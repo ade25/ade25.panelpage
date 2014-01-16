@@ -3,14 +3,10 @@ from AccessControl import Unauthorized
 from five import grok
 from plone import api
 
-from zope import schema
-
 from zope.interface import Interface
-from zope.interface import alsoProvides
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 from plone.keyring import django_random
-from plone.directives import form
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
@@ -24,19 +20,8 @@ from ade25.panelpage.contentpanel import IContentPanel
 from ade25.panelpage import MessageFactory as _
 
 
-class IPanelPage(form.Schema):
+class IPanelPage(Interface):
     """ Marker for panel and block enabled content """
-
-    form.fieldset('panelpage',
-                  label=u"Panel Page",
-                  fields=['panelPageLayout'])
-
-    panelPageLayout = schema.Text(
-        title=u"Panel Page Layout",
-        required=False,
-    )
-
-alsoProvides(IPanelPage, form.IFormFieldProvider)
 
 
 class PanelPageView(grok.View):

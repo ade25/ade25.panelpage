@@ -64,6 +64,10 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         ),
         required=False,
     )
+    panelPageLayout = schema.Text(
+        title=u"Panel Page Layout",
+        required=False,
+    )
 
 
 class ContentBlock(Container):
