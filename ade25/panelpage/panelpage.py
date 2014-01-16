@@ -50,6 +50,18 @@ class PanelPageView(grok.View):
         return tmpl
 
 
+class PanelPageViewlet(grok.Viewlet):
+    grok.context(IPanelPage)
+    grok.viewletmanager(IBelowContentBody)
+    grok.require('zope2.View')
+    grok.name('ade25.panelpage.PanelPageViewlet')
+
+    def panelpage(self):
+        context = aq_inner(self.context)
+        tmpl = context.restrictedTraverse('@@panelpage')()
+        return tmpl
+
+
 class PanelPage(grok.View):
     grok.context(IPanelPage)
     grok.require('zope2.View')
@@ -410,15 +422,3 @@ class TransitionState(grok.View):
         came_from = api.content.get(UID=uuid)
         next_url = came_from.absolute_url()
         return self.request.response.redirect(next_url)
-
-
-class PanelPageViewlet(grok.Viewlet):
-    grok.context(IPanelPage)
-    grok.viewletmanager(IBelowContentBody)
-    grok.require('zope2.View')
-    grok.name('ade25.panelpage.PanelPageViewlet')
-
-    def panelpage(self):
-        context = aq_inner(self.context)
-        tmpl = context.restrictedTraverse('@@panelpage')()
-        return tmpl
