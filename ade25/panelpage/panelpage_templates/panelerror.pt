@@ -1,0 +1,15 @@
+<div class="app-contentpanel"
+    data-appui="panel-adjustment"
+    i18n:domain="ade25.panelpage">
+    <div class="contentpanel-content">
+        <div class="no-data-panel no-data-panel-error">
+            <div class="no-data-sign">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="no-data-title" i18n:translate="">
+                This item is not callable.
+            </h3>
+            <p tal:content="view/uuid" />
+        </div>
+    </div>
+</div>

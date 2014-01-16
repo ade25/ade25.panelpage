@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+    <div class="app-page-header">
+        <h1 i18n:translate="">Content panel</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div tal:content="structure view/render_item" />
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h2>Information</h2>
+            <p class="text-muted" i18n:translate="">
+                Please note that content panels will
+                never be displayed larger than half the content area. Most
+                of the time they will span 1/3rd of a 12 column grid.
+            </p>
+        </div>
+    </div>
+    
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

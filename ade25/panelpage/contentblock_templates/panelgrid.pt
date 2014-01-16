@@ -1,0 +1,63 @@
+<div class="contentblock-content">
+    <tal:panels tal:condition="view/display_panelgrid">
+        <div class="row contentblock-grid"
+            tal:define="panels view/asigned_panels;">
+            <tal:block tal:repeat="item panels">
+                <div tal:attributes="class view/computed_klass">
+                    <div tal:replace="structure python:view.rendered_panel(item)" />
+                </div>
+            </tal:block>
+        </div>
+    </tal:panels>
+    <tal:block tal:condition="not:view/display_panelgrid">
+        <div class="row"
+            tal:define="panels view/asigned_panels;
+                        panel_idx view/panel_idx;
+                        image nocall:context/image;
+                        img_right context/imageRight;
+                        has_panel python:panel_idx == 1;
+                        has_media python:has_panel or image">
+            <div class="col-xs-12 col-sm-4"
+                tal:condition="image"
+                tal:attributes="class python:img_right and 'col-xs-12 col-sm-push-8 col-sm-4' or 'col-xs-12 col-sm-4'">
+                <img tal:condition="image"
+                    tal:define="scales context/@@images"
+                    tal:replace="structure python: scales.tag('image', scale='preview', css_class='img-responsive')"
+                    />
+                <div tal:condition="python:panel_idx == 1">
+                    <div tal:define="uuid view/first_panel"
+                        tal:content="structure python:view.rendered_panel(uuid)" />
+                </div>
+            </div>
+            <div tal:condition="not:image"
+                class="col-xs-12 col-sm-12">
+                <div class="contentblock-header">
+                    <h2 class="contentblock-title"
+                        tal:condition="context/headline"
+                        tal:content="context/headline" />
+                    <p class="lead contentblock-teaser"
+                        tal:condition="context/Description"
+                        tal:content="context/Description" />
+                    <div class="contentblock-body" tal:condition="context/text">
+                        <div tal:replace="structure context/text/output" />
+                    </div>
+                </div>
+            </div>
+            <tal:media tal:condition="image">
+                <div tal:attributes="class python:img_right and 'col-xs-12 col-sm-8 col-sm-pull-4' or 'col-xs-12 col-sm-8'">
+                    <div class="contentblock-header">
+                        <h2 class="contentblock-title"
+                            tal:condition="context/headline"
+                            tal:content="context/headline" />
+                        <p class="lead contentblock-teaser"
+                            tal:condition="context/Description"
+                            tal:content="context/Description" />
+                        <div class="contentblock-body" tal:condition="context/text">
+                            <div tal:replace="structure context/text/output" />
+                        </div>
+                    </div>
+                </div>
+            </tal:media>
+        </div>
+    </tal:block>
+</div>

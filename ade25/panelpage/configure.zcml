@@ -36,4 +36,11 @@
 
   <!-- -*- extra stuff goes here -*- -->
 
+   <plone:behavior
+        title="Panel Page"
+        description="Enable panel page layout engine"
+        provides="ade25.panelpage.panelpage.IPanelPage"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
 </configure>

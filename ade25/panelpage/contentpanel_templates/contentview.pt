@@ -1,0 +1,24 @@
+<div class="app-content-editable"
+    tal:define="klass view/computed_klass;
+                editable view/is_editable"
+    tal:attributes="class string:app-contentblock ${klass};
+                    data-appui python:editable and 'editable' or 'not-editable'"
+    i18n:domain="ade25.panelpage">
+    <div class="contentpanel-editbar animated">
+        <p tal:content="context/Title">Content Panel Headline</p>
+        <a class="btn btn-primary btn-editpanel" href="#"
+            tal:attributes="href string:${context/absolute_url}/@@edit-panel">
+            <i class="fa fa-pencil-square-o"></i>
+        </a>
+        <a class="btn btn-default" href="#"
+            tal:attributes="href string:${context/absolute_url}/@@edit-panel-link">
+            <i class="fa fa-link"></i>
+        </a>
+    </div>
+    <div class="app-editdetails">
+        <p class="text-muted">
+            <span tal:content="context/Title" />
+        </p>
+    </div>
+    <div tal:content="structure view/render_item_content" />
+</div>
