@@ -21,18 +21,32 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from ade25.panelpage import MessageFactory as _
 
 
-# Interface class; used to define content-type schema.
-
 class IPage(form.Schema, IImageScaleTraversable):
     """
     A modular ppage with panel layout
     """
+    headline = schema.TextLine(
+        title=_(u"Headline"),
+        description=_(u"Optional headline overiding the default title in the "
+                      u"content page view"),
+        required=False,
+    )
+    abstract = schema.Text(
+        title=_(u"Abstract"),
+        description=_(u"Optional abstract for the page content overriding the "
+                      u"Dublin Core description"),
+        required=False,
+    )
+    text = RichText(
+        title=_(u"Body Text"),
+        description=_(u"Optional rich body text. Note: you can use content "
+                      u"blocks to structure the page body"),
+        required=False,
+    )
 
 
 class Page(Container):
     grok.implements(IPage)
-
-    # Add your class methods and properties here
     pass
 
 
