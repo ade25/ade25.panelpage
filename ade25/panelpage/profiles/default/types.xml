@@ -9,4 +9,7 @@
 <object name="portal_types" meta_type="Plone Types Tool">
   <!-- -*- extra stuff goes here -*- -->
   <object name="ade25.panelpage.page" meta_type="Dexterity FTI" />
+  <object name="ade25.panelpage.panelmanager" meta_type="Dexterity FTI" />
+  <object name="ade25.panelpage.contentpanel" meta_type="Dexterity FTI" />
+  <object name="ade25.panelpage.contentblock" meta_type="Dexterity FTI" />
 </object>
