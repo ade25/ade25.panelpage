@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div tal:replace="structure provide:plone.belowcontentbody" />
+    <div tal:replace="structure provider:plone.belowcontentbody" />
 
   </metal:content-core>
 </metal:main>
