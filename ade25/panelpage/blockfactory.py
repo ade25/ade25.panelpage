@@ -89,7 +89,7 @@ class ContentBlockEditForm(form.SchemaEditForm):
     def getContent(self):
         context = aq_inner(self.context)
         fti = getUtility(IDexterityFTI,
-                         name='atix.sitecontent.contentblock')
+                         name='ade25.panelpage.contentblock')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
@@ -100,7 +100,7 @@ class ContentBlockEditForm(form.SchemaEditForm):
     def applyChanges(self, data):
         context = aq_inner(self.context)
         fti = getUtility(IDexterityFTI,
-                         name='atix.sitecontent.contentblock')
+                         name='ade25.panelpage.contentblock')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         for key, value in fields:
@@ -154,7 +154,7 @@ class ContentBlockImageEditForm(form.SchemaEditForm):
     def getContent(self):
         context = aq_inner(self.context)
         fti = getUtility(IDexterityFTI,
-                         name='atix.sitecontent.contentblock')
+                         name='ade25.panelpage.contentblock')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
@@ -165,7 +165,7 @@ class ContentBlockImageEditForm(form.SchemaEditForm):
     def applyChanges(self, data):
         context = aq_inner(self.context)
         fti = getUtility(IDexterityFTI,
-                         name='atix.sitecontent.contentblock')
+                         name='ade25.panelpage.contentblock')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         for key, value in fields:
