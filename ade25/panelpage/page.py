@@ -6,6 +6,7 @@ from zope.interface import invariant, Invalid
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
+from plone.indexer import indexer
 from plone.dexterity.content import Container
 
 from plone.directives import dexterity, form
@@ -43,6 +44,18 @@ class IPage(form.Schema, IImageScaleTraversable):
                       u"blocks to structure the page body"),
         required=False,
     )
+
+
+@indexer(IPage)
+def childNodeIndexer(obj):
+    searchable_text = obj.SearchableText()
+    for item in obj.getFolderContents(
+        {'portal_type': 'ade25.panelpage.contentblock'},
+        full_object=True
+    ):
+        searchable_text += item.SearchableText()
+    return searchable_text
+grok.global_adapter(childNodeIndexer, name="SearchableText")
 
 
 class Page(Container):
