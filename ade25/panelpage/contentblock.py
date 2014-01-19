@@ -2,22 +2,16 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
-
-from z3c.form import group, field
 from zope import schema
-from zope.interface import invariant, Invalid
-from zope.schema.interfaces import IContextSourceBinder
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.dexterity.content import Container
 
-from plone.directives import dexterity, form
+from plone.directives import form
 from plone.app.textfield import RichText
-from plone.namedfile.field import NamedImage, NamedFile
-from plone.namedfile.field import NamedBlobImage, NamedBlobFile
+from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 
-from z3c.relationfield.schema import RelationList, RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
+from ade25.panelpage.page import IPage
 
 from ade25.panelpage import MessageFactory as _
 
@@ -67,6 +61,17 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         title=u"Panel Page Layout",
         required=False,
     )
+
+
+@grok.subscribe(IContentBlock, IObjectAddedEvent)
+def reindex_container(obj, event):
+    parent = aq_parent(aq_inner(obj))
+    if not IPage.providedBy(parent):
+        return
+    catalog = api.portal.get_tool(name='portal_catalog')
+    parent_path = '/'.join(parent.getPhysicalPath())
+    if catalog.getrid(parent_path) is not None:
+        parent.reindexObject()
 
 
 class ContentBlock(Container):
