@@ -9,7 +9,7 @@ from plone.directives import form
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
-from zope.lifecycleevent.interfaces import IObjectAddedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 from ade25.panelpage.page import IPage
 
@@ -63,7 +63,7 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
     )
 
 
-@grok.subscribe(IContentBlock, IObjectAddedEvent)
+@grok.subscribe(IContentBlock, IObjectModifiedEvent)
 def reindex_container(obj, event):
     parent = aq_parent(aq_inner(obj))
     if not IPage.providedBy(parent):
