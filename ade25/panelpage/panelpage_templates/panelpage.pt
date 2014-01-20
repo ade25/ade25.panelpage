@@ -1,6 +1,17 @@
 <div class="app-panelpage"
     tal:define="klass view/computed_klass"
     tal:attributes="class string:app-panelpage ${klass}">
+
+    <div class="app-editpanel app-panelpage-edtibar"
+        id="app-editpanel-block"
+        tal:condition="view/is_editable">
+        <a class="btn btn-primary btn-editpanel pull-right"
+            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+            <small i18n:translate="">edit</small>
+        </a>
+        <p class="text-discreet">Panel Page Blocks</p>
+    </div>
+
     <tal:block tal:condition="view/has_subcontent">
         <div class="app-panelpage-content">
             <tal:items tal:repeat="item view/contained_blocks">

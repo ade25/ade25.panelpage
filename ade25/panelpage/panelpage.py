@@ -133,6 +133,35 @@ class PanelPage(grok.View):
         return self.request.response.redirect(url)
 
 
+class PanelPageEditor(grok.View):
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('panelpage-editor')
+
+    def update(self):
+        self.has_subcontent = len(self.contained_blocks()) > 0
+
+    def render_item(self, uid):
+        item = api.content.get(UID=uid)
+        template = item.restrictedTraverse('@@content-view')()
+        return template
+
+    def computed_klass(self):
+        klass = 'app-panelpage-default'
+        if self.is_editable():
+            klass = 'app-panelpage-editable'
+        return klass
+
+    def contained_blocks(self):
+        context = aq_inner(self.context)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IContentBlock.__identifier__,
+                        path=dict(query='/'.join(context.getPhysicalPath()),
+                                  depth=1),
+                        sort_on='getObjPositionInParent')
+        return items
+
+
 class CreateBlock(grok.View):
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')

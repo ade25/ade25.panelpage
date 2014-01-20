@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="panelpage-editor">
+        <div class="app-page-header">
+            <div class="app-page-title">
+                <h1>Panel Page <small>Editor</small></h1>
+            </div>
+        </div>
+    
+        <div class="ppe-block">
+            <div class="ppe-block-header">
+                <p>Content Panel Info Headline</p>
+            </div>
+            <div class="ppe-block-content">
+                <div class="app-page-header">
+                    <h1 class="app-page-title" tal:content="context/Title" />
+                </div>
+                <p class="lead app-page-abstract" tal:condition="context/Description"
+                    tal:content="context/Description" />
+                <div class="app-page-body" id="content-core">
+                    <div tal:condition="context/text"
+                        tal:content="structure context/text/output" />
+                </div>
+            </div>
+        </div>
+
+        <tal:block tal:condition="view/has_subcontent">
+            <div class="app-panelpage-content">
+                <tal:items tal:repeat="item view/contained_blocks">
+                    <div class="panelpage-list-item" href="#content">
+                        <span class="app-sign" tal:content="repeat/item/number">1</span>
+                        <span class="h5" tal:content="item/Title">First added panel</span>
+                    </div>
+                    <div tal:replace="structure python:view.render_item(item.UID)" />
+                </tal:items>
+            </div>
+        </tal:block>
+    
+        <div class="app-page-content" id="content-core">
+            <h2>Panel Layout</h2>
+            <div class="panelpage-list">
+                <div class="panelpage-list-item" href="#content">
+                    <a class="btn btn-default pull-right" href="#edit-this">Drap Indicator</a>
+                    <span class="app-sign">&hellip;</span>
+                    <span class="h5">Fill me with sensible data</span>
+                </div>
+                <div class="panelpage-list-item" href="#content">
+                    <span class="app-sign">1</span>
+                    <span class="h5">First added panel</span>
+                </div>
+                <div class="panelpage-list-item" href="#content">
+                    <span class="app-sign">2</span>
+                    <span class="h5">The second panel in this page</span>
+                </div>
+                <div class="panelpage-list-item" href="#content">
+                    <span class="app-sign">3</span>
+                    <span class="h5">Another panel not ready yet</span>
+                </div>
+            </div>
+            <!-- <div tal:replace="structure view/panelpage" /> -->
+        </div>
+    </div>
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

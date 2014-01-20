@@ -3,6 +3,8 @@ from Acquisition import aq_parent
 from five import grok
 from plone import api
 from zope import schema
+from zope.component import getMultiAdapter
+
 from plone.dexterity.content import Container
 
 from plone.directives import form
@@ -102,6 +104,15 @@ class ContentView(grok.View):
 
     def is_editable(self):
         return not api.user.is_anonymous()
+
+    def show_editbar(self):
+        editor = False
+        context_state = getMultiAdapter((self.context, self.request),
+                                        name='plone_context_state')
+        current_url = context_state.current_page_url()
+        if current_url.endswith('panelpage-editor'):
+            editor = True
+        return editor
 
     def has_data(self):
         context = aq_inner(self.context)
