@@ -139,7 +139,38 @@ class PanelPageEditor(grok.View):
     grok.name('panelpage-editor')
 
     def update(self):
+        context = aq_inner(self.context)
         self.has_subcontent = len(self.contained_blocks()) > 0
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('title')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._create_panel(form)
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -160,6 +191,32 @@ class PanelPageEditor(grok.View):
                                   depth=1),
                         sort_on='getObjPositionInParent')
         return items
+
+    def is_editable(self):
+        editable = False
+        if not api.user.is_anonymous():
+                editable = True
+        return editable
+
+    def default_value(self, error):
+        value = ''
+        if error['active'] is False:
+            value = error['msg']
+        return value
+
+    def _create_panel(self, data):
+        context = aq_inner(self.context)
+        new_title = data['title']
+        token = django_random.get_random_string(length=12)
+        api.content.create(
+            type='ade25.panelpage.contentblock',
+            id=token,
+            title=new_title,
+            container=context,
+            safe_id=True
+        )
+        url = context.absolute_url() + '/@@panelpage-editor'
+        return self.request.response.redirect(url)
 
 
 class CreateBlock(grok.View):

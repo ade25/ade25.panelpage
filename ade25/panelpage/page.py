@@ -51,7 +51,6 @@ def childNodeIndexer(obj):
     searchable_text = obj.SearchableText()
     for item in obj.getFolderContents(
         {'portal_type': 'ade25.panelpage.contentblock'},
-        full_object=True
     ):
         searchable_text += item.SearchableText()
     return searchable_text
