@@ -9,13 +9,14 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="panelpage-editor">
-        <div class="app-page-header">
-            <div class="page-header app-page-title">
-                <h1>Panel Page <small>Editor</small></h1>
-            </div>
+    <div class="panelpage-editor panelpage-editable">
+        <div class="panelpage-editbar">
+            <a class="pull-right">
+                close &times;
+            </a>
+            <small class="text-discreet">&larr; Panel Page Editor</small>
         </div>
-
+        <hr class="visualClear" />
         <tal:block tal:condition="view/has_subcontent">
             <div class="app-panelpage-content panelpage-list">
                 <div class="ppe-block">
@@ -43,8 +44,10 @@
                 <tal:items tal:repeat="item view/contained_blocks">
                     <div class="ppe-block">
                         <a class="panelpage-list-item animated bounceInLeft" href="#content"
-                            data-appui="toggle-contentblock"
-                            tal:attributes="data-target string:#ppe-block-${repeat/item/number}">
+                            data-pjax="#app-pjax-container"
+                            data-appui="xxxtoggle-contentblock"
+                            tal:attributes="data-target string:#ppe-block-${repeat/item/number};
+                                            href string:${item/getURL}">
                             <span class="app-sign" tal:content="repeat/item/number">1</span>
                             <span class="h5" tal:content="item/Title">First added panel</span>
                         </a>
@@ -56,6 +59,11 @@
                 </tal:items>
             </div>
         </tal:block>
+
+        <div class="app-pjax-container panel panel-default"
+            id="app-pjax-container">
+            <span>Loading content...stay tuned</span>
+        </div>
 
         <div class="app-editpanel app-panelpage-edtibar"
             id="app-editpanel-block"

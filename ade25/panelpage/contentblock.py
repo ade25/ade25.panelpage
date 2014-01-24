@@ -86,6 +86,10 @@ class View(grok.View):
     grok.require('zope2.View')
     grok.name('view')
 
+    def update(self):
+        if self.request.get_header('X-PJAX'):
+            return '<p>This is a pjax response</p>'
+
     def render_item(self):
         context = aq_inner(self.context)
         template = context.restrictedTraverse('@@content-view')()
