@@ -171,23 +171,6 @@ class PanelPageEditor(grok.View):
                 self.errors = form_errors
             else:
                 self._create_panel(form)
-<<<<<<< HEAD
-
-    def _create_panel(self, data):
-        context = aq_inner(self.context)
-        new_title = data['title']
-        token = django_random.get_random_string(length=12)
-        api.content.create(
-            type='ade25.panelpage.contentblock',
-            id=token,
-            title=new_title,
-            container=context,
-            safe_id=True
-        )
-        url = context.absolute_url() + '/@@panelpage-editor'
-        return self.request.response.redirect(url)
-=======
->>>>>>> 9676356e21947b88a3c860c00f023ccd9fc8acf0
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)

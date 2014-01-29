@@ -17,7 +17,7 @@
             <small class="text-discreet">&larr; Panel Page Editor</small>
         </div>
         <hr class="visualClear" />
-        <tal:block tal:condition="view/has_subcontent">
+        <tal:block>
             <div class="app-panelpage-content panelpage-list">
                 <div class="ppe-block">
                     <div class="panelpage-list-item animated bounceInLeft" href="#content">
@@ -41,7 +41,8 @@
                         </div>
                     </div>
                 </div>
-                <tal:items tal:repeat="item view/contained_blocks">
+                <tal:items  tal:condition="view/has_subcontent"
+                    tal:repeat="item view/contained_blocks">
                     <div class="ppe-block">
                         <a class="panelpage-list-item animated bounceInLeft" href="#content"
                             data-pjax="#app-pjax-container"
@@ -60,91 +61,6 @@
             </div>
         </tal:block>
 
-<<<<<<< HEAD
-        <div class="no-data-panel"
-            tal:condition="not:view/has_subcontent">
-            <div class="row">
-                <div class="col-xs-12 col-sm-1">
-                    <div class="no-data-sign">
-                        &hellip;
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-11">
-                    <h3 class="no-data-title" i18n:translate="">
-                        The are no content blocks asigned
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <form class="app-form app-create-form"
-            id="createBlockForm"
-            method="post" role="form"
-            tal:define="errors view/errors"
-            tal:attributes="action request/URL">
-            <h4 i18n:translate="" class="sr-only">
-                Please provide a human readable title for this content block
-            </h4>
-            <div class="row">
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group field"
-                        tal:define="error errors/title | nothing;
-                                    err_msg python:error and error['active'] == True;
-                                    value request/title | nothing"
-                        tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
-                        <label class="sr-only" for="title" i18n:translate="">Title</label>
-                            <input class="form-control" id="title"
-                                type="text" name="title"
-                                placeholder="Please enter panel name"
-                                tal:attributes="value python:error and view.default_value(error) or value">
-                            <div class="help-block error"
-                                tal:condition="err_msg">
-                              <i class="fa fa-exclamation-triangle"></i>
-                              <span tal:replace="python:error['msg']" />
-                            </div>
-                    </div><!-- /title field -->
-                    <p class="text-muted">
-                        <strong i18n:translate="">Hint:</strong>
-                        <span i18n:translate="">
-                        Please provide a title useful to identify this specific
-                        block during layout composition</span>
-                    </p>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group">
-                        <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <button class="btn btn-primary btn-editpanel"
-                            name="form.button.Submit"
-                            id="form.button.Submit"
-                            i18n:translate="">Create content block</button>
-                    </div>
-                </div>
-            </div>            
-        </form>
-
-        <div class="app-page-content" id="content-core">
-            <h2>Panel Layout</h2>
-            <div class="panelpage-list">
-                <div class="panelpage-list-item" href="#content">
-                    <a class="btn btn-default pull-right" href="#edit-this">Drap Indicator</a>
-                    <span class="app-sign">&hellip;</span>
-                    <span class="h5">Fill me with sensible data</span>
-                </div>
-                <div class="panelpage-list-item" href="#content">
-                    <span class="app-sign">1</span>
-                    <span class="h5">First added panel</span>
-                </div>
-                <div class="panelpage-list-item" href="#content">
-                    <span class="app-sign">2</span>
-                    <span class="h5">The second panel in this page</span>
-                </div>
-                <div class="panelpage-list-item" href="#content">
-                    <span class="app-sign">3</span>
-                    <span class="h5">Another panel not ready yet</span>
-                </div>
-            </div>
-            <!-- <div tal:replace="structure view/panelpage" /> -->
-=======
         <div class="app-pjax-container panel panel-default"
             id="app-pjax-container">
             <span>Loading content...stay tuned</span>
@@ -166,7 +82,7 @@
                 tal:define="errors view/errors"
                 tal:attributes="action request/URL">
                 <h4 i18n:translate="">
-                    Please provide a human readable title for this content block
+                    Content block title
                 </h4>
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
@@ -186,7 +102,7 @@
                                   <span tal:replace="python:error['msg']" />
                                 </div>
                         </div> <!-- /title field -->
-                        <p class="text-muted">
+                        <p class="text-discreet">
                             <strong i18n:translate="">Good to know:</strong>
                             <span i18n:translate="">
                             The content block title will be used to identify the
@@ -205,7 +121,6 @@
                     </div>
                 </div>            
             </form>
->>>>>>> 9676356e21947b88a3c860c00f023ccd9fc8acf0
         </div>
     </div>
 
