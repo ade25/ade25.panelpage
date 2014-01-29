@@ -9,42 +9,58 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="panelpage-editor">
-        <div class="app-page-header">
-            <div class="app-page-title">
-                <h1>Panel Page <small>Editor</small></h1>
-            </div>
+    <div class="panelpage-editor panelpage-editable">
+        <div class="panelpage-editbar">
+            <a class="pull-right">
+                close &times;
+            </a>
+            <small class="text-discreet">&larr; Panel Page Editor</small>
         </div>
-    
-        <div class="ppe-block">
-            <div class="ppe-block-header">
-                <p>Content Panel Info Headline</p>
-            </div>
-            <div class="ppe-block-content">
-                <div class="app-page-header">
-                    <h1 class="app-page-title" tal:content="context/Title" />
-                </div>
-                <p class="lead app-page-abstract" tal:condition="context/Description"
-                    tal:content="context/Description" />
-                <div class="app-page-body" id="content-core">
-                    <div tal:condition="context/text"
-                        tal:content="structure context/text/output" />
-                </div>
-            </div>
-        </div>
-
+        <hr class="visualClear" />
         <tal:block tal:condition="view/has_subcontent">
-            <div class="app-panelpage-content">
-                <tal:items tal:repeat="item view/contained_blocks">
-                    <div class="panelpage-list-item" href="#content">
-                        <span class="app-sign" tal:content="repeat/item/number">1</span>
-                        <span class="h5" tal:content="item/Title">First added panel</span>
+            <div class="app-panelpage-content panelpage-list">
+                <div class="ppe-block">
+                    <div class="panelpage-list-item animated bounceInLeft" href="#content">
+                        <a class="pull-right" href="#ppe-block-main-page"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page">
+                            edit &rarr;
+                        </a>
+                        <span class="app-sign">0</span>
+                        <span class="h5" tal:content="context/Title">Fill me with sensible data</span>
                     </div>
-                    <div tal:replace="structure python:view.render_item(item.UID)" />
+                    <div class="ppe-block-editable animated hide" id="ppe-block-main-page">
+                        <div class="app-page-header">
+                            <h1 class="app-page-title" tal:content="context/Title" />
+                        </div>
+                        <p class="lead app-page-abstract" tal:condition="context/Description"
+                            tal:content="context/Description" />
+                        <div class="app-page-body" id="content-core">
+                            <div tal:condition="context/text"
+                                tal:content="structure context/text/output" />
+                        </div>
+                    </div>
+                </div>
+                <tal:items tal:repeat="item view/contained_blocks">
+                    <div class="ppe-block">
+                        <a class="panelpage-list-item animated bounceInLeft" href="#content"
+                            data-pjax="#app-pjax-container"
+                            data-appui="xxxtoggle-contentblock"
+                            tal:attributes="data-target string:#ppe-block-${repeat/item/number};
+                                            href string:${item/getURL}">
+                            <span class="app-sign" tal:content="repeat/item/number">1</span>
+                            <span class="h5" tal:content="item/Title">First added panel</span>
+                        </a>
+                        <div class="ppe-block-editable hide animated"
+                            tal:attributes="id string:ppe-block-${repeat/item/number}">
+                            <div tal:replace="structure python:view.render_item(item.UID)" />
+                        </div>
+                    </div>
                 </tal:items>
             </div>
         </tal:block>
 
+<<<<<<< HEAD
         <div class="no-data-panel"
             tal:condition="not:view/has_subcontent">
             <div class="row">
@@ -128,6 +144,68 @@
                 </div>
             </div>
             <!-- <div tal:replace="structure view/panelpage" /> -->
+=======
+        <div class="app-pjax-container panel panel-default"
+            id="app-pjax-container">
+            <span>Loading content...stay tuned</span>
+        </div>
+
+        <div class="app-editpanel app-panelpage-edtibar"
+            id="app-editpanel-block"
+            tal:condition="view/is_editable">
+            <a class="btn btn-primary btn-editpanel pull-right"
+                data-toggle="collapse"
+                data-parent="#app-editpanel-block"
+                href="#createBlockForm">
+                <small i18n:translate="">Add content block</small>
+            </a>
+    
+            <form class="app-form app-create-form collapse"
+                id="createBlockForm"
+                method="post" role="form"
+                tal:define="errors view/errors"
+                tal:attributes="action request/URL">
+                <h4 i18n:translate="">
+                    Please provide a human readable title for this content block
+                </h4>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group field"
+                            tal:define="error errors/title | nothing;
+                                        err_msg python:error and error['active'] == True;
+                                        value request/title | nothing"
+                            tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
+                            <label class="sr-only" for="title" i18n:translate="">Title</label>
+                                <input class="form-control" id="title"
+                                    type="text" name="title"
+                                    placeholder="Please enter panel name"
+                                    tal:attributes="value python:error and view.default_value(error) or value">
+                                <div class="help-block error"
+                                    tal:condition="err_msg">
+                                  <i class="fa fa-exclamation-triangle"></i>
+                                  <span tal:replace="python:error['msg']" />
+                                </div>
+                        </div> <!-- /title field -->
+                        <p class="text-muted">
+                            <strong i18n:translate="">Good to know:</strong>
+                            <span i18n:translate="">
+                            The content block title will be used to identify the
+                            specific item but will not be displayed. You can provide
+                            a dedicated headline in the next step</span>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                            <button class="btn btn-primary btn-editpanel"
+                                name="form.button.Submit"
+                                id="form.button.Submit"
+                                i18n:translate="">Create content block</button>
+                        </div>
+                    </div>
+                </div>            
+            </form>
+>>>>>>> 9676356e21947b88a3c860c00f023ccd9fc8acf0
         </div>
     </div>
 

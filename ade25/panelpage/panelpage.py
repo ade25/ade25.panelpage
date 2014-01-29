@@ -171,6 +171,7 @@ class PanelPageEditor(grok.View):
                 self.errors = form_errors
             else:
                 self._create_panel(form)
+<<<<<<< HEAD
 
     def _create_panel(self, data):
         context = aq_inner(self.context)
@@ -185,6 +186,8 @@ class PanelPageEditor(grok.View):
         )
         url = context.absolute_url() + '/@@panelpage-editor'
         return self.request.response.redirect(url)
+=======
+>>>>>>> 9676356e21947b88a3c860c00f023ccd9fc8acf0
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -205,6 +208,32 @@ class PanelPageEditor(grok.View):
                                   depth=1),
                         sort_on='getObjPositionInParent')
         return items
+
+    def is_editable(self):
+        editable = False
+        if not api.user.is_anonymous():
+                editable = True
+        return editable
+
+    def default_value(self, error):
+        value = ''
+        if error['active'] is False:
+            value = error['msg']
+        return value
+
+    def _create_panel(self, data):
+        context = aq_inner(self.context)
+        new_title = data['title']
+        token = django_random.get_random_string(length=12)
+        api.content.create(
+            type='ade25.panelpage.contentblock',
+            id=token,
+            title=new_title,
+            container=context,
+            safe_id=True
+        )
+        url = context.absolute_url() + '/@@panelpage-editor'
+        return self.request.response.redirect(url)
 
 
 class CreateBlock(grok.View):
