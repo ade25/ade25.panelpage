@@ -186,10 +186,14 @@ class PanelPageEditor(grok.View):
     def item_state_klass(self, uid):
         klass = 'ppe-block-default'
         if not api.user.is_anonymous():
-            item = api.content.get(UID=uid)
-            state = api.content.get_state(obj=item)
+            state = self.item_state_info(uid=uid)
             klass = ('ppe-block-{0}').format(state)
         return klass
+
+    def item_state_info(self, uid):
+        item = api.content.get(UID=uid)
+        state = api.content.get_state(obj=item)
+        return state
 
     def contained_blocks(self):
         context = aq_inner(self.context)

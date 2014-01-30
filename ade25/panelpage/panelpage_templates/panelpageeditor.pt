@@ -13,14 +13,17 @@
         <div class="ppe-header">
             <a class="ppe-close pull-right"
                 tal:attributes="href string:${context/absolute_url}">
-                close &times;
+                <small>close</small> &times;
             </a>
             <div class="panelpage-label">Panel Page Editor</div>
         </div>
         <div class="panelpage-editable">
             <div class="app-panelpage-content panelpage-list"
                 id="ppe-list">
-                <div class="ppe-block animated bounceInLeft">
+                <div class="ppe-block animated bounceInLeft"
+                    tal:define="uid context/UID;
+                                klass python:view.item_state_klass(uid)"
+                    tal:attributes="class string:ppe-block ${klass} animated bounceInLeft">
                         <span class="app-sign app-sign-dragable pull-right">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -40,7 +43,8 @@
                         <a data-toggle="collapse" data-parent="#ppe-list" href="#ppe-block-main-page">
                             <!-- <span class="app-sign app-sign-default">0</span> -->
                             <h4 tal:content="context/Title">Fill me with sensible data</h4>
-                            <small class="ppe-block-state">Private</small>
+                            <small class="ppe-block-state"
+                                tal:content="python:view.item_state_info(uid)">Private</small>
                         </a>
                     <div class="ppe-block-editable collapse" id="ppe-block-main-page">
                         <div class="app-page-header">
@@ -83,7 +87,8 @@
                                             href string:${item/getURL}">
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
                             <h4 tal:content="item/Title">First added panel</h4>
-                            <small class="ppe-block-state">Published</small>
+                            <small class="ppe-block-state"
+                                tal:content="python:view.item_state_info(uid)">Published</small>
                         </a>
                         <div class="ppe-block-editable hide animated"
                             tal:attributes="id string:ppe-block-${repeat/item/number}">
