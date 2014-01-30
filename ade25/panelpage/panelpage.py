@@ -183,6 +183,14 @@ class PanelPageEditor(grok.View):
             klass = 'app-panelpage-editable'
         return klass
 
+    def item_state_klass(self, uid):
+        klass = 'ppe-block-default'
+        if not api.user.is_anonymous():
+            item = api.content.get(UID=uid)
+            state = api.content.get_state(obj=item)
+            klass = ('ppe-block-{0}').format(state)
+        return klass
+
     def contained_blocks(self):
         context = aq_inner(self.context)
         catalog = api.portal.get_tool(name='portal_catalog')

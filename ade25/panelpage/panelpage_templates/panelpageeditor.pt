@@ -11,25 +11,38 @@
   <metal:content-core define-macro="main">
     <div class="panelpage-editor">
         <div class="ppe-header">
-            <a class="close ppp-close"
+            <a class="ppe-close pull-right"
                 tal:attributes="href string:${context/absolute_url}">
                 close &times;
             </a>
             <div class="panelpage-label">Panel Page Editor</div>
         </div>
         <div class="panelpage-editable">
-            <div class="app-panelpage-content panelpage-list">
-                <div class="ppe-block">
-                    <div class="panelpage-list-item animated bounceInLeft" href="#content">
-                        <a class="pull-right" href="#ppe-block-main-page"
+            <div class="app-panelpage-content panelpage-list"
+                id="ppe-list">
+                <div class="ppe-block animated bounceInLeft">
+                        <span class="app-sign app-sign-dragable pull-right">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </span>
+                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page">
-                            edit &rarr;
+                            delete
                         </a>
-                        <span class="app-sign">0</span>
-                        <span class="h5" tal:content="context/Title">Fill me with sensible data</span>
-                    </div>
-                    <div class="ppe-block-editable animated hide" id="ppe-block-main-page">
+                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page">
+                            edit
+                        </a>
+                        <a data-toggle="collapse" data-parent="#ppe-list" href="#ppe-block-main-page">
+                            <!-- <span class="app-sign app-sign-default">0</span> -->
+                            <h4 tal:content="context/Title">Fill me with sensible data</h4>
+                            <small class="ppe-block-state">Private</small>
+                        </a>
+                    <div class="ppe-block-editable collapse" id="ppe-block-main-page">
                         <div class="app-page-header">
                             <h1 class="app-page-title" tal:content="context/Title" />
                         </div>
@@ -43,14 +56,34 @@
                 </div>
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
-                    <div class="ppe-block">
-                        <a class="panelpage-list-item animated bounceInLeft" href="#content"
+                    <div class="ppe-block animated bounceInLeft"
+                        tal:define="uid item/UID;
+                                    klass python:view.item_state_klass(uid)"
+                        tal:attributes="class string:ppe-block ${klass} animated bounceInLeft">
+                        <span class="app-sign app-sign-dragable pull-right">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </span>
+                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page">
+                            delete
+                        </a>
+                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page">
+                            edit
+                        </a>
+                        <a class="animated bounceInLeft" href="#content"
                             data-pjax="#app-pjax-container"
                             data-appui="xxxtoggle-contentblock"
                             tal:attributes="data-target string:#ppe-block-${repeat/item/number};
                                             href string:${item/getURL}">
-                            <span class="app-sign" tal:content="repeat/item/number">1</span>
-                            <span class="h5" tal:content="item/Title">First added panel</span>
+                            <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
+                            <h4 tal:content="item/Title">First added panel</h4>
+                            <small class="ppe-block-state">Published</small>
                         </a>
                         <div class="ppe-block-editable hide animated"
                             tal:attributes="id string:ppe-block-${repeat/item/number}">
@@ -60,12 +93,12 @@
                 </tal:items>
             </div>
 
-            <div class="app-pjax-container panel panel-default"
+            <div class="app-pjax-container panel panel-default hide"
                 id="app-pjax-container">
                 <span>Loading content...stay tuned</span>
             </div>
 
-            <div class="app-editpanel app-panelpage-edtibar"
+            <div class="app-editpanel-form"
                 id="app-editpanel-block"
                 tal:condition="view/is_editable">
         
@@ -74,11 +107,8 @@
                     method="post" role="form"
                     tal:define="errors view/errors"
                     tal:attributes="action request/URL">
-                    <h4 i18n:translate="">
-                        Content block title
-                    </h4>
                     <div class="row">
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-9">
                             <div class="form-group field"
                                 tal:define="error errors/title | nothing;
                                             err_msg python:error and error['active'] == True;
@@ -99,11 +129,10 @@
                                 <strong i18n:translate="">Good to know:</strong>
                                 <span i18n:translate="">
                                 The content block title will be used to identify the
-                                specific item but will not be displayed. You can provide
-                                a dedicated headline in the next step</span>
+                                specific item but will not be displayed</span>
                             </p>
                         </div>
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-3">
                             <div class="form-group">
                                 <span tal:replace="structure context/@@authenticator/authenticator"/>
                                 <button class="btn btn-primary btn-editpanel"
