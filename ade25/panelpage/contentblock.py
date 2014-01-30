@@ -90,6 +90,11 @@ class View(grok.View):
         if self.request.get_header('X-PJAX'):
             return '<p>This is a pjax response</p>'
 
+    def parent_url(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        return parent.absolute_url()
+
     def render_item(self):
         context = aq_inner(self.context)
         template = context.restrictedTraverse('@@content-view')()

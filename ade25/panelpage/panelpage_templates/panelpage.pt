@@ -7,7 +7,7 @@
         tal:condition="view/is_editable">
         <a class="btn btn-primary btn-editpanel pull-right"
             tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-            <small i18n:translate="">edit</small>
+            <small i18n:translate="">Panel Page Editor</small>
         </a>
         <p class="text-discreet">Panel Page Blocks</p>
     </div>
@@ -22,64 +22,12 @@
     <div class="app-editpanel app-panelpage-edtibar"
         id="app-editpanel-block"
         tal:condition="view/is_editable">
-        <a class="btn btn-primary btn-editpanel pull-right"
-            data-toggle="collapse"
-            data-parent="#app-editpanel-block"
-            href="#createBlockForm">
-            <small i18n:translate="">Add content block</small>
-        </a>
-
-        <form class="app-form app-create-form collapse"
-            id="createBlockForm"
-            method="post" role="form"
-            tal:define="errors view/errors"
-            tal:attributes="action request/URL">
-            <h4 i18n:translate="">
-                Please provide a human readable title for this content block
-            </h4>
-            <div class="row">
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group field"
-                        tal:define="error errors/title | nothing;
-                                    err_msg python:error and error['active'] == True;
-                                    value request/title | nothing"
-                        tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
-                        <label class="sr-only" for="title" i18n:translate="">Title</label>
-                            <input class="form-control" id="title"
-                                type="text" name="title"
-                                placeholder="Please enter panel name"
-                                tal:attributes="value python:error and view.default_value(error) or value">
-                            <div class="help-block error"
-                                tal:condition="err_msg">
-                              <i class="fa fa-exclamation-triangle"></i>
-                              <span tal:replace="python:error['msg']" />
-                            </div>
-                    </div><!-- /title field -->
-                    <p class="text-muted">
-                        <strong i18n:translate="">Good to know:</strong>
-                        <span i18n:translate="">
-                        The content block title will be used to identify the
-                        specific item but will not be displayed. You can provide
-                        a dedicated headline in the next step</span>
-                    </p>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group">
-                        <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <button class="btn btn-primary btn-editpanel"
-                            name="form.button.Submit"
-                            id="form.button.Submit"
-                            i18n:translate="">Create content block</button>
-                    </div>
-                </div>
-            </div>            
-        </form>
 
         <div class="no-data-panel"
             tal:condition="not:view/has_subcontent">
             <div class="row">
                 <div class="col-xs-12 col-sm-1">
-                    <div class="no-data-sign">
+                    <div class="app-sign xno-data-sign">
                         <i class="fa fa-ellipsis-h"></i>
                     </div>
                 </div>

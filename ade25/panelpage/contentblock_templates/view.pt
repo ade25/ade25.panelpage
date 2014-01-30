@@ -10,17 +10,18 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
 
-    <div class="app-page">
-        <div class="app-page-header">
-            <h1 class="app-page-title">
-                <span tal:content="context/Title" />
-                <small i18n:translate="">Content Block View</small>
-            </h1>
+    <div class="panelpage-editor">
+        <div class="ppe-header">
+            <a class="ppe-close pull-right"
+                tal:attributes="href string:${view/parent_url}/@@panelpage-editor">
+                <small>close</small> &times;
+            </a>
+            <div class="panelpage-label">Panel Page Editor
+                <small class="text-muted" i18n:translate="">Edit Content Block</small>
+            </div>
         </div>
-        <div class="app-page-body" id="content-core">
-            
+        <div class="panelpage-editable" id="content-core">
             <div tal:replace="structure view/render_item" />
-
         </div>
     </div>
 
