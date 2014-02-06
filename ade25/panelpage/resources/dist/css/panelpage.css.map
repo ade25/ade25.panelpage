@@ -1,0 +1,1 @@
+{"version":3,"sources":["less/editor.less"],"names":[],"mappings":";;;AAIA,YAAa;EACT,gBAAA","sourcesContent":["//\n// Application stylesheet\n// -----------------------------------------------\n\n.app-toolbar + .app-navbar {\n    margin-top: @navbar-height;\n}\n\n"]}
