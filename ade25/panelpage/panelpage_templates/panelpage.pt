@@ -2,10 +2,10 @@
     tal:define="klass view/computed_klass"
     tal:attributes="class string:app-panelpage ${klass}">
 
-    <div class="app-editpanel app-panelpage-edtibar"
-        id="app-editpanel-block"
+    <div class="app-panelpage-edtibar"
+        id="app-panelpage-editbar"
         tal:condition="view/is_editable">
-        <a class="btn btn-primary btn-editpanel pull-right"
+        <a class="btn btn-primary btn-ppe pull-right"
             tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
             <small i18n:translate="">Panel Page Editor</small>
         </a>
@@ -19,20 +19,18 @@
             </tal:items>
         </div>
     </tal:block>
-    <div class="app-editpanel app-panelpage-edtibar"
+    <div class="app-panelpage-edtibar"
         id="app-editpanel-block"
         tal:condition="view/is_editable">
 
-        <div class="no-data-panel"
+        <div class="ppe-block-placeholder"
             tal:condition="not:view/has_subcontent">
             <div class="row">
                 <div class="col-xs-12 col-sm-1">
-                    <div class="app-sign xno-data-sign">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </div>
+                    <div class="placeholder-sign">&hellip;</div>
                 </div>
                 <div class="col-xs-12 col-sm-11">
-                    <h3 class="no-data-title" i18n:translate="">
+                    <h3 class="placeholder-title" i18n:translate="">
                         The are no content blocks asigned
                     </h3>
                 </div>

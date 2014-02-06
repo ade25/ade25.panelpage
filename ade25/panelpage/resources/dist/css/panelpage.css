@@ -1,23 +1,17 @@
 /*!
  * ade25panelpage
  */
-.ppe-section-sortable .sortable-placeholder
+.app-panelpage
+{
+    margin: 20px 0;
+}
+.app-panelpage.app-panelpage-editable
 {
     position: relative;
-
-    width: 100%;
-    height: 100px;
-
-    border: 1px solid #999;
-    background: #eee;
 }
-.ppe-section-sortable .sortable-dragging
+.app-panelpage-editbar
 {
-    opacity: 1;
-    border: 1px solid #d9534f;
-    background: #f2f2f2;
-
-    filter: alpha(opacity=100);
+    color: #333;
 }
 .ppe-block
 {
@@ -51,6 +45,132 @@
 .ppe-block.ppe-block-published .ppe-block-state
 {
     color: #3c763d;
+}
+.ppe-action
+{
+    line-height: 40px;
+
+    display: block;
+
+    margin-right: 10px;
+}
+.ppe-block-placeholder
+{
+    margin: 20px 0;
+    padding: 10px;
+
+    text-align: center;
+
+    color: #999;
+    border: 1px solid #eee;
+}
+.ppe-block-placeholder .placeholder-sign
+{
+    font-size: 25px;
+    line-height: 1;
+
+    display: block;
+
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    padding: 10px;
+
+    text-align: center;
+
+    color: #eee;
+    border: 5px solid #eee;
+    border-radius: 25px;
+}
+.ppe-block-placeholder .placeholder-title,
+.ppe-block-placeholder .placeholder-text,
+.ppe-block-placeholder .placeholder-btn
+{
+    margin-top: 10px;
+}
+@media (min-width: 768px)
+{
+    .ppe-block-placeholder
+    {
+        text-align: left;
+    }
+    .ppe-block-placeholder .placeholder-sign
+    {
+        margin: 0 20px;
+    }
+}
+.ppe-block-placeholder.placeholder-error
+{
+    background: #f2dede;
+}
+.btn-ppe
+{
+    color: #999;
+    border-color: #080808;
+    background-color: #222;
+}
+.btn-ppe:hover,
+.btn-ppe:focus,
+.btn-ppe:active,
+.btn-ppe.active,
+.open .dropdown-toggle.btn-ppe
+{
+    color: #999;
+    border-color: #000;
+    background-color: #0e0e0e;
+}
+.btn-ppe:active,
+.btn-ppe.active,
+.open .dropdown-toggle.btn-ppe
+{
+    background-image: none;
+}
+.btn-ppe.disabled,
+.btn-ppe[disabled],
+fieldset[disabled] .btn-ppe,
+.btn-ppe.disabled:hover,
+.btn-ppe[disabled]:hover,
+fieldset[disabled] .btn-ppe:hover,
+.btn-ppe.disabled:focus,
+.btn-ppe[disabled]:focus,
+fieldset[disabled] .btn-ppe:focus,
+.btn-ppe.disabled:active,
+.btn-ppe[disabled]:active,
+fieldset[disabled] .btn-ppe:active,
+.btn-ppe.disabled.active,
+.btn-ppe[disabled].active,
+fieldset[disabled] .btn-ppe.active
+{
+    border-color: #080808;
+    background-color: #222;
+}
+.btn-ppe .badge
+{
+    color: #222;
+    background-color: #fff;
+}
+.btn-ppe.btn-ppe-boxed
+{
+    position: absolute;
+    bottom: 0;
+}
+.ppe-section-sortable .sortable-placeholder
+{
+    position: relative;
+
+    width: 100%;
+    height: 100px;
+
+    border: 1px solid #999;
+    background: #eee;
+}
+.ppe-section-sortable .sortable-dragging
+{
+    opacity: 1;
+    border: 1px solid #d9534f;
+    background: #f2f2f2;
+
+    filter: alpha(opacity=100);
 }
 .ppe-action
 {

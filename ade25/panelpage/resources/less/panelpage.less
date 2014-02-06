@@ -1,0 +1,93 @@
+//
+// Panelpage view styles
+// ------------------------------------------------------
+
+
+.app-panelpage {
+    margin: @line-height-computed 0;
+    &.app-panelpage-editable {
+        position: relative;
+    }
+}
+
+.app-panelpage-editbar {
+    color: @text-color;
+}
+
+.ppe-block {
+    display: block;
+    margin-bottom: floor(@line-height-computed / 2);
+    padding: floor(@line-height-computed / 2) @line-height-computed;
+    //background: @gray-lighter;
+    // border-bottom: 1px solid @gray-light;
+    color: @text-color;
+    > a {
+        color: @gray-light;
+        &:hover {
+            color: @gray;
+        }
+    }
+    &.ppe-block-private {
+        border-right: 5px solid @alert-danger-bg;
+        .ppe-block-state {
+            color: @alert-danger-text;
+        }
+    }
+    &.ppe-block-published {
+        border-right: 5px solid @alert-success-bg;
+        .ppe-block-state {
+            color: @alert-success-text;
+        }
+    }
+
+}
+
+.ppe-action {
+    display: block;
+    margin-right: floor((@line-height-computed / 2));
+    line-height: ceil((@line-height-computed * 2));
+}
+
+
+
+.ppe-block-placeholder {
+    margin: @line-height-computed 0;
+    padding: ceil(@line-height-computed / 2);
+    border: 1px solid @gray-lighter;
+    color: @gray-light;
+    text-align: center;
+     .placeholder-sign {
+        display: block;
+        .square(@navbar-height);
+        margin:0 auto;
+        padding:ceil(@line-height-computed / 2);
+        border:5px solid @gray-lighter;
+        border-radius:floor(@navbar-height / 2);
+        color:@gray-lighter;
+        font-size:floor(@navbar-height / 2);
+        text-align:center;
+        line-height:1
+    }
+    .placeholder-title,
+    .placeholder-text,
+    .placeholder-btn {
+        margin-top: ceil(@line-height-computed / 2);
+    }
+    @media (min-width: @screen-sm) {
+        text-align: left;
+        .placeholder-sign {
+            margin:0 @line-height-computed;
+        }
+    }
+    &.placeholder-error {
+        background: @alert-danger-bg;
+    }
+}
+
+.btn-ppe {
+    .button-variant(@navbar-inverse-color; @navbar-inverse-bg; @navbar-inverse-border);
+    &.btn-ppe-boxed {
+        position:absolute;
+        bottom: 0;
+    }
+}
