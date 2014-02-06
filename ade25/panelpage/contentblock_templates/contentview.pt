@@ -4,8 +4,8 @@
     tal:attributes="class string:app-contentblock ${klass};
                     data-appui python:editable and 'editable' or 'not-editable'"
     i18n:domain="ade25.panelpage">
-    <div class="contentpanel-editbar animated"
-        tal:condition="view/show_editbar">
+    <div class="xcontentpanel-editbar animated"
+        tal:condition="editable">
         <p tal:content="context/Title">Content Panel Headline</p>
         <a class="btn btn-primary btn-sm btn-editpanel" href="#"
             tal:attributes="href string:${context/absolute_url}/@@edit-block"
