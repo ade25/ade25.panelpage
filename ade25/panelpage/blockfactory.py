@@ -115,7 +115,7 @@ class ContentBlockEditForm(form.SchemaEditForm):
             _(u"The content block has successfully been updated"),
             type='info')
         parent = aq_parent(context)
-        next_url = parent.absolute_url()
+        next_url = parent.absolute_url() + '/@@panelpage-editor'
         return self.request.response.redirect(next_url)
 
 
@@ -180,5 +180,5 @@ class ContentBlockImageEditForm(form.SchemaEditForm):
             _(u"This block has successfully been updated"),
             type='info')
         parent = aq_parent(context)
-        next_url = parent.absolute_url()
+        next_url = parent.absolute_url() + '/@@panelpage-editor'
         return self.request.response.redirect(next_url)

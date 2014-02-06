@@ -62,7 +62,7 @@
                                     uid item/UID;
                                     klass python:view.item_state_klass(uid)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
-                        <input class="form-control" type="text"
+                        <input class="form-control" type="hidden"
                             tal:attributes="name string:${item_idx};
                                             id string:block.${uid};
                                             value uid" />
@@ -101,7 +101,7 @@
                     </div>
                 </tal:items>
             </div>
-                <input class="btn btn-default" type="submit" name="form.button.Submit"
+                <input class="btn btn-default hide" type="submit" name="form.button.Submit"
                     value="Submit" />
             </form>
 
