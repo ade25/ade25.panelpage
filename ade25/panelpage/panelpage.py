@@ -1,3 +1,4 @@
+import json
 from Acquisition import aq_inner
 from AccessControl import Unauthorized
 from five import grok
@@ -487,6 +488,31 @@ class PanelError(grok.View):
 
     def update(self):
         self.uuid = self.request.get('uuid', '')
+
+
+class RearrangeBlocks(grok.View):
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('rearrange-panelpage')
+
+    def update(self):
+        self.query = self.request["QUERY_STRING"]
+
+    def render(self):
+        context = aq_inner(self.context)
+        sort_query = list(self.query.split('&'))
+        for x in sort_query:
+            details = x.split('=')
+            key = details[0]
+            obj = api.content.get(UID=details[1])
+            context.moveObjectToPosition(obj.getId(), int(key))
+        msg = _(u"Panelpage order successfully updated")
+        results = {'success': True,
+                   'message': msg
+                   }
+        self.request.response.setHeader('Content-Type',
+                                        'application/json; charset=utf-8')
+        return json.dumps(results)
 
 
 class TransitionState(grok.View):

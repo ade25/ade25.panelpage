@@ -83,7 +83,7 @@ module.exports = function (grunt) {
                     report: 'min'
                 },
                 files: {
-                    'dist/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css'
+                    'dist/css/panelpage.min.css': 'dist/css/panelpage.css'
                 }
             }
         },
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
                     config: 'less/.csscomb.json'
                 },
                 files: {
-                    'dist/css/<%= pkg.name %>.css': ['dist/css/<%= pkg.name %>.css']
+                    'dist/css/panelpage.css': ['dist/css/panelpage.css']
                 }
             }
         },

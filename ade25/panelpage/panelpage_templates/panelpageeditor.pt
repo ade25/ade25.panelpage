@@ -16,10 +16,15 @@
                 <small>close</small> &times;
             </a>
             <div class="panelpage-label">Panel Page Editor</div>
+            <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
         </div>
         <div class="panelpage-editable">
-            <div class="app-panelpage-content panelpage-list"
-                id="ppe-list">
+        <form class="ppe-form" id="ppe-form-rearrange" method="post"
+            tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
+            <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
+                id="ppe-list"
+                tal:attributes="data-appui-ajax-uri string:${context/absolute_url}/@@rearrange-panelpage;
+                                data-appui-ajax-form string:#ppe-form-rearrange">
                 <div class="ppe-block animated bounceInLeft"
                     tal:define="uid context/UID;
                                 klass python:view.item_state_klass(uid)"
@@ -53,10 +58,15 @@
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"
-                        tal:define="uid item/UID;
+                        tal:define="item_idx repeat/item/index;
+                                    uid item/UID;
                                     klass python:view.item_state_klass(uid)"
-                        tal:attributes="class string:ppe-block ${klass} animated bounceInLeft">
-                        <span class="app-sign app-sign-dragable pull-right">
+                        tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
+                        <input class="form-control" type="text"
+                            tal:attributes="name string:${item_idx};
+                                            id string:block.${uid};
+                                            value uid" />
+                        <span class="ppe-dragindicator app-sign app-sign-dragable pull-right">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -91,6 +101,9 @@
                     </div>
                 </tal:items>
             </div>
+                <input class="btn btn-default" type="submit" name="form.button.Submit"
+                    value="Submit" />
+            </form>
 
             <div class="app-pjax-container panel panel-default hide"
                 id="app-pjax-container">

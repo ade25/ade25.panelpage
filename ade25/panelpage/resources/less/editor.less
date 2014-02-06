@@ -2,7 +2,62 @@
 // Application stylesheet
 // -----------------------------------------------
 
-.app-toolbar + .app-navbar {
-    margin-top: @navbar-height;
+.panelpage-editor {
+
 }
 
+.ppe-section {
+
+}
+
+.ppe-section-sortable {
+    .sortable-placeholder {
+        position: relative;
+        .size(100%, ceil((@navbar-height * 2)));
+        border: 1px solid @gray-light;
+        background: @gray-lighter;
+    }
+    .sortable-dragging {
+        border: 1px solid @brand-danger;
+        background: #f2f2f2;
+        .opacity(1.0);
+    }
+}
+
+.ppe-block {
+    display: block;
+    margin-bottom: floor(@line-height-computed / 2);
+    padding: floor(@line-height-computed / 2) @line-height-computed;
+    //background: @gray-lighter;
+    // border-bottom: 1px solid @gray-light;
+    color: @text-color;
+    > a {
+        color: @gray-light;
+        &:hover {
+            color: @gray;
+        }
+    }
+    &.ppe-block-private {
+        border-right: 5px solid @alert-danger-bg;
+        .ppe-block-state {
+            color: @alert-danger-text;
+        }
+    }
+    &.ppe-block-published {
+        border-right: 5px solid @alert-success-bg;
+        .ppe-block-state {
+            color: @alert-success-text;
+        }
+    }
+
+}
+
+.ppe-action {
+    display: block;
+    margin-right: floor((@line-height-computed / 2));
+    line-height: ceil((@line-height-computed * 2));
+}
+
+.ppe-dragindicator {
+    cursor: move;
+}
