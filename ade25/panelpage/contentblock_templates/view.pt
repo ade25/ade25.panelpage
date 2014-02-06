@@ -14,13 +14,12 @@
         <div class="ppe-header">
             <a class="ppe-close pull-right"
                 tal:attributes="href string:${view/parent_url}/@@panelpage-editor">
-                <small>close</small> &times;
+                &times;
             </a>
-            <div class="panelpage-label">Panel Page Editor
-                <small class="text-muted" i18n:translate="">Edit Content Block</small>
-            </div>
+            <span class="h3 panelpage-label">Page</span>
+            <span class="h3 panelpage-label level-1">&mdash; Block</span>
         </div>
-        <div class="panelpage-editable" id="content-core">
+        <div class="ppe-section" id="content-core">
             <div tal:replace="structure view/render_item" />
         </div>
     </div>

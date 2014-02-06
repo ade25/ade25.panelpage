@@ -10,36 +10,112 @@
     }
 }
 
+// Mockup panel types
+
+.panelpage-type {
+    padding: @line-height-computed;
+    border: 1px solid @gray;
+    background: #fff;
+    .ppt {
+        margin-bottom: floor(@line-height-computed / 4);
+        &.ppt-title {
+            width: 70%;
+            height: ceil((@line-height-computed * 0.75));
+            margin-bottom: floor(@line-height-computed * 0.75);
+            background: @gray-light;
+        }
+        &.ppt-lead {
+            height: floor(@line-height-computed / 2);
+            margin-bottom: floor(@line-height-computed * 0.5);
+            background: @gray-lighter;
+        }
+        &.ppt-text {
+            height: floor(@line-height-computed / 4);
+            background: @gray-lighter;
+        }
+        &.ppt-media {
+            height: ceil((@navbar-height * 1.5));
+            background: @gray-lighter;
+            border: 1px solid @gray-light;
+        }
+    }
+}
+
+
 .app-panelpage-editbar {
+    margin-bottom: ceil((@line-height-computed * 1.5));
     color: @text-color;
+    border-top: 1px solid @text-color;
+}
+
+.panelpage-label {
+    font-weight: 400;
+    &.level-1 {
+        color: @gray-light;
+    }
+    &.level-2 {
+        color: @gray-lighter;
+    }
+}
+
+.panelpage-label + .panelpage-label {
+    margin-left: ceil((@line-height-computed * 2));
+}
+
+
+.ppe-header {
+    // padding: @padding-base-vertical @padding-base-horizontal;
+    padding: @modal-title-padding;
+    border-bottom: 1px solid @modal-header-border-color;
+    min-height: (@modal-title-padding + @modal-title-line-height);
+    .ppe-close {
+        font-size: (@font-size-base * 2.5);
+        font-weight: @close-font-weight;
+        line-height: 1;
+        color: @close-color;
+        text-shadow: @close-text-shadow;
+        .opacity(.2);
+        &:hover,
+        &:focus {
+            color: @close-color;
+            text-decoration: none;
+            cursor: pointer;
+            .opacity(.5);
+        }
+    }
 }
 
 .ppe-block {
     display: block;
-    margin-bottom: floor(@line-height-computed / 2);
+    margin-bottom: @line-height-computed;
     padding: floor(@line-height-computed / 2) @line-height-computed;
-    //background: @gray-lighter;
-    // border-bottom: 1px solid @gray-light;
+    border-left: ceil((@line-height-computed / 3)) solid @gray-lighter;
     color: @text-color;
-    > a {
+    a {
+        display: inline-block;
         color: @gray-light;
         &:hover {
             color: @gray;
         }
     }
     &.ppe-block-private {
-        border-right: 5px solid @alert-danger-bg;
+        border-right: ceil((@line-height-computed / 3)) solid @alert-danger-bg;
         .ppe-block-state {
             color: @alert-danger-text;
         }
     }
     &.ppe-block-published {
-        border-right: 5px solid @alert-success-bg;
+        border-right: ceil((@line-height-computed / 3)) solid @alert-success-bg;
         .ppe-block-state {
             color: @alert-success-text;
         }
     }
 
+}
+
+.ppe-section {
+    padding: @line-height-computed;
+    background-color: @modal-content-bg;
 }
 
 .ppe-action {
@@ -48,6 +124,30 @@
     line-height: ceil((@line-height-computed * 2));
 }
 
+.ppe-sign {
+    display: inline-block;
+    .square(@navbar-height);
+    padding: ceil(@line-height-computed / 2);
+    color: @gray-lighter;
+    font-size: floor(@navbar-height / 2);
+    text-align: center;
+    line-height: 1;
+}
+
+.ppe-sign-draggable {
+    border: none;
+}
+.ppe-icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    border-color: @gray-dark;
+    background-color: @navbar-default-toggle-icon-bar-bg;
+}
+.ppe-icon-bar + .ppe-icon-bar {
+    margin-top: 4px;
+}
 
 
 .ppe-block-placeholder {
@@ -64,14 +164,12 @@
         border:5px solid @gray-lighter;
         border-radius:floor(@navbar-height / 2);
         color:@gray-lighter;
-        font-size:floor(@navbar-height / 2);
+        font-size:@line-height-computed;
         text-align:center;
         line-height:1
     }
-    .placeholder-title,
-    .placeholder-text,
-    .placeholder-btn {
-        margin-top: ceil(@line-height-computed / 2);
+    .placeholder-title {
+        padding-top: ceil(@line-height-computed * 0.75);
     }
     @media (min-width: @screen-sm) {
         text-align: left;
@@ -86,8 +184,13 @@
 
 .btn-ppe {
     .button-variant(@navbar-inverse-color; @navbar-inverse-bg; @navbar-inverse-border);
+    border-radius: 0;
     &.btn-ppe-boxed {
         position:absolute;
         bottom: 0;
     }
+}
+
+.ppe-form {
+    padding: @line-height-computed 0;
 }

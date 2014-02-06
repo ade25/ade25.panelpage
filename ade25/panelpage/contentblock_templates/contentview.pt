@@ -6,48 +6,74 @@
     i18n:domain="ade25.panelpage">
     <div class="xcontentpanel-editbar animated"
         tal:condition="editable">
-        <p tal:content="context/Title">Content Panel Headline</p>
-        <a class="btn btn-primary btn-sm btn-editpanel" href="#"
-            tal:attributes="href string:${context/absolute_url}/@@edit-block"
-            i18n:translate="">
-            edit
-        </a>
-        <a class="btn btn-default btn-sm" href="#"
-            tal:attributes="href string:${context/absolute_url}/@@edit-block-image">
-            manage media
-        </a>
-        <a class="btn btn-default btn-sm" href="#"
-            tal:attributes="href string:${view/asignment_context}/@@panel-asignment?uuid=${context/UID}">
-            manage subpanels
-        </a>
-        <a class="btn btn-default btn-sm pull-right" href="#"
-            tal:attributes="href string:${context/absolute_url}/@@transition-state?uuid=${context/UID}">
-            change state
-        </a>
+        <p class="text-muted">
+            <span i18n:translate="">Content Block</span>
+        </p>
+        <div class="row">
+            <div class="hidden-xs col-sm-3">
+                <div class="panelpage-type panelpage-type-markup">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="ppt ppt-title"></div>
+                            <div class="ppt ppt-lead"></div>
+                            <div class="ppt ppt-text"></div>
+                            <div class="ppt ppt-text"></div>
+                            <div class="ppt ppt-text"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="ppt ppt-media"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+                <h3 tal:content="context/Title">Content Panel Headline</h3>
+                <a class="btn btn-primary btn-sm btn-ppe" href="#"
+                    tal:attributes="href string:${context/absolute_url}/@@edit-block"
+                    i18n:translate="">
+                    edit
+                </a>
+                <a class="btn btn-default btn-sm" href="#"
+                    tal:attributes="href string:${context/absolute_url}/@@edit-block-image">
+                    manage media
+                </a>
+                <a class="btn btn-default btn-sm" href="#"
+                    tal:attributes="href string:${view/asignment_context}/@@panel-asignment?uuid=${context/UID}">
+                    manage subpanels
+                </a>
+                
+            </div>
+        </div>
     </div>
+    <hr>
     <div class="app-editdetails" tal:condition="editable">
         <p class="text-muted">
-            <span tal:content="context/Title" />
+            Preview
             <small class="contentblock-state pull-right"
                 i18n:translate=""
                 tal:content="view/item_state_info" />
         </p>
+        <a class="btn btn-link btn-sm pull-right" href="#"
+            i18n:translate=""
+            tal:attributes="href string:${context/absolute_url}/@@transition-state?uuid=${context/UID}">
+            change
+        </a>
     </div>
     <div class="contentblock" tal:condition="view/has_data">
         <div tal:replace="structure view/render_item" />
     </div>
 
-    <div class="no-data-panel" tal:condition="not:view/has_data">
+    <div class="ppe-block-placeholder" tal:condition="not:view/has_data">
         <div class="row">
             <div class="col-xs-12 col-sm-2">
-                <div class="no-data-sign">
-                    <i class="fa fa-ellipsis-h"></i>
+                <div class="placeholder-sign">
+                   &middot;
                 </div>
             </div>
             <div class="col-xs-12 col-sm-10">
-                <h3 class="no-data-title" i18n:translate="">
+                <div ivclass="placeholder-title" i18n:translate="">
                     This item does not have any content yet
-                </h3>
+                </div>
             </div>
         </div>
     </div>

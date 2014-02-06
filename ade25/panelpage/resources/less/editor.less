@@ -2,25 +2,19 @@
 // Application stylesheet
 // -----------------------------------------------
 
-.panelpage-editor {
 
-}
-
-.ppe-section {
-
-}
 
 .ppe-section-sortable {
     .sortable-placeholder {
-        position: relative;
         .size(100%, ceil((@navbar-height * 2)));
-        border: 1px solid @gray-light;
-        background: @gray-lighter;
+        margin: @line-height-base 0;
+        border: 2px solid @state-warning-border;
+        background: @state-warning-bg;
     }
     .sortable-dragging {
-        border: 1px solid @brand-danger;
+        border: 1px solid @state-danger-border;
         background: #f2f2f2;
-        .opacity(1.0);
+        .opacity(1);
     }
 }
 

@@ -9,15 +9,15 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="ppe-editor">
+    <div class="panelpage-editor">
         <div class="ppe-header">
             <a class="ppe-close pull-right"
                 tal:attributes="href string:${context/absolute_url}">
-                <small>close</small> &times;
+                &times;
             </a>
-            <div class="panelpage-label">Panel Page Editor</div>
-            <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
+            <span class="h3 panelpage-label" i18n:translate="">Page Editor</span>
         </div>
+         <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
         <div class="panelpage-editable">
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
@@ -29,7 +29,7 @@
                     tal:define="uid context/UID;
                                 klass python:view.item_state_klass(uid)"
                     tal:attributes="class string:ppe-block ${klass} animated bounceInLeft">
-                        <span class="app-sign pull-right">
+                        <span class="ppe-sign pull-right">
                             &nbsp;
                         </span>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
@@ -37,12 +37,14 @@
                             data-target="#ppe-block-main-page">
                             edit
                         </a>
-                        <a data-toggle="collapse" data-parent="#ppe-list" href="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/edit">
-                            <!-- <span class="app-sign app-sign-default">0</span> -->
-                            <h4 tal:content="context/Title">Fill me with sensible data</h4>
-                        </a>
-                        <small class="text-muted" i18n:translate="">Main content block</small>
+                        <div class="ppe-block-title">
+                            <a class="h4 ppe-block-headline" data-toggle="collapse" data-parent="#ppe-list" href="#ppe-block-main-page"
+                                tal:attributes="href string:${context/absolute_url}/edit">
+                                <!-- <span class="app-sign app-sign-default">0</span> -->
+                                <span tal:content="context/Title">Fill me with sensible data</span>
+                            </a>
+                            <small class="text-muted" i18n:translate="">Main page content block</small>
+                        </div>
                     <div class="ppe-block-editable collapse" id="ppe-block-main-page">
                         <div class="app-page-header">
                             <h1 class="app-page-title" tal:content="context/Title" />
@@ -66,11 +68,11 @@
                             tal:attributes="name string:${item_idx};
                                             id string:block.${uid};
                                             value uid" />
-                        <span class="ppe-dragindicator app-sign app-sign-dragable pull-right">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                        <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
+                            <span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>
                         </span>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
@@ -91,7 +93,7 @@
                                             href string:${item/getURL}">
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
                             <h4 tal:content="item/Title">First added panel</h4>
-                        </a>
+                        </a><br>
                          <small class="ppe-block-state"
                                 tal:content="python:view.item_state_info(uid)">Published</small>
                         <div class="ppe-block-editable hide animated"
@@ -110,8 +112,8 @@
                 <span>Loading content...stay tuned</span>
             </div>
 
-            <div class="app-editpanel-form"
-                id="app-editpanel-block"
+            <div class="ppe-form"
+                id="ppe-form"
                 tal:condition="view/is_editable">
         
                 <form class="app-form app-create-form"

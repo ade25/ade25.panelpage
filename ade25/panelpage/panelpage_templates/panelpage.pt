@@ -2,7 +2,7 @@
     tal:define="klass view/computed_klass"
     tal:attributes="class string:app-panelpage ${klass}">
 
-    <div class="app-panelpage-edtibar"
+    <div class="app-panelpage-editbar"
         id="app-panelpage-editbar"
         tal:condition="view/is_editable">
         <a class="btn btn-primary btn-ppe pull-right"
@@ -19,7 +19,7 @@
             </tal:items>
         </div>
     </tal:block>
-    <div class="app-panelpage-edtibar"
+    <div class="app-panelpage-aside"
         id="app-editpanel-block"
         tal:condition="view/is_editable">
 
@@ -30,9 +30,9 @@
                     <div class="placeholder-sign">&hellip;</div>
                 </div>
                 <div class="col-xs-12 col-sm-11">
-                    <h3 class="placeholder-title" i18n:translate="">
+                    <div class="placeholder-title" i18n:translate="">
                         The are no content blocks asigned
-                    </h3>
+                    </div>
                 </div>
             </div>
         </div>
