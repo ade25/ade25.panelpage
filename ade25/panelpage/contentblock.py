@@ -14,6 +14,7 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 from ade25.panelpage.page import IPage
+from ade25.panelpage.panelpage import IPanelPage
 
 from ade25.panelpage import MessageFactory as _
 
@@ -121,6 +122,8 @@ class ContentView(grok.View):
         current_url = context_state.current_page_url()
         if current_url.endswith('panelpage-editor'):
             editor = True
+        if IPage.providedBy(aq_inner(self.context)):
+            editor = False
         return editor
 
     def has_data(self):
@@ -134,7 +137,7 @@ class ContentView(grok.View):
         klass = 'app-contentblock-default'
         if not api.user.is_anonymous():
             state = self.item_state_info()
-            state_klass = ('app-contentblock-{0}').format(state)
+            state_klass = ('ppe-block-{0}').format(state)
             klass = state_klass + ' app-contentblock-editable'
         return klass
 

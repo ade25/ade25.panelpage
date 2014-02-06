@@ -1,15 +1,16 @@
 <div class="app-contentblock"
     tal:define="klass view/computed_klass;
-                editable view/is_editable"
-    tal:attributes="class string:app-contentblock ${klass};
+                editable view/is_editable;
+                show_editbar view/show_editbar"
+    tal:attributes="class string:ppe-block app-contentblock ${klass};
                     data-appui python:editable and 'editable' or 'not-editable'"
     i18n:domain="ade25.panelpage">
     <div class="xcontentpanel-editbar animated"
         tal:condition="editable">
-        <p class="text-muted">
+        <p class="text-muted" tal:condition="show_editbar">
             <span i18n:translate="">Content Block</span>
         </p>
-        <div class="row">
+        <div class="row" tal:condition="show_editbar">
             <div class="hidden-xs col-sm-3">
                 <div class="panelpage-type panelpage-type-markup">
                     <div class="row">
@@ -45,8 +46,7 @@
             </div>
         </div>
     </div>
-    <hr>
-    <div class="app-editdetails" tal:condition="editable">
+    <div class="app-editdetails" tal:condition="show_editbar">
         <p class="text-muted">
             Preview
             <small class="contentblock-state pull-right"
@@ -54,6 +54,7 @@
                 tal:content="view/item_state_info" />
         </p>
         <a class="btn btn-link btn-sm pull-right" href="#"
+            tal:condition="editable"
             i18n:translate=""
             tal:attributes="href string:${context/absolute_url}/@@transition-state?uuid=${context/UID}">
             change
@@ -65,14 +66,12 @@
 
     <div class="ppe-block-placeholder" tal:condition="not:view/has_data">
         <div class="row">
-            <div class="col-xs-12 col-sm-2">
-                <div class="placeholder-sign">
-                   &middot;
-                </div>
+            <div class="col-xs-12 col-sm-1">
+                <div class="placeholder-sign">&hellip;</div>
             </div>
-            <div class="col-xs-12 col-sm-10">
-                <div ivclass="placeholder-title" i18n:translate="">
-                    This item does not have any content yet
+            <div class="col-xs-12 col-sm-11">
+                <div class="placeholder-title" i18n:translate="">
+                    This item has not been configured yet
                 </div>
             </div>
         </div>
