@@ -15,10 +15,19 @@
                 tal:attributes="href string:${context/absolute_url}">
                 &times;
             </a>
-            <span class="h3 panelpage-label" i18n:translate="">Page Editor</span>
+            <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <p class="ppe-header-headline" tal:content="context/Title" />
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <a href="#edit">edit</a> | <a href="#transition">retract</a>
+                </div>
+            </div>
         </div>
-         <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
+        <div class="ppe-subtitle" i18n:translate="">Child Content</div>
         <div class="panelpage-editable">
+            <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
@@ -57,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="h6 ppe-subtitle" i18n:translate="">Child Content</div>
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"

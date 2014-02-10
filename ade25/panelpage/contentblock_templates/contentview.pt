@@ -10,7 +10,7 @@
         <p class="text-muted" tal:condition="show_editbar">
             <span i18n:translate="">Content Block</span>
         </p>
-        <div class="row" tal:condition="show_editbar">
+        <div class="row" tal:condition="not:show_editbar">
             <div class="hidden-xs col-sm-3">
                 <div class="panelpage-type panelpage-type-markup">
                     <div class="row">

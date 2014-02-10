@@ -11,13 +11,15 @@
   <metal:content-core define-macro="main">
 
     <div class="panelpage-editor">
-        <div class="ppe-header">
+        <div class="ppe-header"
+            tal:define="parent_info view/parent_info">
             <a class="ppe-close pull-right"
-                tal:attributes="href string:${view/parent_url}/@@panelpage-editor">
+                tal:attributes="href string:${parent_info/url}">
                 &times;
             </a>
-            <span class="h3 panelpage-label">Page</span>
-            <span class="h3 panelpage-label level-1">&mdash; Block</span>
+            <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
+            <p class="ppe-header-headline" tal:content="parent_info/title" />
+            <p class="ppe-header-headline" tal:content="context/Title" />
         </div>
         <div class="ppe-section" id="content-core">
             <div tal:replace="structure view/render_item" />

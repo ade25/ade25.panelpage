@@ -14,7 +14,6 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 from ade25.panelpage.page import IPage
-from ade25.panelpage.panelpage import IPanelPage
 
 from ade25.panelpage import MessageFactory as _
 
@@ -91,10 +90,13 @@ class View(grok.View):
         if self.request.get_header('X-PJAX'):
             return '<p>This is a pjax response</p>'
 
-    def parent_url(self):
+    def parent_info(self):
         context = aq_inner(self.context)
         parent = aq_parent(context)
-        return parent.absolute_url()
+        info = {}
+        info['url'] = parent.absolute_url()
+        info['title'] = parent.Title()
+        return info
 
     def render_item(self):
         context = aq_inner(self.context)
