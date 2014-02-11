@@ -78,7 +78,7 @@
     padding: 15px;
 
     color: #555;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid rgba(252, 252, 252, .1);
     background: #eee;
 }
 .ppe-header .ppe-close
@@ -118,8 +118,16 @@
 
     padding: 6px 12px;
 
+    text-transform: uppercase;
+
     color: #666;
     background: #d9d9d9;
+}
+.ppe-subtitle.ppe-subtitle-default
+{
+    margin-bottom: 20px;
+
+    background: #eee;
 }
 .ppe-block
 {

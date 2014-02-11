@@ -34,6 +34,7 @@
                 id="ppe-list"
                 tal:attributes="data-appui-ajax-uri string:${context/absolute_url}/@@rearrange-panelpage;
                                 data-appui-ajax-form string:#ppe-form-rearrange">
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Main Page Content</div>
                 <div class="ppe-block animated bounceInLeft"
                     tal:define="uid context/UID;
                                 klass python:view.item_state_klass(uid)"
@@ -66,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="h6 ppe-subtitle" i18n:translate="">Child Content</div>
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Child Content</div>
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"
