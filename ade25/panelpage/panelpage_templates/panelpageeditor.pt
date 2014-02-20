@@ -16,14 +16,7 @@
                 &times;
             </a>
             <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <p class="ppe-header-headline" tal:content="context/Title" />
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    <a href="#edit">edit</a> | <a href="#transition">retract</a>
-                </div>
-            </div>
+            <p class="ppe-header-headline" tal:content="context/Title" />
         </div>
         <div class="ppe-subtitle" i18n:translate="">Child Content</div>
         <div class="panelpage-editable">
