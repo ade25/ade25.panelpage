@@ -28,7 +28,7 @@
        in Plone -->
   <genericsetup:registerProfile
       name="default"
-      title="Manage modular pages with blocks and panels"
+      title="Ade25 PanelPage - Manage modular pages with blocks and panels"
       directory="profiles/default"
       description="Extension profile for Manage modular pages with blocks and panels"
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -36,10 +36,17 @@
 
   <!-- -*- extra stuff goes here -*- -->
 
-   <plone:behavior
+    <plone:behavior
         title="Panel Page"
         description="Enable panel page layout engine"
         provides="ade25.panelpage.panelpage.IPanelPage"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
+    <plone:behavior
+        title="Panel Page Layout"
+        description="Storage for Panel Page Layout Ordering"
+        provides="ade25.panelpage.pagelayout.IPanelPageLayout"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
