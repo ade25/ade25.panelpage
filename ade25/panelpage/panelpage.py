@@ -95,7 +95,7 @@ class PanelPage(grok.View):
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
-        template = item.restrictedTraverse('@@content-view')()
+        template = item.restrictedTraverse('@@panelgrid')()
         return template
 
     def computed_klass(self):

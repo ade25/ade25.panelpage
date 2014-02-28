@@ -116,7 +116,7 @@
                 <span>Loading content...stay tuned</span>
             </div>
 
-            <div class="ppe-form"
+            <div class="ppe-section"
                 id="ppe-form"
                 tal:condition="view/is_editable">
         
@@ -140,7 +140,7 @@
                                     <div class="help-block error"
                                         tal:condition="err_msg">
                                       <i class="fa fa-exclamation-triangle"></i>
-                                      <span tal:replace="python:error['msg']" />
+                                      <spxan tal:replace="python:error['msg']" />
                                     </div>
                             </div> <!-- /title field -->
                             <p class="text-discreet">

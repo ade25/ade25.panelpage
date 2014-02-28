@@ -39,7 +39,7 @@
                     manage media
                 </a>
                 <a class="btn btn-default btn-sm" href="#"
-                    tal:attributes="href string:${view/asignment_context}/@@panel-asignment?uuid=${context/UID}">
+                    tal:attributes="href string:${context/absolute_url}/@@panel-asignment?uuid=${context/UID}">
                     manage subpanels
                 </a>
                 
