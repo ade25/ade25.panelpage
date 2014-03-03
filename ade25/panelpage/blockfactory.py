@@ -11,7 +11,9 @@ from zope.lifecycleevent import modified
 from plone.directives import form
 from z3c.form import button
 
-from Products.CMFPlone.utils import safe_unicode
+from z3c.relationfield.schema import RelationChoice
+from plone.formwidget.contenttree import ObjPathSourceBinder
+
 from plone.namedfile.field import NamedBlobImage
 from plone.app.textfield import RichText
 
@@ -21,6 +23,17 @@ from Products.statusmessages.interfaces import IStatusMessage
 from ade25.panelpage.contentblock import IContentBlock
 
 from ade25.panelpage import MessageFactory as _
+
+
+class IContentBlockAlias(form.Schema):
+
+    contentAlias = RelationChoice(
+        title=_(u"Link target"),
+        source=ObjPathSourceBinder(
+            portal_type=['ade25.panelpage.contentblock']
+        ),
+        required=True,
+    )
 
 
 class IContentBlockEdit(form.Schema):

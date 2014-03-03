@@ -279,7 +279,7 @@ class CreateBlock(grok.View):
     def _create_panel(self, data):
         context = aq_inner(self.context)
         new_title = data['title']
-        token = django_random.get_random_string(length=12)
+        token = django_random.get_random_string(length=24)
         item = api.content.create(
             type='ade25.panelpage.contentblock',
             id=token,

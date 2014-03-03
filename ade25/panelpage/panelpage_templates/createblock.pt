@@ -9,13 +9,19 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="app-page-header">
-        <div class="app-page-title">
-            <h1 i18n:translate="">Create new content block</h1>
-        </div>
-    </div>
 
-    <div class="app-page-content" id="content-core">
+    <div class="panelpage-editor">
+        <div class="ppe-header">
+            <a class="ppe-close pull-right"
+                tal:attributes="href string:${context/absolute_url}">
+                &times;
+            </a>
+            <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
+            <!--<p class="ppe-header-headline" tal:content="context/Title" />-->
+        </div>
+        <div class="ppe-subtitle">Create new content block</div>
+
+        <div class="ppe-section ppe-section-sortable app-panelpage-content" id="content-core">
         <form class="app-form"
             method="post" role="form"
             tal:define="errors view/errors"
@@ -48,15 +54,16 @@
                 <div class="col-xs-12 col-md-6">
                     <div class="form-group">
                         <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <button class="btn btn-primary"
+                        <button class="btn btn-ppe"
                             name="form.button.Submit"
                             id="form.button.Submit"
-                            i18n:translate="">Create panel</button>
+                            i18n:translate="">Create</button>
                     </div>
                 </div>
             </div>            
         </form>
     </div>    
+    </div>
 
   </metal:content-core>
 </metal:main>

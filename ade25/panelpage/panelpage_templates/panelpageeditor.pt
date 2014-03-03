@@ -120,7 +120,7 @@
                 id="ppe-form"
                 tal:condition="view/is_editable">
         
-                <form class="app-form app-create-form"
+                <form class="app-form app-create-form hide"
                     id="createBlockForm"
                     method="post" role="form"
                     tal:define="errors view/errors"
@@ -161,10 +161,29 @@
                         </div>
                     </div>            
                 </form>
-                <p>
-                    <a class="btn btn-ppe">Add new content block</a> or
-                    <a class="btn btn-link">Insert existing block</a>
-                </p>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <p>
+                            <a class="btn btn-ppe"
+                                tal:attributes="href string:${context/absolute_url}/@@create-block">
+                                Add new content block</a>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="text-center">
+                            <div class="app-sign"><small>or</small></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <p class="text-right">
+                        <a class="btn btn-default"
+                            tal:attributes="href string:${context/absolute_url}/@@create-block-alias">
+                            Insert existing block</a>
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
