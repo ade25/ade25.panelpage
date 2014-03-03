@@ -1,3 +1,4 @@
+from Acquisition import aq_inner
 from five import grok
 
 from z3c.form import group, field
@@ -66,3 +67,10 @@ class View(grok.View):
     grok.context(IPage)
     grok.require('zope2.View')
     grok.name('view')
+
+    def has_abstract(self):
+        context = aq_inner(self.context)
+        show = False
+        if context.Description or context.abstract:
+            show = True
+        return show

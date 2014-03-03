@@ -20,6 +20,15 @@
                 tal:condition="context/abstract"
                 tal:content="context/abstract" />
         </div>
+<<<<<<< HEAD
+=======
+        <p class="lead app-page-abstract" tal:condition="view/has_abstract">
+            <span tal:condition="context/Description"
+                tal:content="context/Description" />
+            <span tal:condition="context/abstract"
+                tal:content="context/abstract" />
+        </p>
+>>>>>>> 57c484828b80d2c3619b77ce59e8a5d728342c55
         <div class="app-page-body" id="content-core">
             <div tal:condition="context/text"
                 tal:content="structure context/text/output" />

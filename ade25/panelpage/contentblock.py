@@ -49,6 +49,15 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         description=_(u"Change the default image position to the right third"),
         required=False,
     )
+    form.fieldset(
+        'settings',
+        label=_(u"Content Block Settings"),
+        fields=['panels', 'contentBlockLayout']
+    )
+    contentAlias = schema.TextLine(
+        title=_(u"Content Alias/Proxy UID"),
+        required=False,
+    )
     panels = schema.List(
         title=_(u"Associated Content Panels"),
         description=_(u"A list of content panel identifiers that will be "
@@ -59,8 +68,8 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         ),
         required=False,
     )
-    panelPageLayout = schema.Text(
-        title=u"Panel Page Layout",
+    contentBlockLayout = schema.Text(
+        title=u"Content Block Layout",
         required=False,
     )
 

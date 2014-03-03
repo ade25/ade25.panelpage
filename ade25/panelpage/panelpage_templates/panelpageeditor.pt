@@ -16,9 +16,9 @@
                 &times;
             </a>
             <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
-            <p class="ppe-header-headline" tal:content="context/Title" />
+            <!--<p class="ppe-header-headline" tal:content="context/Title" />-->
         </div>
-        <div class="ppe-subtitle" i18n:translate="">Child Content</div>
+        <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
             <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
@@ -161,6 +161,10 @@
                         </div>
                     </div>            
                 </form>
+                <p>
+                    <a class="btn btn-ppe">Add new content block</a> or
+                    <a class="btn btn-link">Insert existing block</a>
+                </p>
             </div>
         </div>
     </div>
