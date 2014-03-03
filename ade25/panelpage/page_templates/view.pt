@@ -13,9 +13,13 @@
     <div class="app-page-content">
         <div class="app-page-header">
             <h1 class="app-page-title" tal:content="context/Title" />
+            <p class="lead app-page-abstract"
+                tal:condition="not:context/abstract"
+                tal:content="context/Description" />
+            <p class="lead app-page-abstract"
+                tal:condition="context/abstract"
+                tal:content="context/abstract" />
         </div>
-        <p class="lead app-page-abstract" tal:condition="context/Description"
-            tal:content="context/Description" />
         <div class="app-page-body" id="content-core">
             <div tal:condition="context/text"
                 tal:content="structure context/text/output" />
