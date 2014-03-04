@@ -16,11 +16,13 @@
                 &times;
             </a>
             <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
-            <!--<p class="ppe-header-headline" tal:content="context/Title" />-->
         </div>
         <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
             <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
+
+            <div class="h3"><a href="">+ Add Item</a></div>
+
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
@@ -98,8 +100,8 @@
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
                             <h4 tal:content="item/Title">First added panel</h4>
                         </a><br>
-                         <small class="ppe-block-state"
-                                tal:content="python:view.item_state_info(uid)">Published</small>
+                        <!--<small class="ppe-block-state"
+                                tal:content="python:view.item_state_info(uid)">Published</small>-->
                         <div class="ppe-block-editable hide animated"
                             tal:attributes="id string:ppe-block-${repeat/item/number}">
                             <div tal:replace="structure python:view.render_item(item.UID)" />

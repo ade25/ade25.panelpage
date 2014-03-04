@@ -26,8 +26,8 @@
                 tal:content="structure context/text/output" />
         </div>
     </div>
-
-      <div tal:replace="structure provider:plone.belowcontentbody" />
+    
+    <div tal:replace="structure provider:plone.belowcontentbody" />
 
   </metal:content-core>
 </metal:main>
