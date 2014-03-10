@@ -14,6 +14,7 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 
 from ade25.panelpage.page import IPage
+from ade25.panelpage.blocklisting import IContentBlockListing
 
 from ade25.panelpage import MessageFactory as _
 
@@ -143,6 +144,14 @@ class ContentView(grok.View):
         if (context.text or context.Description() or context.panels):
             has_content = True
         return has_content
+
+    def has_query_results(self):
+        pass
+
+    def query_results(self, **kwargs):
+        context = aq_inner(self.context)
+        wrapped = IContentBlockListing(context)
+        return wrapped.results(**kwargs)
 
     def computed_klass(self):
         klass = 'app-contentblock-default'
