@@ -97,6 +97,7 @@ class View(grok.View):
     grok.name('view')
 
     def update(self):
+        self.query = self._get_query()
         if self.request.get_header('X-PJAX'):
             return '<p>This is a pjax response</p>'
 
@@ -107,6 +108,45 @@ class View(grok.View):
         info['url'] = parent.absolute_url()
         info['title'] = parent.Title()
         return info
+
+    def dynamic_contents(self, batch=True, b_start=0, b_size=None,
+                         sort_on=None, limit=None, brains=False):
+        context = aq_inner(self.context)
+        querybuilder = getMultiAdapter((self.context, self.context.REQUEST),
+                                       name='querybuilderresults')
+        sort_order = 'reverse' if context.sort_reversed else 'ascending'
+        if not b_size:
+            b_size = context.item_count
+        if not sort_on:
+            sort_on = context.sort_on
+        if not limit:
+            limit = context.limit
+
+        query = self.query
+        if query:
+            has_path_criteria = any(
+                (criteria['i'] == 'path')
+                for criteria in query
+            )
+            if not has_path_criteria:
+                # Make a copy of the query to avoid modifying it
+                query = list(self.query)
+                query.append({
+                    'i': 'path',
+                    'o': 'plone.app.querystring.operation.string.path',
+                    'v': '/',
+                })
+
+        return querybuilder(
+            query=query, batch=batch, b_start=b_start, b_size=b_size,
+            sort_on=sort_on, sort_order=sort_order,
+            limit=limit, brains=brains
+        )
+
+    def _get_query(self):
+        context = aq_inner(self.context)
+        stored_query = getattr(context, 'query', None)
+        return stored_query
 
     def render_item(self):
         context = aq_inner(self.context)

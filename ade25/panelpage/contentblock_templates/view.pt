@@ -24,6 +24,7 @@
           <span tal:replace="context/Title" />
         </div>
         <div class="ppe-section" id="content-core">
+            <div tal:content="view/dynamic_contents" />
             <div tal:replace="structure view/render_item" />
         </div>
     </div>
@@ -33,4 +34,3 @@
 
 </body>
 </html>
-
