@@ -24,7 +24,11 @@
           <span tal:replace="context/Title" />
         </div>
         <div class="ppe-section" id="content-core">
-            <div tal:content="view/dynamic_contents" />
+            <div tal:condition="view/dynamic_contents">
+              <tal:block tal:repeat="item view/dynamic_contents">
+                <h5 tal:content="item/Title" />
+              </tal:block>
+            </div>
             <div tal:replace="structure view/render_item" />
         </div>
     </div>
