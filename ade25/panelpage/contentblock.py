@@ -20,9 +20,9 @@ from ade25.panelpage import MessageFactory as _
 
 
 class IContentBlock(form.Schema, IImageScaleTraversable):
-    """
-    A single content block for layout composition
-    """
+
+    """ A single content block for layout composition. """
+
     title = schema.TextLine(
         title=_(u"Content panel title"),
         required=True,
