@@ -1,7 +1,7 @@
 from five import grok
 from zope.schema. interfaces import IVocabularyFactory
-from zope.vocabulary import SimpleVocabulary
-from zope.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
+from zope.schema.vocabulary import SimpleTerm
 
 from ade25.panelpage import MessageFactory as _
 
