@@ -10,8 +10,13 @@ class AvailableLayoutsVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
-        TYPES = {_(u"Non-Profit Organization"): 'npo-org',
-                 _(u"Profit Organization"): 'po-org'}
+        TYPES = {_(u"1 Col"): '12',
+                 _(u"2 Cols 1:1"): '6',
+                 _(u"2 Cols 1:2"): '8-4',
+                 _(u"2 Cols 2:1"): '8-4',
+                 _(u"2 Cols 3:1"): '9-3',
+                 _(u"3 Cols"): '4',
+                 _(u"4 Cols"): '3'}
         return SimpleVocabulary([SimpleTerm(value, title=title)
                                 for title, value
                                 in TYPES.iteritems()])
