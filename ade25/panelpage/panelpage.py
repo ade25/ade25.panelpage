@@ -364,7 +364,9 @@ class CreateAsignment(grok.View):
         self.uuid = self.request.get('uuid', '')
         self.slot = self.request.get('slot', '')
         self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit', 'form.button.Clear')
+        unwanted = ('_authenticator',
+                    'form.button.Submit',
+                    'form.button.Clear')
         required = ('panel')
         if 'form.button.Clear' in self.request:
             authenticator = getMultiAdapter((context, self.request),
@@ -488,6 +490,22 @@ class PanelError(grok.View):
 
     def update(self):
         self.uuid = self.request.get('uuid', '')
+
+
+class SetupBlock(grok.View):
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('setup-block')
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
 
 
 class RearrangeBlocks(grok.View):

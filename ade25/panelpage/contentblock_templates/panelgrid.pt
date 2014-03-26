@@ -38,9 +38,9 @@
                     <p class="lead contentblock-teaser"
                         tal:condition="context/Description"
                         tal:content="context/Description" />
-                    <div class="contentblock-body" tal:condition="context/text">
-                        <div tal:replace="structure context/text/output" />
-                    </div>
+                </div>
+                <div class="contentblock-body" tal:condition="context/text">
+                    <div tal:replace="structure context/text/output" />
                 </div>
             </div>
             <tal:media tal:condition="image">
@@ -52,9 +52,9 @@
                         <p class="lead contentblock-teaser"
                             tal:condition="context/Description"
                             tal:content="context/Description" />
-                        <div class="contentblock-body" tal:condition="context/text">
-                            <div tal:replace="structure context/text/output" />
-                        </div>
+                    </div>
+                    <div class="contentblock-body" tal:condition="context/text">
+                        <div tal:replace="structure context/text/output" />
                     </div>
                 </div>
             </tal:media>
