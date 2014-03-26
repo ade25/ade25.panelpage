@@ -2,7 +2,6 @@ from zope import schema
 
 from zope.component import adapts
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.interface import implements
 
@@ -18,7 +17,8 @@ from ade25.panelpage import MessageFactory as _
 
 
 class IContentBlockListing(model.Schema):
-    """ Behavior to store a query to provide content listings """
+
+    """ Behavior to store a query to provide content listings. """
 
     form.fieldset(
         'sublisting',
