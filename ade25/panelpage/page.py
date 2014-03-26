@@ -74,3 +74,13 @@ class View(grok.View):
         if context.Description or context.abstract:
             show = True
         return show
+
+
+class AddForm(dexterity.AddForm):
+    grok.name('ade25.panelpage.page')
+
+    def updateWidgets(self):
+        super(AddForm, self).updateWidgets()
+        self.widgets['headline'].mode = 'hidden'
+        self.widgets['abstract'].mode = 'hidden'
+        self.widgets['text'].mode = 'hidden'
