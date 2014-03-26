@@ -37,6 +37,11 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         description=_(u"Short and visualy highlighted teaser message"),
         required=False,
     )
+    form.fieldset(
+        'details',
+        label=_(u"Block Details"),
+        fields=['text', 'image', 'imageRight', 'contentAlias']
+    )
     text = RichText(
         title=_(u"Block Body Text"),
         required=False,
@@ -50,14 +55,14 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         description=_(u"Change the default image position to the right third"),
         required=False,
     )
+    contentAlias = schema.TextLine(
+        title=_(u"Content Alias/Proxy UID"),
+        required=False,
+    )
     form.fieldset(
         'settings',
         label=_(u"Content Block Settings"),
         fields=['panels', 'contentBlockLayout']
-    )
-    contentAlias = schema.TextLine(
-        title=_(u"Content Alias/Proxy UID"),
-        required=False,
     )
     panels = schema.List(
         title=_(u"Associated Content Panels"),

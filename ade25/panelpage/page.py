@@ -16,21 +16,10 @@ class IPage(form.Schema, IImageScaleTraversable):
     """
     A modular ppage with panel layout
     """
-    form.fieldset(
-        'overrides',
-        label=_(u"Overrides"),
-        fields=['headline', 'abstract']
-    )
-    headline = schema.TextLine(
-        title=_(u"Headline"),
-        description=_(u"Optional headline overiding the default title in the "
-                      u"content page view"),
-        required=False,
-    )
-    abstract = schema.Text(
-        title=_(u"Abstract"),
-        description=_(u"Optional abstract for the page content overriding the "
-                      u"Dublin Core description"),
+    hide_dcbasic = schema.Bool(
+        title=_(u"Hide title and description"),
+        description=_(u"Prevent the rendering of DC Title and Description to"
+                      u"use headline and abstract of the first content block"),
         required=False,
     )
 
