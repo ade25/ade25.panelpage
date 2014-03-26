@@ -42,7 +42,6 @@
                     tal:attributes="href string:${context/absolute_url}/@@panel-asignment?uuid=${context/UID}">
                     manage subpanels
                 </a>
-                
             </div>
         </div>
     </div>
