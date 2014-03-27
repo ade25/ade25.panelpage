@@ -20,7 +20,7 @@
             <div class="ppe-header-title" i18n:translate="">Page Explorer</div>
         </div>
         <div class="ppe-subtitle">
-          <span tal:replace="parent_info/title" /> &middot;
+          <span tal:replace="parent_info/title" /> /
           <span tal:replace="context/Title" />
         </div>
         <div class="ppe-section" id="content-core">

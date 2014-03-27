@@ -2,16 +2,16 @@
     tal:define="klass view/computed_klass;
                 editable view/is_editable;
                 show_editbar view/show_editbar"
-    tal:attributes="class string:ppe-block app-contentblock ${klass};
+    tal:attributes="class string:ppe-block-edit;
                     data-appui python:editable and 'editable' or 'not-editable'"
     i18n:domain="ade25.panelpage">
-    <div class="xcontentpanel-editbar animated"
-        tal:condition="editable">
-        <p class="text-muted" tal:condition="show_editbar">
-            <span i18n:translate="">Content Block</span>
-        </p>
+    <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Settings</div>
+    <div class="ppe-block animated"
+        tal:condition="editable"
+        tal:attributes="class string:ppe-block animated ${klass}">
+        <h4 class="ppe-block-title" i18n:translate="">Components</h4>
         <div class="row" tal:condition="not:show_editbar">
-            <div class="hidden-xs col-sm-3">
+            <div class="col-xs-12 col-sm-3">
                 <div class="panelpage-type panelpage-type-markup">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8">
@@ -27,21 +27,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-9">
-                <h3 tal:content="context/Title">Content Panel Headline</h3>
-                <a class="btn btn-primary btn-sm btn-ppe" href="#"
-                    tal:attributes="href string:${context/absolute_url}/@@edit-block"
-                    i18n:translate="">
-                    edit
-                </a>
-                <a class="btn btn-default btn-sm" href="#"
-                    tal:attributes="href string:${context/absolute_url}/@@edit-block-image">
-                    manage media
-                </a>
-                <a class="btn btn-default btn-sm" href="#"
-                    tal:attributes="href string:${context/absolute_url}/@@panel-asignment?uuid=${context/UID}">
-                    manage subpanels
-                </a>
+            <div class="col-xs-12 col-sm-6">
+                
+                <div class="ppe-component" tal:condition="context/headline">
+                    <a class="ppe-action pull-right" href="#">edit</a>
+                    Headline
+                </div>
+                <div class="ppe-component clearfix" tal:condition="context/abstract">
+                    <a class="ppe-action pull-right" href="#">edit</a>
+                    Abstract
+                </div>
+                <div class="ppe-component clearfix" tal:condition="context/panels">
+                    <a class="btn btn-default btn-sm pull-right" href="#"
+                        tal:attributes="href string:${context/absolute_url}/@@panel-asignment?uuid=${context/UID}">
+                        manage subpanels
+                    </a>
+                    Panels
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-ppe dropdown-toggle" data-toggle="dropdown">
+                    Add component <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Text</a></li>
+                    <li><a href="#">Image</a></li>
+                    <li><a href="#">Panel</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Content Alias</a></li>
+                    <li><a href="#">Content Listing</a></li>
+                  </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -59,7 +76,8 @@
             change
         </a>
     </div>
-    <div class="contentblock" tal:condition="view/has_data">
+    <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Preview</div>
+    <div class="ppe-block animated" tal:condition="view/has_data">
         <div tal:replace="structure view/render_item" />
     </div>
 

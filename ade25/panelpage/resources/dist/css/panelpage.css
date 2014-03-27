@@ -165,6 +165,10 @@
 {
     color: #3c763d;
 }
+.ppe-block .ppe-block-title
+{
+    margin-top: 0;
+}
 .ppe-section
 {
     padding: 20px;
