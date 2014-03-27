@@ -11,21 +11,13 @@
   <metal:content-core define-macro="main">
 
     <div class="app-page-content" id="app-page-content">
-        <div class="app-page-header" id="app-page-header">
+        <div class="app-page-header" id="app-page-header"
+          tal:condition="not:context/hide_dcbasic">
           <div class="app-page-title">
             <h1 class="app-page-headline" tal:content="context/Title" />
           </div>
-            <p class="lead app-page-abstract" tal:condition="view/has_abstract">
-              <span tal:condition="context/Description"
-                  tal:content="context/Description" />
-              <span tal:condition="context/abstract"
-                  tal:content="context/abstract" />
-            </p>
-        </div>
-
-        <div class="app-page-body" id="content-core">
-            <div tal:condition="context/text"
-                tal:content="structure context/text/output" />
+            <p class="lead app-page-abstract" tal:condition="context/Description"
+              tal:content="context/Description" />
         </div>
     </div>
 
