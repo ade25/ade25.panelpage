@@ -30,6 +30,7 @@ setup(name='ade25.panelpage',
           'plone.app.dexterity [grok, relations]',
           'plone.app.relationfield',
           'plone.namedfile [blobs]',
+          'plone.formwidget.querystring',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
