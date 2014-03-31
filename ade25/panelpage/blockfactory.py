@@ -21,7 +21,6 @@ from plone.dexterity.interfaces import IDexterityFTI
 from Products.statusmessages.interfaces import IStatusMessage
 
 from ade25.panelpage.contentblock import IContentBlock
-from ade25.panelpage.panelpage import IPanelPage
 
 from ade25.panelpage import MessageFactory as _
 
@@ -199,7 +198,7 @@ class ContentBlockImageEditForm(form.SchemaEditForm):
 
 
 class CreateContentBlockAliasForm(form.SchemaEditForm):
-    grok.context(IPanelPage)
+    grok.context(IContentBlock)
     grok.require('cmf.AddPortalContent')
     grok.name('create-block-alias')
 
@@ -243,16 +242,9 @@ class CreateContentBlockAliasForm(form.SchemaEditForm):
 
     def applyChanges(self, data):
         context = aq_inner(self.context)
-        fti = getUtility(IDexterityFTI,
-                         name='ade25.panelpage.contentblock')
-        schema = fti.lookupSchema()
-        fields = getFieldsInOrder(schema)
-        for key, value in fields:
-            try:
-                new_value = data[key]
-                setattr(context, key, new_value)
-            except KeyError:
-                continue
+        item = data['contentAlias']
+        uid = api.content.get_uuid(obj=item)
+        setattr(context, 'contentAlias', uid)
         modified(context)
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(

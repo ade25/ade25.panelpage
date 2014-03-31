@@ -31,17 +31,22 @@
             </div>
             <div tal:condition="not:image"
                 class="col-xs-12 col-sm-12">
-                <div class="contentblock-header">
-                    <h2 class="contentblock-title"
-                        tal:condition="context/headline"
-                        tal:content="context/headline" />
-                    <p class="lead contentblock-teaser"
-                        tal:condition="context/Description"
-                        tal:content="context/Description" />
-                </div>
-                <div class="contentblock-body" tal:condition="context/text">
-                    <div tal:replace="structure context/text/output" />
-                </div>
+                <tal:local tal:condition="not:view/display_external_content">
+                    <div class="contentblock-header">
+                        <h2 class="contentblock-title"
+                            tal:condition="context/headline"
+                            tal:content="context/headline" />
+                        <p class="lead contentblock-teaser"
+                            tal:condition="context/Description"
+                            tal:content="context/Description" />
+                    </div>
+                    <div class="contentblock-body" tal:condition="context/text">
+                        <div tal:replace="structure context/text/output" />
+                    </div>
+                </tal:local>
+                <tal:external tal:condition="view/display_external_content">
+                    <p>Content alias present: <span tal:replace="context/contentAlias" /></p>
+                </tal:external>
             </div>
             <tal:media tal:condition="image">
                 <div tal:attributes="class python:img_right and 'col-xs-12 col-sm-8 col-sm-pull-4' or 'col-xs-12 col-sm-8'">

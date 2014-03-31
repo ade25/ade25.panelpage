@@ -188,6 +188,8 @@ class ContentView(grok.View):
         has_content = False
         if (context.text or context.description or context.panels):
             has_content = True
+        if (context.contentAlias or hasattr(context, 'query')):
+            has_content = True
         return has_content
 
     def has_query_results(self):
@@ -223,6 +225,13 @@ class PanelGrid(grok.View):
 
     def update(self):
         self.display_panelgrid = self.panel_idx() > 1
+
+    def display_external_content(self):
+        context = aq_inner(self.context)
+        display = False
+        if (hasattr(context, 'query') or context.contentAlias):
+            display = True
+        return display
 
     def asignment_context(self):
         context = aq_inner(self.context)
