@@ -9,31 +9,24 @@
     <div class="ppe-block animated"
         tal:condition="editable"
         tal:attributes="class string:ppe-block animated ${klass}">
-        <h4 class="ppe-block-title" i18n:translate="">Components</h4>
         <div class="row" tal:condition="not:show_editbar">
             <div class="col-xs-12 col-sm-3">
+                <h4 class="ppe-block-title" i18n:translate="">Layout</h4>
                 <div class="panelpage-type panelpage-type-markup">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8">
-                            <div class="ppt ppt-title"></div>
-                            <div class="ppt ppt-lead"></div>
-                            <div class="ppt ppt-text"></div>
-                            <div class="ppt ppt-text"></div>
-                            <div class="ppt ppt-text"></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="ppt ppt-media"></div>
-                        </div>
-                    </div>
+                    <div class="ppt ppt-title"></div>
+                    <div class="ppt ppt-lead"></div>
+                    <div class="ppt ppt-text"></div>
+                    <div class="ppt ppt-text"></div>
+                    <div class="ppt ppt-text"></div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
-                
+                <h4 class="ppe-block-title" i18n:translate="">Components</h4>
                 <div class="ppe-component" tal:condition="context/headline">
                     <a class="ppe-action pull-right" href="#">edit</a>
                     Headline
                 </div>
-                <div class="ppe-component clearfix" tal:condition="context/abstract">
+                <div class="ppe-component clearfix" tal:condition="context/description">
                     <a class="ppe-action pull-right" href="#">edit</a>
                     Abstract
                 </div>
