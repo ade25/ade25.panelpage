@@ -12,6 +12,7 @@ from plone.keyring import django_random
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
 
+from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
@@ -535,17 +536,37 @@ class RearrangeBlocks(grok.View):
 
 class TransitionState(grok.View):
     grok.context(IContentish)
+    grok.implements(IPublishTraverse)
     grok.require('cmf.ModifyPortalContent')
     grok.name('transition-state')
 
     def render(self):
         context = aq_inner(self.context)
-        uuid = self.request.get('uuid', '')
-        state = api.content.get_state(obj=context)
-        if state == 'published':
-            api.content.transition(obj=context, transition='retract')
+        uuid = self.traverse_subpath[0]
+        if len(self.traverse_subpath) > 1:
+            state = self.traverse_subpath[1]
         else:
-            api.content.transition(obj=context, transition='publish')
+            state = api.content.get_state(obj=context)
+        transitions = self.available_transitions()
+        action = transitions[state]
+        api.content.transition(obj=context, transition=action)
         came_from = api.content.get(UID=uuid)
         next_url = came_from.absolute_url()
         return self.request.response.redirect(next_url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def available_transitions(self):
+        transitions = {
+            'published': 'retract',
+            'private': 'publish'
+        }
+        return transitions
