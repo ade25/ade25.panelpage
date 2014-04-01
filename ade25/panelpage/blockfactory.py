@@ -54,6 +54,14 @@ class IContentBlockEdit(form.Schema):
     )
 
 
+class IContentBlockBodyEdit(form.Schema):
+
+    text = RichText(
+        title=_(u"Block Body Text"),
+        required=False,
+    )
+
+
 class IContentBlockImageEdit(form.Schema):
 
     image = NamedBlobImage(
@@ -126,6 +134,71 @@ class ContentBlockEditForm(form.SchemaEditForm):
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
             _(u"The content block has successfully been updated"),
+            type='info')
+        parent = aq_parent(context)
+        next_url = parent.absolute_url() + '/@@panelpage-editor'
+        return self.request.response.redirect(next_url)
+
+
+class ContentBlockBodyEditForm(form.SchemaEditForm):
+    grok.context(IContentBlock)
+    grok.require('cmf.AddPortalContent')
+    grok.name('edit-block-body')
+
+    schema = IContentBlockBodyEdit
+    ignoreContext = False
+    css_class = 'app-form'
+
+    label = _(u"Edit content panel")
+
+    def updateActions(self):
+        super(ContentBlockBodyEditForm, self).updateActions()
+        self.actions['save'].addClass("btn btn-primary btn-ppe")
+        self.actions['cancel'].addClass("btn btn-link")
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        self.applyChanges(data)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content block factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(context.absolute_url())
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.contentblock')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+    def applyChanges(self, data):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.contentblock')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        for key, value in fields:
+            try:
+                new_value = data[key]
+                setattr(context, key, new_value)
+            except KeyError:
+                continue
+        modified(context)
+        context.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The content block body text has successfully been updated"),
             type='info')
         parent = aq_parent(context)
         next_url = parent.absolute_url() + '/@@panelpage-editor'
