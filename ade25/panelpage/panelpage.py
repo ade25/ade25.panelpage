@@ -543,15 +543,15 @@ class TransitionState(grok.View):
     def render(self):
         context = aq_inner(self.context)
         uuid = self.traverse_subpath[0]
-        if len(self.traverse_subpath) > 1:
-            state = self.traverse_subpath[1]
+        item = api.content.get(UID=uuid)
+        if len(self.traverse_subpath) > 0:
+            state = self.traverse_subpath[0]
         else:
-            state = api.content.get_state(obj=context)
+            state = api.content.get_state(obj=item)
         transitions = self.available_transitions()
         action = transitions[state]
-        api.content.transition(obj=context, transition=action)
-        came_from = api.content.get(UID=uuid)
-        next_url = came_from.absolute_url()
+        api.content.transition(obj=item, transition=action)
+        next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
     @property
