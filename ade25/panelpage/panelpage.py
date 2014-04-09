@@ -520,11 +520,12 @@ class RearrangeBlocks(grok.View):
     def render(self):
         context = aq_inner(self.context)
         sort_query = list(self.query.split('&'))
+        layout_order = getattr(context, 'panelPageLayout', list())
         for x in sort_query:
             details = x.split('=')
             key = details[0]
-            obj = api.content.get(UID=details[1])
-            context.moveObjectToPosition(obj.getId(), int(key))
+            layout_order.append(details)
+        setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")
         results = {'success': True,
                    'message': msg
