@@ -56,10 +56,6 @@
                         </div>
                         <p class="lead app-page-abstract" tal:condition="context/Description"
                             tal:content="context/Description" />
-                        <div class="app-page-body" id="content-core">
-                            <div tal:condition="context/text"
-                                tal:content="structure context/text/output" />
-                        </div>
                     </div>
                 </div>
                 <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Child Content</div>
