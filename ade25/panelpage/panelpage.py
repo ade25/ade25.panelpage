@@ -523,7 +523,7 @@ class RearrangeBlocks(grok.View):
         layout_order = getattr(context, 'panelPageLayout', list())
         for x in sort_query:
             details = x.split('=')
-            key = details[0]
+            # key = details[0]
             layout_order.append(details)
         setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")
