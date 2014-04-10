@@ -8,7 +8,7 @@ from collective.beaker.interfaces import ISession
 SESSION_KEY = 'Uh53dAfH2JPzI/lIhBvN72RJzZVv6zk5'
 
 
-class IPageEditorTool(Interface):
+class IPageLayoutTool(Interface):
     """ Survey processing tool that stores data inside a beaker session
         storage. The data is then saved as survey participation result
     """
@@ -46,37 +46,37 @@ class IPageEditorTool(Interface):
         """
 
 
-class PageEditorTool(grok.GlobalUtility):
-    grok.provides(IPageEditorTool)
+class PageLayoutTool(grok.GlobalUtility):
+    grok.provides(IPageLayoutTool)
 
     def get(self, key=None):
-        survey_id = 'survey.%s' % SESSION_KEY
+        session_id = 'ppe.session.{0}'.format(SESSION_KEY)
         if key is not None:
-            survey_id = 'survey.%s' % key
+            session_id = 'ppe.session.{0}'.format(key)
         session = ISession(getRequest())
-        if survey_id not in session:
-            session[survey_id] = dict()
+        if session_id not in session:
+            session[session_id] = dict()
             session.save()
-        return session[survey_id]
+        return session[session_id]
 
     def destroy(self, key=None):
-        survey_id = 'survey.%s' % SESSION_KEY
+        session_id = 'ppe.session.{0}'.format(SESSION_KEY)
         if key is not None:
-            survey_id = 'survey.%s' % key
+            session_id = 'ppe.session.{0}'.format(key)
         session = ISession(getRequest())
-        if survey_id in session:
-            del session[survey_id]
+        if session_id in session:
+            del session[session_id]
             session.save()
 
-    def add(self, uuid, answers=None):
+    def add(self, uuid, items=None):
         """
             Add item to survey session
         """
-        survey = self.get()
-        item = self.update(uuid, answers)
+        session = self.get()
+        item = self.update(uuid, items)
         if not item:
-            survey[uuid] = answers
-            return survey[uuid]
+            session[uuid] = items
+            return session[uuid]
 
     def update(self, uuid, answers):
         survey = self.get()
