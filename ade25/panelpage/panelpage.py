@@ -19,6 +19,8 @@ from Products.CMFCore.interfaces import IContentish
 from ade25.panelpage.contentblock import IContentBlock
 from ade25.panelpage.contentpanel import IContentPanel
 
+from ade25.panelpage.tool import IPageLayoutTool
+
 from ade25.panelpage import MessageFactory as _
 
 
@@ -279,6 +281,7 @@ class CreateBlock(grok.View):
 
     def _create_panel(self, data):
         context = aq_inner(self.context)
+        pagetool = IPageLayoutTool(context)
         new_title = data['title']
         token = django_random.get_random_string(length=24)
         item = api.content.create(
@@ -289,6 +292,7 @@ class CreateBlock(grok.View):
             safe_id=True
         )
         uuid = api.content.get_uuid(obj=item)
+        session = pagetool.get()
         url = context.absolute_url()
         base_url = url + '/@@setup-block?uuid=' + uuid
         next_url = base_url + '&token=' + token

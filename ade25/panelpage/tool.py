@@ -78,11 +78,11 @@ class PageLayoutTool(grok.GlobalUtility):
             session[uuid] = items
             return session[uuid]
 
-    def update(self, uuid, answers):
+    def update(self, uuid, items):
         survey = self.get()
         item_id = uuid
         if item_id in survey:
-            survey[item_id] = answers
+            survey[item_id] = items
             return survey[item_id]
         return None
 
