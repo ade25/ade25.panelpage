@@ -6,12 +6,14 @@ from plone import api
 
 from zope.interface import Interface
 from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.lifecycleevent import modified
 from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
 
+from plone.uuid.interfaces import IUUID
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
@@ -281,7 +283,6 @@ class CreateBlock(grok.View):
 
     def _create_panel(self, data):
         context = aq_inner(self.context)
-        pagetool = IPageLayoutTool(context)
         new_title = data['title']
         token = django_random.get_random_string(length=24)
         item = api.content.create(
@@ -292,7 +293,15 @@ class CreateBlock(grok.View):
             safe_id=True
         )
         uuid = api.content.get_uuid(obj=item)
+        pagetool = getUtility(IPageLayoutTool)
         session = pagetool.get()
+        context_uid = IUUID(context)
+        items = getattr(context, 'panelPageLayout', list())
+        items.append(uuid)
+        session.add(context_uid, items)
+        setattr(item, 'panelPageLayout', items)
+        modified(context)
+        context.reindexObject(idxs='modified')
         url = context.absolute_url()
         base_url = url + '/@@setup-block?uuid=' + uuid
         next_url = base_url + '&token=' + token
