@@ -26,6 +26,7 @@ setup(name='ade25.panelpage',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'collective.beaker',
           'plone.api',
           'plone.app.dexterity [grok, relations]',
           'plone.app.relationfield',
