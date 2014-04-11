@@ -4,6 +4,20 @@
 (function ($) {
     $(document).ready(function () {
 
+        $('div[data-appui="editable"]').on({
+            mouseenter: function () {
+                $(this).find('contentpanel-editbar')
+                    .removeClass('fadeOutUp')
+                    .addClass('fadeInLeft')
+                    .show();
+            },
+            mouseleave: function () {
+                $(this).find('contentpanel-editbar')
+                    .removeClass('fadeInLeft')
+                    .addClass('fadeOutUp');
+            }
+        });
+
         var $sortableSection = $('.ppe-section-sortable').sortable({
             items: '.ppe-block-sortable',
             handle: '.ppe-dragindicator'

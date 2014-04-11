@@ -9,7 +9,7 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="panelpage-editor">
+    <div class="panelpage-editor" id="content-core">
         <div class="ppe-header">
             <a class="ppe-close pull-right"
                 tal:attributes="href string:${context/absolute_url}">

@@ -12,7 +12,7 @@ class AvailableLayoutsVocabulary(object):
     def __call__(self, context):
         TYPES = {_(u"1 Col"): '12',
                  _(u"2 Cols 1:1"): '6',
-                 _(u"2 Cols 1:2"): '8-4',
+                 _(u"2 Cols 1:2"): '4-8',
                  _(u"2 Cols 2:1"): '8-4',
                  _(u"2 Cols 3:1"): '9-3',
                  _(u"3 Cols"): '4',

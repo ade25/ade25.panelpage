@@ -1,4 +1,5 @@
 from five import grok
+from plone import api
 
 from zope.interface import Interface
 from zope.globalrequest import getRequest
@@ -34,7 +35,7 @@ class IPageLayoutTool(Interface):
     def update(context):
         """ Update potentially autosaved form data in session
             storage
-
+x
             @param uuid: catalog uuid of participation object
             @param answers: serialized survey form data
         """
@@ -50,6 +51,8 @@ class PageLayoutTool(grok.GlobalUtility):
     grok.provides(IPageLayoutTool)
 
     def get(self, key=None):
+        portal = api.portal.get()
+        request = getattr(portal, 'REQUEST', None)
         session_id = 'ppe.session.{0}'.format(SESSION_KEY)
         if key is not None:
             session_id = 'ppe.session.{0}'.format(key)

@@ -14,14 +14,15 @@
         <div class="app-page-header" id="app-page-header"
           tal:condition="not:context/hide_dcbasic">
           <div class="app-page-title">
-            <h1 class="app-page-headline" tal:content="context/Title" />
+            <h1 class="documentFirstHeading app-page-headline" tal:content="context/Title" />
           </div>
-            <p class="lead app-page-abstract" tal:condition="context/Description"
+            <p class="documentDescription lead app-page-abstract" tal:condition="context/Description"
               tal:content="context/Description" />
         </div>
     </div>
-
-    <div tal:replace="structure provider:plone.belowcontentbody" />
+    <div id="content-core">
+      <div tal:replace="structure provider:plone.belowcontentbody" />
+    </div>
 
   </metal:content-core>
 </metal:main>
