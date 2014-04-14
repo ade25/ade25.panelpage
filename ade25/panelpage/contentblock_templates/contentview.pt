@@ -75,6 +75,7 @@
         <div class="ppe-section animated" tal:define="layout view/stored_layout">
             <div class="row ppe-row-eq-height">
                 <tal:block tal:repeat="col layout">
+                    <div class="h6">Col</div>
                     <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
                         <a class="btn btn-sm btn-default pull-right" href="#" i18n:translate="">edit</a>
                         <div><strong>Component:</strong>
