@@ -8,6 +8,7 @@ from zope.interface import Interface
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.lifecycleevent import modified
+from zope.schema.vocabulary import getVocabularyRegistry
 from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
@@ -305,8 +306,7 @@ class CreateBlock(grok.View):
         modified(context)
         context.reindexObject(idxs='modified')
         url = context.absolute_url()
-        base_url = url + '/@@setup-block?uuid=' + uuid
-        next_url = base_url + '&token=' + token
+        next_url = '{0}/setup-block/{1}/{2}'.format(url, uuid, token)
         return self.request.response.redirect(next_url)
 
 
@@ -365,10 +365,12 @@ class DeleteBlock(grok.View):
         self.subpath.append(name)
         return self
 
+    def item_uid(self):
+        return self.traverse_subpath[0]
+
     def _delete_block(self, data):
         context = aq_inner(self.context)
-        uuid = self.traverse_subpath[0]
-        item = api.content.get(UID=uuid)
+        item = api.content.get(UID=self.item_uid())
         api.content.delete(obj=item)
         next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
@@ -577,6 +579,39 @@ class SetupBlock(grok.View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('setup-block')
 
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('grid-layout')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._store_block_layout(form)
+
     @property
     def traverse_subpath(self):
         return self.subpath
@@ -586,6 +621,34 @@ class SetupBlock(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+    def available_layouts(self):
+        context = aq_inner(self.context)
+        vr = getVocabularyRegistry()
+        vocab = vr.get(context, 'ade25.panelpage.AvailableLayouts')
+        return vocab
+
+    def _store_block_layout(self, data):
+        item_uid = self.traverse_subpath[0]
+        item = api.content.get(UID=item_uid)
+        grid_idx = int(data['grid-layout'])
+        current = getattr(item, 'contentBlockLayout', list())
+        if not current:
+            updated = list()
+        else:
+            updated = current
+        for idx in range(grid_idx):
+            col = {
+                'uuid': item_uid,
+                'component': u"text",
+                'grid-col': 12 / grid_idx
+            }
+            updated.append(col)
+        setattr(item, 'contentBlockLayout', updated)
+        modified(item)
+        item.reindexObject(idxs='modified')
+        next_url = item.absolute_url()
+        return self.request.response.redirect(next_url)
 
 
 class RearrangeBlocks(grok.View):

@@ -20,9 +20,6 @@
         <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
             <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
-
-            <div class="h3"><a class="btn btn-ppe" href="#">+ Add Item</a></div>
-
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"

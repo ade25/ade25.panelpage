@@ -74,7 +74,7 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         ),
         required=False,
     )
-    contentBlockLayout = schema.Text(
+    contentBlockLayout = schema.TextLine(
         title=u"Content Block Layout",
         required=False,
     )

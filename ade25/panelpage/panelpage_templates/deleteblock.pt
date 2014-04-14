@@ -32,30 +32,21 @@
             method="post" role="form"
             tal:define="errors view/errors"
             tal:attributes="action request/URL">
-            <div class="row">
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group field">
-                        <label class="sr-only" for="title" i18n:translate="">Title</label>
-                            <input class="form-control" id="uuid"
-                                name="uuid" type="text"
-                                placeholder="Please enter UID"
-                                tal:attributes="value view/item_uid">
-                    </div><!-- /title field -->
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="form-group">
-                        <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <button class="btn btn-ppe"
-                            name="form.button.Submit"
-                            id="form.button.Submit"
-                            i18n:translate="">Delete</button>
-                        <button class="btn btn-link"
-                            name="form.button.Cancel"
-                            id="form.button.Cancel"
-                            i18n:translate="">Cancel and keep item</button>
-                    </div>
-                </div>
-            </div>            
+            <div class="form-group">
+                <span tal:replace="structure context/@@authenticator/authenticator"/>
+                <input class="form-control" id="uuid"
+                    name="uuid" type="hidden"
+                    placeholder="Please enter UID"
+                    tal:attributes="value view/item_uid">
+                <button class="btn btn-ppe"
+                    name="form.button.Submit"
+                    id="form.button.Submit"
+                    i18n:translate="">Delete</button>
+                <button class="btn btn-link"
+                    name="form.button.Cancel"
+                    id="form.button.Cancel"
+                    i18n:translate="">Cancel and keep item</button>
+            </div>         
         </form>
     </div>    
     </div>
