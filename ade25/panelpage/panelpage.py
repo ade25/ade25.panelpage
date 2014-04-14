@@ -644,7 +644,7 @@ class SetupBlock(grok.View):
                 'grid-col': 12 / grid_idx
             }
             updated.append(col)
-        setattr(item, 'contentBlockLayout', updated)
+        setattr(item, 'contentBlockLayout', json.dumps(updated))
         modified(item)
         item.reindexObject(idxs='modified')
         next_url = item.absolute_url()

@@ -69,6 +69,35 @@
             change
         </a>
     </div>
+
+    <tal:layout tal:condition="context/contentBlockLayout">
+        <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Layout</div>
+        <div class="ppe-section animated" tal:define="layout view/stored_layout">
+            <div class="row ppe-row-eq-height">
+                <tal:block tal:repeat="col layout">
+                    <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
+                        <a class="btn btn-sm btn-default pull-right" href="#" i18n:translate="">edit</a>
+                        <div><strong>Component:</strong>
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span tal:content="col/component" /> <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Text</a></li>
+                                <li><a href="#">Image</a></li>
+                                <li><a href="#">Panel</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Content Alias</a></li>
+                                <li><a href="#">Content Listing</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
+                </tal:block>
+            </div>
+        </div>
+    </tal:layout>
+
     <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Preview</div>
     <div class="ppe-block animated" tal:condition="view/has_data">
         <div tal:replace="structure view/render_item" />

@@ -1,3 +1,4 @@
+import json
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
@@ -182,6 +183,11 @@ class ContentView(grok.View):
         if IPage.providedBy(aq_inner(self.context)):
             editor = False
         return editor
+
+    def stored_layout(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'contentBlockLayout')
+        return json.loads(stored)
 
     def has_data(self):
         context = aq_inner(self.context)
