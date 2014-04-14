@@ -52,7 +52,6 @@ class PageLayoutTool(grok.GlobalUtility):
 
     def get(self, key=None):
         portal = api.portal.get()
-        request = getattr(portal, 'REQUEST', None)
         session_id = 'ppe.session.{0}'.format(SESSION_KEY)
         if key is not None:
             session_id = 'ppe.session.{0}'.format(key)

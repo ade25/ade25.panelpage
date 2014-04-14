@@ -310,6 +310,70 @@ class CreateBlock(grok.View):
         return self.request.response.redirect(next_url)
 
 
+class DeleteBlock(grok.View):
+    grok.context(IContentish)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('delete-block')
+
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('title')
+        if 'form.button.Cancel' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            next_url = context.absolute_url()
+            return self.request.response.redirect(next_url)
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._delete_block(form)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def _delete_block(self, data):
+        context = aq_inner(self.context)
+        uuid = self.traverse_subpath[0]
+        item = api.content.get(UID=uuid)
+        api.content.delete(obj=item)
+        next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
+
+
 class PanelAsignment(grok.View):
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
@@ -560,8 +624,8 @@ class TransitionState(grok.View):
         context = aq_inner(self.context)
         uuid = self.traverse_subpath[0]
         item = api.content.get(UID=uuid)
-        if len(self.traverse_subpath) > 0:
-            state = self.traverse_subpath[0]
+        if len(self.traverse_subpath) > 1:
+            state = self.traverse_subpath[1]
         else:
             state = api.content.get_state(obj=item)
         transitions = self.available_transitions()
