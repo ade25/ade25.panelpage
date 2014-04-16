@@ -1,4 +1,4 @@
-<div class="app-panelpage" id="app-panelpage"
+ <div class="app-panelpage" id="app-panelpage"
     tal:define="klass view/computed_klass"
     tal:attributes="class string:app-panelpage ${klass}">
 
