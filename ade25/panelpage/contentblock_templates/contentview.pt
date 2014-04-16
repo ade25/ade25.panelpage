@@ -70,10 +70,11 @@
 
             <div class="row ppe-row-eq-height">
                 <tal:block tal:repeat="col layout">
-                    <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
-                        <div class="h6">Col <span tal:content="col/component" /></div>
+                    <div tal:define="idx repeat/col/index"
+                        tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
+                        <div class="h4">Col <span tal:replace="idx" /></div>
                         <a class="btn btn-sm btn-default pull-right" href="#" i18n:translate="">edit</a>
-                        <div><strong>Component:</strong>
+                        <div><strong><span tal:content="col/component" /></strong>
                             <div class="btn-group">
                               <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                                 Change <span class="caret"></span>
