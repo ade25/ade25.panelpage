@@ -57,26 +57,26 @@
         <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Layout</div>
         <div class="ppe-section animated" tal:define="layout view/stored_layout">
 
-            <div class="btn-group">
-              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/6">1:1</a>
-              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/4">1:2</a>
-              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/3">1:3</a>
-              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/8">2:1</a>
-              <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/9">3:1</a>
+            <div class="ppe-block" tal:condition="view/show_ratio_selection">
+                <div class="btn-group pull-right">
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6">1:1</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8">1:2</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/3/9">1:3</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/8/4">2:1</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/9/3">3:1</a>
+                </div>
+                <h4><span i18n:translate="">Ratio:</span></h4>
             </div>
-
-
-            <code tal:content="context/contentBlockLayout" />
 
             <div class="row ppe-row-eq-height">
                 <tal:block tal:repeat="col layout">
                     <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
-                        <div class="h6">Col</div>
+                        <div class="h6">Col <span tal:content="col/component" /></div>
                         <a class="btn btn-sm btn-default pull-right" href="#" i18n:translate="">edit</a>
                         <div><strong>Component:</strong>
                             <div class="btn-group">
                               <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <span tal:content="col/component" /> <span class="caret"></span>
+                                Change <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Text</a></li>

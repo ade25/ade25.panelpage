@@ -1,4 +1,12 @@
 <div class="contentblock-content">
+    <div class="contentblock-header">
+        <h2 class="contentblock-title"
+            tal:condition="context/headline"
+            tal:content="context/headline" />
+        <p class="lead contentblock-teaser"
+            tal:condition="context/Description"
+            tal:content="context/Description" />
+    </div>
     <tal:panels tal:condition="view/display_panelgrid">
         <div class="row contentblock-grid"
             tal:define="panels view/asigned_panels;">
@@ -10,7 +18,26 @@
         </div>
     </tal:panels>
     <tal:block tal:condition="not:view/display_panelgrid">
-        <div class="row"
+        <div class="row ppe-row-eq-height">
+            <tal:block tal:repeat="col view/stored_layout">
+                <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
+                    tal:define="panel_type col/component;
+                                uuid col/uuid;
+                                item python:view.panel_item(uuid)">
+                    <h6 tal:content="item/Title" />
+                    <tal:body tal:condition="python:panel_type == 'text'">
+                        <div tal:replace="structure item/text/output" />
+                    </tal:body>
+                    <tal:body tal:condition="python:panel_type == 'image'">
+                        <img tal:condition="item/image"
+                            tal:define="scales item/@@images"
+                            tal:replace="structure python: scales.tag('image', scale='preview', css_class='img-responsive')"
+                            />
+                    </tal:body>
+                </div>
+            </tal:block>
+        </div>
+        <div class="row hidden"
             tal:define="panels view/asigned_panels;
                         panel_idx view/panel_idx;
                         image nocall:context/image;
