@@ -1,4 +1,5 @@
 import json
+from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
@@ -10,6 +11,7 @@ from plone.dexterity.content import Container
 
 from plone.directives import form
 from plone.app.textfield import RichText
+from Products.CMFPlone.utils import safe_unicode
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
@@ -189,6 +191,17 @@ class ContentView(grok.View):
         stored = getattr(context, 'contentBlockLayout')
         return json.loads(stored)
 
+    def show_ratio_selection(self):
+        return len(self.stored_layout()) == 2
+
+    def active_ratio(self):
+        layout = self.stored_layout()
+        value = '6'
+        if len(layout) > 0:
+            first_col = layout[0]
+            value = first_col['grid-col']
+        return value
+
     def has_data(self):
         context = aq_inner(self.context)
         has_content = False
@@ -291,3 +304,50 @@ class PanelGrid(grok.View):
             '4': 'col-sm-3'
         }
         return matrix
+
+
+class RatioSelection(grok.View):
+    grok.context(IContentBlock)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('ratio-selection')
+
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('grid-layout')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._set_column_ratio(form_data)
+
+    def render(self):
+        return ''
+
+    def _set_column_ratio(self, data):
+        context = aq_inner(self.context)
+        next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
