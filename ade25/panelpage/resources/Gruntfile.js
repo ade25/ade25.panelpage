@@ -48,6 +48,8 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     'bower_components/html5sortable/jquery.sortable.js',
+                    'bower_components/grid-list/src/gridList.js',
+                    'bower_components/grid-list/src/jquery.gridList.js',
                     'js/main.js'
                 ],
                 dest: 'dist/js/panelpage.js'

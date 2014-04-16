@@ -33,7 +33,14 @@
             </p>
             <div class="row">
                 <div class="col-xs-12 col-md-6">
-
+                    <select class="form-control" id="grid-layout"
+                        name="grid-layout">
+                        <tal:block tal:repeat="term view/available_layouts">
+                            <option tal:attributes="value term/value;
+                                                    id term/value"
+                                tal:content="term/title">1</option>
+                        </tal:block>
+                    </select>
                 </div>
                 <div class="col-xs-12 col-md-6">
                     <div class="form-group">

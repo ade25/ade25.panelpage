@@ -6,18 +6,23 @@ from plone import api
 
 from zope.interface import Interface
 from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.lifecycleevent import modified
+from zope.schema.vocabulary import getVocabularyRegistry
 from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
 
+from plone.uuid.interfaces import IUUID
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
 from ade25.panelpage.contentblock import IContentBlock
 from ade25.panelpage.contentpanel import IContentPanel
+
+from ade25.panelpage.tool import IPageLayoutTool
 
 from ade25.panelpage import MessageFactory as _
 
@@ -289,9 +294,85 @@ class CreateBlock(grok.View):
             safe_id=True
         )
         uuid = api.content.get_uuid(obj=item)
+        # pagetool = getUtility(IPageLayoutTool)
+        # session = pagetool.get()
+        # context_uid = IUUID(context)
+        items = getattr(context, 'panelPageLayout', None)
+        if items is None:
+            items = list()
+        items.append(uuid)
+        # session.add(context_uid, items)
+        setattr(item, 'panelPageLayout', items)
+        modified(context)
+        context.reindexObject(idxs='modified')
         url = context.absolute_url()
-        base_url = url + '/@@setup-block?uuid=' + uuid
-        next_url = base_url + '&token=' + token
+        next_url = '{0}/setup-block/{1}/{2}'.format(url, uuid, token)
+        return self.request.response.redirect(next_url)
+
+
+class DeleteBlock(grok.View):
+    grok.context(IContentish)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('delete-block')
+
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('title')
+        if 'form.button.Cancel' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            next_url = context.absolute_url()
+            return self.request.response.redirect(next_url)
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._delete_block(form)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def item_uid(self):
+        return self.traverse_subpath[0]
+
+    def _delete_block(self, data):
+        context = aq_inner(self.context)
+        item = api.content.get(UID=self.item_uid())
+        api.content.delete(obj=item)
+        next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
 
@@ -498,6 +579,39 @@ class SetupBlock(grok.View):
     grok.require('cmf.ModifyPortalContent')
     grok.name('setup-block')
 
+    def update(self):
+        context = aq_inner(self.context)
+        self.errors = {}
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('grid-layout')
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            errorIdx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        error = {}
+                        error['active'] = True
+                        error['msg'] = _(u"This field is required")
+                        form_errors[value] = error
+                        errorIdx += 1
+                    else:
+                        error = {}
+                        error['active'] = False
+                        error['msg'] = form[value]
+                        form_errors[value] = error
+            if errorIdx > 0:
+                self.errors = form_errors
+            else:
+                self._store_block_layout(form)
+
     @property
     def traverse_subpath(self):
         return self.subpath
@@ -507,6 +621,34 @@ class SetupBlock(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+    def available_layouts(self):
+        context = aq_inner(self.context)
+        vr = getVocabularyRegistry()
+        vocab = vr.get(context, 'ade25.panelpage.AvailableLayouts')
+        return vocab
+
+    def _store_block_layout(self, data):
+        item_uid = self.traverse_subpath[0]
+        item = api.content.get(UID=item_uid)
+        grid_idx = int(data['grid-layout'])
+        current = getattr(item, 'contentBlockLayout', list())
+        if not current:
+            updated = list()
+        else:
+            updated = current
+        for idx in range(grid_idx):
+            col = {
+                'uuid': item_uid,
+                'component': u"text",
+                'grid-col': 12 / grid_idx
+            }
+            updated.append(col)
+        setattr(item, 'contentBlockLayout', json.dumps(updated))
+        modified(item)
+        item.reindexObject(idxs='modified')
+        next_url = item.absolute_url()
+        return self.request.response.redirect(next_url)
 
 
 class RearrangeBlocks(grok.View):
@@ -520,11 +662,12 @@ class RearrangeBlocks(grok.View):
     def render(self):
         context = aq_inner(self.context)
         sort_query = list(self.query.split('&'))
+        layout_order = getattr(context, 'panelPageLayout', list())
         for x in sort_query:
             details = x.split('=')
-            key = details[0]
-            obj = api.content.get(UID=details[1])
-            context.moveObjectToPosition(obj.getId(), int(key))
+            # key = details[0]
+            layout_order.append(details)
+        setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")
         results = {'success': True,
                    'message': msg
@@ -543,15 +686,15 @@ class TransitionState(grok.View):
     def render(self):
         context = aq_inner(self.context)
         uuid = self.traverse_subpath[0]
+        item = api.content.get(UID=uuid)
         if len(self.traverse_subpath) > 1:
             state = self.traverse_subpath[1]
         else:
-            state = api.content.get_state(obj=context)
+            state = api.content.get_state(obj=item)
         transitions = self.available_transitions()
         action = transitions[state]
-        api.content.transition(obj=context, transition=action)
-        came_from = api.content.get(UID=uuid)
-        next_url = came_from.absolute_url()
+        api.content.transition(obj=item, transition=action)
+        next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
     @property

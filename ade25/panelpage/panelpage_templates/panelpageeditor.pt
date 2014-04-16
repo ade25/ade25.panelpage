@@ -9,7 +9,7 @@
 
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
-    <div class="panelpage-editor">
+    <div class="panelpage-editor" id="content-core">
         <div class="ppe-header">
             <a class="ppe-close pull-right"
                 tal:attributes="href string:${context/absolute_url}">
@@ -20,49 +20,14 @@
         <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
             <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
-
-            <div class="h3"><a class="btn btn-ppe" href="#">+ Add Item</a></div>
-
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
                 id="ppe-list"
                 tal:attributes="data-appui-ajax-uri string:${context/absolute_url}/@@rearrange-panelpage;
                                 data-appui-ajax-form string:#ppe-form-rearrange">
-                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Main Page Content</div>
-                <div class="ppe-block animated bounceInLeft"
-                    tal:define="uid context/UID;
-                                klass python:view.item_state_klass(uid)"
-                    tal:attributes="class string:ppe-block ${klass} animated bounceInLeft">
-                        <span class="ppe-sign pull-right">
-                            &nbsp;
-                        </span>
-                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
-                            data-appui="toggle-contentblock"
-                            data-target="#ppe-block-main-page">
-                            edit
-                        </a>
-                        <div class="ppe-block-title">
-                            <a class="h4 ppe-block-headline" data-toggle="collapse" data-parent="#ppe-list" href="#ppe-block-main-page"
-                                tal:attributes="href string:${context/absolute_url}/edit">
-                                <!-- <span class="app-sign app-sign-default">0</span> -->
-                                <span tal:content="context/Title">Fill me with sensible data</span>
-                            </a>
-                            <small class="text-muted" i18n:translate="">Main page content block</small>
-                        </div>
-                    <div class="ppe-block-editable collapse" id="ppe-block-main-page">
-                        <div class="app-page-header">
-                            <h1 class="app-page-title" tal:content="context/Title" />
-                        </div>
-                        <p class="lead app-page-abstract" tal:condition="context/Description"
-                            tal:content="context/Description" />
-                        <div class="app-page-body" id="content-core">
-                            <div tal:condition="context/text"
-                                tal:content="structure context/text/output" />
-                        </div>
-                    </div>
-                </div>
-                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Child Content</div>
+
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Page Content</div>
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"
@@ -83,7 +48,7 @@
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${item/getURL}/delete_confirmation">
+                            tal:attributes="href string:${context/absolute_url}/delete-block/${uid}">
                             delete
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
@@ -95,7 +60,7 @@
                         <a class="ppe-action pull-right" href="#ppe-block-transition"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/transistion-state/${uid}">
+                            tal:attributes="href string:${context/absolute_url}/transition-state/${uid}">
                             transition
                         </a>
                         <a class="animated bounceInLeft" href="#content"
