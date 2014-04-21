@@ -6,23 +6,18 @@ from plone import api
 
 from zope.interface import Interface
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from zope.lifecycleevent import modified
 from zope.schema.vocabulary import getVocabularyRegistry
 from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
-
-from plone.uuid.interfaces import IUUID
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
 from ade25.panelpage.contentblock import IContentBlock
 from ade25.panelpage.contentpanel import IContentPanel
-
-from ade25.panelpage.tool import IPageLayoutTool
 
 from ade25.panelpage import MessageFactory as _
 
@@ -236,6 +231,76 @@ class PanelPageEditor(grok.View):
         )
         url = context.absolute_url() + '/@@panelpage-editor'
         return self.request.response.redirect(url)
+
+
+class PanelPageBlocks(grok.View):
+    """ Generic router for panel page content blocks
+
+        :param action:  CRUD content action
+        :param uid:     Content block UID
+    """
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('ppb')
+
+    def update(self):
+        context = aq_inner(self.context)
+        self.data = {}
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            self.data = self.request.form
+
+    def render(self):
+        context = aq_inner(self.context)
+        action = self.traverse_subpath[0]
+        if action == 'create':
+            next_url = self._create_panel()
+        if action == 'delete':
+            next_url = self._delete_panel()
+        else:
+            next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def _create_panel(self):
+        context = aq_inner(self.context)
+        new_title = self.data['title']
+        token = django_random.get_random_string(length=12)
+        api.content.create(
+            type='ade25.panelpage.contentblock',
+            id=token,
+            title=new_title,
+            container=context,
+            safe_id=True
+        )
+        url = context.absolute_url() + '/@@panelpage-editor'
+        return self.request.response.redirect(url)
+
+    def _delete_panel(self):
+        context = aq_inner(self.context)
+        item_uid = self.traverse_subpath[1]
+        item = api.content.get(UID=item_uid)
+        api.content.delete(obj=item)
+        next_url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return self.request.response.redirect(next_url)
+
+    def get_possible_transitions(self, item):
+        """Return available transitions for an item."""
+        workflow_tool = api.portal.get_tool('portal_workflow')
+        items = workflow_tool.getTransitionsFor(item)
+        return [i['id'] for i in items]
 
 
 class CreateBlock(grok.View):

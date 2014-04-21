@@ -26,7 +26,8 @@
                                 item python:view.panel_item(uuid)">
                     <h6 tal:content="item/Title" />
                     <tal:body tal:condition="python:panel_type == 'text'">
-                        <div tal:replace="structure item/text/output" />
+                        <div tal:condition="item/text"
+                            tal:replace="structure item/text/output" />
                     </tal:body>
                     <tal:body tal:condition="python:panel_type == 'image'">
                         <img tal:condition="item/image"

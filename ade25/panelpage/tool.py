@@ -35,7 +35,7 @@ class IPageLayoutTool(Interface):
     def update(context):
         """ Update potentially autosaved form data in session
             storage
-x
+
             @param uuid: catalog uuid of participation object
             @param answers: serialized survey form data
         """
