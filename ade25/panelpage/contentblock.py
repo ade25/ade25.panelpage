@@ -14,7 +14,7 @@ from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-
+from plone.uuid.interfaces import IUUID
 from ade25.panelpage.page import IPage
 from ade25.panelpage.blocklisting import IContentBlockListing
 
