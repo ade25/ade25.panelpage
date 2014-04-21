@@ -12,9 +12,9 @@ from plone.dexterity.content import Container
 from plone.directives import form
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
+from plone.uuid.interfaces import IUUID
 from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from plone.uuid.interfaces import IUUID
 from ade25.panelpage.page import IPage
 from ade25.panelpage.blocklisting import IContentBlockListing
 
@@ -310,6 +310,80 @@ class PanelGrid(grok.View):
             '4': 'col-sm-3'
         }
         return matrix
+
+
+class GridColumns(grok.View):
+    grok.context(IContentBlock)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('gridcol')
+
+    def render(self):
+        context = aq_inner(self.context)
+        action = self.traverse_subpath[0]
+        if action == 'create':
+            new_layout = self._create_column()
+        if action == 'delete':
+            new_layout = self._delete_column()
+        if action == 'move':
+            new_layout = self._move_column()
+        else:
+            new_layout = self.current_layout()
+        setattr(context, 'contentBlockLayout', json.dumps(new_layout))
+        modified(context)
+        context.reindexObject(idxs='modified')
+        next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
+
+    def old_render(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'contentBlockLayout')
+        layout = json.loads(stored)
+        for idx, key in enumerate(self.traverse_subpath):
+            item = layout[idx]
+            item['grid-col'] = key
+        setattr(context, 'contentBlockLayout', json.dumps(layout))
+        modified(item)
+        context.reindexObject(idxs='modified')
+        next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def current_layout(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'contentBlockLayout')
+        return json.loads(stored)
+
+    def _create_column(self):
+        context = aq_inner(self.context)
+        uid = IUUID(context)
+        updated = self.current_layout()
+        grid_idx = len(updated)
+        col = {
+            'uuid': uid,
+            'component': u"text",
+            'grid-col': 12 / grid_idx
+        }
+        updated.append(col)
+        return updated
+
+    def _delete_column(self):
+        idx = self.traverse_subpath[1]
+        updated = self.current_layout()
+        updated.pop(int(idx))
+        return updated
+
+    def _move_column(self):
+        updated = self.current_layout()
+        return updated
 
 
 class RatioSelection(grok.View):

@@ -70,27 +70,22 @@
 
             <div class="row ppe-row-eq-height">
                 <tal:block tal:repeat="col layout">
-                    <div tal:define="idx repeat/col/number"
+                    <div tal:define="idx repeat/col/index;
+                                     number repeat/col/number"
                         tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
-                        <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="idx" /></div>
-                        <a class="btn btn-sm btn-default pull-right" href="#" i18n:translate="">edit</a>
-                        <div><strong><span tal:content="col/component" /></strong>
-                            <div class="btn-group">
-                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                                Change <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Text</a></li>
-                                <li><a href="#">Image</a></li>
-                                <li><a href="#">Panel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Content Alias</a></li>
-                                <li><a href="#">Content Listing</a></li>
-                              </ul>
-                            </div>
+                        <a class="ppe-action pull-right" i18n:translate="">delete</a>
+                        <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
+                        <div><strong tal:content="col/component" i18n:translate="">Content:</strong>
+                            <a href="#" i18n:translate="">edit</a>
                         </div>
                     </div>
                 </tal:block>
+            </div>
+            <div class="ppe-action text-right">
+                <a class="btn btn-ppe btn-sm" tal:attributes="href string:${context/absolute_url}/column/add"
+                    i18n:translate="">
+                    Add column
+                </a>
             </div>
         </div>
     </tal:layout>
