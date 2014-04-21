@@ -260,6 +260,8 @@ class PanelPageBlocks(grok.View):
             next_url = self._create_panel()
         if action == 'delete':
             next_url = self._delete_panel()
+        if action == 'transition':
+            next_url = self._transition_panel()
         else:
             next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
@@ -276,8 +278,8 @@ class PanelPageBlocks(grok.View):
 
     def _create_panel(self):
         context = aq_inner(self.context)
-        new_title = self.data['title']
         token = django_random.get_random_string(length=12)
+        new_title = self.request.form.get('title', token)
         api.content.create(
             type='ade25.panelpage.contentblock',
             id=token,
@@ -285,22 +287,38 @@ class PanelPageBlocks(grok.View):
             container=context,
             safe_id=True
         )
-        url = context.absolute_url() + '/@@panelpage-editor'
-        return self.request.response.redirect(url)
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
 
     def _delete_panel(self):
         context = aq_inner(self.context)
         item_uid = self.traverse_subpath[1]
         item = api.content.get(UID=item_uid)
         api.content.delete(obj=item)
-        next_url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return self.request.response.redirect(next_url)
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
 
-    def get_possible_transitions(self, item):
-        """Return available transitions for an item."""
-        workflow_tool = api.portal.get_tool('portal_workflow')
-        items = workflow_tool.getTransitionsFor(item)
-        return [i['id'] for i in items]
+    def _transition_panel(self):
+        context = aq_inner(self.context)
+        item_uid = self.traverse_subpath[1]
+        item = api.content.get(UID=item_uid)
+        # check if we have an explicit transition requested
+        if len(self.traverse_subpath) > 2:
+            state = self.traverse_subpath[2]
+        else:
+            state = api.content.get_state(obj=item)
+        transitions = self.available_transitions()
+        action = transitions[state]
+        api.content.transition(obj=item, transition=action)
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
+
+    def available_transitions(self):
+        transitions = {
+            'published': 'retract',
+            'private': 'publish'
+        }
+        return transitions
 
 
 class CreateBlock(grok.View):

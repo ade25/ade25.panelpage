@@ -36,7 +36,7 @@
                     <div class="app-content-editable"
                         tal:attributes="class string:app-contentblock app-contentblock-default;
                                         data-appui string:editable">
-                        <div class="contentpanel-editbar animated">
+                        <div class="contentpanel-editbar animated fadeOutUp">
                             <p><span i18n:translate="">Content Panel</span>
                                 <small class="contentblock-state pull-right">1</small>
                             </p>
@@ -249,7 +249,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 
   </metal:content-core>
 </metal:main>

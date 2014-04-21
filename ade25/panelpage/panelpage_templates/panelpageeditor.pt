@@ -48,7 +48,7 @@
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/delete-block/${uid}">
+                            tal:attributes="href string:${context/absolute_url}/ppb/delete/${uid}">
                             delete
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
@@ -60,8 +60,14 @@
                         <a class="ppe-action pull-right" href="#ppe-block-transition"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/transition-state/${uid}">
+                            tal:attributes="href string:${context/absolute_url}/ppb/transition/${uid}">
                             transition
+                        </a>
+                        <a class="ppe-action pull-right" href="#ppe-block-transition"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page"
+                            tal:attributes="href string:${context/absolute_url}/@@panel-asignment/${uid}">
+                            panels
                         </a>
                         <a class="animated bounceInLeft" href="#content"
                             data-pjax="#app-pjax-container"
@@ -92,12 +98,12 @@
             <div class="ppe-section"
                 id="ppe-form"
                 tal:condition="view/is_editable">
-
-                <form class="app-form app-create-form hide"
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Add Page Content</div>
+                <form class="app-form app-create-form"
                     id="createBlockForm"
                     method="post" role="form"
                     tal:define="errors view/errors"
-                    tal:attributes="action request/URL">
+                    tal:attributes="action string:${context/absolute_url}/ppb/create">
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="form-group field"
@@ -116,7 +122,7 @@
                                       <spxan tal:replace="python:error['msg']" />
                                     </div>
                             </div> <!-- /title field -->
-                            <p class="text-discreet">
+                            <p class="text-muted text-discreet">
                                 <strong i18n:translate="">Good to know:</strong>
                                 <span i18n:translate="">
                                 The content block title will be used to identify the
@@ -134,8 +140,7 @@
                         </div>
                     </div>
                 </form>
-                <hr>
-                <div class="row">
+                <div class="row hidden">
                     <div class="col-xs-12 col-sm-4">
                         <p>
                             <a class="btn btn-ppe"
