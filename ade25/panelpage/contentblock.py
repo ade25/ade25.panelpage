@@ -39,10 +39,14 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         description=_(u"Short and visualy highlighted teaser message"),
         required=False,
     )
+    klass = schema.TextLine(
+        title=_(u"CSS Class"),
+        required=False,
+    )
     form.fieldset(
         'details',
         label=_(u"Block Details"),
-        fields=['text', 'image', 'imageRight', 'contentAlias']
+        fields=['text', 'image', 'contentAlias']
     )
     text = RichText(
         title=_(u"Block Body Text"),
@@ -50,11 +54,6 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
     )
     image = NamedBlobImage(
         title=_(u"Image"),
-        required=False,
-    )
-    imageRight = schema.Bool(
-        title=_(u"Right align image"),
-        description=_(u"Change the default image position to the right third"),
         required=False,
     )
     contentAlias = schema.TextLine(
