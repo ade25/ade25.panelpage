@@ -340,10 +340,3 @@ class RatioSelection(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
-
-    def available_transitions(self):
-        transitions = {
-            'published': 'retract',
-            'private': 'publish'
-        }
-        return transitions
