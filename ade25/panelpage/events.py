@@ -16,7 +16,7 @@ def setDefaultContentBlockLayout(obj, event):
         updated = json.loads(current)
     col = {
         'uuid': IUUID(obj),
-        'component': u"text",
+        'component': u"placeholder",
         'grid-col': 12
     }
     updated.append(col)

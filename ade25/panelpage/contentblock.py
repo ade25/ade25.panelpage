@@ -201,13 +201,11 @@ class ContentView(grok.View):
         return value
 
     def has_data(self):
-        context = aq_inner(self.context)
-        has_content = False
-        if (context.text or context.description or context.panels):
-            has_content = True
-        if (context.contentAlias or hasattr(context, 'query')):
-            has_content = True
-        return has_content
+        for panel in self.stored_layout():
+            component = panel['component']
+            if component != 'placeholder':
+                return True
+        return False
 
     def has_query_results(self):
         pass
@@ -228,6 +226,36 @@ class ContentView(grok.View):
     def item_state_info(self):
         context = aq_inner(self.context)
         return api.content.get_state(obj=context)
+
+    def column_edit_action(self, component):
+        context = aq_inner(self.context)
+        base_url = context.absolute_url()
+        matrix = {
+            'text': '@@edit-block-body',
+            'image': '@@edit-block-image',
+            'listing': '@@edit-block',
+            'box': '@@edit-block',
+            'alias': '@@edit-block',
+            'placeholder': 'fa-ellipsis-h'
+        }
+        return '{0}/{1}'.format(base_url, matrix[component])
+
+    def get_component_icon(self, component):
+        matrix = {
+            'text': 'fa-file-text-o',
+            'image': 'fa-picture-o',
+            'listing': 'fa-list',
+            'box': 'fa-list-alt',
+            'alias': 'fa-copy',
+            'placeholder': 'fa-ellipsis-h'
+        }
+        return matrix[component]
+
+    def get_started(self, component):
+        display = False
+        if component == 'placeholder':
+            display = True
+        return display
 
     def render_item(self):
         context = aq_inner(self.context)
@@ -320,14 +348,15 @@ class GridColumns(grok.View):
     def render(self):
         context = aq_inner(self.context)
         action = self.traverse_subpath[0]
+        new_layout = self.current_layout()
         if action == 'create':
             new_layout = self._create_column()
         if action == 'delete':
             new_layout = self._delete_column()
         if action == 'move':
             new_layout = self._move_column()
-        else:
-            new_layout = self.current_layout()
+        if action == 'add':
+            new_layout = self._add_content()
         setattr(context, 'contentBlockLayout', json.dumps(new_layout))
         modified(context)
         context.reindexObject(idxs='modified')
@@ -342,7 +371,7 @@ class GridColumns(grok.View):
             item = layout[idx]
             item['grid-col'] = key
         setattr(context, 'contentBlockLayout', json.dumps(layout))
-        modified(item)
+        modified(context)
         context.reindexObject(idxs='modified')
         next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
@@ -366,12 +395,16 @@ class GridColumns(grok.View):
         context = aq_inner(self.context)
         uid = IUUID(context)
         updated = self.current_layout()
-        grid_idx = len(updated)
+        grid_idx = len(updated) + 1
+        col_size = 12 / grid_idx
         col = {
             'uuid': uid,
-            'component': u"text",
-            'grid-col': 12 / grid_idx
+            'component': u"placeholder",
+            'grid-col': col_size
         }
+        # Reset col size to make room for additional column
+        for x in updated:
+            x['grid-col'] = col_size
         updated.append(col)
         return updated
 
@@ -383,6 +416,14 @@ class GridColumns(grok.View):
 
     def _move_column(self):
         updated = self.current_layout()
+        return updated
+
+    def _add_content(self):
+        idx = int(self.traverse_subpath[1])
+        col_content = self.traverse_subpath[2]
+        updated = self.current_layout()
+        column = updated[idx]
+        column['component'] = col_content
         return updated
 
 
@@ -413,3 +454,17 @@ class RatioSelection(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+
+class PanelComponents(grok.View):
+    grok.context(IContentBlock)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('components')
+
+    def parent_info(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        info = {}
+        info['url'] = parent.absolute_url()
+        info['title'] = parent.Title()
+        return info
