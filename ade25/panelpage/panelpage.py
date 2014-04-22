@@ -265,14 +265,13 @@ class PanelPageBlocks(grok.View):
     def render(self):
         context = aq_inner(self.context)
         action = self.traverse_subpath[0]
+        next_url = context.absolute_url()
         if action == 'create':
             next_url = self._create_panel()
         if action == 'delete':
             next_url = self._delete_panel()
         if action == 'transition':
             next_url = self._transition_panel()
-        else:
-            next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
     @property
