@@ -201,11 +201,11 @@ class ContentView(grok.View):
         return value
 
     def has_data(self):
-        for panel in self.stored_layout():
-            component = panel['component']
-            if component != 'placeholder':
-                return True
-        return False
+        #for panel in self.stored_layout():
+        #    component = panel['component']
+        #    if component != 'placeholder':
+        #        return True
+        return True
 
     def has_query_results(self):
         pass
