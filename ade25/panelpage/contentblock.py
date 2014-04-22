@@ -414,7 +414,7 @@ class GridColumns(grok.View):
         updated.pop(int(idx))
         return updated
 
-    def _move_column(self):
+    def _move_column(self)
         updated = self.current_layout()
         return updated
 
@@ -454,17 +454,3 @@ class RatioSelection(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
-
-
-class PanelComponents(grok.View):
-    grok.context(IContentBlock)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('components')
-
-    def parent_info(self):
-        context = aq_inner(self.context)
-        parent = aq_parent(context)
-        info = {}
-        info['url'] = parent.absolute_url()
-        info['title'] = parent.Title()
-        return info
