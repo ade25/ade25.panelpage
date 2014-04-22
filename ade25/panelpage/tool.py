@@ -118,17 +118,20 @@ class UpdateBlockLayoutStorage(grok.View):
     def process_migration(self):
         idx = 0
         for item in self.items():
-            cb_layout = getattr(item, 'contentBlockLayout')
-            stored = json.loads(cb_layout)
-            uid = IUUID(item)
-            col_size = 12
-            col = {
-                'uuid': uid,
-                'component': u"placeholder",
-                'grid-col': col_size
-            }
-            stored.append(col)
-            modified(item)
-            item.reindexObject(idxs='modified')
+            obj = item.getObject()
+            #cb_layout = getattr(obj, 'contentBlockLayout')
+            #if cb_layout is None:
+            #    stored = {}
+            #    uid = IUUID(obj)
+            #    col_size = 12
+            #    col = {
+            #        'uuid': uid,
+            #        'component': u"placeholder",
+            #        'grid-col': col_size
+            #    }
+            #    stored.append(col)
+            setattr(obj, 'contentBlockLayout', '')
+            modified(obj)
+            obj.reindexObject(idxs='modified')
             idx += 1
         return idx

@@ -414,7 +414,7 @@ class GridColumns(grok.View):
         updated.pop(int(idx))
         return updated
 
-    def _move_column(self)
+    def _move_column(self):
         updated = self.current_layout()
         return updated
 
