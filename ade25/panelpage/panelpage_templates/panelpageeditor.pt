@@ -54,7 +54,7 @@
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${item/getURL}">
+                            tal:attributes="href string:${item/absolute_url}">
                             edit
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-transition"
@@ -73,7 +73,7 @@
                             data-pjax="#app-pjax-container"
                             data-appui="xxxtoggle-contentblock"
                             tal:attributes="data-target string:#ppe-block-${repeat/item/number};
-                                            href string:${item/getURL}">
+                                            href string:${item/absolute_url}">
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
                             <h4 tal:content="item/Title">First added panel</h4>
                         </a><br>
@@ -81,7 +81,7 @@
                                 tal:content="python:view.item_state_info(uid)">Published</small>-->
                         <div class="ppe-block-editable hide animated"
                             tal:attributes="id string:ppe-block-${repeat/item/number}">
-                            <div tal:replace="structure python:view.render_item(item.UID)" />
+                            <div tal:replace="structure python:view.render_item(uid)" />
                         </div>
                     </div>
                 </tal:items>
