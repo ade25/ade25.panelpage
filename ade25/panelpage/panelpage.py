@@ -12,6 +12,7 @@ from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
+from plone.uuid.interfaces import IUUID
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
@@ -199,11 +200,19 @@ class PanelPageEditor(grok.View):
 
     def contained_blocks(self):
         context = aq_inner(self.context)
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IContentBlock.__identifier__,
-                        path=dict(query='/'.join(context.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
+        block_layout = getattr(context, 'panelPageLayout', None)
+        if block_layout is None:
+            catalog = api.portal.get_tool(name='portal_catalog')
+            items = catalog(object_provides=IContentBlock.__identifier__,
+                            path=dict(
+                                query='/'.join(context.getPhysicalPath()),
+                                depth=1),
+                            sort_on='getObjPositionInParent')
+        else:
+            items = list()
+            for entry in block_layout:
+                item = api.content.get(UID=entry)
+                items.append(item)
         return items
 
     def is_editable(self):
@@ -256,14 +265,13 @@ class PanelPageBlocks(grok.View):
     def render(self):
         context = aq_inner(self.context)
         action = self.traverse_subpath[0]
+        next_url = context.absolute_url()
         if action == 'create':
             next_url = self._create_panel()
         if action == 'delete':
             next_url = self._delete_panel()
         if action == 'transition':
             next_url = self._transition_panel()
-        else:
-            next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
     @property
@@ -280,13 +288,22 @@ class PanelPageBlocks(grok.View):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=12)
         new_title = self.request.form.get('title', token)
-        api.content.create(
+        item = api.content.create(
             type='ade25.panelpage.contentblock',
             id=token,
             title=new_title,
             container=context,
             safe_id=True
         )
+        uuid = api.content.get_uuid(obj=item)
+        items = getattr(context, 'panelPageLayout', None)
+        if items is None:
+            items = list()
+        items.append(uuid)
+        # session.add(context_uid, items)
+        setattr(context, 'panelPageLayout', items)
+        modified(context)
+        context.reindexObject(idxs='modified')
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())
         return url
 

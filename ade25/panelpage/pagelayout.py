@@ -15,7 +15,7 @@ class IPanelPageLayout(form.Schema):
         label=_(u"Page Layout"),
         fields=['panelPageLayout']
     )
-    form.mode(panelPageLayout='hidden')
+    #form.mode(panelPageLayout='hidden')
     panelPageLayout = schema.List(
         title=_("Panel Page Layout"),
         value_type=schema.TextLine(

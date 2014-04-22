@@ -81,7 +81,7 @@
                             <i tal:attributes="class string:fa ${icon_klass} fa-3x fa-border pull-left"></i>
                             <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
-                            <p tal:condition="show_setup" i18n:translate="">
+                            <div tal:condition="show_setup" i18n:translate="">
                                 <span class="text-muted" i18n:translate="">This panel is empty</span><br />
                                 <div class="btn-group">
                                   <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
@@ -98,7 +98,7 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Insert existing panel</a></li>
                                   </ul>
                                 </div>
-                            </p>
+                            </div>
                             <a tal:condition="not:show_setup"
                                 tal:define="edit_action python:view.column_edit_action(component)"
                                 tal:attributes="href edit_action"

@@ -454,17 +454,3 @@ class RatioSelection(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
-
-
-class PanelComponents(grok.View):
-    grok.context(IContentBlock)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('components')
-
-    def parent_info(self):
-        context = aq_inner(self.context)
-        parent = aq_parent(context)
-        info = {}
-        info['url'] = parent.absolute_url()
-        info['title'] = parent.Title()
-        return info

@@ -1,10 +1,16 @@
+import json
 from five import grok
 from plone import api
 
 from zope.interface import Interface
 from zope.globalrequest import getRequest
+from zope.lifecycleevent import modified
 
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from collective.beaker.interfaces import ISession
+from plone.uuid.interfaces import IUUID
+
+from ade25.panelpage.contentblock import IContentBlock
 
 SESSION_KEY = 'Uh53dAfH2JPzI/lIhBvN72RJzZVv6zk5'
 
@@ -93,3 +99,39 @@ class PageLayoutTool(grok.GlobalUtility):
         if uuid in survey:
             del survey[uuid]
             return uuid
+
+
+class UpdateBlockLayoutStorage(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('migrate-pp-contentblocks')
+
+    def render(self):
+        processed = self.process_migration()
+        return processed
+
+    def items(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IContentBlock.__identifier__)
+        return items
+
+    def process_migration(self):
+        idx = 0
+        for item in self.items():
+            obj = item.getObject()
+            #cb_layout = getattr(obj, 'contentBlockLayout')
+            #if cb_layout is None:
+            #    stored = {}
+            #    uid = IUUID(obj)
+            #    col_size = 12
+            #    col = {
+            #        'uuid': uid,
+            #        'component': u"placeholder",
+            #        'grid-col': col_size
+            #    }
+            #    stored.append(col)
+            setattr(obj, 'contentBlockLayout', '')
+            modified(obj)
+            obj.reindexObject(idxs='modified')
+            idx += 1
+        return idx
