@@ -392,7 +392,8 @@ class GridColumns(grok.View):
         col = {
             'uuid': uid,
             'component': u"placeholder",
-            'grid-col': col_size
+            'grid-col': col_size,
+            'klass': 'panel-column'
         }
         # Reset col size to make room for additional column
         for x in updated:
