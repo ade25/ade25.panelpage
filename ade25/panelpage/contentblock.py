@@ -187,7 +187,9 @@ class ContentView(grok.View):
     def stored_layout(self):
         context = aq_inner(self.context)
         stored = getattr(context, 'contentBlockLayout')
-        return json.loads(stored)
+        if stored is not None:
+            return json.loads(stored)
+        return list()
 
     def show_ratio_selection(self):
         return len(self.stored_layout()) == 2
@@ -201,10 +203,10 @@ class ContentView(grok.View):
         return value
 
     def has_data(self):
-        #for panel in self.stored_layout():
-        #    component = panel['component']
-        #    if component != 'placeholder':
-        #        return True
+        for panel in self.stored_layout():
+            component = panel['component']
+            if component != 'placeholder':
+                return True
         return True
 
     def has_query_results(self):
@@ -412,6 +414,10 @@ class GridColumns(grok.View):
         idx = self.traverse_subpath[1]
         updated = self.current_layout()
         updated.pop(int(idx))
+        grid_idx = len(updated)
+        col_size = 12 / grid_idx
+        for x in updated:
+            x['grid-col'] = col_size
         return updated
 
     def _move_column(self):

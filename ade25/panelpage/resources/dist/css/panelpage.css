@@ -200,6 +200,7 @@
 }
 .ppe-sign-draggable
 {
+    color: #555;
     border: none;
 }
 .ppe-icon-bar
@@ -344,6 +345,18 @@ fieldset[disabled] .btn-ppe.active
     display: block;
 
     margin-right: 10px;
+}
+.ppe-action.ppe-action-transition
+{
+    min-width: 50px;
+}
+.ppe-action.ppe-action-private
+{
+    color: #a94442;
+}
+.ppe-action.ppe-action-published
+{
+    color: #3c763d;
 }
 .ppe-dragindicator
 {

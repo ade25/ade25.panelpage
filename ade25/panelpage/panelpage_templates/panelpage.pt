@@ -15,9 +15,10 @@
     <tal:block tal:condition="view/has_subcontent">
         <div class="app-panelpage-content">
             <tal:items tal:repeat="item view/contained_blocks">
-                <div tal:define="oddrow repeat/item/odd"
+                <div tal:define="oddrow repeat/item/odd;
+                                 uid item/UID"
                     tal:attributes="class python:oddrow and 'app-panelpage-item item-odd' or 'app-panelpage-item item-even'">
-                    <div tal:replace="structure python:view.render_item(item.UID)" />
+                    <div tal:replace="structure python:view.render_item(uid)" />
                 </div>
             </tal:items>
         </div>

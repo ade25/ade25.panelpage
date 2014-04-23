@@ -50,7 +50,7 @@
             if (data.success === true) {
               var $message = data.message,
                   $htmlString = '<p class="text-warning">' + $message + '</p>';
-              $('#ppe-statusinfo').append($htmlString).removeClass('hide').slideDown('slow');
+              $('#ppe-statusinfo-content').append($htmlString).removeClass('hidden').slideDown('slow');
             } else {
               // This could be nicer in the future...
               console.log('Form could not be submitted. Bummer.');

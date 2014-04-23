@@ -19,7 +19,16 @@
         </div>
         <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
-            <div class="ppe-statusinfo hide" id="ppe-statusinfo"></div>
+            <div class="ppe-statusinfo hidden" id="ppe-statusinfo">
+                <div class="ppe-block ppe-block-warning animated bounceInTop">
+                    <a class="btn btn-ppe pull-right" href="#commit-changes">
+                        Commit changes
+                    </a>
+                    <div class="ppe-statusinfo-content" id="ppe-statusinfo-content">
+                        Loading...
+                    </div>
+                </div>
+            </div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
@@ -33,18 +42,22 @@
                     <div class="ppe-block animated bounceInLeft"
                         tal:define="item_idx repeat/item/index;
                                     uid item/UID;
+                                    item_state python:view.item_state_info(uid);
                                     klass python:view.item_state_klass(uid)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
                         <input class="form-control" type="hidden"
                             tal:attributes="name string:${item_idx};
                                             id string:block.${uid};
                                             value uid" />
-                        <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
-                            <span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>
-                        </span>
+                        <a class="ppe-action pull-right" href="#ppe-block-transition"
+                            data-appui="toggle-contentblock"
+                            data-target="#ppe-block-main-page"
+                            tal:attributes="href string:${context/absolute_url}/ppb/transition/${uid};
+                                            class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
+                            tal:content="python:view.available_transitions(uid)"
+                            i18n:translate="">
+                            transition
+                        </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
@@ -57,13 +70,14 @@
                             tal:attributes="href string:${item/absolute_url}">
                             edit
                         </a>
-                        <a class="ppe-action pull-right" href="#ppe-block-transition"
-                            data-appui="toggle-contentblock"
-                            data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/ppb/transition/${uid}">
-                            transition
-                        </a>
-                        <a class="ppe-action pull-right" href="#ppe-block-transition"
+                        <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
+                            <i class="fa fa-sort"></i>
+                            <!--<span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>
+                            <span class="ppe-icon-bar"></span>-->
+                        </span>
+                        <a class="ppe-action hidden pull-right" href="#ppe-block-transition"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
                             tal:attributes="href string:${context/absolute_url}/@@panel-asignment/${uid}">

@@ -5,23 +5,32 @@
 
 
 .ppe-section-sortable {
-    .sortable-placeholder {
-        .size(100%, ceil((@navbar-height * 2)));
-        margin: @line-height-base 0;
-        border: 2px solid @state-warning-border;
-        background: @state-warning-bg;
-    }
-    .sortable-dragging {
-        border: 1px solid @state-danger-border;
-        background: #f2f2f2;
-        .opacity(1);
-    }
+  .sortable-placeholder {
+    .size(100%, ceil((@navbar-height * 2)));
+    margin: @line-height-base 0;
+    border: 2px solid @state-warning-border;
+    background: @state-warning-bg;
+  }
+  .sortable-dragging {
+    border: 1px solid @state-danger-border;
+    background: #f2f2f2;
+    .opacity(1);
+  }
 }
 
 .ppe-action {
-    display: block;
-    margin-right: floor((@line-height-computed / 2));
-    line-height: ceil((@line-height-computed * 2));
+  display: block;
+  margin-right: floor((@line-height-computed / 2));
+  line-height: ceil((@line-height-computed * 2));
+  &.ppe-action-transition {
+    min-width: @navbar-height;
+  }
+  &.ppe-action-private {
+    color: @alert-danger-text;
+  }
+  &.ppe-action-published {
+    color: @alert-success-text;
+  }
 }
 
 .ppe-dragindicator {

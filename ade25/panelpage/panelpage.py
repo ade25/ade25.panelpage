@@ -12,7 +12,6 @@ from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
 from plone.app.uuid.utils import uuidToObject
-from plone.uuid.interfaces import IUUID
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
@@ -108,11 +107,19 @@ class PanelPage(grok.View):
 
     def contained_blocks(self):
         context = aq_inner(self.context)
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IContentBlock.__identifier__,
-                        path=dict(query='/'.join(context.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
+        block_layout = getattr(context, 'panelPageLayout', None)
+        if block_layout is None:
+            catalog = api.portal.get_tool(name='portal_catalog')
+            items = catalog(object_provides=IContentBlock.__identifier__,
+                            path=dict(
+                                query='/'.join(context.getPhysicalPath()),
+                                depth=1),
+                            sort_on='getObjPositionInParent')
+        else:
+            items = list()
+            for entry in block_layout:
+                item = api.content.get(UID=entry)
+                items.append(item)
         return items
 
     def default_value(self, error):
@@ -197,6 +204,14 @@ class PanelPageEditor(grok.View):
         item = api.content.get(UID=uid)
         state = api.content.get_state(obj=item)
         return state
+
+    def available_transitions(self, uid):
+        transitions = {
+            'published': 'retract',
+            'private': 'publish'
+        }
+        state = self.item_state_info(uid)
+        return transitions[state]
 
     def contained_blocks(self):
         context = aq_inner(self.context)
@@ -762,11 +777,12 @@ class RearrangeBlocks(grok.View):
     def render(self):
         context = aq_inner(self.context)
         sort_query = list(self.query.split('&'))
-        layout_order = getattr(context, 'panelPageLayout', list())
+        layout_order = list()
         for x in sort_query:
             details = x.split('=')
-            # key = details[0]
-            layout_order.append(details)
+            key = int(details[0])
+            value = details[1]
+            layout_order.insert(key, value)
         setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")
         results = {'success': True,
