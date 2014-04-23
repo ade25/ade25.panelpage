@@ -14,7 +14,7 @@
       tal:define="parent_info view/parent_info">
         <div class="ppe-header">
             <a class="ppe-close pull-right"
-                tal:attributes="href string:${parent_info/url}">
+                tal:attributes="href string:${parent_info/url}/@@panelpage-editor">
                 &times;
             </a>
             <div class="ppe-header-title" i18n:translate="">Page Explorer</div>

@@ -7,6 +7,36 @@
       i18n:domain="ade25.panelpage">
 <body>
 
+<metal:header fill-slot="header">
+    <tal:modals tal:repeat="item view/contained_blocks">
+        <div class="modal fade" id="confirmBlockDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            tal:attributes="id string:confirmBlockDelete${item/UID}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel" i18n:translate="">Delete confirmation</h4>
+              </div>
+              <div class="modal-body">
+                <p i18n:translate="">
+                    Removing a content block will also delete all its
+                    subcontents.</p>
+                <strong class="text-danger" i18n:translate="">
+                     Careful this step can not be undone
+                </strong>
+              </div>
+              <div class="modal-footer">
+                <a class="btn btn-danger"
+                    tal:attributes="href string:${context/absolute_url}/ppb/delete/${item/UID}"
+                    i18n:translate="">Delete item</a>
+                <button type="button" class="btn btn-link" data-dismiss="modal" i18n:translate="">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </tal:modals>
+</metal:header>
+
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
     <div class="panelpage-editor" id="content-core">
@@ -24,9 +54,7 @@
                     <a class="btn btn-ppe pull-right" href="#commit-changes">
                         Commit changes
                     </a>
-                    <div class="ppe-statusinfo-content" id="ppe-statusinfo-content">
-                        Loading...
-                    </div>
+                    <div class="ppe-statusinfo-content" id="ppe-statusinfo-content"></div>
                 </div>
             </div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
@@ -59,9 +87,8 @@
                             transition
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
-                            data-appui="toggle-contentblock"
-                            data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/ppb/delete/${uid}">
+                            data-toggle="modal" data-target="#confirmBlockDelete"
+                            tal:attributes="data-target string:#confirmBlockDelete${uid}">
                             delete
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
