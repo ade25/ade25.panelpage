@@ -151,7 +151,7 @@
 }
 .ppe-block.ppe-block-private
 {
-    border-right: 7px solid #f2dede;
+    border-right: 7px solid #d9534f;
 }
 .ppe-block.ppe-block-private .ppe-block-state
 {
@@ -159,7 +159,7 @@
 }
 .ppe-block.ppe-block-published
 {
-    border-right: 7px solid #dff0d8;
+    border-right: 7px solid #5cb85c;
 }
 .ppe-block.ppe-block-published .ppe-block-state
 {
