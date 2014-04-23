@@ -78,7 +78,7 @@
                         <div tal:define="component col/component;
                                          show_setup python:view.get_started(component);
                                          icon_klass python:view.get_component_icon(component)">
-                            <i tal:attributes="class string:fa ${icon_klass} fa-3x fa-border pull-left"></i>
+                            <i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>
                             <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
                             <div tal:condition="show_setup" i18n:translate="">

@@ -24,7 +24,6 @@
                     tal:define="panel_type col/component;
                                 uuid col/uuid;
                                 item python:view.panel_item(uuid)">
-                    <h6 tal:content="item/Title" />
                     <tal:body tal:condition="python:panel_type == 'text'">
                         <div tal:condition="item/text"
                             tal:replace="structure item/text/output" />

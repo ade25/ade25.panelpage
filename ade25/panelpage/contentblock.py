@@ -63,17 +63,7 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
     form.fieldset(
         'settings',
         label=_(u"Content Block Settings"),
-        fields=['panels', 'contentBlockLayout']
-    )
-    panels = schema.List(
-        title=_(u"Associated Content Panels"),
-        description=_(u"A list of content panel identifiers that will be "
-                      u"automatically updated. Normally you do not need to "
-                      u"change this list"),
-        value_type=schema.TextLine(
-            title=_(u"Panel UID"),
-        ),
-        required=False,
+        fields=['contentBlockLayout']
     )
     contentBlockLayout = schema.TextLine(
         title=u"Content Block Layout",
