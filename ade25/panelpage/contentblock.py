@@ -355,19 +355,6 @@ class GridColumns(grok.View):
         next_url = context.absolute_url()
         return self.request.response.redirect(next_url)
 
-    def old_render(self):
-        context = aq_inner(self.context)
-        stored = getattr(context, 'contentBlockLayout')
-        layout = json.loads(stored)
-        for idx, key in enumerate(self.traverse_subpath):
-            item = layout[idx]
-            item['grid-col'] = key
-        setattr(context, 'contentBlockLayout', json.dumps(layout))
-        modified(context)
-        context.reindexObject(idxs='modified')
-        next_url = context.absolute_url()
-        return self.request.response.redirect(next_url)
-
     @property
     def traverse_subpath(self):
         return self.subpath

@@ -245,7 +245,7 @@ class PanelPageEditor(grok.View):
     def _create_panel(self, data):
         context = aq_inner(self.context)
         new_title = data['title']
-        token = django_random.get_random_string(length=12)
+        token = django_random.get_random_string(length=24)
         api.content.create(
             type='ade25.panelpage.contentblock',
             id=token,
@@ -301,21 +301,28 @@ class PanelPageBlocks(grok.View):
 
     def _create_panel(self):
         context = aq_inner(self.context)
-        token = django_random.get_random_string(length=12)
+        token = django_random.get_random_string(length=24)
         new_title = self.request.form.get('title', token)
-        item = api.content.create(
-            type='ade25.panelpage.contentblock',
-            id=token,
-            title=new_title,
-            container=context,
-            safe_id=True
-        )
-        uuid = api.content.get_uuid(obj=item)
+        #item = api.content.create(
+        #    type='ade25.panelpage.contentblock',
+        #    id=token,
+        #    title=new_title,
+        #    container=context,
+        #    safe_id=True
+        #)
+        #uuid = api.content.get_uuid(obj=item)
+        block = {
+            'id': token,
+            'title': new_title,
+            'status': 'hidden',
+            'title': None,
+            'abstract': None,
+            'panels': list()
+        }
         items = getattr(context, 'panelPageLayout', None)
         if items is None:
             items = list()
-        items.append(uuid)
-        # session.add(context_uid, items)
+        items.append(block)
         setattr(context, 'panelPageLayout', items)
         modified(context)
         context.reindexObject(idxs='modified')
