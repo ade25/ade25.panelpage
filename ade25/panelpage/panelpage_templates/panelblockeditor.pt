@@ -122,7 +122,7 @@
               </tal:block>
             </div>
             <div class="ppe-action text-right" tal:condition="view/panels">
-                <a class="btn btn-ppe btn-sm" tal:attributes="href string:${context/absolute_url}/gridcol/create"
+                <a class="btn btn-ppe btn-sm" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}"
                     i18n:translate="">
                     Add column
                 </a>
@@ -175,7 +175,7 @@
             <div class="placeholder-title" i18n:translate="">
                 No panels asigned yet
             </div>
-            <a class="btn btn-primary btn-lg" tal:attributes="href string:${context/absolute_url}/gridcol/create"
+            <a class="btn btn-primary btn-lg" tal:attributes="href string:${context/absolute_url}/gridcolumn/create"
               i18n:translate="">
                 Create content panel
             </a>

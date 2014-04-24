@@ -7,17 +7,14 @@ from plone import api
 from zope.interface import Interface
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
-from zope.schema.vocabulary import getVocabularyRegistry
 from plone.keyring import django_random
 
 from Products.CMFPlone.utils import safe_unicode
-from plone.app.uuid.utils import uuidToObject
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
 from ade25.panelpage.contentblock import IContentBlock
-from ade25.panelpage.contentpanel import IContentPanel
 
 from ade25.panelpage import MessageFactory as _
 
@@ -363,7 +360,6 @@ class PanelPageBlocks(grok.View):
         if items is None:
             items = list()
         items.append(block)
-        # session.add(context_uid, items)
         setattr(context, 'panelPageLayout', items)
         modified(context)
         context.reindexObject(idxs='modified')
@@ -372,33 +368,41 @@ class PanelPageBlocks(grok.View):
 
     def _delete_panel(self):
         context = aq_inner(self.context)
-        item_uid = self.traverse_subpath[1]
-        item = api.content.get(UID=item_uid)
-        api.content.delete(obj=item)
+        grid = getattr(context, 'panelPageLayout')
+        idx = self.traverse_subpath[1]
+        grid.pop(int(idx))
+        setattr(context, 'panelPageLayout', grid)
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())
         return url
 
     def _transition_panel(self):
         context = aq_inner(self.context)
-        item_uid = self.traverse_subpath[1]
-        item = api.content.get(UID=item_uid)
+        grid = getattr(context, 'panelPageLayout')
+        index = self.traverse_subpath[1]
+        idx = int(index)
+        row = grid[idx]
         # check if we have an explicit transition requested
         if len(self.traverse_subpath) > 2:
             state = self.traverse_subpath[2]
         else:
-            state = api.content.get_state(obj=item)
-        transitions = self.available_transitions()
-        action = transitions[state]
-        api.content.transition(obj=item, transition=action)
+            state = row['status']
+        changed = 'visible'
+        if state == 'visible':
+            changed = 'hidden'
+        row['status'] = changed
+        grid[idx] = row
+        setattr(context, 'panelPageLayout', grid)
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())
         return url
 
-    def available_transitions(self):
+    def available_transitions(self, state):
         transitions = {
             'published': 'retract',
+            'visible': 'hide',
+            'hidden': 'show',
             'private': 'publish'
         }
-        return transitions
+        return transitions[state]
 
 
 class PanelError(grok.View):

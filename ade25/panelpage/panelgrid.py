@@ -3,6 +3,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.keyring import django_random
 from zope.lifecycleevent import modified
 
 from plone.uuid.interfaces import IUUID
@@ -132,10 +133,18 @@ class GridColumns(grok.View):
         self.subpath.append(name)
         return self
 
-    def current_layout(self):
+    def stored_layout(self):
         context = aq_inner(self.context)
-        stored = getattr(context, 'contentBlockLayout')
-        return json.loads(stored)
+        stored = getattr(context, 'panelPageLayout')
+        return stored
+
+    def gridrow(self):
+        grid = self.stored_layout()
+        row = self.traverse_subpath[1]
+        return grid[int(row)]
+
+    def panels(self):
+        return self.gridrow()['panels']
 
     def _create_column(self):
         context = aq_inner(self.context)
@@ -157,7 +166,7 @@ class GridColumns(grok.View):
 
     def _delete_column(self):
         idx = self.traverse_subpath[1]
-        updated = self.current_layout()
+        updated = self.stored_layout()
         updated.pop(int(idx))
         grid_idx = len(updated)
         col_size = 12 / grid_idx
@@ -182,7 +191,7 @@ class GridColumns(grok.View):
         new_title = data['title']
         token = django_random.get_random_string(length=12)
         api.content.create(
-            type='ade25.panelpage.contentblock',
+            type='ade25.panelpage.contentpanel',
             id=token,
             title=new_title,
             container=context,
