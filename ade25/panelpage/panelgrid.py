@@ -6,7 +6,6 @@ from plone import api
 from plone.keyring import django_random
 from zope.lifecycleevent import modified
 
-from plone.uuid.interfaces import IUUID
 from ade25.panelpage.panelpage import IPanelPage
 
 
@@ -147,22 +146,25 @@ class GridColumns(grok.View):
         return self.gridrow()['panels']
 
     def _create_column(self):
-        context = aq_inner(self.context)
-        uid = IUUID(context)
-        updated = self.current_layout()
-        grid_idx = len(updated) + 1
-        col_size = 12 / grid_idx
+        grid = self.stored_layout()
+        row_idx = self.traverse_subpath[1]
+        row = grid[int(row_idx)]
+        cols = self.gridrow()['panels']
+        col_idx = len(cols) + 1
+        col_size = 12 / col_idx
         col = {
-            'uuid': uid,
+            'uuid': None,
             'component': u"placeholder",
             'grid-col': col_size,
             'klass': 'panel-column'
         }
         # Reset col size to make room for additional column
-        for x in updated:
+        for x in cols:
             x['grid-col'] = col_size
-        updated.append(col)
-        return updated
+        cols.append(col)
+        row['panels'] = cols
+        grid[int(row_idx)] = row
+        return grid
 
     def _delete_column(self):
         idx = self.traverse_subpath[1]
