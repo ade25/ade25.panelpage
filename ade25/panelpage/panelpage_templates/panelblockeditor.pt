@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+    <div class="panelpage-editor" id="content-core"
+        tal:define="layout view/stored_layout;
+                    gridrow view/gridrow">
+      <div class="ppe-header">
+          <a class="ppe-close pull-right"
+              tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+              &times;
+          </a>
+          <div class="ppe-header-title">
+            <span tal:replace="context/Title" /> /
+            <span tal:replace="gridrow/title" />
+          </div>
+      </div>
+      <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
+
+      <div class="panelpage-editable">
+        <div class="ppe-statusinfo hidden" id="ppe-statusinfo">
+            <div class="ppe-block ppe-block-warning animated bounceInTop">
+                <a class="btn btn-ppe pull-right" href="#commit-changes">
+                    Commit changes
+                </a>
+                <div class="ppe-statusinfo-content" id="ppe-statusinfo-content"></div>
+            </div>
+        </div>
+        <div class="ppe-section">
+          <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Settings</div>
+            <div class="ppe-block animated"
+                tal:attributes="class string:ppe-block animated bounceInLeft">
+                <a class="ppe-action pull-right" href="#ppe-block-main-page"
+                    data-appui="toggle-contentblock"
+                    data-target="#ppe-block-main-page"
+                    tal:attributes="href string:${context/absolute_url}/edit-block">
+                    edit
+                </a>
+                <a class="animated bounceInLeft" href="#content"
+                    data-pjax="#app-pjax-container"
+                    data-appui="xxxtoggle-contentblock"
+                    tal:attributes="href string:${context/absolute_url}">
+                    <h4 i18n:translate="">Headline</h4>
+                </a>
+            </div>
+            <div class="ppe-block animated"
+                tal:attributes="class string:ppe-block animated bounceInLeft">
+                <a class="ppe-action pull-right" href="#ppe-block-main-page"
+                    data-appui="toggle-contentblock"
+                    data-target="#ppe-block-main-page"
+                    tal:attributes="href string:${context/absolute_url}/edit-block">
+                    edit
+                </a>
+                <a class="animated bounceInLeft" href="#content"
+                    data-pjax="#app-pjax-container"
+                    data-appui="xxxtoggle-contentblock"
+                    tal:attributes="href string:${context/absolute_url}">
+                    <h4 i18n:translate="">Abstract</h4>
+                </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ppe-section" tal:condition="view/has_layout">
+          <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Layout</div>
+          <div class="ppe-section animated" tal:condition="not:view/get_started">
+            <div class="ppe-block" tal:condition="view/show_ratio_selection">
+                <div class="btn-group pull-right">
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6">1:1</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8">1:2</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/3/9">1:3</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/8/4">2:1</a>
+                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/9/3">3:1</a>
+                </div>
+                <h4><span i18n:translate="">Ratio:</span></h4>
+            </div>
+
+            <div class="row ppe-row-eq-height"
+              tal:condition="not:view/get_started">
+              <tal:block tal:repeat="col gridrow/panels">
+                <div tal:define="idx repeat/col/index;
+                                 number repeat/col/number"
+                    tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
+                    <a class="ppe-action close pull-right" tal:attributes="href string:${context/absolute_url}/gridcol/delete/${idx}"
+                        i18n:translate="">&times;</a>
+                    <div tal:define="component col/component;
+                                     show_setup python:view.must_setup_panel(component);
+                                     icon_klass python:view.get_component_icon(component)">
+                        <i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>
+                        <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
+                        <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
+                        <div tal:condition="show_setup" i18n:translate="">
+                            <span class="text-muted" i18n:translate="">This panel is empty</span><br />
+                            <div class="btn-group">
+                              <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span i18n:translate="" tal:omit-tag="">add content</span> <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li role="presentation" class="dropdown-header" i18n:translate="">Widgets</li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/text" i18n:translate="">Richtext</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/image" i18n:translate="">Image</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/listing" i18n:translate="">Listing</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/box" i18n:translate="">Infobox</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation" class="dropdown-header" i18n:translate="">Content Aliases</li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Insert existing panel</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                        <a tal:condition="not:show_setup"
+                            tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uid}"
+                            i18n:translate="">edit</a>
+                    </div>
+                </div>
+              </tal:block>
+            </div>
+            <div class="ppe-action text-right" tal:condition="view/panels">
+                <a class="btn btn-ppe btn-sm" tal:attributes="href string:${context/absolute_url}/gridcol/create"
+                    i18n:translate="">
+                    Add column
+                </a>
+            </div>
+
+          </div>
+
+          <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Preview</div>
+          <div class="ppe-block no-border animated" tal:condition="not:view/get_started">
+              <div class="contentblock-content">
+                 <div class="contentblock-header" tal:content="nothing">
+                   <h2 class="contentblock-title"
+                       tal:condition="context/headline"
+                       tal:content="context/headline" />
+                   <p class="lead contentblock-teaser"
+                       tal:condition="context/Description"
+                       tal:content="context/Description" />
+                 </div>
+                 <tal:panelgrid tal:define="grid view/gridrow">
+                   <div class="panelpage-default">
+                   <div class="row ppe-row-eq-height">
+                     <tal:block tal:repeat="col view/panels">
+                       <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
+                         tal:define="panel_type col/component;
+                                     uuid col/uuid;
+                                     show_panel python:view.show_panel_obj(uuid)">
+                         <div tal:define="idx repeat/col/number;
+                                          oddrow repeat/col/odd;
+                                          klass col/klass | string:contentpanel-default;
+                                          oddclass python:oddrow and 'item-odd' or 'item-even'"
+                           tal:attributes="class string:contentpanel ${klass} ${oddclass}">
+                           <tal:item tal:condition="show_panel">
+                             <div tal:define="item python:view.rendered_panel(uuid)">
+                             </div>
+                           </tal:item>
+                           <div tal:condition="not:show_panel">
+                             <h6>Panel <span tal:replace="idx" /></h6>
+                           </div>
+                         </div>
+                       </div>
+                     </tal:block>
+                   </div>
+                 </div>
+                 </tal:panelgrid>
+              </div>
+          </div>
+
+          <div class="ppe-block-placeholder placeholder-get-started" tal:condition="view/get_started">
+            <div class="placeholder-sign">&hellip;</div>
+            <div class="placeholder-title" i18n:translate="">
+                No panels asigned yet
+            </div>
+            <a class="btn btn-primary btn-lg" tal:attributes="href string:${context/absolute_url}/gridcol/create"
+              i18n:translate="">
+                Create content panel
+            </a>
+          </div>
+        </div>
+
+    </div>
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

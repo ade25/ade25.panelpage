@@ -1,0 +1,36 @@
+<div class="contentblock-content">
+  <div class="contentblock-header" tal:content="nothing">
+    <h2 class="contentblock-title"
+        tal:condition="context/headline"
+        tal:content="context/headline" />
+    <p class="lead contentblock-teaser"
+        tal:condition="context/Description"
+        tal:content="context/Description" />
+  </div>
+  <tal:panelgrid tal:define="grid view/gridrow">
+    <div class="panelpage-default">
+    <div class="row ppe-row-eq-height">
+      <tal:block tal:repeat="col view/panels">
+        <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
+          tal:define="panel_type col/component;
+                      uuid col/uuid;
+                      show_panel python:view.show_panel_obj(uuid)">
+          <div tal:define="idx repeat/col/index;
+                           oddrow repeat/col/odd;
+                           klass col/klass | string:panel-default;
+                           oddclass python:oddrow and 'item-odd' or 'item-even'"
+            tal:attributes="class string:panel ${klass} ${oddclass}">
+            <tal:item tal:condition="show_panel">
+              <div tal:define="item python:view.panel_item(uuid)">
+              </div>
+            </tal:item>
+            <div tal:condition="not:show_panel">
+              <h6>Panel <span tal:replace="idx" /></h6>
+            </div>
+          </div>
+        </div>
+      </tal:block>
+    </div>
+  </div>
+  </tal:panelgrid>
+</div>

@@ -118,12 +118,17 @@
             color: @gray;
         }
     }
+    &.no-border {
+        border: none;
+    }
+    &.ppe-block-hidden,
     &.ppe-block-private {
         border-right: ceil((@line-height-computed / 3)) solid @brand-danger;
         .ppe-block-state {
             color: @alert-danger-text;
         }
     }
+    &.ppe-block-visible,
     &.ppe-block-published {
         border-right: ceil((@line-height-computed / 3)) solid @brand-success;
         .ppe-block-state {
@@ -202,6 +207,14 @@
     }
     &.placeholder-error {
         background: @alert-danger-bg;
+    }
+    &.placeholder-get-started {
+        text-align: center;
+        padding: @navbar-height;
+        color: @gray;
+        .placeholder-sign {
+            margin:@line-height-computed auto 0;
+        }
     }
 }
 

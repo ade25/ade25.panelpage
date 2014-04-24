@@ -10,7 +10,7 @@
 <metal:header fill-slot="header">
     <tal:modals tal:repeat="item view/contained_blocks">
         <div class="modal fade" id="confirmBlockDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            tal:attributes="id string:confirmBlockDelete${item/UID}">
+            tal:attributes="id string:confirmBlockDelete${item/id}">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
               <div class="modal-header">
@@ -27,7 +27,7 @@
               </div>
               <div class="modal-footer">
                 <a class="btn btn-danger"
-                    tal:attributes="href string:${context/absolute_url}/ppb/delete/${item/UID}"
+                    tal:attributes="href string:${context/absolute_url}/ppb/delete/${item/id}"
                     i18n:translate="">Delete item</a>
                 <button type="button" class="btn btn-link" data-dismiss="modal" i18n:translate="">Cancel</button>
               </div>
@@ -58,6 +58,7 @@
                 </div>
             </div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
+            tal:condition="view/has_subcontent"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
                 id="ppe-list"
@@ -69,9 +70,9 @@
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"
                         tal:define="item_idx repeat/item/index;
-                                    uid item/UID;
-                                    item_state python:view.item_state_info(uid);
-                                    klass python:view.item_state_klass(uid)"
+                                    uid item/id;
+                                    item_state item/status;
+                                    klass python:view.item_state_klass(item_state)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
                         <input class="form-control" type="hidden"
                             tal:attributes="name string:${item_idx};
@@ -82,7 +83,7 @@
                             data-target="#ppe-block-main-page"
                             tal:attributes="href string:${context/absolute_url}/ppb/transition/${uid};
                                             class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
-                            tal:content="python:view.available_transitions(uid)"
+                            tal:content="python:view.available_transitions(item_state)"
                             i18n:translate="">
                             transition
                         </a>
@@ -94,7 +95,7 @@
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${item/absolute_url}">
+                            tal:attributes="href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
                             edit
                         </a>
                         <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
@@ -114,15 +115,15 @@
                             data-pjax="#app-pjax-container"
                             data-appui="xxxtoggle-contentblock"
                             tal:attributes="data-target string:#ppe-block-${repeat/item/number};
-                                            href string:${item/absolute_url}">
+                                            href string:${context/absolute_url}">
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
-                            <h4 tal:content="item/Title">First added panel</h4>
+                            <h4 tal:content="item/title">First added panel</h4>
                         </a><br>
                         <!--<small class="ppe-block-state"
                                 tal:content="python:view.item_state_info(uid)">Published</small>-->
                         <div class="ppe-block-editable hide animated"
                             tal:attributes="id string:ppe-block-${repeat/item/number}">
-                            <div tal:replace="structure python:view.render_item(uid)" />
+                            <!--<div tal:replace="structure python:view.render_item(uid)" />-->
                         </div>
                     </div>
                 </tal:items>
@@ -136,6 +137,19 @@
                 <span>Loading content...stay tuned</span>
             </div>
 
+            <div class="ppe-block-placeholder" tal:condition="not:view/has_subcontent">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-1">
+                        <div class="placeholder-sign">&hellip;</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-11">
+                        <div class="placeholder-title" i18n:translate="">
+                            This item has no content
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="ppe-section"
                 id="ppe-form"
                 tal:condition="view/is_editable">
@@ -143,25 +157,16 @@
                 <form class="app-form app-create-form"
                     id="createBlockForm"
                     method="post" role="form"
-                    tal:define="errors view/errors"
                     tal:attributes="action string:${context/absolute_url}/ppb/create">
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="form-group field"
-                                tal:define="error errors/title | nothing;
-                                            err_msg python:error and error['active'] == True;
-                                            value request/title | nothing"
-                                tal:attributes="class python:err_msg and 'form-group has-error' or 'form-group'">
+                                tal:define="req_value request/title | nothing">
                                 <label class="sr-only" for="title" i18n:translate="">Title</label>
                                     <input class="form-control" id="title"
                                         type="text" name="title"
                                         placeholder="Please enter panel name"
-                                        tal:attributes="value python:error and view.default_value(error) or value">
-                                    <div class="help-block error"
-                                        tal:condition="err_msg">
-                                      <i class="fa fa-exclamation-triangle"></i>
-                                      <spxan tal:replace="python:error['msg']" />
-                                    </div>
+                                        tal:attributes="value req_value">
                             </div> <!-- /title field -->
                             <p class="text-muted text-discreet">
                                 <strong i18n:translate="">Good to know:</strong>

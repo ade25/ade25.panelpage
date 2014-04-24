@@ -149,18 +149,26 @@
 {
     color: #555;
 }
+.ppe-block.no-border
+{
+    border: none;
+}
+.ppe-block.ppe-block-hidden,
 .ppe-block.ppe-block-private
 {
     border-right: 7px solid #d9534f;
 }
+.ppe-block.ppe-block-hidden .ppe-block-state,
 .ppe-block.ppe-block-private .ppe-block-state
 {
     color: #a94442;
 }
+.ppe-block.ppe-block-visible,
 .ppe-block.ppe-block-published
 {
     border-right: 7px solid #5cb85c;
 }
+.ppe-block.ppe-block-visible .ppe-block-state,
 .ppe-block.ppe-block-published .ppe-block-state
 {
     color: #3c763d;
@@ -212,7 +220,7 @@
 
     border-color: #333;
     border-radius: 1px;
-    background-color: #ccc;
+    background-color: #888;
 }
 .ppe-icon-bar + .ppe-icon-bar
 {
@@ -265,6 +273,18 @@
 {
     background: #f2dede;
 }
+.ppe-block-placeholder.placeholder-get-started
+{
+    padding: 50px;
+
+    text-align: center;
+
+    color: #555;
+}
+.ppe-block-placeholder.placeholder-get-started .placeholder-sign
+{
+    margin: 20px auto 0;
+}
 .btn-ppe
 {
     color: #999;
@@ -276,15 +296,15 @@
 .btn-ppe:focus,
 .btn-ppe:active,
 .btn-ppe.active,
-.open .dropdown-toggle.btn-ppe
+.open > .dropdown-toggle.btn-ppe
 {
     color: #999;
     border-color: #000;
-    background-color: #0e0e0e;
+    background-color: #080808;
 }
 .btn-ppe:active,
 .btn-ppe.active,
-.open .dropdown-toggle.btn-ppe
+.open > .dropdown-toggle.btn-ppe
 {
     background-image: none;
 }
@@ -310,7 +330,7 @@ fieldset[disabled] .btn-ppe.active
 .btn-ppe .badge
 {
     color: #222;
-    background-color: #fff;
+    background-color: #999;
 }
 .btn-ppe.btn-ppe-boxed
 {
