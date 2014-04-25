@@ -1,0 +1,9 @@
+<div class="contentpanel contentpanel-text"
+  tal:attributes="class string:contentpanel contentpanel-text ${context/klass};
+                  id string:contentpanel-${context/getId}">
+  <div class="contentpanel-content">
+    <div tal:condition="context/text"
+      talreplace="structure context/text/output" />
+    </div>
+  </div>
+</div>
