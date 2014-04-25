@@ -5,6 +5,7 @@
  <bindings>
   <!-- Bind nothing for these content types -->
   <type type_id="ade25.panelpage.panelmanager" />
+  <type type_id="ade25.panelpage.basepanel" />
   <type type_id="ade25.panelpage.contentpanel" />
  </bindings>
 </object>
