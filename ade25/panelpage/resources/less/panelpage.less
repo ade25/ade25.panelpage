@@ -142,7 +142,7 @@
 }
 
 .ppe-section {
-    padding: @line-height-computed;
+    padding: @line-height-computed 0;
     background-color: @modal-content-bg;
 }
 
@@ -234,6 +234,12 @@
 
 .pp-icon {
     font-size: @font-size-base;
+    &.pp-icon-md {
+        font-size: ceil((@font-size-base * 2));
+    }
+    .ppe-icon-mdl {
+        font-size: ceil((@font-size-base * 3));
+    }
     &.pp-icon-lg {
         font-size: ceil((@font-size-base * 4));
     }

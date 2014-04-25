@@ -2740,6 +2740,183 @@ MIT License: https://github.com/driftyco/ionicons
 {
     content: '\f30c';
 }
+.cbp-spmenu
+{
+    position: fixed;
+
+    background: #999;
+}
+.cbp-spmenu h3
+{
+    font-size: 1.9em;
+    font-weight: 300;
+
+    margin: 0;
+    padding: 20px;
+
+    color: #eee;
+    background: #555;
+}
+.cbp-spmenu a
+{
+    font-size: 1.1em;
+    font-weight: 300;
+
+    display: block;
+
+    color: #fff;
+}
+.cbp-spmenu a:hover
+{
+    background: #428bca;
+}
+.cbp-spmenu a:active
+{
+    color: #47a3da;
+    background: #afdefa;
+}
+.cbp-spmenu-vertical
+{
+    z-index: 1000;
+    top: 0;
+
+    width: 375px;
+    height: 100%;
+}
+.userrole-authenticated .cbp-spmenu-vertical
+{
+    top: 50px;
+}
+.cbp-spmenu-vertical a
+{
+    padding: 1em;
+
+    border-bottom: 1px solid #258ecd;
+}
+.cbp-spmenu-horizontal
+{
+    z-index: 1000;
+    left: 0;
+
+    overflow: hidden;
+
+    width: 100%;
+    height: 150px;
+}
+.cbp-spmenu-horizontal h3
+{
+    float: left;
+
+    width: 20%;
+    height: 100%;
+}
+.cbp-spmenu-horizontal a
+{
+    float: left;
+
+    width: 20%;
+    padding: .8em;
+
+    border-left: 1px solid #258ecd;
+}
+/* Vertical menu that slides from the left or right */
+.cbp-spmenu-left
+{
+    left: -240px;
+}
+.cbp-spmenu-right
+{
+    right: -375px;
+}
+.cbp-spmenu-left.cbp-spmenu-open
+{
+    left: 0;
+}
+.cbp-spmenu-right.cbp-spmenu-open
+{
+    right: 0;
+}
+/* Horizontal menu that slides from the top or bottom */
+.cbp-spmenu-top
+{
+    top: -150px;
+}
+.cbp-spmenu-bottom
+{
+    bottom: -150px;
+}
+.cbp-spmenu-top.cbp-spmenu-open
+{
+    top: 0;
+}
+.cbp-spmenu-bottom.cbp-spmenu-open
+{
+    bottom: 0;
+}
+/* Push classes applied to the body */
+.cbp-spmenu-push
+{
+    position: relative;
+    left: 0;
+
+    overflow-x: hidden;
+}
+.cbp-spmenu-push-toright
+{
+    left: 240px;
+}
+.cbp-spmenu-push-toleft
+{
+    left: -240px;
+}
+/* Transitions */
+.cbp-spmenu,
+.cbp-spmenu-push
+{
+    -webkit-transition: all .3s ease;
+       -moz-transition: all .3s ease;
+            transition: all .3s ease;
+}
+/* Example media queries */
+@media screen and (max-width: 55.1875em)
+{
+    .cbp-spmenu-horizontal
+    {
+        font-size: 75%;
+
+        height: 110px;
+    }
+    .cbp-spmenu-top
+    {
+        top: -110px;
+    }
+    .cbp-spmenu-bottom
+    {
+        bottom: -110px;
+    }
+}
+@media screen and (max-height: 26.375em)
+{
+    .cbp-spmenu-vertical
+    {
+        font-size: 90%;
+
+        width: 190px;
+    }
+    .cbp-spmenu-left,
+  .cbp-spmenu-push-toleft
+    {
+        left: -190px;
+    }
+    .cbp-spmenu-right
+    {
+        right: -190px;
+    }
+    .cbp-spmenu-push-toright
+    {
+        left: 190px;
+    }
+}
 .app-panelpage
 {
     margin: 20px 0;
@@ -2918,7 +3095,7 @@ MIT License: https://github.com/driftyco/ionicons
 }
 .ppe-section
 {
-    padding: 20px;
+    padding: 20px 0;
 
     background-color: #fff;
 }
@@ -3084,6 +3261,14 @@ fieldset[disabled] .btn-ppe.active
 {
     font-size: 14px;
 }
+.pp-icon.pp-icon-md
+{
+    font-size: 28px;
+}
+.pp-icon .ppe-icon-mdl
+{
+    font-size: 42px;
+}
 .pp-icon.pp-icon-lg
 {
     font-size: 56px;
@@ -3145,6 +3330,9 @@ fieldset[disabled] .btn-ppe.active
     display: -webkit-flex;
     display: -ms-flexbox;
     display:         flex;
+
+    margin-right: 0;
+    margin-left: 0;
 }
 .ppe-col-visible
 {
