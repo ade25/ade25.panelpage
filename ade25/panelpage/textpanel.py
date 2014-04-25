@@ -2,15 +2,16 @@ from Acquisition import aq_inner
 from five import grok
 from zope import schema
 
-from plone.dexterity.content import Item
+from plone.dexterity.content import Container
 
 from plone.directives import form
+from plone.app.textfield import RichText
 from plone.namedfile.interfaces import IImageScaleTraversable
 
 from ade25.panelpage import MessageFactory as _
 
 
-class IBasePanel(form.Schema, IImageScaleTraversable):
+class ITextPanel(form.Schema, IImageScaleTraversable):
     """
     A single content panel or box
     """
@@ -22,24 +23,21 @@ class IBasePanel(form.Schema, IImageScaleTraversable):
         title=_(u"CSS Class"),
         required=False,
     )
-    headline = schema.TextLine(
-        title=_(u"Headline"),
-        required=False,
-    )
-    abstract = schema.Text(
-        title=_(u"Abstract"),
-        description=_(u"Short and visualy highlighted teaser message"),
+    text = RichText(
+        title=_(u"Body Text"),
+        description=_(u"Please enter rich formatted text. But keep it short "
+                      u"and suitable for a content panel"),
         required=False,
     )
 
 
-class ContentPanel(Item):
-    grok.implements(IBasePanel)
+class TextPanel(Container):
+    grok.implements(ITextPanel)
     pass
 
 
 class View(grok.View):
-    grok.context(IBasePanel)
+    grok.context(ITextPanel)
     grok.require('zope2.View')
     grok.name('view')
 
@@ -50,6 +48,6 @@ class View(grok.View):
 
 
 class ContentView(grok.View):
-    grok.context(IBasePanel)
+    grok.context(ITextPanel)
     grok.require('zope2.View')
     grok.name('content-view')
