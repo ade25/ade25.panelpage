@@ -108,8 +108,9 @@
 .ppe-block {
     display: block;
     margin-bottom: @line-height-computed;
-    padding: floor(@line-height-computed / 2) @line-height-computed;
-    border-left: ceil((@line-height-computed / 3)) solid @gray-lighter;
+    //padding: floor(@line-height-computed / 2) @line-height-computed;
+    padding-right: @line-height-computed;
+    border-right: ceil((@line-height-computed / 3)) solid @gray-lighter;
     color: @text-color;
     a {
         display: inline-block;
@@ -123,14 +124,14 @@
     }
     &.ppe-block-hidden,
     &.ppe-block-private {
-        border-right: ceil((@line-height-computed / 3)) solid @brand-danger;
+        border-left: ceil((@line-height-computed / 3)) solid @alert-danger-border;
         .ppe-block-state {
             color: @alert-danger-text;
         }
     }
     &.ppe-block-visible,
     &.ppe-block-published {
-        border-right: ceil((@line-height-computed / 3)) solid @brand-success;
+        border-left: ceil((@line-height-computed / 3)) solid @alert-success-border;
         .ppe-block-state {
             color: @alert-success-text;
         }
@@ -219,7 +220,7 @@
 }
 
 .btn-ppe {
-    .button-variant(@navbar-inverse-color; @navbar-inverse-bg; @navbar-inverse-border);
+    .button-variant(@gray-lighter; @navbar-inverse-bg; @navbar-inverse-border);
     border-radius: 0;
     &.btn-ppe-boxed {
         position:absolute;
@@ -229,4 +230,11 @@
 
 .ppe-form {
     padding: @line-height-computed 0;
+}
+
+.pp-icon {
+    font-size: @font-size-base;
+    &.pp-icon-lg {
+        font-size: ceil((@font-size-base * 4));
+    }
 }

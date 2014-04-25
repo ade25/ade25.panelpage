@@ -35,45 +35,70 @@
                 <div class="ppe-statusinfo-content" id="ppe-statusinfo-content"></div>
             </div>
         </div>
-        <div class="ppe-section">
-          <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Settings</div>
-            <div class="ppe-block animated"
-                tal:attributes="class string:ppe-block animated bounceInLeft">
-                <a class="ppe-action pull-right" href="#ppe-block-main-page"
-                    data-appui="toggle-contentblock"
-                    data-target="#ppe-block-main-page"
-                    tal:attributes="href string:${context/absolute_url}/edit-block">
-                    edit
-                </a>
-                <a class="animated bounceInLeft" href="#content"
-                    data-pjax="#app-pjax-container"
-                    data-appui="xxxtoggle-contentblock"
-                    tal:attributes="href string:${context/absolute_url}">
-                    <h4 i18n:translate="">Headline</h4>
-                </a>
-            </div>
-            <div class="ppe-block animated"
-                tal:attributes="class string:ppe-block animated bounceInLeft">
-                <a class="ppe-action pull-right" href="#ppe-block-main-page"
-                    data-appui="toggle-contentblock"
-                    data-target="#ppe-block-main-page"
-                    tal:attributes="href string:${context/absolute_url}/edit-block">
-                    edit
-                </a>
-                <a class="animated bounceInLeft" href="#content"
-                    data-pjax="#app-pjax-container"
-                    data-appui="xxxtoggle-contentblock"
-                    tal:attributes="href string:${context/absolute_url}">
-                    <h4 i18n:translate="">Abstract</h4>
-                </a>
-            </div>
-          </div>
-        </div>
 
         <div class="ppe-section" tal:condition="view/has_layout">
           <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Layout</div>
-          <div class="ppe-section animated" tal:condition="not:view/get_started">
-            <div class="ppe-block" tal:condition="view/show_ratio_selection">
+
+            <div class="ppe-section">
+              <div class="row ppe-row-eq-height">
+                <div class="col-xs-12 col-sm-11 ppe-col-visible">
+                  <div class="row ppe-row-eq-height"
+                    tal:condition="not:view/get_started">
+                    <tal:block tal:repeat="col gridrow/panels">
+                      <div tal:define="idx repeat/col/index;
+                                       number repeat/col/number"
+                          tal:attributes="class string:col-xs-12 col-sm-${col/grid-col}">
+                          <a class="ppe-action close pull-right" tal:attributes="href string:${context/absolute_url}/gridcol/delete/${idx}"
+                              i18n:translate="">&times;</a>
+                          <div class="ppe-panel" 
+                              tal:define="component col/component;
+                                          show_setup python:view.must_setup_panel(component);
+                                          icon_klass python:view.get_component_icon(component)">
+                            <div class="ppe-panel-icon pull-left">
+                              <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"></i>
+                            </div>
+                              <!--<i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>-->
+                              <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
+                              <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
+                              <div tal:condition="show_setup" i18n:translate="">
+                                  <span class="text-muted" i18n:translate="">This panel is empty</span><br />
+                                  <div class="btn-group">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="      dropdown">
+                                      <span i18n:translate="" tal:omit-tag="">add content</span> <span class="caret"><      /span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li role="presentation" class="dropdown-header" i18n:translate="">Widgets</li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href       string:${context/absolute_url}/gridcol/add/${idx}/text" i18n:translate="">      Richtext</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href       string:${context/absolute_url}/gridcol/add/${idx}/image" i18n:translate="">Image      </a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href       string:${context/absolute_url}/gridcol/add/${idx}/listing" i18n:translate="">     Listing</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href       string:${context/absolute_url}/gridcol/add/${idx}/box" i18n:translate="">Infobox      </a></li>
+                                      <li role="presentation" class="divider"></li>
+                                      <li role="presentation" class="dropdown-header" i18n:translate="">Content       Aliases</li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Insert      existing panel</a></li>
+                                    </ul>
+                                  </div>
+                              </div>
+                              <a tal:condition="not:show_setup"
+                                  tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uid}"
+                                  i18n:translate="">edit</a>
+                          </div>
+                      </div>
+                    </tal:block>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-1 ppe-col-action">
+                  <a class="ppe-link" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                    <div class="ppe-sign">
+                      <i class="ion ion-ios7-plus-outline pp-icon pp-icon-lg"></i>
+                    </div>
+                    <div class="h5" i18n:translate="">Panel</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ppe-section animated" tal:condition="not:view/get_started">
+            <div tal:condition="view/show_ratio_selection">
                 <div class="btn-group pull-right">
                   <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6">1:1</a>
                   <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8">1:2</a>
@@ -84,49 +109,12 @@
                 <h4><span i18n:translate="">Ratio:</span></h4>
             </div>
 
-            <div class="row ppe-row-eq-height"
-              tal:condition="not:view/get_started">
-              <tal:block tal:repeat="col gridrow/panels">
-                <div tal:define="idx repeat/col/index;
-                                 number repeat/col/number"
-                    tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} ppe-col-visible">
-                    <a class="ppe-action close pull-right" tal:attributes="href string:${context/absolute_url}/gridcol/delete/${idx}"
-                        i18n:translate="">&times;</a>
-                    <div tal:define="component col/component;
-                                     show_setup python:view.must_setup_panel(component);
-                                     icon_klass python:view.get_component_icon(component)">
-                        <i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>
-                        <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
-                        <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
-                        <div tal:condition="show_setup" i18n:translate="">
-                            <span class="text-muted" i18n:translate="">This panel is empty</span><br />
-                            <div class="btn-group">
-                              <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                <span i18n:translate="" tal:omit-tag="">add content</span> <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li role="presentation" class="dropdown-header" i18n:translate="">Widgets</li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/text" i18n:translate="">Richtext</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/image" i18n:translate="">Image</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/listing" i18n:translate="">Listing</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/box" i18n:translate="">Infobox</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation" class="dropdown-header" i18n:translate="">Content Aliases</li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Insert existing panel</a></li>
-                              </ul>
-                            </div>
-                        </div>
-                        <a tal:condition="not:show_setup"
-                            tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uid}"
-                            i18n:translate="">edit</a>
-                    </div>
-                </div>
-              </tal:block>
-            </div>
-            <div class="ppe-action text-right" tal:condition="view/panels">
-                <a class="btn btn-ppe btn-sm" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}"
-                    i18n:translate="">
-                    Add column
+            <div class="ppe-action" tal:condition="view/panels">
+              <strong>CSS Class:</strong><small tal:content="gridrow/klass" />
+              <a href="btn btn-default btn-sm">change</a>
+                <a class="btn btn-default btn-sm pull-right" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                    <span i18n:translate="">Add column</span>
+                    <i class="ion ion-ios7-arrow-right pp-icon"></i>
                 </a>
             </div>
 
@@ -183,7 +171,7 @@
             </a>
           </div>
         </div>
-
+      </div>
     </div>
 
   </metal:content-core>

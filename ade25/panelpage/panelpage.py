@@ -345,8 +345,7 @@ class PanelPageBlocks(grok.View):
             'id': token,
             'title': new_title,
             'status': 'visible',
-            'headline': None,
-            'abstract': None,
+            'klass': 'pp-row-default',
             'panels': [
                 {
                     'uuid': None,

@@ -17,7 +17,10 @@
     "html5sortable": "git@github.com:farhadi/html5sortable.git",
     "diazo-plone": "git@github.com:ade25/diazo-plone.git#master",
     "svgloading": "git@github.com:jxnblk/loading.git",
-    "grid-list": "~0.1.0"
+    "grid-list": "~0.1.0",
+    "Blueprint-SlidePushMenus": "*",
+    "ionicons": "~1.4.1",
+    "ionicons-less": "~1.4.1"
   },
   "devDependencies": {
     "chai": "1.7.2"

@@ -33,7 +33,7 @@ class IBasePanel(form.Schema, IImageScaleTraversable):
     )
 
 
-class ContentPanel(Item):
+class BasePanel(Item):
     grok.implements(IBasePanel)
     pass
 

@@ -107,7 +107,7 @@ class GridColumns(grok.View):
     def render(self):
         context = aq_inner(self.context)
         action = self.traverse_subpath[0]
-        new_layout = self.current_layout()
+        new_layout = self.stored_layout()
         if action == 'create':
             new_layout = self._create_column()
         if action == 'delete':
@@ -116,7 +116,7 @@ class GridColumns(grok.View):
             new_layout = self._move_column()
         if action == 'add':
             new_layout = self._add_content()
-        setattr(context, 'contentBlockLayout', json.dumps(new_layout))
+        setattr(context, 'panelPageLayout', new_layout)
         modified(context)
         context.reindexObject(idxs='modified')
         next_url = context.absolute_url()

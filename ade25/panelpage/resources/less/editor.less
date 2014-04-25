@@ -20,16 +20,24 @@
 
 .ppe-action {
   display: block;
-  margin-right: floor((@line-height-computed / 2));
+  margin-right: floor((@line-height-computed));
   line-height: ceil((@line-height-computed * 2));
   &.ppe-action-transition {
-    min-width: @navbar-height;
+    height: ceil((@headings-line-height + (@line-height-computed * 2)));
+    min-width: ceil((@navbar-height * 1.5));
+    padding-left: @padding-base-horizontal;
+    border: 0px solid @gray;
+    font-size: @font-size-small;
   }
-  &.ppe-action-private {
+  &.ppe-action-hidden {
     color: @alert-danger-text;
+    background: @alert-danger-bg;
+    border: 2px solid @alert-danger-border;
   }
-  &.ppe-action-published {
+  &.ppe-action-visible {
     color: @alert-success-text;
+    background: @alert-success-bg;
+    border: 3px solid @alert-success-border;
   }
 }
 
@@ -49,6 +57,25 @@
   padding-bottom: 15px;
   background-color: #f2f2f2;
   border: 1px solid @gray-light;
+}
+
+.ppe-col-action {
+  background-color: @gray;
+  border-right: 1px solid @text-color;
+  .ppe-link {
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.ppe-panel {
+  padding-top: @line-height-computed;
+  border-top: 2px solid @gray;
+  .ppe-panel-icon {
+    margin-right: ceil((@line-height-computed / 2));
+    padding: 0 ceil((@line-height-computed / 2));
+    border-right: 1px solid @gray;
+  }
 }
 
 .app-contentblock {
