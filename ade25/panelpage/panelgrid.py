@@ -40,14 +40,6 @@ class PanelGrid(grok.View):
         stored = getattr(context, 'panelPageLayout')
         return stored
 
-    def gridrow(self):
-        grid = self.stored_layout()
-        block_id = self.traverse_subpath[0]
-        return grid[int(block_id)]
-
-    def panels(self):
-        return self.gridrow()['panels']
-
     def panel_item(self, uuid):
         return api.content.get(UID=uuid)
 
@@ -72,7 +64,7 @@ class PanelGrid(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@basic-content-view')()
+            template = item.restrictedTraverse('@@content-view')()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template

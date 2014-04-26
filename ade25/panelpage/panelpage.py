@@ -14,7 +14,6 @@ from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
-from ade25.panelpage.contentblock import IContentBlock
 
 from ade25.panelpage import MessageFactory as _
 
@@ -118,18 +117,9 @@ class PanelPage(grok.View):
         context = aq_inner(self.context)
         block_layout = getattr(context, 'panelPageLayout', None)
         if block_layout is None:
-            catalog = api.portal.get_tool(name='portal_catalog')
-            items = catalog(object_provides=IContentBlock.__identifier__,
-                            path=dict(
-                                query='/'.join(context.getPhysicalPath()),
-                                depth=1),
-                            sort_on='getObjPositionInParent')
+            return list()
         else:
-            items = list()
-            for entry in block_layout:
-                item = api.content.get(UID=entry)
-                items.append(item)
-        return items
+            return block_layout
 
     def default_value(self, error):
         value = ''
