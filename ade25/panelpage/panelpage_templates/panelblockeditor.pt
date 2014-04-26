@@ -13,11 +13,16 @@
         tal:define="layout view/stored_layout;
                     gridrow view/gridrow">
       <div class="ppe-header">
-          <a class="ppe-close pull-right"
-              tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-              &times;
+          <a class="ppe-close pull-left"
+            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+            <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
+            Back
           </a>
-          <div class="ppe-header-title" i18n:translate="">
+          <a class="ppe-close pull-right"
+            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+            Edit
+          </a>
+          <div class="ppe-header-title text-center" i18n:translate="">
             Layout Editor
           </div>
       </div>
@@ -60,15 +65,15 @@
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
                             <div tal:condition="show_setup" i18n:translate="">
                                 <span class="text-muted" i18n:translate="">This panel is empty</span>
-                                <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s2" href="#cbp-spmenu-s2">show options</a>
-                                <nav id="cbp-spmenu-s2" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
+                                <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2">edit</a>
+                                <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
                                   <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Asign panel</h3>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}/base/${idx}">
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/base/${idx}">
                                     <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
                                     Base
                                   </a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}/text/${idx}">
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/text/${idx}">
                                     <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
                                     Rich Text</a>
                                   <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
@@ -86,7 +91,7 @@
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"
-                                tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uid}"
+                                tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uuid}"
                                 i18n:translate="">edit</a>
                         </div>
                     </div>
@@ -116,12 +121,8 @@
             </div>
 
             <div class="ppe-action" tal:condition="view/panels">
-              <strong>CSS Class:</strong><small tal:content="gridrow/klass" />
+              <strong>CSS Class: </strong><small tal:content="gridrow/klass" />
               <a href="btn btn-default btn-sm">change</a>
-                <a class="btn btn-default btn-sm pull-right" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
-                    <span i18n:translate="">Add column</span>
-                    <i class="ion ion-ios7-arrow-right pp-icon"></i>
-                </a>
             </div>
 
           </div>

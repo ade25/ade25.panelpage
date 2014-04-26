@@ -199,12 +199,12 @@ class GridColumns(grok.View):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=12)
         panel_type = 'ade25.panelpage.{0}panel'.format(component)
-        api.content.create(
+        item = api.content.create(
             type=panel_type,
             id=token,
             title=token,
             container=context,
             safe_id=True
         )
-        url = context.absolute_url()
-        return self.request.response.redirect(url)
+        uuid = api.content.get_uuid(obj=item)
+        return uuid

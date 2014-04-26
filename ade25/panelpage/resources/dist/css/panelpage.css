@@ -3010,15 +3010,9 @@ MIT License: https://github.com/driftyco/ionicons
 }
 .ppe-header .ppe-close
 {
-    font-size: 35px;
-    font-weight: bold;
-    line-height: 1;
+    font-size: 21px;
 
-    opacity: .2;
-    color: #000;
-    text-shadow: 0 1px 0 #fff;
-
-    filter: alpha(opacity=20);
+    margin-right: 20px;
 }
 .ppe-header .ppe-close:hover,
 .ppe-header .ppe-close:focus
