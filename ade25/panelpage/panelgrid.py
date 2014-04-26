@@ -1,8 +1,10 @@
+from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
 from plone.keyring import django_random
+from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
 from ade25.panelpage.panelpage import IPanelPage
@@ -98,6 +100,115 @@ class PanelGrid(grok.View):
         return matrix
 
 
+class GridRows(grok.View):
+    """ Generic router for panel page content blocks
+
+        :param action:  CRUD content action
+        :param uid:     Content block UID
+    """
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('gridrow')
+
+    def update(self):
+        context = aq_inner(self.context)
+        self.data = {}
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            self.data = self.request.form
+
+    def render(self):
+        context = aq_inner(self.context)
+        action = self.traverse_subpath[0]
+        next_url = context.absolute_url()
+        if action == 'create':
+            next_url = self._create_panel()
+        if action == 'delete':
+            next_url = self._delete_panel()
+        if action == 'transition':
+            next_url = self._transition_panel()
+        return self.request.response.redirect(next_url)
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def _create_panel(self):
+        context = aq_inner(self.context)
+        token = django_random.get_random_string(length=24)
+        new_title = self.request.form.get('title', token)
+        block = {
+            'id': token,
+            'title': new_title,
+            'status': 'visible',
+            'klass': 'pp-row-default',
+            'panels': [
+                {
+                    'uuid': None,
+                    'component': u"placeholder",
+                    'grid-col': 12,
+                    'klass': 'panel-column'
+                }
+            ]
+        }
+        items = getattr(context, 'panelPageLayout', None)
+        if items is None:
+            items = list()
+        items.append(block)
+        setattr(context, 'panelPageLayout', items)
+        modified(context)
+        context.reindexObject(idxs='modified')
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
+
+    def _delete_panel(self):
+        context = aq_inner(self.context)
+        grid = getattr(context, 'panelPageLayout')
+        idx = self.traverse_subpath[1]
+        grid.pop(int(idx))
+        setattr(context, 'panelPageLayout', grid)
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
+
+    def _transition_panel(self):
+        context = aq_inner(self.context)
+        grid = getattr(context, 'panelPageLayout')
+        index = self.traverse_subpath[1]
+        idx = int(index)
+        row = grid[idx]
+        # check if we have an explicit transition requested
+        if len(self.traverse_subpath) > 2:
+            state = self.traverse_subpath[2]
+        else:
+            state = row['status']
+        changed = 'visible'
+        if state == 'visible':
+            changed = 'hidden'
+        row['status'] = changed
+        grid[idx] = row
+        setattr(context, 'panelPageLayout', grid)
+        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
+        return url
+
+    def available_transitions(self, state):
+        transitions = {
+            'published': 'retract',
+            'visible': 'hide',
+            'hidden': 'show',
+            'private': 'publish'
+        }
+        return transitions[state]
+
+
 class GridColumns(grok.View):
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
@@ -169,7 +280,7 @@ class GridColumns(grok.View):
         idx = self.traverse_subpath[1]
         updated = self.stored_layout()
         updated.pop(int(idx))
-        grid_idx = len(updated)
+        grid_idx = len(updated) + 1
         col_size = 12 / grid_idx
         for x in updated:
             x['grid-col'] = col_size
