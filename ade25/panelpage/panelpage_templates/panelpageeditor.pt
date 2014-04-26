@@ -97,7 +97,8 @@
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
                             data-toggle="modal" data-target="#confirmBlockDelete"
-                            tal:attributes="data-target string:#confirmBlockDelete${uid}">
+                            tal:attributes="href string:${context/absolute_url}/@@gridrow/delete/${item_idx};
+                                            data-target string:#confirmBlockDelete${uid}">
                             delete
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
