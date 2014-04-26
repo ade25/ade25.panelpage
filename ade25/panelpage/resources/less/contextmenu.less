@@ -21,13 +21,13 @@
 
 .cbp-spmenu a {
   display: block;
-  color: #fff;
+  color: @gray-lighter;
   font-size: 1.1em;
   font-weight: 300;
 }
 
 .cbp-spmenu a:hover {
-  //background: #258ecd;
+  color: #fff;
   background: @link-color;
 }
 
@@ -50,8 +50,15 @@
 }
 
 .cbp-spmenu-vertical a {
-  border-bottom: 1px solid #258ecd;
+  border-bottom: 1px solid @gray-lighter;
   padding: 1em;
+  &.cbp-spmenu-discard {
+    padding: 0;
+    border: none;
+    &:hover {
+      background: transparent;
+    }
+  }
 }
 
 .cbp-spmenu-horizontal {

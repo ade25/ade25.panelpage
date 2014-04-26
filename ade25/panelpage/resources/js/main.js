@@ -9,13 +9,13 @@
       click: function (e) {
         e.preventDefault();
         var $contextMenu = $(this).data('target');
-        $contextMenu.toggleClass('cbp-spmenu-open');
+        $($contextMenu).toggleClass('cbp-spmenu-open');
       }
     });
     $('a[data-appui="contextmenu-close"]').on({
       click: function (e) {
         e.preventDefault();
-        $(this).closest('.panelpage-slide').removeClass('cbp-spmenu-open');
+        $(this).closest('.cbp-spmenu').removeClass('cbp-spmenu-open');
       }
     });
     $('div[data-appui="editable"]').on({

@@ -108,8 +108,8 @@
 .ppe-block {
     display: block;
     margin-bottom: @line-height-computed;
-    //padding: floor(@line-height-computed / 2) @line-height-computed;
-    padding-right: @line-height-computed;
+    padding-left: @padding-base-horizontal;
+    border-bottom: 1px solid @gray-lighter;
     border-right: ceil((@line-height-computed / 3)) solid @gray-lighter;
     color: @text-color;
     a {
@@ -131,7 +131,7 @@
     }
     &.ppe-block-visible,
     &.ppe-block-published {
-        border-left: ceil((@line-height-computed / 3)) solid @alert-success-border;
+        // border-right: ceil((@line-height-computed / 3)) solid @alert-success-border;
         .ppe-block-state {
             color: @alert-success-text;
         }
@@ -237,7 +237,7 @@
     &.pp-icon-md {
         font-size: ceil((@font-size-base * 2));
     }
-    .ppe-icon-mdl {
+    &.pp-icon-mlg {
         font-size: ceil((@font-size-base * 3));
     }
     &.pp-icon-lg {

@@ -1,4 +1,3 @@
-import json
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
@@ -181,21 +180,29 @@ class GridColumns(grok.View):
         return updated
 
     def _add_content(self):
-        idx = int(self.traverse_subpath[1])
-        col_content = self.traverse_subpath[2]
-        updated = self.current_layout()
-        column = updated[idx]
-        column['component'] = col_content
-        return updated
+        grid = self.stored_layout()
+        row_idx = self.traverse_subpath[1]
+        row = grid[int(row_idx)]
+        cols = self.gridrow()['panels']
+        component = self.traverse_subpath[2]
+        col_idx = self.traverse_subpath[3]
+        col = cols[int(col_idx)]
+        # Create panel content type here
+        uid = self._create_panel(component)
+        col['component'] = component
+        col['uuid'] = uid
+        row['panels'] = cols
+        grid[int(row_idx)] = row
+        return grid
 
-    def _create_panel(self, data):
+    def _create_panel(self, component):
         context = aq_inner(self.context)
-        new_title = data['title']
         token = django_random.get_random_string(length=12)
+        panel_type = 'ade25.panelpage.{0}panel'.format(component)
         api.content.create(
-            type='ade25.panelpage.contentpanel',
+            type=panel_type,
             id=token,
-            title=new_title,
+            title=token,
             container=context,
             safe_id=True
         )

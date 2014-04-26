@@ -2764,10 +2764,11 @@ MIT License: https://github.com/driftyco/ionicons
 
     display: block;
 
-    color: #fff;
+    color: #eee;
 }
 .cbp-spmenu a:hover
 {
+    color: #fff;
     background: #428bca;
 }
 .cbp-spmenu a:active
@@ -2791,7 +2792,17 @@ MIT License: https://github.com/driftyco/ionicons
 {
     padding: 1em;
 
-    border-bottom: 1px solid #258ecd;
+    border-bottom: 1px solid #eee;
+}
+.cbp-spmenu-vertical a.cbp-spmenu-discard
+{
+    padding: 0;
+
+    border: none;
+}
+.cbp-spmenu-vertical a.cbp-spmenu-discard:hover
+{
+    background: transparent;
 }
 .cbp-spmenu-horizontal
 {
@@ -3050,10 +3061,11 @@ MIT License: https://github.com/driftyco/ionicons
     display: block;
 
     margin-bottom: 20px;
-    padding-right: 20px;
+    padding-left: 12px;
 
     color: #333;
     border-right: 7px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 .ppe-block a
 {
@@ -3078,11 +3090,6 @@ MIT License: https://github.com/driftyco/ionicons
 .ppe-block.ppe-block-private .ppe-block-state
 {
     color: #a94442;
-}
-.ppe-block.ppe-block-visible,
-.ppe-block.ppe-block-published
-{
-    border-left: 7px solid #d6e9c6;
 }
 .ppe-block.ppe-block-visible .ppe-block-state,
 .ppe-block.ppe-block-published .ppe-block-state
@@ -3265,7 +3272,7 @@ fieldset[disabled] .btn-ppe.active
 {
     font-size: 28px;
 }
-.pp-icon .ppe-icon-mdl
+.pp-icon.pp-icon-mlg
 {
     font-size: 42px;
 }
@@ -3292,33 +3299,20 @@ fieldset[disabled] .btn-ppe.active
 }
 .ppe-action
 {
-    line-height: 40px;
+    line-height: 1;
 
     display: block;
 
-    margin-right: 20px;
+    margin-top: 15px;
+    margin-right: 0;
+    margin-left: 20px;
 }
 .ppe-action.ppe-action-transition
 {
-    font-size: 12px;
+    margin-right: 40px;
+    padding-right: 12px;
 
-    min-width: 75px;
-    height: 42px;
-    padding-left: 12px;
-
-    border: 0 solid #555;
-}
-.ppe-action.ppe-action-hidden
-{
-    color: #a94442;
-    border: 2px solid #ebccd1;
-    background: #f2dede;
-}
-.ppe-action.ppe-action-visible
-{
-    color: #3c763d;
-    border: 3px solid #d6e9c6;
-    background: #dff0d8;
+    border-right: 1px solid #eee;
 }
 .ppe-dragindicator
 {
@@ -3331,8 +3325,8 @@ fieldset[disabled] .btn-ppe.active
     display: -ms-flexbox;
     display:         flex;
 
-    margin-right: 0;
-    margin-left: 0;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 .ppe-col-visible
 {
@@ -3340,7 +3334,7 @@ fieldset[disabled] .btn-ppe.active
     padding-bottom: 15px;
 
     border: 1px solid #999;
-    background-color: #f2f2f2;
+    background-color: #f9f9f9;
 }
 .ppe-col-action
 {

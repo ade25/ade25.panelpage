@@ -61,33 +61,28 @@
                             <div tal:condition="show_setup" i18n:translate="">
                                 <span class="text-muted" i18n:translate="">This panel is empty</span>
                                 <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s2" href="#cbp-spmenu-s2">show options</a>
-                                <div class="btn-group">
-                                  <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                    <span i18n:translate="" tal:omit-tag="">add content</span> <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu">
-                                    <li role="presentation" class="dropdown-header" i18n:translate="">Widgets</li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/text" i18n:translate="">      Richtext</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/image" i18n:translate="">Image      </a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/listing" i18n:translate="">     Listing</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" tal:attributes="href string:${context/absolute_url}/gridcol/add/${idx}/box" i18n:translate="">Infobox      </a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation" class="dropdown-header" i18n:translate="">Content Aliases</li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Insert existing panel</a></li>
-                                  </ul>
-                                </div>
                                 <nav id="cbp-spmenu-s2" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
-                                  <h3><a class="pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
+                                  <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Asign panel</h3>
-                                  <a href="#">
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}/base/${idx}">
                                     <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
                                     Base
                                   </a>
-                                  <a href="#"><i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>Rich Text</a>
-                                  <a href="#"><i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>Image</a>
-                                  <a href="#"><i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>Listing</a>
-                                  <a href="#"><i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>Infobox</a>
-                                  <a href="#"><i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>Alias</a>
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}/text/${idx}">
+                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                    Rich Text</a>
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                    Image</a>
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                    Listing</a>
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                    Infobox</a>
+                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
+                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                    Alias</a>
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"
