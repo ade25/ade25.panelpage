@@ -20,7 +20,7 @@
           </a>
           <a class="ppe-close pull-right"
             tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-            Edit
+            CSS Class
           </a>
           <div class="ppe-header-title text-center" i18n:translate="">
             Layout Editor
@@ -62,7 +62,8 @@
                                         show_setup python:view.must_setup_panel(component);
                                         icon_klass python:view.get_component_icon(component)">
                           <div class="ppe-panel-icon pull-left">
-                            <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"></i>
+                            <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"
+                              tal:attributes="class string:ion ${icon_klass} pp-icon pp-icon-lg"></i>
                           </div>
                             <!--<i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>-->
                             <div class="h4 pp-panel-title"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
@@ -101,6 +102,27 @@
                     </div>
                   </tal:block>
                 </div>
+                <div tal:condition="view/show_ratio_selection" class="ppe-ratio text-center">
+                    <div class="btn-group"
+                      tal:define="active view/active_ratio">
+                      <a tal:define="is_active python:active == 9;"
+                        tal:attributes="href string:${context/absolute_url}/ratio-selection/9/3;
+                                        class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">3:1</a>
+                      <a tal:define="is_active python:active == 8;"
+                        tal:attributes="href string:${context/absolute_url}/ratio-selection/8/4;
+                                        class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">2:1</a>
+                      <a tal:define="is_active python:active == 6;"
+                        tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6;
+                                        class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:1</a>
+                      <a tal:define="is_active python:active == 4;"
+                        tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8;
+                                        class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:2</a>
+                      <a tal:define="is_active python:active == 3;"
+                        tal:attributes="href string:${context/absolute_url}/ratio-selection/3/9;
+                                        class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:3</a>
+                    </div>
+                </div>
+
               </div>
               <div class="col-xs-12 col-sm-1 ppe-col-action">
                 <a class="ppe-link" tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
@@ -111,25 +133,6 @@
                 </a>
               </div>
             </div>
-
-            <div class="ppe-section animated" tal:condition="not:view/get_started">
-            <div tal:condition="view/show_ratio_selection">
-                <div class="btn-group pull-right">
-                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6">1:1</a>
-                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8">1:2</a>
-                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/3/9">1:3</a>
-                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/8/4">2:1</a>
-                  <a class="btn btn-default btn-sm" tal:attributes="href string:${context/absolute_url}/ratio-selection/9/3">3:1</a>
-                </div>
-                <h4><span i18n:translate="">Ratio:</span></h4>
-            </div>
-
-            <div class="ppe-action" tal:condition="view/panels">
-              <strong>CSS Class: </strong><small tal:content="gridrow/klass" />
-              <a href="btn btn-default btn-sm">change</a>
-            </div>
-
-          </div>
 
           <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Preview</div>
             <div class="ppe-block no-border animated" tal:condition="not:view/get_started">

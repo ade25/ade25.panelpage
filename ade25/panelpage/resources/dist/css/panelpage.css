@@ -3130,6 +3130,12 @@ MIT License: https://github.com/driftyco/ionicons
 
     color: #eee;
 }
+.ppe-sign-ratio
+{
+    color: #555;
+    border: 1px solid #555;
+    border-radius: 50%;
+}
 .ppe-sign-draggable
 {
     color: #555;
@@ -3372,6 +3378,15 @@ fieldset[disabled] .btn-ppe.active
 .ppe-panel .pp-panel-title
 {
     margin-bottom: 0;
+}
+.ppe-ratio
+{
+    display: block;
+
+    width: 480px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .app-contentblock
 {

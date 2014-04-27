@@ -3,7 +3,6 @@
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
     <div tal:condition="context/text"
-      talreplace="structure context/text/output" />
-    </div>
+      tal:replace="structure context/text/output" />
   </div>
 </div>

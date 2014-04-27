@@ -257,22 +257,19 @@ class PanelBlockEditor(grok.View):
         return len(self.panels()) == 2
 
     def active_ratio(self):
-        layout = self.stored_layout()
-        value = '6'
-        if len(layout) > 0:
-            first_col = layout[0]
-            value = first_col['grid-col']
+        panel = self.panels()[0]
+        value = panel['grid-col']
         return value
 
     def get_component_icon(self, component):
         matrix = {
-            'base': 'fa-file-text-o',
-            'text': 'fa-file-text-o',
-            'image': 'fa-picture-o',
-            'listing': 'fa-list',
-            'box': 'fa-list-alt',
-            'alias': 'fa-copy',
-            'placeholder': 'fa-ellipsis-h'
+            'base': 'ion-document',
+            'text': 'ion-document-text',
+            'image': 'ion-image',
+            'listing': 'ion-ios7-albums-outline',
+            'box': 'ion-filing',
+            'alias': 'ion-ios7-download',
+            'placeholder': 'ion-ios7-circle-outline'
         }
         return matrix[component]
 
