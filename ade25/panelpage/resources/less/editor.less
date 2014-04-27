@@ -24,6 +24,12 @@
   margin-right: 0;
   margin-left: floor((@line-height-computed));
   line-height: 1;
+  &.ppe-action-close {
+    .opacity(.5);
+    &:hover {
+      .opacity(1);
+    }
+  }
   &.ppe-action-transition {
     //height: ceil((@headings-line-height + (@line-height-computed * 2)));
     // min-width: ceil((@navbar-height * 1.5));
@@ -58,10 +64,10 @@
 }
 
 .ppe-col-visible {
-  padding-top: 15px;
+  // padding-top: 15px;
   padding-bottom: 15px;
   background-color: #f9f9f9;
-  border: 1px solid @gray-light;
+  // border: 1px solid @gray-light;
 }
 
 .ppe-col-action {
@@ -74,12 +80,15 @@
 }
 
 .ppe-panel {
-  padding-top: @line-height-computed;
+  // padding-top: @line-height-computed;
   border-top: 2px solid @gray;
   .ppe-panel-icon {
     margin-right: ceil((@line-height-computed / 2));
     padding: 0 ceil((@line-height-computed / 2));
     border-right: 1px solid @gray;
+  }
+  .pp-panel-title {
+    margin-bottom: 0;
   }
 }
 

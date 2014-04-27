@@ -5,11 +5,11 @@
     <div class="contentpanel-header">
       <div class="contentpanel-title">
         <h2 tal:condition="context/headline"
-          tal:replace="context/headline" />
+          tal:content="context/headline" />
         <h2 tal:condition="not:context/headline"
           tal:replace="context/Title" />
       </div>
-      <p class="contentpanel-abstract" tal:condition="context/abstract"
+      <p class="lead contentpanel-abstract" tal:condition="context/abstract"
         tal:content="context/abstract" />
     </div>
   </div>

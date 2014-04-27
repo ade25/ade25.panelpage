@@ -3301,6 +3301,18 @@ fieldset[disabled] .btn-ppe.active
     margin-right: 0;
     margin-left: 20px;
 }
+.ppe-action.ppe-action-close
+{
+    opacity: .5;
+
+    filter: alpha(opacity=50);
+}
+.ppe-action.ppe-action-close:hover
+{
+    opacity: 1;
+
+    filter: alpha(opacity=100);
+}
 .ppe-action.ppe-action-transition
 {
     margin-right: 40px;
@@ -3324,10 +3336,8 @@ fieldset[disabled] .btn-ppe.active
 }
 .ppe-col-visible
 {
-    padding-top: 15px;
     padding-bottom: 15px;
 
-    border: 1px solid #999;
     background-color: #f9f9f9;
 }
 .ppe-col-action
@@ -3343,8 +3353,6 @@ fieldset[disabled] .btn-ppe.active
 }
 .ppe-panel
 {
-    padding-top: 20px;
-
     border-top: 2px solid #555;
 }
 .ppe-panel .ppe-panel-icon
@@ -3353,6 +3361,10 @@ fieldset[disabled] .btn-ppe.active
     padding: 0 10px;
 
     border-right: 1px solid #555;
+}
+.ppe-panel .pp-panel-title
+{
+    margin-bottom: 0;
 }
 .app-contentblock
 {

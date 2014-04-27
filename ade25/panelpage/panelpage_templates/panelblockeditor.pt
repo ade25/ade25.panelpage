@@ -51,8 +51,9 @@
                     <div tal:define="idx repeat/col/index;
                                      number repeat/col/number"
                         tal:attributes="class string:col-xs-12 col-sm-${col/grid-col}">
-                        <a class="ppe-action close pull-right" tal:attributes="href string:${context/absolute_url}/gridcol/delete/${idx}"
-                            i18n:translate="">&times;</a>
+                        <a class="ppe-action ppe-action-close pull-right" tal:attributes="href string:${context/absolute_url}/gridcolumn/delete/${idx}">
+                            <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md"></i>
+                        </a>
                         <div class="ppe-panel"
                             tal:define="component col/component;
                                         show_setup python:view.must_setup_panel(component);
@@ -61,7 +62,7 @@
                             <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"></i>
                           </div>
                             <!--<i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>-->
-                            <div class="h4"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
+                            <div class="h4 pp-panel-title"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
                             <div tal:condition="show_setup" i18n:translate="">
                                 <span class="text-muted" i18n:translate="">This panel is empty</span>
@@ -128,44 +129,9 @@
           </div>
 
           <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Block Preview</div>
-          <div class="ppe-block no-border animated" tal:condition="not:view/get_started">
-              <div class="contentblock-content">
-                 <div class="contentblock-header" tal:content="nothing">
-                   <h2 class="contentblock-title"
-                       tal:condition="context/headline"
-                       tal:content="context/headline" />
-                   <p class="lead contentblock-teaser"
-                       tal:condition="context/Description"
-                       tal:content="context/Description" />
-                 </div>
-                 <tal:panelgrid tal:define="grid view/gridrow">
-                   <div class="panelpage-default">
-                   <div class="row ppe-row-eq-height">
-                     <tal:block tal:repeat="col view/panels">
-                       <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
-                         tal:define="panel_type col/component;
-                                     uuid col/uuid;
-                                     show_panel python:view.show_panel_obj(uuid)">
-                         <div tal:define="idx repeat/col/number;
-                                          oddrow repeat/col/odd;
-                                          klass col/klass | string:contentpanel-default;
-                                          oddclass python:oddrow and 'item-odd' or 'item-even'"
-                           tal:attributes="class string:contentpanel ${klass} ${oddclass}">
-                           <tal:item tal:condition="show_panel">
-                             <div tal:define="item python:view.rendered_panel(uuid)">
-                             </div>
-                           </tal:item>
-                           <div tal:condition="not:show_panel">
-                             <h6>Panel <span tal:replace="idx" /></h6>
-                           </div>
-                         </div>
-                       </div>
-                     </tal:block>
-                   </div>
-                 </div>
-                 </tal:panelgrid>
-              </div>
-          </div>
+            <div class="ppe-block no-border animated" tal:condition="not:view/get_started">
+              <div tal:replace="structure python:view.rendered_panelgrid()" />
+            </div>
 
           <div class="ppe-block-placeholder placeholder-get-started" tal:condition="view/get_started">
             <div class="placeholder-sign">&hellip;</div>

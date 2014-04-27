@@ -276,11 +276,16 @@ class PanelBlockEditor(grok.View):
         }
         return matrix[component]
 
+    def rendered_panelgrid(self):
+        context = aq_inner(self.context)
+        template = context.restrictedTraverse('@@panelgrid')()
+        return template
+
     def rendered_panel(self, uid):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@basic-content-view')()
+            template = item.restrictedTraverse('@@content-view')()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template

@@ -20,7 +20,12 @@
                            klass col/klass | string:panel-default;
                            oddclass python:oddrow and 'item-odd' or 'item-even'"
             tal:attributes="class string:panel ${klass} ${oddclass}">
-              <h6>Panel <span tal:replace="idx" /></h6>
+              <div tal:condition="not:uuid">
+                <h6>Panel <span tal:replace="idx" /></h6>
+              </div>
+              <div tal:condition="uuid">
+                <div tal:replace="structure python:view.rendered_panel(uuid)" />
+              </div>
           </div>
         </div>
       </tal:block>
