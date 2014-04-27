@@ -28,7 +28,7 @@ class IListingPanel(form.Schema, IImageScaleTraversable):
         title=_(u"Display subitems"),
         description=_(u"Use this setting to automatically list all subcontents"
                       u" of this context. All custom query selections made"
-                      u" will beignored"),
+                      u" will be ignored"),
         required=False
     )
     form.widget(query=QueryStringFieldWidget)
