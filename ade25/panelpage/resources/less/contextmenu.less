@@ -28,7 +28,7 @@
 
 .cbp-spmenu a:hover {
   color: #fff;
-  background: @link-color;
+  background: lighten(@gray, 5%);
 }
 
 .cbp-spmenu a:active {
@@ -59,6 +59,12 @@
       background: transparent;
     }
   }
+}
+
+.cbp-spmenu-vertical p {
+  margin-bottom: 0;
+  padding: @line-height-computed;
+  border-bottom: 1px solid @gray-lighter;
 }
 
 .cbp-spmenu-horizontal {

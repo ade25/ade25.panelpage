@@ -51,7 +51,10 @@
                     <div tal:define="idx repeat/col/index;
                                      number repeat/col/number"
                         tal:attributes="class string:col-xs-12 col-sm-${col/grid-col}">
-                        <a class="ppe-action ppe-action-close pull-right" tal:attributes="href string:${context/absolute_url}/gridcolumn/delete/${idx}">
+                        <a class="ppe-action ppe-action-close pull-right"
+                          data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
+                          tal:attributes="data-target string:#cbp-spmenu-p${idx} ;
+                                          href string:${context/absolute_url}/gridcolumn/delete/${view/block_id}/${idx}">
                             <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md"></i>
                         </a>
                         <div class="ppe-panel"
@@ -149,6 +152,23 @@
 
   </metal:content-core>
 </metal:main>
+
+<metal:header fill-slot="header">
+  <tal:modals tal:repeat="item view/panels">
+    <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right"
+      tal:define="idx repeat/item/index"
+      tal:attributes="id string:cbp-spmenu-p${idx}">
+      <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
+        Delete confirmation</h3>
+      <p i18n:translate="">Removing this panel will also remove all of its contents.
+        This step can not be undone.</p>
+      <a tal:attributes="href string:${context/absolute_url}/gridcolumn/delete/${view/block_id}/${idx}">
+        <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md pull-right"></i>
+        Delete panel
+      </a>
+    </nav>
+  </tal:modals>
+</metal:header>
 
 </body>
 </html>
