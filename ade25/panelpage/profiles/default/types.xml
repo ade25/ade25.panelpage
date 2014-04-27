@@ -13,5 +13,6 @@
   <object name="ade25.panelpage.contentpanel" meta_type="Dexterity FTI" />
   <object name="ade25.panelpage.basepanel" meta_type="Dexterity FTI" />
   <object name="ade25.panelpage.textpanel" meta_type="Dexterity FTI" />
+  <object name="ade25.panelpage.imagepanel" meta_type="Dexterity FTI" />
   <object name="ade25.panelpage.contentblock" meta_type="Dexterity FTI" />
 </object>
