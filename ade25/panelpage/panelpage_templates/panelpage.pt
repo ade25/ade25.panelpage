@@ -15,7 +15,6 @@
   <tal:block tal:condition="view/has_subcontent">
     <div class="app-panelpage-content"
       tal:condition="view/has_stored_layout">
-      <p>Render the panelgrid here</p>
       <div tal:replace="structure view/rendered_panelgrid" />
     </div>
   </tal:block>

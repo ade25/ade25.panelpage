@@ -2771,6 +2771,10 @@ MIT License: https://github.com/driftyco/ionicons
     color: #fff;
     background: #626262;
 }
+.cbp-spmenu-delete a:hover
+{
+    background: #d9534f;
+}
 .cbp-spmenu a:active
 {
     color: #47a3da;
