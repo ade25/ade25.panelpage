@@ -23,6 +23,7 @@ from plone.app.uuid.utils import uuidToObject
 
 from plone.dexterity.interfaces import IDexterityFTI
 from Products.statusmessages.interfaces import IStatusMessage
+from ade25.panelpage.panelpage import IPanelPage
 from ade25.panelpage.panelmanager import IPanelManager
 from ade25.panelpage.contentpanel import IContentPanel
 
@@ -203,3 +204,24 @@ class ContentPanelLinkEditForm(form.SchemaEditForm):
         if IPanelManager.providedBy(parent):
             next_url = parent.absolute_url()
         return self.request.response.redirect(next_url)
+
+
+class PanelFactory(grok.View):
+    grok.context(IPanelPage)
+    grok.require('zope2.View')
+    grok.name('panelfactory')
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def panel(self):
+        uuid = self.traverse_subpath[0]
+        item = api.content.get(UID=uuid)
+        return item

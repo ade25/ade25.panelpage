@@ -113,6 +113,24 @@ $.fn.sortable = function(options) {
         $(this).closest('.cbp-spmenu').removeClass('cbp-spmenu-open');
       }
     });
+    $('a[data-appui="modal"]').on({
+      click: function (e) {
+        e.preventDefault();
+        var $modal = $(this).data('target');
+        $modal.on('show.bs.modal', function () {
+          var $modalBody = $(this).find('.modal-body');
+          $modalBody.load(e.currentTarget.href);
+        })
+        .modal();
+      }
+    });
+    $('a[data-appui="ajaxified"]').each(function () {
+      var $targetUrl = $(this).data('source'),
+          $container = $(this).data('target');
+      $(this).load($targetUrl + '?ajax_load=1 #content-core >*')
+        .fadeIn('slow');
+    });
+
     $('div[data-appui="editable"]').on({
       mouseenter: function () {
         $(this).find('.contentpanel-editbar')
