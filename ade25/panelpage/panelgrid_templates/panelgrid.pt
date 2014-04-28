@@ -9,9 +9,9 @@
                         uuid col/uuid">
             <div tal:define="idx repeat/col/index;
                              oddrow repeat/col/odd;
-                             klass col/klass | string:panel-default;
+                             klass col/klass | string:pagepanel-default;
                              oddclass python:oddrow and 'item-odd' or 'item-even'"
-              tal:attributes="class string:panel ${klass} ${oddclass}">
+              tal:attributes="class string:pagepanel ${klass} ${oddclass}">
                 <div tal:condition="not:uuid">
                   <h6>Panel <span tal:replace="idx" /></h6>
                 </div>
