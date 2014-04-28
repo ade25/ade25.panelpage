@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<object name="ade25.panelpage.basepanel"
+<object name="ade25.panelpage.imagepanel"
    meta_type="Dexterity FTI"
    i18n:domain="ade25.panelpage" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
@@ -15,8 +15,8 @@
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">ade25.panelpage.basepanel.IListingPanel</property>
-  <property name="klass">ade25.panelpage.basepanel.ListingPanel</property>
+  <property name="schema">ade25.panelpage.listingpanel.IListingPanel</property>
+  <property name="klass">ade25.panelpage.listingpanel.ListingPanel</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
