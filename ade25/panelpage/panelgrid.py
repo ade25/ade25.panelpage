@@ -223,7 +223,7 @@ class GridColumns(grok.View):
         setattr(context, 'panelPageLayout', new_layout)
         modified(context)
         context.reindexObject(idxs='modified')
-        row = self.gridrow()
+        row = self.traverse_subpath[1]
         base_url = context.absolute_url()
         next_url = '{0}/@@panelblock-editor/{1}'.format(base_url, row)
         return self.request.response.redirect(next_url)
@@ -274,13 +274,17 @@ class GridColumns(grok.View):
 
     def _delete_column(self):
         idx = self.traverse_subpath[1]
-        updated = self.stored_layout()
-        updated.pop(int(idx))
-        grid_idx = len(updated) + 1
+        grid = self.stored_layout()
+        row = grid[int(idx)]
+        cols = self.gridrow()['panels']
+        cols.pop(int(idx))
+        grid_idx = len(cols) + 1
         col_size = 12 / grid_idx
-        for x in updated:
+        for x in cols:
             x['grid-col'] = col_size
-        return updated
+        row['panels'] = cols
+        grid[int(idx)] = row
+        return grid
 
     def _update_column(self):
         updated = self.current_layout()
@@ -315,7 +319,7 @@ class GridColumns(grok.View):
 
     def _create_panel(self, component):
         context = aq_inner(self.context)
-        token = django_random.get_random_string(length=12)
+        token = django_random.get_random_string(length=24)
         panel_type = 'ade25.panelpage.{0}panel'.format(component)
         item = api.content.create(
             type=panel_type,
