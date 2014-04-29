@@ -214,6 +214,8 @@ class GridColumns(grok.View):
             new_layout = self._create_column()
         if action == 'delete':
             new_layout = self._delete_column()
+        if action == 'update':
+            new_layout = self._update_column()
         if action == 'move':
             new_layout = self._move_column()
         if action == 'add':
@@ -221,7 +223,9 @@ class GridColumns(grok.View):
         setattr(context, 'panelPageLayout', new_layout)
         modified(context)
         context.reindexObject(idxs='modified')
-        next_url = context.absolute_url()
+        row = self.gridrow()
+        base_url = context.absolute_url()
+        next_url = '{0}/@@panelblock-editor/{1}'.format(base_url, row)
         return self.request.response.redirect(next_url)
 
     @property
@@ -276,6 +280,17 @@ class GridColumns(grok.View):
         col_size = 12 / grid_idx
         for x in updated:
             x['grid-col'] = col_size
+        return updated
+
+    def _update_column(self):
+        updated = self.current_layout()
+        gridrow = self.gridrow()
+        row = updated[gridrow]
+        panels = self.panels()
+        panels[0]['grid-col'] = self.traverse_subpath[2]
+        panels[1]['grid-col'] = self.traverse_subpath[3]
+        row['panels'] = panels
+        updated[gridrow] = row
         return updated
 
     def _move_column(self):
