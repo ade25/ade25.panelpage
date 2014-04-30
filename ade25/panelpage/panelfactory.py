@@ -30,6 +30,90 @@ from ade25.panelpage.contentpanel import IContentPanel
 from ade25.panelpage import MessageFactory as _
 
 
+class IPanelHeadlineEdit(form.Schema):
+
+    headline = schema.TextLine(
+        title=_(u"Headline"),
+        required=False,
+    )
+
+
+class PanelHeadlineEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('edit-panel')
+
+    schema = IPanelHeadlineEdit
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        row = self.traverse_subpath[0]
+        panel = self.traverse_subpath[1]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.contentpanel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+    def applyChanges(self, data):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.contentpanel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        for key, value in fields:
+            try:
+                new_value = data[key]
+                setattr(context, key, new_value)
+            except KeyError:
+                continue
+        modified(context)
+        context.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+
 class IContentPanelEdit(form.Schema):
 
     title = schema.TextLine(

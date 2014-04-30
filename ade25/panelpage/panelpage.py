@@ -296,17 +296,11 @@ class PanelPageBlocks(grok.View):
     """
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
-    grok.name('ppb')
+    grok.name('panel-editor')
 
     def update(self):
-        context = aq_inner(self.context)
-        self.data = {}
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            self.data = self.request.form
+        self.has_layout = len(self.stored_layout()) > 0
+        self.block_id = self.traverse_subpath[0]
 
     def render(self):
         context = aq_inner(self.context)

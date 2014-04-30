@@ -15,6 +15,7 @@
     <element value="Image" />
     <element value="File" />
     <element value="ade25.panelpage.basepanel" />
+    <element value="ade25.panelpage.contentpanel" />
     <element value="ade25.panelpage.textpanel" />
   </property>
   <property name="allow_discussion">False</property>

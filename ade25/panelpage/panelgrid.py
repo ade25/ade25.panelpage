@@ -310,19 +310,18 @@ class GridColumns(grok.View):
         col_idx = self.traverse_subpath[3]
         col = cols[int(col_idx)]
         # Create panel content type here
-        uid = self._create_panel(component)
+        uid = self._create_panel()
         col['component'] = component
         col['uuid'] = uid
         row['panels'] = cols
         grid[int(row_idx)] = row
         return grid
 
-    def _create_panel(self, component):
+    def _create_panel(self):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=24)
-        panel_type = 'ade25.panelpage.{0}panel'.format(component)
         item = api.content.create(
-            type=panel_type,
+            type='ade25.panelpage.contentpanel',
             id=token,
             title=token,
             container=context,
