@@ -11,11 +11,9 @@ from zope.lifecycleevent import modified
 from plone.directives import form
 from z3c.form import button
 
-from Products.CMFPlone.utils import safe_unicode
 from plone.namedfile.field import NamedBlobImage
 from plone.app.textfield import RichText
 
-from z3c.relationfield import RelationValue
 from z3c.relationfield.schema import RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
@@ -32,16 +30,20 @@ from ade25.panelpage import MessageFactory as _
 
 class IPanelHeadlineEdit(form.Schema):
 
-    headline = schema.TextLine(
-        title=_(u"Headline"),
+    title = schema.TextLine(
+        title=_(u"Textline"),
         required=False,
+    )
+    klass = schema.Choice(
+        title=_(u"Choose your topping"),
+        values=[_(u'h2'), _(u'h3'), _(u'h4'), _(u'text-plain')]
     )
 
 
 class PanelHeadlineEditForm(form.SchemaEditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
-    grok.name('edit-panel')
+    grok.name('panel-textline-edit')
 
     schema = IPanelHeadlineEdit
     ignoreContext = True
@@ -64,9 +66,19 @@ class PanelHeadlineEditForm(form.SchemaEditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'title', data['title'])
+        setattr(item, 'klass', data['klass'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
         row = self.traverse_subpath[0]
-        panel = self.traverse_subpath[1]
-        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
         return self.request.response.redirect(url)
 
     @button.buttonAndHandler(_(u"cancel"))
@@ -90,28 +102,6 @@ class PanelHeadlineEditForm(form.SchemaEditForm):
         for key, value in fields:
             data[key] = getattr(context, key, value)
         return data
-
-    def applyChanges(self, data):
-        context = aq_inner(self.context)
-        fti = getUtility(IDexterityFTI,
-                         name='ade25.panelpage.contentpanel')
-        schema = fti.lookupSchema()
-        fields = getFieldsInOrder(schema)
-        for key, value in fields:
-            try:
-                new_value = data[key]
-                setattr(context, key, new_value)
-            except KeyError:
-                continue
-        modified(context)
-        context.reindexObject(idxs='modified')
-        IStatusMessage(self.request).addStatusMessage(
-            _(u"The panel has successfully been updated"),
-            type='info')
-        parent = aq_parent(context)
-        row = self.traverse_subpath[0]
-        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
-        return self.request.response.redirect(url)
 
 
 class IContentPanelEdit(form.Schema):

@@ -74,6 +74,12 @@
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
                                   <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Select panel content</h3>
+                                  <tal:items tal:repeat="pc view/available_components">
+                                    <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/${pc}/${idx}">
+                                      <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                      <span tal:content="pc">Component Type</span>
+                                    </a>
+                                  </tal:items>
                                   <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/base/${idx}">
                                     <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
                                     Base
@@ -99,7 +105,7 @@
                                 tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uuid}"
                                 i18n:translate="">edit</a>
                             <a tal:condition="not:show_setup"
-                                tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/uuid}"
+                                tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
                                 i18n:translate="">panel manager</a>
                         </div>
                     </div>

@@ -10,6 +10,8 @@ from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
 
+from ade25.panelpage.config import panel_components
+
 from ade25.panelpage import MessageFactory as _
 
 
@@ -205,12 +207,15 @@ class PanelBlockEditor(grok.View):
         value = panel['grid-col']
         return value
 
+    def available_components(self):
+        return panel_components()
+
     def get_component_icon(self, component):
         matrix = {
             'textline': 'ion-document',
             'text': 'ion-document',
             'base': 'ion-document',
-            'text': 'ion-document-text',
+            'richtext': 'ion-document-text',
             'image': 'ion-image',
             'listing': 'ion-ios7-albums-outline',
             'box': 'ion-filing',
@@ -246,8 +251,9 @@ class PanelPageBlocks(grok.View):
         row = self.traverse_subpath[0]
         panel = self.traverse_subpath[1]
         component = self.traverse_subpath[2]
-        url = '{0}/@@panel-{1}/{2}/{3}'.format(
-            base_url, component, row, panel)
+        uuid = self.traverse_subpath[3]
+        url = '{0}/@@panel-{1}/{2}/{3}/{4}'.format(
+            base_url, component, row, panel, uuid)
         return self.request.response.redirect(url)
 
     @property
