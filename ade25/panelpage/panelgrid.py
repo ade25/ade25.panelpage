@@ -321,7 +321,7 @@ class GridColumns(grok.View):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=24)
         item = api.content.create(
-            type='ade25.panelpage.contentpanel',
+            type='ade25.panelpage.panel',
             id=token,
             title=token,
             container=context,

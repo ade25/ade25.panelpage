@@ -150,7 +150,7 @@
                 <form class="app-form app-create-form"
                     id="createBlockForm"
                     method="post" role="form"
-                    tal:attributes="action string:${context/absolute_url}/ppb/create">
+                    tal:attributes="action string:${context/absolute_url}/gridrow/create">
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="form-group field"

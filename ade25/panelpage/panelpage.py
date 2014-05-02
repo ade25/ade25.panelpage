@@ -207,6 +207,8 @@ class PanelBlockEditor(grok.View):
 
     def get_component_icon(self, component):
         matrix = {
+            'textline': 'ion-document',
+            'text': 'ion-document',
             'base': 'ion-document',
             'text': 'ion-document-text',
             'image': 'ion-image',
