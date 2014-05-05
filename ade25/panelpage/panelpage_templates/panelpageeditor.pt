@@ -174,7 +174,10 @@
                                 <button class="btn btn-ppe"
                                     name="form.button.Submit"
                                     id="form.button.Submit"
-                                    i18n:translate="">Create content block</button>
+                                    i18n:translate="">
+                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sm"></i>
+                                    Content block
+                                </button>
                             </div>
                         </div>
                     </div>
