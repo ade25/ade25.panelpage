@@ -175,7 +175,7 @@
                                     name="form.button.Submit"
                                     id="form.button.Submit"
                                     i18n:translate="">
-                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sm"></i>
+                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sgit com"></i>
                                     Content block
                                 </button>
                             </div>

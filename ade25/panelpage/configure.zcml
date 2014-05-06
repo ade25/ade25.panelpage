@@ -36,25 +36,32 @@
 
   <!-- -*- extra stuff goes here -*- -->
 
-    <plone:behavior
-        title="Panel Page"
-        description="Enable panel page layout engine"
-        provides="ade25.panelpage.panelpage.IPanelPage"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
+  <plone:behavior
+    title="Panel Page"
+    description="Enable panel page layout engine"
+    provides="ade25.panelpage.panelpage.IPanelPage"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    />
 
-    <plone:behavior
-        title="Panel Page Layout"
-        description="Storage for Panel Page Layout Ordering"
-        provides="ade25.panelpage.pagelayout.IPanelPageLayout"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
+  <plone:behavior
+    title="Panel Page Layout"
+    description="Storage for Panel Page Layout Ordering"
+    provides="ade25.panelpage.pagelayout.IPanelPageLayout"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    />
 
-    <plone:behavior
-        title="Panel Page Content Listing"
-        description="Use a collection/catalog query as block content"
-        provides="ade25.panelpage.blocklisting.IContentBlockListing"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
+  <plone:behavior
+    title="Panel Content"
+    description="Panel basic content schema"
+    provides="ade25.panelpage.panelcontent.IPanelContent"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    />
+
+  <plone:behavior
+    title="Panel Page Content Listing"
+    description="Use a collection/catalog query as block content"
+    provides="ade25.panelpage.blocklisting.IContentBlockListing"
+    for="plone.dexterity.interfaces.IDexterityContent"
+    />
 
 </configure>
