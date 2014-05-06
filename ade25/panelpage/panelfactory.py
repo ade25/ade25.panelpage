@@ -30,20 +30,16 @@ from ade25.panelpage import MessageFactory as _
 
 class IPanelHeadlineEdit(form.Schema):
 
-    title = schema.TextLine(
-        title=_(u"Textline"),
+    heading = schema.TextLine(
+        title=_(u"Heading"),
         required=False,
-    )
-    klass = schema.Choice(
-        title=_(u"Choose your topping"),
-        values=[_(u'h2'), _(u'h3'), _(u'h4'), _(u'text-plain')]
     )
 
 
 class PanelHeadlineEditForm(form.SchemaEditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
-    grok.name('panel-textline-edit')
+    grok.name('panel-heading')
 
     schema = IPanelHeadlineEdit
     ignoreContext = True
@@ -95,7 +91,7 @@ class PanelHeadlineEditForm(form.SchemaEditForm):
     def getContent(self):
         context = aq_inner(self.context)
         fti = getUtility(IDexterityFTI,
-                         name='ade25.panelpage.contentpanel')
+                         name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}

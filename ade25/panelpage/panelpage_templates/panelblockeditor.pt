@@ -77,28 +77,9 @@
                                   <tal:items tal:repeat="pc view/available_components">
                                     <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/${pc}/${idx}">
                                       <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                      <span tal:content="pc">Component Type</span>
+                                      <span tal:content="python:view.prettify_name(pc)" i18n:translate="">Component Type</span>
                                     </a>
                                   </tal:items>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/base/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Base
-                                  </a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/text/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Rich Text</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/image/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Image</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/listing/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Listing</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/@@panel-error/{view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Infobox</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/@@panel-error/${view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Alias</a>
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"

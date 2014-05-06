@@ -11,6 +11,8 @@ from plone.app.layout.viewlets.interfaces import IBelowContentBody
 from Products.CMFCore.interfaces import IContentish
 
 from ade25.panelpage.config import panel_components
+from ade25.panelpage.config import pretty_components
+from ade25.panelpage.config import component_icons
 
 from ade25.panelpage import MessageFactory as _
 
@@ -210,18 +212,12 @@ class PanelBlockEditor(grok.View):
     def available_components(self):
         return panel_components()
 
+    def prettify_name(self, component):
+        names = pretty_components()
+        return names[component]
+
     def get_component_icon(self, component):
-        matrix = {
-            'textline': 'ion-document',
-            'text': 'ion-document',
-            'base': 'ion-document',
-            'richtext': 'ion-document-text',
-            'image': 'ion-image',
-            'listing': 'ion-ios7-albums-outline',
-            'box': 'ion-filing',
-            'alias': 'ion-ios7-download',
-            'placeholder': 'ion-ios7-circle-outline'
-        }
+        matrix = component_icons()
         return matrix[component]
 
     def rendered_panelgrid(self):
@@ -292,12 +288,13 @@ class RearrangeBlocks(grok.View):
 
     def render(self):
         context = aq_inner(self.context)
+        grid = getattr(context, 'panelPageLayout')
         sort_query = list(self.query.split('&'))
         layout_order = list()
         for x in sort_query:
             details = x.split('=')
             key = int(details[0])
-            value = details[1]
+            value = grid[key]
             layout_order.insert(key, value)
         setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")
