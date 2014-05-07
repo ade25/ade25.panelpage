@@ -1,11 +1,13 @@
 from five import grok
 from plone import api
 
+from zope.component import getUtility
 from zope.interface import Interface
-from zope.globalrequest import getRequest
+from zope.schema import getFieldsInOrder
 from zope.lifecycleevent import modified
 
-from collective.beaker.interfaces import ISession
+from plone.dexterity.interfaces import IDexterityFTI
+#from collective.beaker.interfaces import ISession
 
 SESSION_KEY = 'Uh53dAfH2JPzI/lIhBvN72RJzZVv6zk5'
 
@@ -28,9 +30,22 @@ class PanelTool(grok.GlobalUtility):
     grok.provides(IPanelTool)
 
     def update(self, uuid, component, data):
-        survey = self.get()
-        item_id = uuid
-        if item_id in survey:
-            survey[item_id] = items
-            return survey[item_id]
-        return None
+        item = api.content.get(UID=uuid)
+        if 'textline' in data:
+            setattr(item, 'textline', data['textline'])
+        if 'textblock' in data:
+            setattr(item, 'textblock', data['textblock'])
+        else:
+            fti = getUtility(IDexterityFTI,
+                             name='ade25.panelpage.panel')
+            schema = fti.lookupSchema()
+            fields = getFieldsInOrder(schema)
+            for key, value in fields:
+                try:
+                    new_value = data[key]
+                    setattr(item, key, new_value)
+                except KeyError:
+                    continue
+        modified(item)
+        item.reindexObject(idxs='modified')
+        return item

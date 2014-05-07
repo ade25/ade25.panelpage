@@ -30,7 +30,7 @@ from ade25.panelpage import MessageFactory as _
 
 class IPanelHeadlineEdit(form.Schema):
 
-    heading = schema.TextLine(
+    textline = schema.TextLine(
         title=_(u"Heading"),
         required=False,
     )

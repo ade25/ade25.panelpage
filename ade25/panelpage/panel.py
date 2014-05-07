@@ -22,6 +22,11 @@ class IPanel(form.Schema, IImageScaleTraversable):
         title=_(u"CSS Class"),
         required=False,
     )
+    form.omitted('component')
+    component = schema.TextLine(
+        title=_(u"Component"),
+        required=False,
+    )
 
 
 class Panel(Item):
