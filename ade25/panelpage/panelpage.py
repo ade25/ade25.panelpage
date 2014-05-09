@@ -4,6 +4,7 @@ from five import grok
 from plone import api
 
 from zope.interface import Interface
+from zope.lifecycleevent import modified
 
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
@@ -231,7 +232,9 @@ class PanelBlockEditor(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template
@@ -299,6 +302,8 @@ class RearrangeBlocks(grok.View):
             value = grid[key]
             layout_order.insert(key, value)
         setattr(context, 'panelPageLayout', layout_order)
+        modified(context)
+        context.reindexObject(idxs='modified')
         msg = _(u"Panelpage order successfully updated")
         results = {'success': True,
                    'message': msg

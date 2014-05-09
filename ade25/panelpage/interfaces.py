@@ -22,7 +22,7 @@ class IPanelHeading(form.Schema):
     )
 
 
-class IPanelSubheading(form.Schema):
+class IPanelSubHeading(form.Schema):
 
     textline = schema.TextLine(
         title=_(u"Subheading"),
