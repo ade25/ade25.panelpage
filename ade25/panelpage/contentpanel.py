@@ -1,4 +1,5 @@
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from five import grok
 from plone import api
 from zope import schema
@@ -10,8 +11,7 @@ from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
 
-from z3c.relationfield.schema import RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.app.uuid.utils import uuidToObject
 
 from ade25.panelpage import MessageFactory as _
@@ -25,8 +25,16 @@ class IContentPanel(form.Schema, IImageScaleTraversable):
         title=_(u"Content panel title"),
         required=True,
     )
-    description = schema.Text(
-        title=_(u"Teaser"),
+    klass = schema.TextLine(
+        title=_(u"CSS Class"),
+        required=False,
+    )
+    headline = schema.TextLine(
+        title=_(u"Headline"),
+        required=False,
+    )
+    abstract = schema.Text(
+        title=_(u"Abstract"),
         description=_(u"Short and visualy highlighted teaser message"),
         required=False,
     )
@@ -53,10 +61,49 @@ class IContentPanel(form.Schema, IImageScaleTraversable):
                       u"system. Do not edit it yourself"),
         required=False,
     )
-    show_contentlisting = schema.Bool(
-        title=_(u"Enable content listing"),
-        description=_(u"List contents of link target"),
+    subitems = schema.Bool(
+        title=_(u"Display subitems"),
+        description=_(u"Use this setting to automatically list all subcontents"
+                      u" of this context. All custom query selections made"
+                      u" will be ignored"),
         required=False
+    )
+    form.widget(query=QueryStringFieldWidget)
+    query = schema.List(
+        title=_(u"Search terms"),
+        description=_(u"Define the search terms for the items you want to list"
+                      u" by choosing what to match on. The list of results"
+                      u"will be dynamically updated"),
+        value_type=schema.Dict(
+            value_type=schema.Field(),
+            key_type=schema.TextLine()
+        ),
+        required=False
+    )
+    sort_on = schema.TextLine(
+        title=_(u'label_sort_on', default=u'Sort on'),
+        description=_(u"Sort the collection on this index"),
+        required=False,
+    )
+
+    sort_reversed = schema.Bool(
+        title=_(u'label_sort_reversed', default=u'Reversed order'),
+        description=_(u'Sort the results in reversed order'),
+        required=False,
+    )
+
+    limit = schema.Int(
+        title=_(u'Limit'),
+        description=_(u'Limit Search Results'),
+        required=False,
+        default=1000,
+    )
+
+    item_count = schema.Int(
+        title=_(u'label_item_count', default=u'Item count'),
+        description=_(u'Number of items that will show up in one batch.'),
+        required=False,
+        default=30,
     )
 
 
@@ -69,6 +116,27 @@ class View(grok.View):
     grok.context(IContentPanel)
     grok.require('zope2.View')
     grok.name('view')
+
+    def parent_url(self):
+        parent = aq_parent(aq_inner(self.context))
+        return parent.absolute_url()
+
+    def back_url(self):
+        url = self.parent_url()
+        if len(self.traverse_subpath()) > 0:
+            row = self.traverse_subpath[0]
+            url = '{0}/panelblock-editor/{1}'.format(url, row)
+        return url
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
 
     def render_item(self):
         context = aq_inner(self.context)

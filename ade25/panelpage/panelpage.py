@@ -1,19 +1,18 @@
 import json
 from Acquisition import aq_inner
-from AccessControl import Unauthorized
 from five import grok
 from plone import api
 
 from zope.interface import Interface
-from zope.component import getMultiAdapter
-from zope.lifecycleevent import modified
-from plone.keyring import django_random
 
-from Products.CMFPlone.utils import safe_unicode
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
+
+from ade25.panelpage.config import panel_components
+from ade25.panelpage.config import pretty_components
+from ade25.panelpage.config import component_icons
 
 from ade25.panelpage import MessageFactory as _
 
@@ -51,38 +50,7 @@ class PanelPage(grok.View):
     grok.name('panelpage')
 
     def update(self):
-        context = aq_inner(self.context)
         self.has_subcontent = self.has_stored_layout()
-        self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('title')
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._create_panel(form)
 
     def is_editable(self):
         editable = False
@@ -120,26 +88,6 @@ class PanelPage(grok.View):
             return list()
         else:
             return block_layout
-
-    def default_value(self, error):
-        value = ''
-        if error['active'] is False:
-            value = error['msg']
-        return value
-
-    def _create_panel(self, data):
-        context = aq_inner(self.context)
-        new_title = data['title']
-        token = django_random.get_random_string(length=12)
-        api.content.create(
-            type='ade25.panelpage.contentblock',
-            id=token,
-            title=new_title,
-            container=context,
-            safe_id=True
-        )
-        url = context.absolute_url()
-        return self.request.response.redirect(url)
 
 
 class PanelPageEditor(grok.View):
@@ -261,16 +209,15 @@ class PanelBlockEditor(grok.View):
         value = panel['grid-col']
         return value
 
+    def available_components(self):
+        return panel_components()
+
+    def prettify_name(self, component):
+        names = pretty_components()
+        return names[component]
+
     def get_component_icon(self, component):
-        matrix = {
-            'base': 'ion-document',
-            'text': 'ion-document-text',
-            'image': 'ion-image',
-            'listing': 'ion-ios7-albums-outline',
-            'box': 'ion-filing',
-            'alias': 'ion-ios7-download',
-            'placeholder': 'ion-ios7-circle-outline'
-        }
+        matrix = component_icons()
         return matrix[component]
 
     def rendered_panelgrid(self):
@@ -289,36 +236,21 @@ class PanelBlockEditor(grok.View):
 
 
 class PanelPageBlocks(grok.View):
-    """ Generic router for panel page content blocks
-
-        :param action:  CRUD content action
-        :param uid:     Content block UID
-    """
+    """ Generic router for panel content """
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
-    grok.name('ppb')
-
-    def update(self):
-        context = aq_inner(self.context)
-        self.data = {}
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            self.data = self.request.form
+    grok.name('panel-editor')
 
     def render(self):
         context = aq_inner(self.context)
-        action = self.traverse_subpath[0]
-        next_url = context.absolute_url()
-        if action == 'create':
-            next_url = self._create_panel()
-        if action == 'delete':
-            next_url = self._delete_panel()
-        if action == 'transition':
-            next_url = self._transition_panel()
-        return self.request.response.redirect(next_url)
+        base_url = context.absolute_url()
+        row = self.traverse_subpath[0]
+        panel = self.traverse_subpath[1]
+        component = self.traverse_subpath[2]
+        uuid = self.traverse_subpath[3]
+        url = '{0}/@@panel-{1}/{2}/{3}/{4}'.format(
+            base_url, component, row, panel, uuid)
+        return self.request.response.redirect(url)
 
     @property
     def traverse_subpath(self):
@@ -330,72 +262,6 @@ class PanelPageBlocks(grok.View):
         self.subpath.append(name)
         return self
 
-    def _create_panel(self):
-        context = aq_inner(self.context)
-        token = django_random.get_random_string(length=24)
-        new_title = self.request.form.get('title', token)
-        block = {
-            'id': token,
-            'title': new_title,
-            'status': 'visible',
-            'klass': 'pp-row-default',
-            'panels': [
-                {
-                    'uuid': None,
-                    'component': u"placeholder",
-                    'grid-col': 12,
-                    'klass': 'panel-column'
-                }
-            ]
-        }
-        items = getattr(context, 'panelPageLayout', None)
-        if items is None:
-            items = list()
-        items.append(block)
-        setattr(context, 'panelPageLayout', items)
-        modified(context)
-        context.reindexObject(idxs='modified')
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
-
-    def _delete_panel(self):
-        context = aq_inner(self.context)
-        grid = getattr(context, 'panelPageLayout')
-        idx = self.traverse_subpath[1]
-        grid.pop(int(idx))
-        setattr(context, 'panelPageLayout', grid)
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
-
-    def _transition_panel(self):
-        context = aq_inner(self.context)
-        grid = getattr(context, 'panelPageLayout')
-        index = self.traverse_subpath[1]
-        idx = int(index)
-        row = grid[idx]
-        # check if we have an explicit transition requested
-        if len(self.traverse_subpath) > 2:
-            state = self.traverse_subpath[2]
-        else:
-            state = row['status']
-        changed = 'visible'
-        if state == 'visible':
-            changed = 'hidden'
-        row['status'] = changed
-        grid[idx] = row
-        setattr(context, 'panelPageLayout', grid)
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
-
-    def available_transitions(self, state):
-        transitions = {
-            'published': 'retract',
-            'visible': 'hide',
-            'hidden': 'show',
-            'private': 'publish'
-        }
-        return transitions[state]
-
 
 class PanelError(grok.View):
     grok.context(IContentish)
@@ -403,7 +269,13 @@ class PanelError(grok.View):
     grok.name('panel-error')
 
     def update(self):
-        self.uuid = self.request.get('uuid', '')
+        self.row_idx = self.subpath[0]
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
 
 
 class RearrangeBlocks(grok.View):
@@ -416,12 +288,13 @@ class RearrangeBlocks(grok.View):
 
     def render(self):
         context = aq_inner(self.context)
+        grid = getattr(context, 'panelPageLayout')
         sort_query = list(self.query.split('&'))
         layout_order = list()
         for x in sort_query:
             details = x.split('=')
             key = int(details[0])
-            value = details[1]
+            value = grid[key]
             layout_order.insert(key, value)
         setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")

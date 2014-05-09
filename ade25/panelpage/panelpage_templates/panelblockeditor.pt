@@ -74,30 +74,20 @@
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
                                   <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Select panel content</h3>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/base/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Base
-                                  </a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/text/${idx}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Rich Text</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Image</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Listing</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Infobox</a>
-                                  <a tal:attributes="href string:${context/absolute_url}/gridcolumn/create/${view/block_id}">
-                                    <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
-                                    Alias</a>
+                                  <tal:items tal:repeat="pc view/available_components">
+                                    <a tal:attributes="href string:${context/absolute_url}/gridcolumn/add/${view/block_id}/${pc}/${idx}">
+                                      <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+                                      <span tal:content="python:view.prettify_name(pc)" i18n:translate="">Component Type</span>
+                                    </a>
+                                  </tal:items>
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"
                                 tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uuid}"
                                 i18n:translate="">edit</a>
+                            <a tal:condition="not:show_setup"
+                                tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
+                                i18n:translate="">panel manager</a>
                         </div>
                     </div>
                   </tal:block>
@@ -106,19 +96,19 @@
                     <div class="btn-group"
                       tal:define="active view/active_ratio">
                       <a tal:define="is_active python:active == 9;"
-                        tal:attributes="href string:${context/absolute_url}/ratio-selection/9/3;
+                        tal:attributes="href string:${context/absolute_url}/gridcolumn/update/${view/block_id}/9/3;
                                         class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">3:1</a>
                       <a tal:define="is_active python:active == 8;"
-                        tal:attributes="href string:${context/absolute_url}/ratio-selection/8/4;
+                        tal:attributes="href string:${context/absolute_url}/gridcolumn/update/${view/block_id}/8/4;
                                         class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">2:1</a>
                       <a tal:define="is_active python:active == 6;"
-                        tal:attributes="href string:${context/absolute_url}/ratio-selection/6/6;
+                        tal:attributes="href string:${context/absolute_url}/gridcolumn/update/${view/block_id}/6/6;
                                         class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:1</a>
                       <a tal:define="is_active python:active == 4;"
-                        tal:attributes="href string:${context/absolute_url}/ratio-selection/4/8;
+                        tal:attributes="href string:${context/absolute_url}/gridcolumn/update/${view/block_id}/4/8;
                                         class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:2</a>
                       <a tal:define="is_active python:active == 3;"
-                        tal:attributes="href string:${context/absolute_url}/ratio-selection/3/9;
+                        tal:attributes="href string:${context/absolute_url}/gridcolumn/update/${view/block_id}/3/9;
                                         class python:is_active and 'btn btn-default btn-xs active' or 'btn btn-default btn-xs'">1:3</a>
                     </div>
                 </div>

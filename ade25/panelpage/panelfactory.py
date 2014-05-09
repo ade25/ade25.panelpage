@@ -11,11 +11,9 @@ from zope.lifecycleevent import modified
 from plone.directives import form
 from z3c.form import button
 
-from Products.CMFPlone.utils import safe_unicode
 from plone.namedfile.field import NamedBlobImage
 from plone.app.textfield import RichText
 
-from z3c.relationfield import RelationValue
 from z3c.relationfield.schema import RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
 
@@ -28,6 +26,78 @@ from ade25.panelpage.panelmanager import IPanelManager
 from ade25.panelpage.contentpanel import IContentPanel
 
 from ade25.panelpage import MessageFactory as _
+
+
+class IPanelHeadlineEdit(form.Schema):
+
+    textline = schema.TextLine(
+        title=_(u"Heading"),
+        required=False,
+    )
+
+
+class PanelHeadlineEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-heading')
+
+    schema = IPanelHeadlineEdit
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'title', data['title'])
+        setattr(item, 'klass', data['klass'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
 
 
 class IContentPanelEdit(form.Schema):
