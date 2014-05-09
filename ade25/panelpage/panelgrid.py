@@ -64,7 +64,9 @@ class PanelGrid(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template

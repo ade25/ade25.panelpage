@@ -42,8 +42,7 @@ class View(grok.View):
     def render_item(self):
         context = aq_inner(self.context)
         component = getattr(context, 'component')
-        viewname = '@@content-{0}'.format(component)
-        import pdb; pdb.set_trace()
+        viewname = '@@panel-{0}'.format(component)
         template = context.restrictedTraverse(viewname)()
         return template
 
@@ -52,3 +51,39 @@ class ContentView(grok.View):
     grok.context(IPanel)
     grok.require('zope2.View')
     grok.name('content-view')
+
+
+class HeadingView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-heading')
+
+
+class SubheadingView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-subheading')
+
+
+class AbstractView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-abstract')
+
+
+class TextView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-text')
+
+
+class RichTextView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-richtext')
+
+
+class ImageView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-image')
