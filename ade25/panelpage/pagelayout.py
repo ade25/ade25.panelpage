@@ -1,4 +1,5 @@
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from five import grok
 from plone import api
 from zope import schema
@@ -53,7 +54,6 @@ class MigrateLayout(grok.View):
         return items
 
     def _migrate_items(self, pages):
-        context = aq_inner(self.context)
         catalog = api.portal.get_tool(name="portal_catalog")
         idx = 0
         for page in pages:
@@ -72,27 +72,26 @@ class MigrateLayout(grok.View):
                     grid.append(abstract_row)
                     idx += 1
                 if cb.text:
-                    text_row = self._build_gridrow(cb, 'text')
+                    text_row = self._build_gridrow(cb, 'richtext')
                     grid.append(text_row)
                     idx += 1
-        context = aq_inner(self.context)
-        setattr(context, 'panelPageLayout', grid)
-        modified(context)
-        context.reindexObject(idxs='modified')
+            setattr(obj, 'panelPageLayout', grid)
+            modified(obj)
+            obj.reindexObject(idxs='modified')
         return idx
 
     def _build_gridrow(self, cb, key):
         value = getattr(cb, key)
         token = django_random.get_random_string(length=24)
-        component = u"text"
+        component = u"richtext"
         if key == 'headline':
             component = u"heading"
         if key == 'description':
             component = u"abstract"
-        uid = self._create_panel(component, key, value)
+        uid = self._create_panel(cb, component, key, value)
         row = {
             'id': token,
-            'title': '{0}: {1}'.format(component, cb.Title),
+            'title': '{0}: {1}'.format(component, cb.Title()),
             'status': 'visible',
             'klass': 'pp-row-default',
             'panels': [
@@ -106,8 +105,8 @@ class MigrateLayout(grok.View):
         }
         return row
 
-    def _create_panel(self, component, key, value):
-        context = aq_inner(self.context)
+    def _create_panel(self, cb, component, key, value):
+        context = aq_parent(aq_inner(cb))
         token = django_random.get_random_string(length=24)
         item = api.content.create(
             type='ade25.panelpage.panel',
@@ -121,8 +120,8 @@ class MigrateLayout(grok.View):
             setattr(item, 'textblock', value)
         if key == 'headline':
             setattr(item, 'textline', value)
-        else:
-            setattr(item, key, value)
+        if key == 'richtext':
+            setattr(item, 'text', value)
         modified(item)
         item.reindexObject(idxs='modified')
         uuid = api.content.get_uuid(obj=item)
