@@ -41,7 +41,10 @@ class View(grok.View):
 
     def render_item(self):
         context = aq_inner(self.context)
-        template = context.restrictedTraverse('@@content-view')()
+        component = getattr(context, 'component')
+        viewname = '@@content-{0}'.format(component)
+        import pdb; pdb.set_trace()
+        template = context.restrictedTraverse(viewname)()
         return template
 
 

@@ -44,7 +44,8 @@
       </p>
       <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Preview</div>
       <div class="ppe-block" tal:content="nothing">
-        <!--<div tal:replace="structure view/render_item" />-->
+        <code tal:content="view/render_item" />
+        <div tal:replace="structure view/render_item" />
       </div>
     </div>
 
