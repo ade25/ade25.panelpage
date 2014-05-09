@@ -100,7 +100,9 @@ class PanelPageEditor(grok.View):
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
-        template = item.restrictedTraverse('@@content-view')()
+        component = getattr(item, 'component')
+        viewname = '@@panel-{0}'.format(component)
+        template = item.restrictedTraverse(viewname)()
         return template
 
     def computed_klass(self):
