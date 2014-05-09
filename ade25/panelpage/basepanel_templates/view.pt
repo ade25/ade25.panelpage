@@ -11,11 +11,13 @@
   <metal:content-core define-macro="main">
 
     <div class="panelpage-editor" id="content-core">
-      <div class="ppe-header">
+      <div class="ppe-header"
+        tal:define="cstate context/@@plone_context_state;
+                    parent cstate/parent">
         <div class="row">
           <div class="col-xs-12 col-sm-4">
             <a class="ppe-close pull-left"
-              tal:attributes="href string:${context/parent_url}/@@panelpage-editor">
+              tal:attributes="href string:${parent/absolute_url}/@@panelpage-editor">
               <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
               Back
             </a>
