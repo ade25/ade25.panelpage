@@ -1,32 +1,30 @@
-<div class="contentblock-content">
-  <tal:panelgrid tal:define="grid view/stored_layout">
-    <tal:row tal:repeat="row grid">
-      <div class="panelpage-default"
-        tal:define="idx repeat/row/index"
-        tal:attributes="class string:row pp-row pp-row-${idx};
-                        id string:pp-row-${idx}">
-        <div class="row ppe-row-eq-height">
-          <tal:block tal:repeat="col row/panels">
-            <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
-              tal:define="panel_type col/component;
-                          uuid col/uuid">
-              <div tal:define="idx repeat/col/index;
-                               oddrow repeat/col/odd;
-                               klass col/klass | string:pagepanel-default;
-                               oddclass python:oddrow and 'item-odd' or 'item-even'"
-                tal:attributes="class string:pagepanel ${klass} pagepanel-${idx} ${oddclass};
-                                id string:pagepanel-${idx}">
-                  <div tal:condition="not:uuid">
-                    <h6>Panel <span tal:replace="idx" /></h6>
-                  </div>
-                  <tal:block tal:condition="uuid">
-                    <div tal:replace="structure python:view.rendered_panel(uuid)" />
-                  </tal:block>
-              </div>
+<div class="panelgrid" tal:define="grid view/stored_layout">
+  <tal:block tal:repeat="row grid">
+    <div class="panelgrid-row"
+      tal:define="idx repeat/row/index"
+      tal:attributes="class string:row panelgrid-row panelgrid-row-${idx};
+                      id string:panelgrid-row-${idx}">
+      <div class="row ppe-row-eq-height">
+        <tal:block tal:repeat="col row/panels">
+          <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
+            tal:define="panel_type col/component;
+                        uuid col/uuid">
+            <div tal:define="idx repeat/col/index;
+                             oddrow repeat/col/odd;
+                             klass col/klass | string:pagepanel-default;
+                             oddclass python:oddrow and 'item-odd' or 'item-even'"
+              tal:attributes="class string:panelgrid-col panelgrid-col-${idx} ${oddclass} ${klass};
+                              id string:panelgrid-col-${idx}">
+                <div tal:condition="not:uuid">
+                  <h6>Panel <span tal:replace="idx" /></h6>
+                </div>
+                <tal:block tal:condition="uuid">
+                  <div tal:replace="structure python:view.rendered_panel(uuid)" />
+                </tal:block>
             </div>
-          </tal:block>
-        </div>
+          </div>
+        </tal:block>
       </div>
-    </tal:row>
-  </tal:panelgrid>
+    </div>
+  </tal:block>
 </div>
