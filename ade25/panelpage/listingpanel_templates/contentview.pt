@@ -1,9 +1,0 @@
-<div class="contentpanel contentpanel-listing"
-  tal:attributes="class string:contentpanel contentpanel-listing ${context/klass};
-                  id string:contentpanel-${context/getId}">
-  <div class="contentpanel-content">
-      <p class="lead contentpanel-abstract">
-        Content Listing will be included here</p>
-    </div>
-  </div>
-</div>
