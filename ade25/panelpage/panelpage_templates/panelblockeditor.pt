@@ -83,11 +83,8 @@
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"
-                                tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uuid}"
-                                i18n:translate="">edit</a>
-                            <a tal:condition="not:show_setup"
                                 tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
-                                i18n:translate="">panel manager</a>
+                                i18n:translate="">edit panel</a>
                         </div>
                     </div>
                   </tal:block>

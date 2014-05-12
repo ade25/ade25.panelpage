@@ -23,7 +23,7 @@ from ade25.panelpage import MessageFactory as _
 class IPanelPageLayout(form.Schema):
     """ Behavior storing panelpage block order """
 
-    #form.mode(panelPageLayout='hidden')
+    form.omitted('panelPageLayout')
     panelPageLayout = schema.List(
         title=_("Panel Page Layout"),
         value_type=schema.TextLine(
