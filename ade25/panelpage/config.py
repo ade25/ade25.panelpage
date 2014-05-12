@@ -39,6 +39,7 @@ def component_icons():
         'textline': 'ion-document',
         'heading': 'ion-document',
         'subheading': 'ion-document',
+        'abstract': 'ion-document-text',
         'text': 'ion-document-text',
         'richtext': 'ion-document-text',
         'image': 'ion-image',

@@ -43,8 +43,8 @@
         <strong>CSS Class</strong> <code>.<span tal:replace="context/klass" /></code>
       </p>
       <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Preview</div>
-      <div class="ppe-block" tal:content="nothing">
-        <!--<div tal:replace="structure view/render_item" />-->
+      <div class="ppe-block">
+        <div tal:replace="structure view/render_item" />
       </div>
     </div>
 

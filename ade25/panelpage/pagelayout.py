@@ -81,7 +81,10 @@ class MigrateLayout(grok.View):
         return idx
 
     def _build_gridrow(self, cb, key):
-        value = getattr(cb, key)
+        if key == 'richtext':
+            value = getattr(cb, 'text')
+        else:
+            value = getattr(cb, key)
         token = django_random.get_random_string(length=24)
         component = u"richtext"
         if key == 'headline':

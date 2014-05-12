@@ -64,7 +64,9 @@ class PanelGrid(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template
@@ -148,7 +150,7 @@ class GridRows(grok.View):
                     'uuid': None,
                     'component': u"placeholder",
                     'grid-col': 12,
-                    'klass': 'panel-column'
+                    'klass': 'pp-column'
                 }
             ]
         }
@@ -310,14 +312,14 @@ class GridColumns(grok.View):
         col_idx = self.traverse_subpath[3]
         col = cols[int(col_idx)]
         # Create panel content type here
-        uid = self._create_panel()
+        uid = self._create_panel(component)
         col['component'] = component
         col['uuid'] = uid
         row['panels'] = cols
         grid[int(row_idx)] = row
         return grid
 
-    def _create_panel(self):
+    def _create_panel(self, component):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=24)
         item = api.content.create(
@@ -327,5 +329,6 @@ class GridColumns(grok.View):
             container=context,
             safe_id=True
         )
+        setattr(item, 'component', component)
         uuid = api.content.get_uuid(obj=item)
         return uuid

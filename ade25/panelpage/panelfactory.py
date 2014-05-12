@@ -25,23 +25,22 @@ from ade25.panelpage.panelpage import IPanelPage
 from ade25.panelpage.panelmanager import IPanelManager
 from ade25.panelpage.contentpanel import IContentPanel
 
+from ade25.panelpage.interfaces import IPanelHeading
+from ade25.panelpage.interfaces import IPanelSubHeading
+from ade25.panelpage.interfaces import IPanelAbstract
+from ade25.panelpage.interfaces import IPanelText
+from ade25.panelpage.interfaces import IPanelRichText
+from ade25.panelpage.interfaces import IPanelImage
+
 from ade25.panelpage import MessageFactory as _
 
 
-class IPanelHeadlineEdit(form.Schema):
-
-    textline = schema.TextLine(
-        title=_(u"Heading"),
-        required=False,
-    )
-
-
-class PanelHeadlineEditForm(form.SchemaEditForm):
+class PanelHeadingEditForm(form.SchemaEditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-heading')
 
-    schema = IPanelHeadlineEdit
+    schema = IPanelHeading
     ignoreContext = True
     css_class = 'app-form'
     label = _(u"Edit content panel")
@@ -64,8 +63,322 @@ class PanelHeadlineEditForm(form.SchemaEditForm):
             return
         uid = self.traverse_subpath[2]
         item = api.content.get(UID=uid)
-        setattr(item, 'title', data['title'])
-        setattr(item, 'klass', data['klass'])
+        setattr(item, 'textline', data['textline'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+
+class PanelSubHeadingEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-subheading')
+
+    schema = IPanelSubHeading
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'textline', data['textline'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+
+class PanelAbstractEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-abstract')
+
+    schema = IPanelAbstract
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'textblock', data['textblock'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+
+class PanelTextEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-text')
+
+    schema = IPanelText
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'textblock', data['textblock'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+
+class PanelRichTextEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-richtext')
+
+    schema = IPanelRichText
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'text', data['text'])
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        row = self.traverse_subpath[0]
+        context = aq_inner(self.context)
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(url)
+
+    def getContent(self):
+        context = aq_inner(self.context)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(context, key, value)
+        return data
+
+
+class PanelImageEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-image')
+
+    schema = IPanelImage
+    ignoreContext = True
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        setattr(item, 'image', data['image'])
         modified(item)
         item.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
