@@ -35,6 +35,22 @@ class IPanelPageLayout(form.Schema):
 alsoProvides(IPanelPageLayout, IFormFieldProvider)
 
 
+class ResetLayout(grok.View):
+    grok.context(IPanelPage)
+    grok.require('cmf.ManagePortal')
+    grok.name('reset-layout')
+
+    def render(self):
+        context = aq_inner(self.context)
+        setattr(context, 'panelPageLayout', '')
+        modified(context)
+        context.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Removed stored layout - you may start over now"), type='info')
+        url = self.context.absolute_url()
+        return self.request.response.redirect(url)
+
+
 class MigrateLayout(grok.View):
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
