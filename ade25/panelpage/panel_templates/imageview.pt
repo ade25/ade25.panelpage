@@ -3,11 +3,13 @@
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
     <div tal:attributes="class string:contentpanel-image ${context/klass}">
-      <img tal:define="scales context/@@images"
-        tal:replace="structure python: scales.tag('image',
-                     width=600, height=600, direction='down',
-                     css_class='img-responsive')"
-        />
+      <tal:image tal:condition="context/image">
+        <img tal:define="scales context/@@images"
+          tal:replace="structure python: scales.tag('image',
+                       width=600, height=600, direction='down',
+                       css_class='img-responsive')"
+          />
+      </tal:image>
     </div>
   </div>
 </div>
