@@ -330,23 +330,23 @@ class PanelRichTextEditForm(form.SchemaEditForm):
     @button.buttonAndHandler(_(u"cancel"))
     def handleCancel(self, action):
         context = aq_inner(self.context)
-        parent = aq_parent(context)
         row = self.traverse_subpath[0]
-        url = '{0}/@@panelblock-editor/{1}'.format(parent.absolute_url(), row)
+        url = '{0}/@@panelblock-editor/{1}'.format(context.absolute_url(), row)
         IStatusMessage(self.request).addStatusMessage(
             _(u"Content panel factory has been cancelled."),
             type='info')
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
         return data
 
 

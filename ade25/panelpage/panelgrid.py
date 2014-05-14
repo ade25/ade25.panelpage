@@ -279,6 +279,11 @@ class GridColumns(grok.View):
         grid = self.stored_layout()
         row = grid[int(idx)]
         cols = self.gridrow()['panels']
+        col = cols[int(idx)]
+        if col['component'] != 'placeholder':
+            uuid = col['uuid']
+            panel = api.content.get(UID=uuid)
+            api.content.delete(obj=panel)
         cols.pop(int(idx))
         grid_idx = len(cols) + 1
         col_size = 12 / grid_idx
@@ -289,14 +294,14 @@ class GridColumns(grok.View):
         return grid
 
     def _update_column(self):
-        updated = self.current_layout()
-        gridrow = self.gridrow()
-        row = updated[gridrow]
+        updated = self.stored_layout()
+        row = self.gridrow()
         panels = self.panels()
         panels[0]['grid-col'] = self.traverse_subpath[2]
         panels[1]['grid-col'] = self.traverse_subpath[3]
         row['panels'] = panels
-        updated[gridrow] = row
+        row_idx = int(self.traverse_subpath[1])
+        updated[row_idx] = row
         return updated
 
     def _move_column(self):
