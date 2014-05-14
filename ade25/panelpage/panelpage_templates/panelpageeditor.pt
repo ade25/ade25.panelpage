@@ -28,16 +28,27 @@
   <metal:content-core define-macro="main">
     <div class="panelpage-editor" id="content-core">
         <div class="ppe-header">
-            <a class="ppe-close pull-right"
-                tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-                Help
-            </a>
-            <a class="ppe-close pull-left"
+            <div class="row">
+              <div class="col-xs-12 col-sm-4">
+                 <a class="ppe-close pull-left"
                 tal:attributes="href string:${context/absolute_url}">
                 <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md">
                 Quit
             </a>
-            <div class="ppe-header-title text-center" i18n:translate="">Panel Page Editor</div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="ppe-header-title text-center" i18n:translate="">
+                  Panel Page Layout
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <a class="ppe-close pull-right"
+                  tal:attributes="href string:${context/absolute_url}/"
+                  i18n:translate="">
+                  View
+                </a>
+              </div>
+            </div>
         </div>
         <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
         <div class="panelpage-editable">
@@ -173,10 +184,9 @@
                                 <span tal:replace="structure context/@@authenticator/authenticator"/>
                                 <button class="btn btn-ppe"
                                     name="form.button.Submit"
-                                    id="form.button.Submit"
-                                    i18n:translate="">
+                                    id="form.button.Submit">
                                     <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sgit com"></i>
-                                    Content block
+                                    <span i18n:translate="">Content block</span>
                                 </button>
                             </div>
                         </div>

@@ -41,7 +41,7 @@ class PanelHeadingEditForm(form.SchemaEditForm):
     grok.name('panel-heading')
 
     schema = IPanelHeading
-    ignoreContext = True
+    ignoreContext = False
     css_class = 'app-form'
     label = _(u"Edit content panel")
 
@@ -87,14 +87,17 @@ class PanelHeadingEditForm(form.SchemaEditForm):
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
+        data['textline'] = getattr(item, 'textline', '')
+        import pdb; pdb.set_trace()
         return data
 
 
@@ -150,14 +153,16 @@ class PanelSubHeadingEditForm(form.SchemaEditForm):
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
+        data['textline'] = getattr(item, 'textline', '')
         return data
 
 
@@ -213,14 +218,16 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
+        data['textblock'] = getattr(item, 'textline', '')
         return data
 
 
@@ -276,14 +283,16 @@ class PanelTextEditForm(form.SchemaEditForm):
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
+        data['textblock'] = getattr(item, 'textline', '')
         return data
 
 
@@ -347,6 +356,7 @@ class PanelRichTextEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
+        data['text'] = getattr(item, 'text', None)
         return data
 
 
@@ -402,14 +412,16 @@ class PanelImageEditForm(form.SchemaEditForm):
         return self.request.response.redirect(url)
 
     def getContent(self):
-        context = aq_inner(self.context)
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
         fti = getUtility(IDexterityFTI,
                          name='ade25.panelpage.panel')
         schema = fti.lookupSchema()
         fields = getFieldsInOrder(schema)
         data = {}
         for key, value in fields:
-            data[key] = getattr(context, key, value)
+            data[key] = getattr(item, key, value)
+        data['image'] = getattr(item, 'image')
         return data
 
 
