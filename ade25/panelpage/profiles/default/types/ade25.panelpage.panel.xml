@@ -1,25 +1,26 @@
 <?xml version="1.0"?>
-<object name="ade25.panelpage.listingpanel"
+<object name="ade25.panelpage.panel"
    meta_type="Dexterity FTI"
    i18n:domain="ade25.panelpage" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">ListingPanel</property>
+  <property name="title" i18n:translate="">Panel</property>
   <property name="description"
-    i18n:translate="">A panel providing content listings</property>
+    i18n:translate="">A base panel</property>
   <property name="icon_expr">string:${portal_url}/document_icon.png</property>
-  <property name="factory">ade25.panelpage.listingpanel</property>
+  <property name="factory">ade25.panelpage.panel</property>
   <property name="global_allow">False</property>
   <property name="filter_content_types">True</property>
   <property name="allowed_content_types" />
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">ade25.panelpage.listingpanel.IListingPanel</property>
-  <property name="klass">ade25.panelpage.listingpanel.ListingPanel</property>
+  <property name="schema">ade25.panelpage.panel.IPanel</property>
+  <property name="klass">ade25.panelpage.panel.Panel</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
+     <element value="ade25.panelpage.panelcontent.IPanelContent" />
    </property>
 
   <!-- View information -->

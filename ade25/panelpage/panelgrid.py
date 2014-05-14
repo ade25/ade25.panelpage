@@ -64,7 +64,9 @@ class PanelGrid(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template
@@ -148,7 +150,7 @@ class GridRows(grok.View):
                     'uuid': None,
                     'component': u"placeholder",
                     'grid-col': 12,
-                    'klass': 'panel-column'
+                    'klass': 'pp-column'
                 }
             ]
         }
@@ -214,6 +216,8 @@ class GridColumns(grok.View):
             new_layout = self._create_column()
         if action == 'delete':
             new_layout = self._delete_column()
+        if action == 'update':
+            new_layout = self._update_column()
         if action == 'move':
             new_layout = self._move_column()
         if action == 'add':
@@ -221,7 +225,9 @@ class GridColumns(grok.View):
         setattr(context, 'panelPageLayout', new_layout)
         modified(context)
         context.reindexObject(idxs='modified')
-        next_url = context.absolute_url()
+        row = self.traverse_subpath[1]
+        base_url = context.absolute_url()
+        next_url = '{0}/@@panelblock-editor/{1}'.format(base_url, row)
         return self.request.response.redirect(next_url)
 
     @property
@@ -270,12 +276,27 @@ class GridColumns(grok.View):
 
     def _delete_column(self):
         idx = self.traverse_subpath[1]
-        updated = self.stored_layout()
-        updated.pop(int(idx))
-        grid_idx = len(updated) + 1
+        grid = self.stored_layout()
+        row = grid[int(idx)]
+        cols = self.gridrow()['panels']
+        cols.pop(int(idx))
+        grid_idx = len(cols) + 1
         col_size = 12 / grid_idx
-        for x in updated:
+        for x in cols:
             x['grid-col'] = col_size
+        row['panels'] = cols
+        grid[int(idx)] = row
+        return grid
+
+    def _update_column(self):
+        updated = self.current_layout()
+        gridrow = self.gridrow()
+        row = updated[gridrow]
+        panels = self.panels()
+        panels[0]['grid-col'] = self.traverse_subpath[2]
+        panels[1]['grid-col'] = self.traverse_subpath[3]
+        row['panels'] = panels
+        updated[gridrow] = row
         return updated
 
     def _move_column(self):
@@ -300,14 +321,14 @@ class GridColumns(grok.View):
 
     def _create_panel(self, component):
         context = aq_inner(self.context)
-        token = django_random.get_random_string(length=12)
-        panel_type = 'ade25.panelpage.{0}panel'.format(component)
+        token = django_random.get_random_string(length=24)
         item = api.content.create(
-            type=panel_type,
+            type='ade25.panelpage.panel',
             id=token,
             title=token,
             container=context,
             safe_id=True
         )
+        setattr(item, 'component', component)
         uuid = api.content.get_uuid(obj=item)
         return uuid

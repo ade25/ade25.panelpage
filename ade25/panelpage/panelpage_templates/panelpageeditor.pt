@@ -9,31 +9,18 @@
 
 <metal:header fill-slot="header">
     <tal:modals tal:repeat="item view/contained_blocks">
-        <div class="modal fade" id="confirmBlockDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            tal:attributes="id string:confirmBlockDelete${item/id}">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel" i18n:translate="">Delete confirmation</h4>
-              </div>
-              <div class="modal-body">
-                <p i18n:translate="">
-                    Removing a content block will also delete all its
-                    subcontents.</p>
-                <strong class="text-danger" i18n:translate="">
-                     Careful this step can not be undone
-                </strong>
-              </div>
-              <div class="modal-footer">
-                <a class="btn btn-danger"
-                    tal:attributes="href string:${context/absolute_url}/ppb/delete/${item/id}"
-                    i18n:translate="">Delete item</a>
-                <button type="button" class="btn btn-link" data-dismiss="modal" i18n:translate="">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-delete"
+            tal:define="idx repeat/item/index"
+          tal:attributes="id string:cbp-spmenu-p${idx}">
+          <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
+            Delete confirmation</h3>
+          <p i18n:translate="">Removing this content block from the layout will
+            also remove all asigned panels.</p>
+          <a tal:attributes="href string:${context/absolute_url}/gridrow/delete/${idx}">
+            <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md pull-right"></i>
+            Delete panel
+          </a>
+        </nav>
     </tal:modals>
 </metal:header>
 
@@ -93,16 +80,16 @@
                         <a class="ppe-action" href="#ppe-block-transition"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/ppb/transition/${item_idx};
+                            tal:attributes="href string:${context/absolute_url}/@@gridrow/transition/${item_idx};
                                             class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
                             tal:content="python:view.available_transitions(item_state)"
                             i18n:translate="">
                             transition
                         </a>
-                        <a class="ppe-action pull-right" href="#ppe-block-main-page"
-                            data-toggle="modal" data-target="#confirmBlockDelete"
-                            tal:attributes="href string:${context/absolute_url}/@@gridrow/delete/${item_idx};
-                                            data-target string:#confirmBlockDelete${uid}">
+                        <a class="ppe-action pull-right"
+                          data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
+                          tal:attributes="data-target string:#cbp-spmenu-p${item_idx} ;
+                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}">
                             delete
                         </a>
                         <a class="ppe-action pull-right" href="#ppe-block-main-page"
@@ -163,7 +150,7 @@
                 <form class="app-form app-create-form"
                     id="createBlockForm"
                     method="post" role="form"
-                    tal:attributes="action string:${context/absolute_url}/ppb/create">
+                    tal:attributes="action string:${context/absolute_url}/gridrow/create">
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="form-group field"
@@ -187,7 +174,10 @@
                                 <button class="btn btn-ppe"
                                     name="form.button.Submit"
                                     id="form.button.Submit"
-                                    i18n:translate="">Create content block</button>
+                                    i18n:translate="">
+                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sgit com"></i>
+                                    Content block
+                                </button>
                             </div>
                         </div>
                     </div>

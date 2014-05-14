@@ -1,0 +1,10 @@
+<div class="contentpanel contentpanel-base"
+  tal:attributes="class string:contentpanel contentpanel-base ${context/klass};
+                  id string:contentpanel-${context/getId}">
+  <div class="contentpanel-content">
+    <div class="contentpanel-body">
+      <div tal:attributes="class string:contentpanel-text ${context/klass}"
+        tal:content="context/textblock">Headline</div>
+    </div>
+  </div>
+</div>
