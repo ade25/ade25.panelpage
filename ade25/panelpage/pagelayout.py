@@ -42,7 +42,7 @@ class ResetLayout(grok.View):
 
     def render(self):
         context = aq_inner(self.context)
-        setattr(context, 'panelPageLayout', '')
+        setattr(context, 'panelPageLayout', list())
         modified(context)
         context.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(

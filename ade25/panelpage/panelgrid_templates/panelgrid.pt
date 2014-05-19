@@ -9,12 +9,12 @@
           <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
             tal:define="panel_type col/component;
                         uuid col/uuid">
-            <div tal:define="idx repeat/col/index;
+            <div tal:define="col_idx repeat/col/index;
                              oddrow repeat/col/odd;
                              klass col/klass | string:pagepanel-default;
                              oddclass python:oddrow and 'item-odd' or 'item-even'"
-              tal:attributes="class string:panelgrid-col panelgrid-col-${idx} ${oddclass} ${klass};
-                              id string:panelgrid-col-${idx}">
+              tal:attributes="class string:panelgrid-col panelgrid-col-${col_idx} ${oddclass} ${klass};
+                              id string:panelgrid-col-${col_idx}">
                 <div tal:condition="not:uuid">
                   <h6>Panel <span tal:replace="idx" /></h6>
                 </div>

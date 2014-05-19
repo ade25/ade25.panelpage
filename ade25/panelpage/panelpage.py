@@ -144,7 +144,10 @@ class PanelPageEditor(grok.View):
 
     def prettify_name(self, component):
         names = pretty_components()
-        return names[component]
+        if component == 'placeholder':
+            return _(u"Unconfigured")
+        else:
+            return names[component]
 
     def is_editable(self):
         editable = False
