@@ -137,6 +137,15 @@ class PanelPageEditor(grok.View):
         else:
             return block_layout
 
+    def panels(self, row_idx):
+        grid = self.contained_blocks()
+        row = grid[int(row_idx)]
+        return row['panels']
+
+    def prettify_name(self, component):
+        names = pretty_components()
+        return names[component]
+
     def is_editable(self):
         editable = False
         if not api.user.is_anonymous():

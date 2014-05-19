@@ -3308,6 +3308,16 @@ fieldset[disabled] .btn-ppe.active
 
     filter: alpha(opacity=100);
 }
+.ppe-col-info
+{
+    font-size: 14px;
+
+    padding-top: 15px;
+
+    text-transform: uppercase;
+
+    color: #999;
+}
 .ppe-action
 {
     line-height: 1;

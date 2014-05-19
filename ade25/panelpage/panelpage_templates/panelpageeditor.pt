@@ -77,16 +77,32 @@
                                     item_state item/status;
                                     klass python:view.item_state_klass(item_state)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
-                        <input class="form-control" type="hidden"
-                            tal:attributes="name string:${item_idx};
-                                            id string:block.${uid};
-                                            value uid" />
-                        <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                          <small class="text-muted" tal:content="repeat/item/number" />
+                          <a class="animated bounceInLeft" href="#content"
+                            data-pjax="#app-pjax-container"
+                            data-appui="xxxtoggle-contentblock"
+                            tal:attributes="data-target string:#ppe-block-${repeat/item/number};
+                                            href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
+                            <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
+                            <h4 tal:content="item/title">First added panel</h4>
+                          </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                          <div class="ppe-col-info"
+                            tal:define="panels python:view.panels(item_idx)">
+                            <tal:panel tal:repeat="panel panels">
+                              <small tal:define="component panel/component;
+                                                 name python:view.prettify_name(component)"
+                                tal:content="name"
+                                i18n:translate="">Component name</small>
+                            </tal:panel>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                           <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
                             <i class="ion ion-ios7-drag pp-icon pp-icon-md">
-                            <!--<span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>
-                            <span class="ppe-icon-bar"></span>-->
                         </span>
                         <a class="ppe-action" href="#ppe-block-transition"
                             data-appui="toggle-contentblock"
@@ -109,26 +125,12 @@
                             tal:attributes="href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
                             edit
                         </a>
-                        <a class="ppe-action hidden pull-right" href="#ppe-block-transition"
-                            data-appui="toggle-contentblock"
-                            data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/@@panel-asignment/${uid}">
-                            panels
-                        </a>
-                        <a class="animated bounceInLeft" href="#content"
-                            data-pjax="#app-pjax-container"
-                            data-appui="xxxtoggle-contentblock"
-                            tal:attributes="data-target string:#ppe-block-${repeat/item/number};
-                                            href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
-                            <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
-                            <h4 tal:content="item/title">First added panel</h4>
-                        </a><br>
-                        <!--<small class="ppe-block-state"
-                                tal:content="python:view.item_state_info(uid)">Published</small>-->
-                        <div class="ppe-block-editable hide animated"
-                            tal:attributes="id string:ppe-block-${repeat/item/number}">
-                            <!--<div tal:replace="structure python:view.render_item(uid)" />-->
                         </div>
+                      </div>
+                        <input class="form-control" type="hidden"
+                            tal:attributes="name string:${item_idx};
+                                            id string:block.${uid};
+                                            value uid" />
                     </div>
                 </tal:items>
             </div>
