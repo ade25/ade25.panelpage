@@ -309,7 +309,7 @@ class RearrangeBlocks(grok.View):
             details = x.split('=')
             key = int(details[0])
             value = grid[key]
-            layout_order.insert(key, value)
+            layout_order.append(value)
         setattr(context, 'panelPageLayout', layout_order)
         modified(context)
         context.reindexObject(idxs='modified')
