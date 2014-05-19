@@ -158,26 +158,6 @@ class PanelPageEditor(grok.View):
             value = error['msg']
         return value
 
-<<<<<<< HEAD
-    def _create_panel(self, data):
-        context = aq_inner(self.context)
-        new_title = data['title']
-        token = django_random.get_random_string(length=24)
-        api.content.create(
-            type='ade25.panelpage.contentblock',
-            id=token,
-            title=new_title,
-            container=context,
-            safe_id=True
-        )
-        url = context.absolute_url() + '/@@panelpage-editor'
-        return self.request.response.redirect(url)
-
-
-class PanelPageBlocks(grok.View):
-    """ Generic router for panel page content blocks
-=======
->>>>>>> remotes/origin/master
 
 class PanelBlockEditor(grok.View):
     grok.context(IPanelPage)
@@ -200,55 +180,9 @@ class PanelBlockEditor(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-<<<<<<< HEAD
-        token = django_random.get_random_string(length=24)
-        new_title = self.request.form.get('title', token)
-        #item = api.content.create(
-        #    type='ade25.panelpage.contentblock',
-        #    id=token,
-        #    title=new_title,
-        #    container=context,
-        #    safe_id=True
-        #)
-        #uuid = api.content.get_uuid(obj=item)
-        block = {
-            'id': token,
-            'title': new_title,
-            'status': 'hidden',
-            'title': None,
-            'abstract': None,
-            'panels': list()
-        }
-        items = getattr(context, 'panelPageLayout', None)
-        if items is None:
-            items = list()
-        items.append(block)
-        setattr(context, 'panelPageLayout', items)
-        modified(context)
-        context.reindexObject(idxs='modified')
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
-
-    def _delete_panel(self):
-        context = aq_inner(self.context)
-        item_uid = self.traverse_subpath[1]
-        item = api.content.get(UID=item_uid)
-        api.content.delete(obj=item)
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
-
-    def _transition_panel(self):
-        context = aq_inner(self.context)
-        item_uid = self.traverse_subpath[1]
-        item = api.content.get(UID=item_uid)
-        # check if we have an explicit transition requested
-        if len(self.traverse_subpath) > 2:
-            state = self.traverse_subpath[2]
-=======
         block_layout = getattr(context, 'panelPageLayout', None)
         if block_layout is None:
             return list()
->>>>>>> remotes/origin/master
         else:
             return block_layout
 
