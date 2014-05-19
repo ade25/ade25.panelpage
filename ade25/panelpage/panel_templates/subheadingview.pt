@@ -4,8 +4,8 @@
   <div class="contentpanel-content">
     <div class="contentpanel-header">
       <div class="contentpanel-title">
-        <div tal:attributes="class string:${context/klass}"
-          tal:content="context/Title">Headline</div>
+        <h3 tal:attributes="class string:contentpanel-subheading ${context/klass}"
+          tal:content="context/textline">Headline</h3>
       </div>
     </div>
   </div>

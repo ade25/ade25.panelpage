@@ -18,12 +18,22 @@
   }
 }
 
+.ppe-col-info {
+    padding-top: ceil((@line-height-computed * .75));
+    font-size: @font-size-base;
+    color: @gray-light;
+    text-transform: uppercase;
+}
+
 .ppe-action {
   display: block;
   margin-top: ceil((@line-height-computed * .75));
   margin-right: 0;
   margin-left: floor((@line-height-computed));
   line-height: 1;
+  &.ppe-action-primary {
+    color: darken(@gray-light, 10%);
+  }
   &.ppe-action-close {
     .opacity(.5);
     &:hover {

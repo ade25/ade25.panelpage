@@ -64,7 +64,9 @@ class PanelGrid(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template
@@ -148,7 +150,7 @@ class GridRows(grok.View):
                     'uuid': None,
                     'component': u"placeholder",
                     'grid-col': 12,
-                    'klass': 'panel-column'
+                    'klass': 'pp-column'
                 }
             ]
         }
@@ -277,6 +279,11 @@ class GridColumns(grok.View):
         grid = self.stored_layout()
         row = grid[int(idx)]
         cols = self.gridrow()['panels']
+        col = cols[int(idx)]
+        if col['component'] != 'placeholder':
+            uuid = col['uuid']
+            panel = api.content.get(UID=uuid)
+            api.content.delete(obj=panel)
         cols.pop(int(idx))
         grid_idx = len(cols) + 1
         col_size = 12 / grid_idx
@@ -287,14 +294,14 @@ class GridColumns(grok.View):
         return grid
 
     def _update_column(self):
-        updated = self.current_layout()
-        gridrow = self.gridrow()
-        row = updated[gridrow]
+        updated = self.stored_layout()
+        row = self.gridrow()
         panels = self.panels()
         panels[0]['grid-col'] = self.traverse_subpath[2]
         panels[1]['grid-col'] = self.traverse_subpath[3]
         row['panels'] = panels
-        updated[gridrow] = row
+        row_idx = int(self.traverse_subpath[1])
+        updated[row_idx] = row
         return updated
 
     def _move_column(self):
@@ -310,14 +317,14 @@ class GridColumns(grok.View):
         col_idx = self.traverse_subpath[3]
         col = cols[int(col_idx)]
         # Create panel content type here
-        uid = self._create_panel()
+        uid = self._create_panel(component)
         col['component'] = component
         col['uuid'] = uid
         row['panels'] = cols
         grid[int(row_idx)] = row
         return grid
 
-    def _create_panel(self):
+    def _create_panel(self, component):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=24)
         item = api.content.create(
@@ -327,5 +334,6 @@ class GridColumns(grok.View):
             container=context,
             safe_id=True
         )
+        setattr(item, 'component', component)
         uuid = api.content.get_uuid(obj=item)
         return uuid

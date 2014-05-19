@@ -13,18 +13,27 @@
         tal:define="layout view/stored_layout;
                     gridrow view/gridrow">
       <div class="ppe-header">
-          <a class="ppe-close pull-left"
-            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-            <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
-            Back
-          </a>
-          <a class="ppe-close pull-right"
-            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-            CSS Class
-          </a>
-          <div class="ppe-header-title text-center" i18n:translate="">
-            Layout Editor
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+             <a class="ppe-close pull-left"
+              tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+              <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
+              Back
+            </a>
           </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="ppe-header-title text-center" i18n:translate="">
+              Gridrow Layout
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <a class="ppe-close pull-right"
+              tal:attributes="href string:${context/absolute_url}/@@panel-base-edit"
+              i18n:translate="">
+              Settings
+            </a>
+          </div>
+        </div>
       </div>
       <div class="ppe-subtitle">
         <span tal:replace="context/Title" /> /
@@ -68,7 +77,7 @@
                             <!--<i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>-->
                             <div class="h4 pp-panel-title"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
-                            <div tal:condition="show_setup" i18n:translate="">
+                            <div tal:condition="show_setup">
                                 <span class="text-muted" i18n:translate="">This panel is empty</span>
                                 <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2">edit</a>
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
@@ -83,11 +92,8 @@
                                 </nav>
                             </div>
                             <a tal:condition="not:show_setup"
-                                tal:attributes="href string:${context/absolute_url}/@@redirect-to-uuid/${col/uuid}"
-                                i18n:translate="">edit</a>
-                            <a tal:condition="not:show_setup"
                                 tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
-                                i18n:translate="">panel manager</a>
+                                i18n:translate="">edit panel</a>
                         </div>
                     </div>
                   </tal:block>

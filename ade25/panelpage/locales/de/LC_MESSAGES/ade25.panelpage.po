@@ -1,0 +1,641 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2014-03-12 15:23+0000\n"
+"PO-Revision-Date: 2014-05-14 14:56+0100\n"
+"Last-Translator: Christoph Boehner <cb@vorwaerts-werbung.de>\n"
+"Language-Team: KK Language Team <info@kreativkombinat.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: de\n"
+"Language-Name: German\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ade25.panelpage\n"
+
+#: ./../contentblock_templates/contentview.pt:76
+msgid "&times;"
+msgstr "&times;"
+
+#: ./../vocabulary.py:13
+msgid "1 Cols"
+msgstr "1 Spalte"
+
+#: ./../vocabulary.py:14
+msgid "2 Cols"
+msgstr "2 Spalten"
+
+#: ./../vocabulary.py:15
+msgid "3 Cols"
+msgstr "3 Spalten"
+
+#: ./../vocabulary.py:16
+msgid "4 Cols"
+msgstr "4 Spalten"
+
+#: ./../profiles/default/types/ade25.panelpage.basepanel.xml
+msgid "A base content panel"
+msgstr "Basis Inhaltskachel"
+
+#: ./../profiles/default/types/ade25.panelpage.panel.xml
+msgid "A base panel"
+msgstr "Basis Panel"
+
+#: ./../profiles/default/types/ade25.panelpage.imagepanel.xml
+msgid "A image content panel"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.page.xml
+msgid "A modular ppage with panel layout"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.listingpanel.xml
+msgid "A panel providing content listings"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.textpanel.xml
+msgid "A richtext panel"
+msgstr ""
+
+#: ./../pagelayout_templates/layoutchanger.pt:35
+msgid "A row in the list represents a content block which is inserted into the page layout grid. The contentblock is a dictionary of settings and has a panel list for the associated content panels also refered to as columns. Please be careful to keep the semantics correct when making changes."
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.contentblock.xml
+msgid "A single content block for layout composition"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.contentpanel.xml
+msgid "A single content panel or box"
+msgstr ""
+
+#: ./../config.py:26
+#: ./../contentblock_templates/contentview.pt:38
+#: ./../contentpanel.py:37
+msgid "Abstract"
+msgstr "Anreisser"
+
+#: ./../panelpage_templates/panelpageeditor.pt:149
+msgid "Add Page Content"
+msgstr ""
+
+#: ./../contentpanel.py:49
+#: ./../panelfactory.py:429
+msgid "Add an icon class from font awesome site"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:111
+msgid "Add column"
+msgstr "Absatz hinzufügen"
+
+#: ./../blockfactory.py:282
+msgid "Add content block alias"
+msgstr ""
+
+#: ./../panelmanager_templates/view.pt:25
+msgid "Add content panel"
+msgstr "Inhaltpanel hinzufügen"
+
+#: ./../config.py:30
+#: ./../vocabulary.py:34
+msgid "Alias"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.basepanel.xml
+msgid "BasePanel"
+msgstr ""
+
+#: ./../blockfactory.py:52
+#: ./../contentblock.py:52
+msgid "Block Body Text"
+msgstr ""
+
+#: ./../contentblock.py:48
+msgid "Block Details"
+msgstr ""
+
+#: ./../interfaces.py:52
+msgid "Body"
+msgstr "Haupttext"
+
+#: ./../contentpanel.py:53
+#: ./../panelcontent.py:34
+#: ./../panelfactory.py:439
+msgid "Body Text"
+msgstr ""
+
+#: ./../contentblock.py:43
+#: ./../contentpanel.py:29
+#: ./../panel.py:22
+msgid "CSS Class"
+msgstr ""
+
+#: ./../blockfactory.py:73
+msgid "Change the default image position to the right third"
+msgstr ""
+
+#: ./../panel.py:27
+msgid "Component"
+msgstr ""
+
+#: ./../contentblock.py:60
+msgid "Content Alias/Proxy UID"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:97
+msgid "Content Aliases"
+msgstr ""
+
+#: ./../blockfactory.py:42
+#: ./../contentblock.py:33
+msgid "Content Block Headline"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:57
+#: ./../panelpage_templates/panelblockeditor.pt:45
+msgid "Content Block Layout"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:119
+#: ./../panelpage_templates/panelblockeditor.pt:124
+msgid "Content Block Preview"
+msgstr ""
+
+#: ./../contentblock.py:65
+#: ./../contentblock_templates/contentview.pt:8
+msgid "Content Block Settings"
+msgstr ""
+
+#: ./../blocklisting.py:25
+msgid "Content Listing"
+msgstr ""
+
+#: ./../pagelayout.py:30
+msgid "Content Page Layout"
+msgstr ""
+
+#: ./../contentpanel_templates/view.pt:25
+msgid "Content Panel"
+msgstr ""
+
+#: ./../panel.py:18
+msgid "Content Panel Title"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:178
+msgid "Content block"
+msgstr ""
+
+#: ./../blockfactory.py:106
+msgid "Content block factory has been cancelled."
+msgstr ""
+
+#: ./../panelfactory.py:85
+msgid "Content panel factory has been cancelled."
+msgstr ""
+
+#: ./../contentpanel.py:48
+#: ./../panelfactory.py:428
+msgid "Content panel icon class"
+msgstr ""
+
+#: ./../contentblock.py:29
+#: ./../contentpanel.py:25
+#: ./../panelfactory.py:419
+msgid "Content panel title"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.contentblock.xml
+msgid "ContentBlock"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.contentpanel.xml
+msgid "ContentPanel"
+msgstr ""
+
+#: ./../panelmanager_templates/view.pt:60
+msgid "Create content block"
+msgstr ""
+
+#: ./../panelpage_templates/panelblockeditor.pt:154
+msgid "Create content panel"
+msgstr ""
+
+#: ./../panelmanager_templates/createpanel.pt:14
+msgid "Create new panel"
+msgstr ""
+
+#: ./../panelmanager_templates/createpanel.pt:53
+msgid "Create panel"
+msgstr ""
+
+#: ./../blocklisting.py:32
+#: ./../contentpanel.py:74
+msgid "Define the search terms for the items you want to list by choosing what to match on. The list of resultswill be dynamically updated"
+msgstr ""
+
+#: ./../contentpanel.py:65
+msgid "Display subitems"
+msgstr ""
+
+#: ./../blockfactory.py:217
+msgid "Edit content block image content"
+msgstr ""
+
+#: ./../blockfactory.py:87
+#: ./../panelfactory.py:46
+msgid "Edit content panel"
+msgstr ""
+
+#: ./../panelfactory.py:458
+msgid "Enable content listing"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.panelmanager.xml
+msgid "Folder ccontaining content panels and showing overviews"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:165
+msgid "Good to know:"
+msgstr ""
+
+#: ./../config.py:24
+#: ./../interfaces.py:20
+msgid "Heading"
+msgstr "Überschrift"
+
+#: ./../contentblock_templates/contentview.pt:22
+#: ./../contentpanel.py:33
+#: ./../panelcontent.py:26
+msgid "Headline"
+msgstr "Überschrift"
+
+#: ./../page.py:20
+msgid "Hide title and description"
+msgstr ""
+
+#: ./../blockfactory.py:68
+#: ./../config.py:29
+#: ./../contentblock.py:56
+msgid "Image"
+msgstr "Bild"
+
+#: ./../profiles/default/types/ade25.panelpage.imagepanel.xml
+msgid "ImagePanel"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:95
+msgid "Infobox"
+msgstr "Infobox"
+
+#: ./../panelpage_templates/panelblockeditor.pt:25
+msgid "Layout Editor"
+msgstr ""
+
+#: ./../panelpage_templates/panelerror.pt:24
+msgid "Layout Panel"
+msgstr ""
+
+#: ./../pagelayout_templates/layoutchanger.pt:30
+msgid "Layout Settings"
+msgstr ""
+
+#: ./../blocklisting.py:54
+#: ./../contentpanel.py:96
+msgid "Limit"
+msgstr ""
+
+#: ./../blocklisting.py:55
+#: ./../contentpanel.py:97
+msgid "Limit Search Results"
+msgstr ""
+
+#: ./../blockfactory.py:31
+#: ./../panelfactory.py:449
+msgid "Link target"
+msgstr ""
+
+#: ./../contentpanel.py:59
+msgid "Linked content item"
+msgstr ""
+
+#: ./../panelfactory.py:459
+msgid "List contents of link target"
+msgstr ""
+
+#: ./../config.py:31
+#: ./../contentblock_templates/contentview.pt:94
+#: ./../vocabulary.py:33
+msgid "Listing"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.listingpanel.xml
+msgid "ListingPanel"
+msgstr ""
+
+#: ./../pagelayout_templates/layoutchanger.pt:20
+msgid "Manage Layout"
+msgstr ""
+
+#: ./../panelpage_templates/panelblockeditor.pt:151
+msgid "No panels asigned yet"
+msgstr ""
+
+#: ./../panelpage_templates/panelerror.pt:38
+msgid "Not implemented yet"
+msgstr ""
+
+#: ./../blocklisting.py:62
+#: ./../contentpanel.py:104
+msgid "Number of items that will show up in one batch."
+msgstr ""
+
+#: ./../blockfactory.py:43
+#: ./../contentblock.py:34
+msgid "Optional headline for this block"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.page.xml
+msgid "Page"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:60
+msgid "Page Content"
+msgstr ""
+
+#: ./../contentblock_templates/view.pt:20
+msgid "Page Explorer"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:82
+#: ./../panelpage_templates/panelblockeditor.pt:69
+#: ./../profiles/default/types/ade25.panelpage.panel.xml
+msgid "Panel"
+msgstr ""
+
+#: ./../contentpanel_templates/view.pt:40
+#: ./../panel_templates/view.pt:40
+msgid "Panel Details"
+msgstr ""
+
+#: ./../panelfactory_templates/panelfactory.pt:26
+msgid "Panel Edit Form"
+msgstr ""
+
+#: ./../panelfactory_templates/panelfactory.pt:20
+msgid "Panel Factory"
+msgstr ""
+
+#: ./../contentpanel.py:42
+#: ./../panelcontent.py:40
+#: ./../panelfactory.py:433
+msgid "Panel Icon Image"
+msgstr ""
+
+#: ./../interfaces.py:60
+msgid "Panel Image"
+msgstr ""
+
+#: ./../panel_templates/view.pt:24
+msgid "Panel Manager"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:40
+msgid "Panel Page Editor"
+msgstr ""
+
+#: ./../pagelayout.py:28
+msgid "Panel Page Layout"
+msgstr ""
+
+#: ./../contentpanel_templates/view.pt:45
+#: ./../panel_templates/view.pt:45
+msgid "Panel Preview"
+msgstr ""
+
+#: ./../profiles/default/types/ade25.panelpage.panelmanager.xml
+msgid "PanelManager"
+msgstr ""
+
+#: ./../panelpage.py:307
+msgid "Panelpage order successfully updated"
+msgstr ""
+
+#: ./../config.py:27
+#: ./../interfaces.py:44
+msgid "Plaintext"
+msgstr "Unformatierter Text"
+
+#: ./../contentpanel.py:54
+#: ./../panelcontent.py:35
+#: ./../panelfactory.py:440
+msgid "Please enter rich formatted text. But keep it short and suitable for a content panel"
+msgstr ""
+
+#: ./../panelmanager_templates/createpanel.pt:25
+#: ./../panelmanager_templates/view.pt:32
+msgid "Please provide a human readable title for this panel"
+msgstr ""
+
+#: ./../page.py:21
+msgid "Prevent the rendering of DC Title and Description touse headline and abstract of the first content block"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:68
+msgid "Ratio:"
+msgstr "Verhältnis"
+
+#: ./../panelpage_templates/panelpageeditor.pt:17
+msgid "Removing this content block from the layout will also remove all asigned panels."
+msgstr ""
+
+#: ./../panelpage_templates/panelblockeditor.pt:173
+msgid "Removing this panel will also remove all of its contents. This step can not be undone."
+msgstr ""
+
+#: ./../vocabulary.py:30
+msgid "Rich Text"
+msgstr "Formatierter Text"
+
+#: ./../config.py:28
+#: ./../contentblock_templates/contentview.pt:92
+msgid "Richtext"
+msgstr "Formatierter Text"
+
+#: ./../blockfactory.py:72
+msgid "Right align image"
+msgstr ""
+
+#: ./../blockfactory.py:94
+#: ./../panelfactory.py:58
+msgid "Save"
+msgstr "Speichern"
+
+#: ./../pagelayout_templates/layoutchanger.pt:45
+msgid "Save page layout"
+msgstr ""
+
+#: ./../blocklisting.py:31
+#: ./../contentpanel.py:73
+msgid "Search terms"
+msgstr ""
+
+#: ./../blockfactory.py:48
+#: ./../contentblock.py:39
+#: ./../contentpanel.py:38
+msgid "Short and visualy highlighted teaser message"
+msgstr ""
+
+#: ./../blocklisting.py:43
+#: ./../contentpanel.py:85
+msgid "Sort the collection on this index"
+msgstr ""
+
+#: ./../blocklisting.py:49
+#: ./../contentpanel.py:91
+msgid "Sort the results in reversed order"
+msgstr ""
+
+#: ./../config.py:25
+#: ./../interfaces.py:28
+msgid "Subheading"
+msgstr "Unterüberschrift"
+
+#: ./../blockfactory.py:47
+#: ./../contentblock.py:38
+#: ./../panelfactory.py:423
+msgid "Teaser"
+msgstr "Anreisser"
+
+#: ./../vocabulary.py:29
+msgid "Text"
+msgstr "Text"
+
+#: ./../profiles/default/types/ade25.panelpage.textpanel.xml
+msgid "TextPanel"
+msgstr ""
+
+#: ./../blockfactory.py:201
+msgid "The content block body text has successfully been updated"
+msgstr ""
+
+#: ./../blockfactory.py:136
+msgid "The content block has successfully been updated"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:166
+msgid "The content block title will be used to identify the specific item but will not be displayed"
+msgstr ""
+
+#: ./../panelfactory.py:70
+msgid "The panel has successfully been updated"
+msgstr ""
+
+#: ./../panelmanager_templates/createpanel.pt:28
+#: ./../panelmanager_templates/view.pt:35
+msgid "The title will be displayed next to a default icon"
+msgstr ""
+
+#: ./../blockfactory.py:266
+msgid "This block has successfully been updated"
+msgstr ""
+
+#: ./../panelmanager.py:54
+msgid "This field is required"
+msgstr ""
+
+#: ./../contentpanel.py:60
+msgid "This field will be populated with an uid by the system. Do not edit it yourself"
+msgstr ""
+
+#: ./../panelpage_templates/panelpageeditor.pt:139
+msgid "This item has no content"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:130
+msgid "This item has not been configured yet"
+msgstr ""
+
+#: ./../contentpanel_templates/view.pt:42
+#: ./../panel_templates/view.pt:42
+msgid "This panel can be styled by using the custom"
+msgstr ""
+
+#: ./../panelpage_templates/panelblockeditor.pt:137
+msgid "This panel does not have any content to display"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:85
+#: ./../panelpage_templates/panelblockeditor.pt:72
+msgid "This panel is empty"
+msgstr ""
+
+#: ./../panelpage_templates/panelerror.pt:41
+msgid "This panel type will be available soon. Please hold tight until we update the system"
+msgstr ""
+
+#: ./../panelmanager_templates/createpanel.pt:38
+#: ./../panelmanager_templates/view.pt:45
+#: ./../panelpage_templates/panelpageeditor.pt:158
+msgid "Title"
+msgstr ""
+
+#: ./../contentpanel.py:43
+#: ./../panelcontent.py:41
+#: ./../panelfactory.py:434
+msgid "Upload panel icon image suitable in size and dimension for the usecase"
+msgstr ""
+
+#: ./../interfaces.py:61
+msgid "Upload panel image suitable in size and dimension for the usecase"
+msgstr ""
+
+#: ./../contentpanel.py:66
+msgid "Use this setting to automatically list all subcontents of this context. All custom query selections made will be ignored"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:91
+msgid "Widgets"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:88
+msgid "add content"
+msgstr ""
+
+#: ./../blockfactory.py:102
+#: ./../pagelayout_templates/layoutchanger.pt:47
+#: ./../panelfactory.py:78
+msgid "cancel"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:48
+msgid "change"
+msgstr ""
+
+#: ./../contentblock_templates/contentview.pt:102
+msgid "edit"
+msgstr ""
+
+#: ./../panelpage_templates/panelblockeditor.pt:85
+msgid "edit panel"
+msgstr ""
+
+#. Default: "Item count"
+#: ./../blocklisting.py:61
+#: ./../contentpanel.py:103
+msgid "label_item_count"
+msgstr ""
+
+#. Default: "Sort on"
+#: ./../blocklisting.py:42
+#: ./../contentpanel.py:84
+msgid "label_sort_on"
+msgstr ""
+
+#. Default: "Reversed order"
+#: ./../blocklisting.py:48
+#: ./../contentpanel.py:90
+msgid "label_sort_reversed"
+msgstr ""
+

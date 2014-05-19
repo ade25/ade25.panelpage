@@ -4,6 +4,7 @@ from five import grok
 from plone import api
 
 from zope.interface import Interface
+from zope.lifecycleevent import modified
 
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
@@ -100,7 +101,9 @@ class PanelPageEditor(grok.View):
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
-        template = item.restrictedTraverse('@@content-view')()
+        component = getattr(item, 'component')
+        viewname = '@@panel-{0}'.format(component)
+        template = item.restrictedTraverse(viewname)()
         return template
 
     def computed_klass(self):
@@ -133,6 +136,15 @@ class PanelPageEditor(grok.View):
             return list()
         else:
             return block_layout
+
+    def panels(self, row_idx):
+        grid = self.contained_blocks()
+        row = grid[int(row_idx)]
+        return row['panels']
+
+    def prettify_name(self, component):
+        names = pretty_components()
+        return names[component]
 
     def is_editable(self):
         editable = False
@@ -295,7 +307,9 @@ class PanelBlockEditor(grok.View):
         context = aq_inner(self.context)
         item = api.content.get(UID=uid)
         if item:
-            template = item.restrictedTraverse('@@content-view')()
+            component = getattr(item, 'component')
+            viewname = '@@panel-{0}'.format(component)
+            template = item.restrictedTraverse(viewname)()
         else:
             template = context.restrictedTraverse('@@panel-error')()
         return template
@@ -361,8 +375,10 @@ class RearrangeBlocks(grok.View):
             details = x.split('=')
             key = int(details[0])
             value = grid[key]
-            layout_order.insert(key, value)
+            layout_order.append(value)
         setattr(context, 'panelPageLayout', layout_order)
+        modified(context)
+        context.reindexObject(idxs='modified')
         msg = _(u"Panelpage order successfully updated")
         results = {'success': True,
                    'message': msg

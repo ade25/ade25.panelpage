@@ -12,22 +12,26 @@
 
     <div class="panelpage-editor" id="content-core">
       <div class="ppe-header">
-        <a class="ppe-close pull-right"
-          tal:attributes="href string:${context/absolute_url}">
-          &times;
-        </a>
-        <div class="ppe-header-title" i18n:translate="">Text Panel</div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <a class="ppe-close pull-left"
+              tal:attributes="href string:${view/next_url}">
+              <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
+              Back
+            </a>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="ppe-header-title text-center" i18n:translate="">
+              Subheading Panel
+            </div>
+          </div>
+        </div>
       </div>
       <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
     </div>
 
     <div class="ppe-section">
-      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Details</div>
-
-      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Preview</div>
-      <div class="ppe-block">
-        <div tal:replace="structure view/render_item" />
-      </div>
+      <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
     </div>
 
 
