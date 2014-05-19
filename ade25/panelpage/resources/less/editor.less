@@ -20,16 +20,33 @@
 
 .ppe-action {
   display: block;
-  margin-right: floor((@line-height-computed / 2));
-  line-height: ceil((@line-height-computed * 2));
+  margin-top: ceil((@line-height-computed * .75));
+  margin-right: 0;
+  margin-left: floor((@line-height-computed));
+  line-height: 1;
+  &.ppe-action-close {
+    .opacity(.5);
+    &:hover {
+      .opacity(1);
+    }
+  }
   &.ppe-action-transition {
-    min-width: @navbar-height;
+    //height: ceil((@headings-line-height + (@line-height-computed * 2)));
+    // min-width: ceil((@navbar-height * 1.5));
+    margin-right: ceil((@line-height-computed * 2 ));
+    padding-right: @padding-base-horizontal;
+    // padding-left: @padding-base-horizontal;
+    border-right: 1px solid @gray-lighter;
   }
-  &.ppe-action-private {
-    color: @alert-danger-text;
+  &.ppe-action-hidden {
+    //color: @alert-danger-text;
+    // background: @alert-danger-bg;
+    //border-right: 2px solid @alert-danger-border;
   }
-  &.ppe-action-published {
-    color: @alert-success-text;
+  &.ppe-action-visible {
+    //color: @alert-success-text;
+    // background: @alert-success-bg;
+    // border-right: 3px solid @alert-success-border;
   }
 }
 
@@ -42,13 +59,43 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display:         flex;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
 }
 
 .ppe-col-visible {
-  padding-top: 15px;
+  // padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #f2f2f2;
-  border: 1px solid @gray-light;
+  background-color: #f9f9f9;
+  // border: 1px solid @gray-light;
+}
+
+.ppe-col-action {
+  background-color: @gray;
+  border-right: 1px solid @text-color;
+  .ppe-link {
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.ppe-panel {
+  // padding-top: @line-height-computed;
+  border-top: 2px solid @gray;
+  .ppe-panel-icon {
+    margin-right: ceil((@line-height-computed / 2));
+    padding: 0 ceil((@line-height-computed / 2));
+    border-right: 1px solid @gray;
+  }
+  .pp-panel-title {
+    margin-bottom: 0;
+  }
+}
+
+.ppe-ratio {
+  .center-block();
+  width: @screen-xs;
+  margin-top: @line-height-computed;
 }
 
 .app-contentblock {

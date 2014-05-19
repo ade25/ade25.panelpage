@@ -1,24 +1,19 @@
-<div class="app-content-editable"
-    tal:define="klass view/computed_klass;
-                editable view/is_editable"
-    tal:attributes="class string:app-contentblock ${klass};
-                    data-appui python:editable and 'editable' or 'not-editable'"
-    i18n:domain="ade25.panelpage">
-    <div class="contentpanel-editbar animated">
-        <p tal:content="context/Title">Content Panel Headline</p>
-        <a class="btn btn-primary btn-editpanel" href="#"
-            tal:attributes="href string:${context/absolute_url}/@@edit-panel">
-            <i class="fa fa-pencil-square-o"></i>
-        </a>
-        <a class="btn btn-default" href="#"
-            tal:attributes="href string:${context/absolute_url}/@@edit-panel-link">
-            <i class="fa fa-link"></i>
-        </a>
+<div class="contentpanel contentpanel-base"
+  tal:attributes="class string:contentpanel contentpanel-base ${context/klass};
+                  id string:contentpanel-${context/getId}">
+  <div class="contentpanel-content">
+    <div class="contentpanel-header">
+      <div class="contentpanel-title">
+        <h2 tal:condition="context/headline"
+          tal:content="context/headline" />
+        <h2 tal:condition="not:context/headline"
+          tal:replace="context/Title" />
+      </div>
+      <p class="lead contentpanel-abstract" tal:condition="context/abstract"
+        tal:content="context/abstract" />
     </div>
-    <div class="app-editdetails">
-        <p class="text-muted">
-            <span tal:content="context/Title" />
-        </p>
+    <div class="contentpanel-body">
+        <div tal:content="structure view/render_item_content" />
     </div>
-    <div tal:content="structure view/render_item_content" />
+  </div>
 </div>

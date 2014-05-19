@@ -4,7 +4,10 @@
     name="title">Contains workflow definitions for your portal</property>
  <bindings>
   <!-- Bind nothing for these content types -->
+  <type type_id="ade25.panelpage.panel" />
   <type type_id="ade25.panelpage.panelmanager" />
+  <type type_id="ade25.panelpage.basepanel" />
+  <type type_id="ade25.panelpage.textpanel" />
   <type type_id="ade25.panelpage.contentpanel" />
  </bindings>
 </object>

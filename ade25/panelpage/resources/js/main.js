@@ -4,23 +4,38 @@
 (function ($) {
 
   $(document).ready(function () {
-    //var DemoGrid = {
-    //    currentSize: 3,
-    //};
-    //$('#grid').gridList({
-    //    rows: DemoGrid.currentSize,
-    //    widthHeightRatio: 264 / 294,
-    //    heightToFontSizeRatio: 0.25,
-    //    onChange: function (changedItems) {
-    //        DemoGrid.flashItems(changedItems);
-    //    }
-    //});
-    //$('#grid li .resize').click(function (e) {
-    //    e.preventDefault();
-    //    var itemElement = $(e.currentTarget).closest('li'),
-    //        itemSize = $(e.currentTarget).data('size');
-    //    $('#grid').gridList('resizeItem', itemElement, itemSize);
-    //});
+
+    $('a[data-appui="contextmenu"]').on({
+      click: function (e) {
+        e.preventDefault();
+        var $contextMenu = $(this).data('target');
+        $($contextMenu).toggleClass('cbp-spmenu-open');
+      }
+    });
+    $('a[data-appui="contextmenu-close"]').on({
+      click: function (e) {
+        e.preventDefault();
+        $(this).closest('.cbp-spmenu').removeClass('cbp-spmenu-open');
+      }
+    });
+    $('a[data-appui="modal"]').on({
+      click: function (e) {
+        e.preventDefault();
+        var $modal = $(this).data('target');
+        $modal.on('show.bs.modal', function () {
+          var $modalBody = $(this).find('.modal-body');
+          $modalBody.load(e.currentTarget.href);
+        })
+        .modal();
+      }
+    });
+    $('a[data-appui="ajaxified"]').each(function () {
+      var $targetUrl = $(this).data('source'),
+          $container = $(this).data('target');
+      $(this).load($targetUrl + '?ajax_load=1 #content-core >*')
+        .fadeIn('slow');
+    });
+
     $('div[data-appui="editable"]').on({
       mouseenter: function () {
         $(this).find('.contentpanel-editbar')

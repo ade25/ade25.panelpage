@@ -1,45 +1,40 @@
- <div class="app-panelpage" id="app-panelpage"
-    tal:define="klass view/computed_klass"
-    tal:attributes="class string:app-panelpage ${klass}">
+<div class="app-panelpage" id="app-panelpage"
+  tal:define="klass view/computed_klass"
+  tal:attributes="class string:app-panelpage ${klass}">
 
-    <div class="app-panelpage-editbar"
-        id="app-panelpage-editbar"
-        tal:condition="view/is_editable">
-        <a class="btn btn-primary btn-ppe pull-right"
-            tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
-            <small i18n:translate="">Panel Page Editor</small>
-        </a>
-        <p class="text-discreet">Panel Page Blocks</p>
+  <div class="app-panelpage-editbar"
+    id="app-panelpage-editbar"
+    tal:condition="view/is_editable">
+    <a class="btn btn-primary btn-ppe pull-right"
+        tal:attributes="href string:${context/absolute_url}/@@panelpage-editor">
+        <small i18n:translate="">Panel Page Editor</small>
+    </a>
+    <p class="text-discreet">Panel Page Blocks</p>
+  </div>
+
+  <tal:block tal:condition="view/has_subcontent">
+    <div class="app-panelpage-content"
+      tal:condition="view/has_stored_layout">
+      <div tal:replace="structure view/rendered_panelgrid" />
     </div>
+  </tal:block>
+  <div class="app-panelpage-aside"
+      id="app-editpanel-block"
+      tal:condition="view/is_editable">
 
-    <tal:block tal:condition="view/has_subcontent">
-        <div class="app-panelpage-content">
-            <tal:items tal:repeat="item view/contained_blocks">
-                <div tal:define="oddrow repeat/item/odd;
-                                 uid item/UID"
-                    tal:attributes="class python:oddrow and 'app-panelpage-item item-odd' or 'app-panelpage-item item-even'">
-                    <div tal:replace="structure python:view.render_item(uid)" />
-                </div>
-            </tal:items>
-        </div>
-    </tal:block>
-    <div class="app-panelpage-aside"
-        id="app-editpanel-block"
-        tal:condition="view/is_editable">
+      <div class="ppe-block-placeholder"
+          tal:condition="not:view/has_subcontent">
+          <div class="row">
+              <div class="col-xs-12 col-sm-1">
+                  <div class="placeholder-sign">&hellip;</div>
+              </div>
+              <div class="col-xs-12 col-sm-11">
+                  <div class="placeholder-title" i18n:translate="">
+                      The are no content blocks asigned
+                  </div>
+              </div>
+          </div>
+      </div>
 
-        <div class="ppe-block-placeholder"
-            tal:condition="not:view/has_subcontent">
-            <div class="row">
-                <div class="col-xs-12 col-sm-1">
-                    <div class="placeholder-sign">&hellip;</div>
-                </div>
-                <div class="col-xs-12 col-sm-11">
-                    <div class="placeholder-title" i18n:translate="">
-                        The are no content blocks asigned
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+  </div>
 </div>

@@ -48,8 +48,6 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     'bower_components/html5sortable/jquery.sortable.js',
-                    'bower_components/grid-list/src/gridList.js',
-                    'bower_components/grid-list/src/jquery.gridList.js',
                     'js/main.js'
                 ],
                 dest: 'dist/js/panelpage.js'
@@ -106,7 +104,7 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 cwd: 'bower_components/',
-                src: ['font-awesome/fonts/*'],
+                src: ['font-awesome/fonts/*', 'ionicons-less/fonts/*'],
                 dest: 'dist/assets/fonts/'
             },
             ico: {
@@ -149,22 +147,10 @@ module.exports = function (grunt) {
         },
 
         sed: {
-            'clean-source-assets': {
+            cleanSourceAssets: {
                 path: 'dist/',
                 pattern: '../../assets/',
                 replacement: '../assets/',
-                recursive: true
-            },
-            'clean-source-css': {
-                path: 'dist/',
-                pattern: '../dist/css/styles.css',
-                replacement: 'css/styles.css',
-                recursive: true
-            },
-            'clean-source-js': {
-                path: 'dist/',
-                pattern: '../dist/js/rms.js',
-                replacement: 'js/rms.min.js',
                 recursive: true
             }
         },
@@ -246,7 +232,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', ['dist-css', 'dist-js']);
 
     // Full distribution task.
-    grunt.registerTask('dist', ['clean', 'dist-css', 'dist-js', 'dist-assets']);
+    grunt.registerTask('dist', ['clean', 'dist-css', 'dist-js', 'dist-assets', 'sed']);
 
     // Shim theme compilation alias
     grunt.registerTask('compile-theme', ['dist']);

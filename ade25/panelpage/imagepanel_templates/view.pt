@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+    <div class="panelpage-editor" id="content-core">
+      <div class="ppe-header">
+        <a class="ppe-close pull-left"
+          tal:attributes="href string:${context/parent_url}/@@panelpage-editor">
+          <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
+          Back
+        </a>
+        <a class="ppe-close pull-right"
+          tal:attributes="href string:${context/absolute_url}/@@edit">
+          Edit
+        </a>
+        <div class="ppe-header-title" i18n:translate="">Image Panel</div>
+      </div>
+      <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
+    </div>
+
+    <div class="ppe-section">
+      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Details</div>
+
+      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Preview</div>
+      <div class="ppe-block">
+        <div tal:replace="structure view/render_item" />
+      </div>
+    </div>
+
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="contentblock-content">
+  <tal:panelgrid tal:define="grid view/stored_layout">
+    <div class="panelpage-default"
+      tal:repeat="row grid">
+      <div class="row ppe-row-eq-height">
+        <tal:block tal:repeat="col row/panels">
+          <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
+            tal:define="panel_type col/component;
+                        uuid col/uuid">
+            <div tal:define="idx repeat/col/index;
+                             oddrow repeat/col/odd;
+                             klass col/klass | string:pagepanel-default;
+                             oddclass python:oddrow and 'item-odd' or 'item-even'"
+              tal:attributes="class string:pagepanel ${klass} ${oddclass}">
+                <div tal:condition="not:uuid">
+                  <h6>Panel <span tal:replace="idx" /></h6>
+                </div>
+                <div tal:condition="uuid">
+                  <div tal:replace="structure python:view.rendered_panel(uuid)" />
+                </div>
+            </div>
+          </div>
+        </tal:block>
+      </div>
+    </div>
+  </tal:panelgrid>
+</div>

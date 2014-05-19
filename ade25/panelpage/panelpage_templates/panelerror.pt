@@ -1,15 +1,52 @@
-<div class="app-contentpanel"
-    data-appui="panel-adjustment"
-    i18n:domain="ade25.panelpage">
-    <div class="contentpanel-content">
-        <div class="no-data-panel no-data-panel-error">
-            <div class="no-data-sign">
-                <i class="fa fa-exclamation-triangle"></i>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+  <metal:content-core define-macro="main">
+
+    <div class="panelpage-editor" id="content-core">
+      <div class="ppe-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <a class="ppe-close pull-left"
+              tal:attributes="href string:${context/parent_url}/@@panelpage-editor">
+              <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
+              Back
+            </a>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="ppe-header-title text-center" i18n:translate="">
+              Layout Panel
             </div>
-            <h3 class="no-data-title" i18n:translate="">
-                This item is not callable.
-            </h3>
-            <p tal:content="view/uuid" />
+          </div>
+        </div>
+      </div>
+      <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
+    </div>
+
+    <div class="ppe-section">
+        <div class="ppe-block-placeholder placeholder-get-started">
+            <div class="placeholder-sign">
+                <i class="ion ion-ios7-information-outline"></i>
+            </div>
+            <div class="placeholder-title" i18n:translate="">
+                Not implemented yet
+            </div>
+            <p i18n:translate="">This panel type will be available soon. Please hold
+                tight until we update the system</p>
         </div>
     </div>
-</div>
+
+
+  </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

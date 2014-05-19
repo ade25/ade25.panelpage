@@ -1,23 +1,18 @@
 import json
 from Acquisition import aq_inner
-from AccessControl import Unauthorized
 from five import grok
 from plone import api
 
 from zope.interface import Interface
-from zope.component import getMultiAdapter
-from zope.lifecycleevent import modified
-from zope.schema.vocabulary import getVocabularyRegistry
-from plone.keyring import django_random
 
-from Products.CMFPlone.utils import safe_unicode
-from plone.app.uuid.utils import uuidToObject
 from zope.publisher.interfaces import IPublishTraverse
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 
 from Products.CMFCore.interfaces import IContentish
-from ade25.panelpage.contentblock import IContentBlock
-from ade25.panelpage.contentpanel import IContentPanel
+
+from ade25.panelpage.config import panel_components
+from ade25.panelpage.config import pretty_components
+from ade25.panelpage.config import component_icons
 
 from ade25.panelpage import MessageFactory as _
 
@@ -55,44 +50,18 @@ class PanelPage(grok.View):
     grok.name('panelpage')
 
     def update(self):
-        context = aq_inner(self.context)
-        self.has_subcontent = len(self.contained_blocks()) > 0
-        self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('title')
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._create_panel(form)
+        self.has_subcontent = self.has_stored_layout()
 
     def is_editable(self):
         editable = False
         if not api.user.is_anonymous():
                 editable = True
         return editable
+
+    def rendered_panelgrid(self):
+        context = aq_inner(self.context)
+        template = context.restrictedTraverse('@@panelgrid')()
+        return template
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -105,42 +74,20 @@ class PanelPage(grok.View):
             klass = 'app-panelpage-editable'
         return klass
 
+    def has_stored_layout(self):
+        context = aq_inner(self.context)
+        stored = getattr(context, 'panelPageLayout')
+        if stored is not None:
+            return True
+        return False
+
     def contained_blocks(self):
         context = aq_inner(self.context)
         block_layout = getattr(context, 'panelPageLayout', None)
         if block_layout is None:
-            catalog = api.portal.get_tool(name='portal_catalog')
-            items = catalog(object_provides=IContentBlock.__identifier__,
-                            path=dict(
-                                query='/'.join(context.getPhysicalPath()),
-                                depth=1),
-                            sort_on='getObjPositionInParent')
+            return list()
         else:
-            items = list()
-            for entry in block_layout:
-                item = api.content.get(UID=entry)
-                items.append(item)
-        return items
-
-    def default_value(self, error):
-        value = ''
-        if error['active'] is False:
-            value = error['msg']
-        return value
-
-    def _create_panel(self, data):
-        context = aq_inner(self.context)
-        new_title = data['title']
-        token = django_random.get_random_string(length=12)
-        api.content.create(
-            type='ade25.panelpage.contentblock',
-            id=token,
-            title=new_title,
-            container=context,
-            safe_id=True
-        )
-        url = context.absolute_url()
-        return self.request.response.redirect(url)
+            return block_layout
 
 
 class PanelPageEditor(grok.View):
@@ -149,38 +96,7 @@ class PanelPageEditor(grok.View):
     grok.name('panelpage-editor')
 
     def update(self):
-        context = aq_inner(self.context)
         self.has_subcontent = len(self.contained_blocks()) > 0
-        self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('title')
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._create_panel(form)
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -193,42 +109,30 @@ class PanelPageEditor(grok.View):
             klass = 'app-panelpage-editable'
         return klass
 
-    def item_state_klass(self, uid):
-        klass = 'ppe-block-default'
-        if not api.user.is_anonymous():
-            state = self.item_state_info(uid=uid)
-            klass = ('ppe-block-{0}').format(state)
-        return klass
+    def item_state_klass(self, state):
+        return ('ppe-block-{0}').format(state)
 
     def item_state_info(self, uid):
         item = api.content.get(UID=uid)
         state = api.content.get_state(obj=item)
         return state
 
-    def available_transitions(self, uid):
+    def available_transitions(self, state):
         transitions = {
             'published': 'retract',
+            'visible': 'hide',
+            'hidden': 'show',
             'private': 'publish'
         }
-        state = self.item_state_info(uid)
         return transitions[state]
 
     def contained_blocks(self):
         context = aq_inner(self.context)
         block_layout = getattr(context, 'panelPageLayout', None)
         if block_layout is None:
-            catalog = api.portal.get_tool(name='portal_catalog')
-            items = catalog(object_provides=IContentBlock.__identifier__,
-                            path=dict(
-                                query='/'.join(context.getPhysicalPath()),
-                                depth=1),
-                            sort_on='getObjPositionInParent')
+            return list()
         else:
-            items = list()
-            for entry in block_layout:
-                item = api.content.get(UID=entry)
-                items.append(item)
-        return items
+            return block_layout
 
     def is_editable(self):
         editable = False
@@ -242,6 +146,7 @@ class PanelPageEditor(grok.View):
             value = error['msg']
         return value
 
+<<<<<<< HEAD
     def _create_panel(self, data):
         context = aq_inner(self.context)
         new_title = data['title']
@@ -259,35 +164,17 @@ class PanelPageEditor(grok.View):
 
 class PanelPageBlocks(grok.View):
     """ Generic router for panel page content blocks
+=======
+>>>>>>> remotes/origin/master
 
-        :param action:  CRUD content action
-        :param uid:     Content block UID
-    """
+class PanelBlockEditor(grok.View):
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
-    grok.name('ppb')
+    grok.name('panelblock-editor')
 
     def update(self):
-        context = aq_inner(self.context)
-        self.data = {}
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            self.data = self.request.form
-
-    def render(self):
-        context = aq_inner(self.context)
-        action = self.traverse_subpath[0]
-        next_url = context.absolute_url()
-        if action == 'create':
-            next_url = self._create_panel()
-        if action == 'delete':
-            next_url = self._delete_panel()
-        if action == 'transition':
-            next_url = self._transition_panel()
-        return self.request.response.redirect(next_url)
+        self.has_layout = len(self.stored_layout()) > 0
+        self.block_id = self.traverse_subpath[0]
 
     @property
     def traverse_subpath(self):
@@ -299,8 +186,9 @@ class PanelPageBlocks(grok.View):
         self.subpath.append(name)
         return self
 
-    def _create_panel(self):
+    def stored_layout(self):
         context = aq_inner(self.context)
+<<<<<<< HEAD
         token = django_random.get_random_string(length=24)
         new_title = self.request.form.get('title', token)
         #item = api.content.create(
@@ -344,257 +232,91 @@ class PanelPageBlocks(grok.View):
         # check if we have an explicit transition requested
         if len(self.traverse_subpath) > 2:
             state = self.traverse_subpath[2]
+=======
+        block_layout = getattr(context, 'panelPageLayout', None)
+        if block_layout is None:
+            return list()
+>>>>>>> remotes/origin/master
         else:
-            state = api.content.get_state(obj=item)
-        transitions = self.available_transitions()
-        action = transitions[state]
-        api.content.transition(obj=item, transition=action)
-        url = '{0}/@@panelpage-editor'.format(context.absolute_url())
-        return url
+            return block_layout
 
-    def available_transitions(self):
-        transitions = {
-            'published': 'retract',
-            'private': 'publish'
-        }
-        return transitions
-
-
-class PanelAsignment(grok.View):
-    grok.context(IPanelPage)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('panel-asignment')
-
-    def update(self):
-        self.uuid = self.request.get('uuid', '')
-
-    def default_value(self, error):
-        value = ''
-        if error['active'] is False:
-            value = error['msg']
-        return value
-
-    def rendered_item(self, uid):
-        item = api.content.get(UID=uid)
-        template = item.restrictedTraverse('@@content-view')()
-        return template
-
-    def render_panelgrid(self):
-        item = self.resolve_item()
-        template = item.restrictedTraverse('@@panelgrid')()
-        return template
-
-    def is_activated_slot(self, idx):
-        return idx <= self.asigned_panels()
-
-    def has_panels(self):
-        return self.asigned_panels() > 0
+    def gridrow(self):
+        grid = self.stored_layout()
+        return grid[int(self.block_id)]
 
     def panels(self):
-        item = self.resolve_item()
-        return item.panels
+        return self.gridrow()['panels']
 
-    def asigned_panels(self):
-        item = self.resolve_item()
-        count = 0
-        if item.panels:
-            count = len(item.panels)
-        return count
+    def show_panel_obj(self, uuid):
+        if uuid is None:
+            return False
+        return True
 
-    def get_asigned_panel(self, uid):
+    def get_started(self):
+        display = False
+        panels = self.panels()
+        if panels == 0:
+            display = True
+        if panels == 1 and panels[0]['component'] == 'placeholder':
+            display = True
+        return display
+
+    def must_setup_panel(self, component):
+        display = False
+        if component == 'placeholder':
+            display = True
+        return display
+
+    def show_ratio_selection(self):
+        return len(self.panels()) == 2
+
+    def active_ratio(self):
+        panel = self.panels()[0]
+        value = panel['grid-col']
+        return value
+
+    def available_components(self):
+        return panel_components()
+
+    def prettify_name(self, component):
+        names = pretty_components()
+        return names[component]
+
+    def get_component_icon(self, component):
+        matrix = component_icons()
+        return matrix[component]
+
+    def rendered_panelgrid(self):
+        context = aq_inner(self.context)
+        template = context.restrictedTraverse('@@panelgrid')()
+        return template
+
+    def rendered_panel(self, uid):
+        context = aq_inner(self.context)
         item = api.content.get(UID=uid)
-        return item.Title()
-
-    def resolve_item(self):
-        uuid = self.request.get('uuid', None)
-        return uuidToObject(uuid)
-
-    def available_panels(self):
-        portal = api.portal.get()
-        manager = portal['panel-manager']
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IContentPanel.__identifier__,
-                        path=dict(query='/'.join(manager.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
-        return items
-
-
-class CreateAsignment(grok.View):
-    grok.context(IPanelPage)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('create-asignment')
-
-    def update(self):
-        context = aq_inner(self.context)
-        self.uuid = self.request.get('uuid', '')
-        self.slot = self.request.get('slot', '')
-        self.errors = {}
-        unwanted = ('_authenticator',
-                    'form.button.Submit',
-                    'form.button.Clear')
-        required = ('panel')
-        if 'form.button.Clear' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-            self._clear_panel_asignment(form_data)
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._update_panel_asignment(form)
-
-    def default_value(self, error):
-        value = self.uuid
-        if error['active'] is False:
-            value = error['msg']
-        return value
-
-    def has_asignment(self):
-        value = False
-        item = uuidToObject(self.uuid)
-        current = getattr(item, 'panels', list())
-        idx = int(self.slot) - 1
-        if current >= idx:
-            value = True
-        return value
-
-    def is_selected(self, value):
-        selected = False
-        item = uuidToObject(self.uuid)
-        panels = getattr(item, 'panels', list())
-        if panels and value in panels:
-            selected = True
-        return selected
-
-    def available_panels(self):
-        portal = api.portal.get()
-        manager = portal['panel-manager']
-        catalog = api.portal.get_tool(name='portal_catalog')
-        items = catalog(object_provides=IContentPanel.__identifier__,
-                        path=dict(query='/'.join(manager.getPhysicalPath()),
-                                  depth=1),
-                        sort_on='getObjPositionInParent')
-        return items
-
-    def _update_panel_asignment(self, data):
-        context = aq_inner(self.context)
-        item = uuidToObject(self.uuid)
-        current = getattr(item, 'panels', list())
-        idx = int(self.slot)
-        panel = data['panel']
-        if not current:
-            updated = list()
-            updated.append(panel)
+        if item:
+            template = item.restrictedTraverse('@@content-view')()
         else:
-            list_idx = len(current) - 1
-            updated = current
-            if panel:
-                if idx > list_idx:
-                    updated.append(panel)
-                else:
-                    del updated[idx]
-                    updated.insert(idx, panel)
-        setattr(item, 'panels', updated)
-        modified(context)
-        context.reindexObject(idxs='modified')
-        base_url = context.absolute_url()
-        params = '/@@panel-asignment?uuid={0}'.format(self.uuid)
-        next_url = base_url + params
-        return self.request.response.redirect(next_url)
-
-    def _clear_panel_asignment(self, data):
-        context = aq_inner(self.context)
-        item = uuidToObject(self.uuid)
-        idx = int(self.slot)
-        panels = getattr(item, 'panels', list())
-        del panels[idx]
-        setattr(item, 'panels', panels)
-        modified(context)
-        context.reindexObject(idxs='modified')
-        base_url = context.absolute_url()
-        params = '/@@panel-asignment?uuid={0}'.format(self.uuid)
-        next_url = base_url + params
-        return self.request.response.redirect(next_url)
+            template = context.restrictedTraverse('@@panel-error')()
+        return template
 
 
-class PanelError(grok.View):
-    grok.context(IContentish)
-    grok.require('zope2.View')
-    grok.name('panel-error')
-
-    def update(self):
-        self.uuid = self.request.get('uuid', '')
-
-
-class SetupBlock(grok.View):
+class PanelPageBlocks(grok.View):
+    """ Generic router for panel content """
     grok.context(IPanelPage)
     grok.require('cmf.ModifyPortalContent')
-    grok.name('setup-block')
+    grok.name('panel-editor')
 
-    def update(self):
+    def render(self):
         context = aq_inner(self.context)
-        self.errors = {}
-        unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('grid-layout')
-        if 'form.button.Submit' in self.request:
-            authenticator = getMultiAdapter((context, self.request),
-                                            name=u"authenticator")
-            if not authenticator.verify():
-                raise Unauthorized
-            form = self.request.form
-            form_data = {}
-            form_errors = {}
-            errorIdx = 0
-            for value in form:
-                if value not in unwanted:
-                    form_data[value] = safe_unicode(form[value])
-                    if not form[value] and value in required:
-                        error = {}
-                        error['active'] = True
-                        error['msg'] = _(u"This field is required")
-                        form_errors[value] = error
-                        errorIdx += 1
-                    else:
-                        error = {}
-                        error['active'] = False
-                        error['msg'] = form[value]
-                        form_errors[value] = error
-            if errorIdx > 0:
-                self.errors = form_errors
-            else:
-                self._store_block_layout(form)
+        base_url = context.absolute_url()
+        row = self.traverse_subpath[0]
+        panel = self.traverse_subpath[1]
+        component = self.traverse_subpath[2]
+        uuid = self.traverse_subpath[3]
+        url = '{0}/@@panel-{1}/{2}/{3}/{4}'.format(
+            base_url, component, row, panel, uuid)
+        return self.request.response.redirect(url)
 
     @property
     def traverse_subpath(self):
@@ -606,33 +328,20 @@ class SetupBlock(grok.View):
         self.subpath.append(name)
         return self
 
-    def available_layouts(self):
-        context = aq_inner(self.context)
-        vr = getVocabularyRegistry()
-        vocab = vr.get(context, 'ade25.panelpage.AvailableLayouts')
-        return vocab
 
-    def _store_block_layout(self, data):
-        item_uid = self.traverse_subpath[0]
-        item = api.content.get(UID=item_uid)
-        grid_idx = int(data['grid-layout'])
-        current = getattr(item, 'contentBlockLayout', list())
-        if not current:
-            updated = list()
-        else:
-            updated = current
-        for idx in range(grid_idx):
-            col = {
-                'uuid': item_uid,
-                'component': u"text",
-                'grid-col': 12 / grid_idx
-            }
-            updated.append(col)
-        setattr(item, 'contentBlockLayout', json.dumps(updated))
-        modified(item)
-        item.reindexObject(idxs='modified')
-        next_url = item.absolute_url()
-        return self.request.response.redirect(next_url)
+class PanelError(grok.View):
+    grok.context(IContentish)
+    grok.require('zope2.View')
+    grok.name('panel-error')
+
+    def update(self):
+        self.row_idx = self.subpath[0]
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
 
 
 class RearrangeBlocks(grok.View):
@@ -645,12 +354,13 @@ class RearrangeBlocks(grok.View):
 
     def render(self):
         context = aq_inner(self.context)
+        grid = getattr(context, 'panelPageLayout')
         sort_query = list(self.query.split('&'))
         layout_order = list()
         for x in sort_query:
             details = x.split('=')
             key = int(details[0])
-            value = details[1]
+            value = grid[key]
             layout_order.insert(key, value)
         setattr(context, 'panelPageLayout', layout_order)
         msg = _(u"Panelpage order successfully updated")

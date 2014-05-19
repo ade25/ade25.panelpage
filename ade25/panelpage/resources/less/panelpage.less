@@ -72,12 +72,8 @@
     background: @gray-lighter;
     color: @gray;
     .ppe-close {
-        font-size: (@font-size-base * 2.5);
-        font-weight: @close-font-weight;
-        line-height: 1;
-        color: @close-color;
-        text-shadow: @close-text-shadow;
-        .opacity(.2);
+        margin-right: @line-height-computed;
+        font-size: ceil((@font-size-base * 1.5));
         &:hover,
         &:focus {
             color: @close-color;
@@ -108,8 +104,9 @@
 .ppe-block {
     display: block;
     margin-bottom: @line-height-computed;
-    padding: floor(@line-height-computed / 2) @line-height-computed;
-    border-left: ceil((@line-height-computed / 3)) solid @gray-lighter;
+    padding-left: @padding-base-horizontal;
+    border-bottom: 1px solid @gray-lighter;
+    border-right: ceil((@line-height-computed / 3)) solid @gray-lighter;
     color: @text-color;
     a {
         display: inline-block;
@@ -118,14 +115,19 @@
             color: @gray;
         }
     }
+    &.no-border {
+        border: none;
+    }
+    &.ppe-block-hidden,
     &.ppe-block-private {
-        border-right: ceil((@line-height-computed / 3)) solid @brand-danger;
+        border-left: ceil((@line-height-computed / 3)) solid @alert-danger-border;
         .ppe-block-state {
             color: @alert-danger-text;
         }
     }
+    &.ppe-block-visible,
     &.ppe-block-published {
-        border-right: ceil((@line-height-computed / 3)) solid @brand-success;
+        // border-right: ceil((@line-height-computed / 3)) solid @alert-success-border;
         .ppe-block-state {
             color: @alert-success-text;
         }
@@ -136,7 +138,7 @@
 }
 
 .ppe-section {
-    padding: @line-height-computed;
+    padding: @line-height-computed 0;
     background-color: @modal-content-bg;
 }
 
@@ -155,7 +157,11 @@
     text-align: center;
     line-height: 1;
 }
-
+.ppe-sign-ratio {
+    color: @gray;
+    border: 1px solid @gray;
+    border-radius: 50%;
+}
 .ppe-sign-draggable {
     color: @gray;
     border: none;
@@ -203,10 +209,18 @@
     &.placeholder-error {
         background: @alert-danger-bg;
     }
+    &.placeholder-get-started {
+        text-align: center;
+        padding: @navbar-height;
+        color: @gray;
+        .placeholder-sign {
+            margin:@line-height-computed auto 0;
+        }
+    }
 }
 
 .btn-ppe {
-    .button-variant(@navbar-inverse-color; @navbar-inverse-bg; @navbar-inverse-border);
+    .button-variant(@gray-lighter; @navbar-inverse-bg; @navbar-inverse-border);
     border-radius: 0;
     &.btn-ppe-boxed {
         position:absolute;
@@ -216,4 +230,17 @@
 
 .ppe-form {
     padding: @line-height-computed 0;
+}
+
+.pp-icon {
+    font-size: @font-size-base;
+    &.pp-icon-md {
+        font-size: ceil((@font-size-base * 2));
+    }
+    &.pp-icon-mlg {
+        font-size: ceil((@font-size-base * 3));
+    }
+    &.pp-icon-lg {
+        font-size: ceil((@font-size-base * 4));
+    }
 }
