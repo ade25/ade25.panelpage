@@ -3328,6 +3328,10 @@ fieldset[disabled] .btn-ppe.active
     margin-right: 0;
     margin-left: 20px;
 }
+.ppe-action.ppe-action-primary
+{
+    color: #808080;
+}
 .ppe-action.ppe-action-close
 {
     opacity: .5;
