@@ -51,14 +51,18 @@ class PanelHeadingEditForm(form.SchemaEditForm):
             context.absolute_url(), row)
         return url
 
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
+
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
-        uid = self.traverse_subpath[2]
-        item = api.content.get(UID=uid)
+        item = self.panel()
         setattr(item, 'textline', data['textline'])
         modified(item)
         item.reindexObject(idxs='modified')
@@ -108,14 +112,18 @@ class PanelSubHeadingEditForm(form.SchemaEditForm):
         self.subpath.append(name)
         return self
 
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
+
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
-        uid = self.traverse_subpath[2]
-        item = api.content.get(UID=uid)
+        item = self.panel()
         setattr(item, 'textline', data['textline'])
         modified(item)
         item.reindexObject(idxs='modified')
@@ -179,6 +187,11 @@ class PanelAbstractEditForm(form.SchemaEditForm):
             context.absolute_url(), row)
         return url
 
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
+
     @button.buttonAndHandler(_(u"cancel"))
     def handleCancel(self, action):
         IStatusMessage(self.request).addStatusMessage(
@@ -192,8 +205,7 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-        uid = self.traverse_subpath[2]
-        item = api.content.get(UID=uid)
+        item = self.panel()
         setattr(item, 'textblock', data['textblock'])
         modified(item)
         item.reindexObject(idxs='modified')
@@ -236,14 +248,18 @@ class PanelTextEditForm(form.SchemaEditForm):
         self.subpath.append(name)
         return self
 
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
+
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
-        uid = self.traverse_subpath[2]
-        item = api.content.get(UID=uid)
+        item = self.panel()
         setattr(item, 'textblock', data['textblock'])
         modified(item)
         item.reindexObject(idxs='modified')
@@ -375,12 +391,10 @@ class PanelImageEditForm(form.SchemaEditForm):
             context.absolute_url(), row)
         return url
 
-    @button.buttonAndHandler(_(u"cancel"))
-    def handleCancel(self, action):
-        IStatusMessage(self.request).addStatusMessage(
-            _(u"Content panel factory has been cancelled."),
-            type='info')
-        return self.request.response.redirect(self.next_url())
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
 
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
@@ -394,6 +408,13 @@ class PanelImageEditForm(form.SchemaEditForm):
         item.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
             _(u"The panel has successfully been updated"),
+            type='info')
+        return self.request.response.redirect(self.next_url())
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
             type='info')
         return self.request.response.redirect(self.next_url())
 
@@ -428,7 +449,7 @@ class PanelBaseEditForm(form.SchemaEditForm):
     grok.require('cmf.AddPortalContent')
     grok.name('panel-base-edit')
 
-    schema = IPanelImage
+    schema = IPanelBaseEdit
     ignoreContext = False
     css_class = 'app-form'
     label = _(u"Edit content panel")
@@ -450,12 +471,10 @@ class PanelBaseEditForm(form.SchemaEditForm):
             context.absolute_url(), row)
         return url
 
-    @button.buttonAndHandler(_(u"cancel"))
-    def handleCancel(self, action):
-        IStatusMessage(self.request).addStatusMessage(
-            _(u"Content panel factory has been cancelled."),
-            type='info')
-        return self.request.response.redirect(self.next_url())
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
 
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
@@ -480,6 +499,13 @@ class PanelBaseEditForm(form.SchemaEditForm):
         url = '{0}/@@panelblock-editor/{1}'.format(
             context.absolute_url(), row)
         return self.request.response.redirect(url)
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(self.next_url())
 
     def getContent(self):
         context = aq_inner(self.context)
