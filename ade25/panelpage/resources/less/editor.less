@@ -77,7 +77,11 @@
   // padding-top: 15px;
   padding-bottom: 15px;
   background-color: #f9f9f9;
-  // border: 1px solid @gray-light;
+  &.ppe-col-bordered {
+    padding-top: 15px;
+    padding-bottom: 0;
+    border-left: 1px solid @gray-lighter;
+  }
 }
 
 .ppe-col-action {
@@ -100,6 +104,10 @@
   .pp-panel-title {
     margin-bottom: 0;
   }
+}
+
+.ppe-panel-preview {
+  color: @gray-light;
 }
 
 .ppe-ratio {

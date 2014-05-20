@@ -3154,7 +3154,7 @@ MIT License: https://github.com/driftyco/ionicons
 
     border-color: #333;
     border-radius: 1px;
-    background-color: #888;
+    background-color: #ccc;
 }
 .ppe-icon-bar + .ppe-icon-bar
 {
@@ -3230,15 +3230,15 @@ MIT License: https://github.com/driftyco/ionicons
 .btn-ppe:focus,
 .btn-ppe:active,
 .btn-ppe.active,
-.open > .dropdown-toggle.btn-ppe
+.open .dropdown-toggle.btn-ppe
 {
     color: #eee;
     border-color: #000;
-    background-color: #080808;
+    background-color: #0e0e0e;
 }
 .btn-ppe:active,
 .btn-ppe.active,
-.open > .dropdown-toggle.btn-ppe
+.open .dropdown-toggle.btn-ppe
 {
     background-image: none;
 }
@@ -3264,7 +3264,7 @@ fieldset[disabled] .btn-ppe.active
 .btn-ppe .badge
 {
     color: #222;
-    background-color: #eee;
+    background-color: #fff;
 }
 .btn-ppe.btn-ppe-boxed
 {
@@ -3371,6 +3371,13 @@ fieldset[disabled] .btn-ppe.active
 
     background-color: #f9f9f9;
 }
+.ppe-col-visible.ppe-col-bordered
+{
+    padding-top: 15px;
+    padding-bottom: 0;
+
+    border-left: 1px solid #eee;
+}
 .ppe-col-action
 {
     border-right: 1px solid #333;
@@ -3396,6 +3403,10 @@ fieldset[disabled] .btn-ppe.active
 .ppe-panel .pp-panel-title
 {
     margin-bottom: 0;
+}
+.ppe-panel-preview
+{
+    color: #999;
 }
 .ppe-ratio
 {

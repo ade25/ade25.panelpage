@@ -38,7 +38,7 @@
               </div>
               <div class="col-xs-12 col-sm-4">
                 <div class="ppe-header-title text-center" i18n:translate="">
-                  Panel Page Layout
+                  Page Layout
                 </div>
               </div>
               <div class="col-xs-12 col-sm-4">
@@ -68,7 +68,7 @@
                 tal:attributes="data-appui-ajax-uri string:${context/absolute_url}/@@rearrange-panelpage;
                                 data-appui-ajax-form string:#ppe-form-rearrange">
 
-                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Page Content</div>
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Blocks</div>
                 <tal:items  tal:condition="view/has_subcontent"
                     tal:repeat="item view/contained_blocks">
                     <div class="ppe-block animated bounceInLeft"
@@ -91,12 +91,13 @@
                           </a>
                           <div class="row ppe-row-eq-height">
                             <tal:panels tal:repeat="panel panels">
-                              <div tal:attributes="class string:col-xs-12 col-sm-${panel/grid-col} ppe-col-visible">
-                                <div class="ppe-panel"
+                              <div tal:attributes="class string:col-xs-12 col-sm-${panel/grid-col} ppe-col-visible ppe-col-bordered">
+                                <div class="ppe-panel-preview"
                                   tal:define="component panel/component;
-                                                   name python:view.prettify_name(component)"
-                                  tal:content="name"
-                                  i18n:translate="">Component name</div>
+                                              name python:view.prettify_name(component)">
+                                  <small class="text-bottom" tal:content="name"
+                                    i18n:translate="">Component name</small>
+                                </div>
                               </div>
                             </tal:panels>
                           </div>
@@ -192,7 +193,7 @@
                                 specific item but will not be displayed</span>
                             </p>
                         </div>
-                        <div class="col-xs-12 col-md-3 ppe-col-action">
+                        <div class="col-xs-12 col-md-3">
                             <div class="form-group">
                                 <span tal:replace="structure context/@@authenticator/authenticator"/>
                                 <button class="btn btn-ppe"
@@ -205,28 +206,6 @@
                         </div>
                     </div>
                 </form>
-                <div class="row hidden">
-                    <div class="col-xs-12 col-sm-4">
-                        <p>
-                            <a class="btn btn-ppe"
-                                tal:attributes="href string:${context/absolute_url}/@@create-block">
-                                Add new content block</a>
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="text-center">
-                            <div class="app-sign"><small>or</small></div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <p class="text-right">
-                        <a class="btn btn-default"
-                            tal:attributes="href string:${context/absolute_url}/@@create-block-alias">
-                            Insert existing block</a>
-                        </p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
