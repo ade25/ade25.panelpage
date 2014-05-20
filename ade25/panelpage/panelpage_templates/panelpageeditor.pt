@@ -10,7 +10,8 @@
 <metal:header fill-slot="header">
     <tal:modals tal:repeat="item view/contained_blocks">
         <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-delete"
-            tal:define="idx repeat/item/index"
+            tal:define="idx repeat/item/index;
+                        item_state item/status"
           tal:attributes="id string:cbp-spmenu-p${idx}">
           <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
             Delete confirmation</h3>
@@ -19,6 +20,13 @@
           <a tal:attributes="href string:${context/absolute_url}/gridrow/delete/${idx}">
             <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md pull-right"></i>
             Delete panel
+          </a>
+          <p i18n:translate="">You can also just hide the content block and
+            keep all asigned content</p>
+          <a tal:attributes="href string:${context/absolute_url}/@@gridrow/transition/${idx}">
+            <i class="ion ion-ios7-checkmark-outline pp-icon pp-icon-md pull-right"></i>
+              <span tal:content="python:view.available_transitions(item_state)"
+                i18n:translate="">transition</span>
           </a>
         </nav>
     </tal:modals>
@@ -171,7 +179,7 @@
             <div class="ppe-section"
                 id="ppe-form"
                 tal:condition="view/is_editable">
-                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Add Page Content</div>
+                <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Add Content Block</div>
                 <form class="app-form app-create-form"
                     id="createBlockForm"
                     method="post" role="form"
