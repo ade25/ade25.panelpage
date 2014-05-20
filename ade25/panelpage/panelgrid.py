@@ -278,18 +278,18 @@ class GridColumns(grok.View):
         return grid
 
     def _delete_column(self):
-        row_idx = self.traverse_subpath[1]
-        col_idx = self.traverse_subpath[2]
+        row_idx = int(self.traverse_subpath[1])
+        col_idx = int(self.traverse_subpath[2])
         grid = self.stored_layout()
-        row = grid[int(row_idx)]
+        row = grid[row_idx]
         cols = self.gridrow()['panels']
-        col = cols[int(col_idx)]
+        col = cols[col_idx]
         if col['component'] != 'placeholder':
             uuid = col['uuid']
             panel = api.content.get(UID=uuid)
             api.content.delete(obj=panel)
-        cols.pop(int(col_idx))
-        grid_idx = len(cols) + 1
+        cols.pop(col_idx)
+        grid_idx = len(cols)
         col_size = 12 / grid_idx
         for x in cols:
             x['grid-col'] = col_size
