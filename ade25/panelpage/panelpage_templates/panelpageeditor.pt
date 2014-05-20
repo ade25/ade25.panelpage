@@ -75,10 +75,11 @@
                         tal:define="item_idx repeat/item/index;
                                     uid item/id;
                                     item_state item/status;
-                                    klass python:view.item_state_klass(item_state)"
+                                    klass python:view.item_state_klass(item_state);
+                                    panels python:view.panels(item_idx)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
                       <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6 col-md-8">
                           <small class="text-muted" tal:content="repeat/item/number" />
                           <a class="animated bounceInLeft" href="#content"
                             data-pjax="#app-pjax-container"
@@ -88,10 +89,20 @@
                             <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
                             <h4 tal:content="item/title">First added panel</h4>
                           </a>
+                          <div class="row ppe-row-eq-height">
+                            <tal:panels tal:repeat="panel panels">
+                              <div tal:attributes="class string:col-xs-12 col-sm-${panel/grid-col} ppe-col-visible">
+                                <div class="ppe-panel"
+                                  tal:define="component panel/component;
+                                                   name python:view.prettify_name(component)"
+                                  tal:content="name"
+                                  i18n:translate="">Component name</div>
+                              </div>
+                            </tal:panels>
+                          </div>
                         </div>
-                        <div class="col-xs-12 col-sm-2">
-                          <div class="ppe-col-info"
-                            tal:define="panels python:view.panels(item_idx)">
+                        <div class="col-xs-12 col-sm-2 hidden">
+                          <div class="ppe-col-info">
                             <tal:panel tal:repeat="panel panels">
                               <small tal:define="component panel/component;
                                                  name python:view.prettify_name(component)"
@@ -181,14 +192,14 @@
                                 specific item but will not be displayed</span>
                             </p>
                         </div>
-                        <div class="col-xs-12 col-md-3">
+                        <div class="col-xs-12 col-md-3 ppe-col-action">
                             <div class="form-group">
                                 <span tal:replace="structure context/@@authenticator/authenticator"/>
                                 <button class="btn btn-ppe"
                                     name="form.button.Submit"
                                     id="form.button.Submit">
-                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-sgit com"></i>
-                                    <span i18n:translate="">Content block</span>
+                                    <i class="ion ion-ios7-plus-outline pp-icon pp-icon-lg"></i><br>
+                                    <span class="h5" i18n:translate="">Content block</span>
                                 </button>
                             </div>
                         </div>
