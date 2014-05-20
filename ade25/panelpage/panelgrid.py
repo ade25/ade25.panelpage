@@ -139,7 +139,10 @@ class GridRows(grok.View):
     def _create_panel(self):
         context = aq_inner(self.context)
         token = django_random.get_random_string(length=24)
-        new_title = self.request.form.get('title', token)
+        title = self.request.form.get('title')
+        new_title = 'row'
+        if title:
+            new_title = title
         block = {
             'id': token,
             'title': new_title,
