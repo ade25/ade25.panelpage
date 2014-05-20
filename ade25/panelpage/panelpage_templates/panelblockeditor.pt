@@ -74,7 +74,8 @@
                         <div class="ppe-panel"
                             tal:define="component col/component;
                                         show_setup python:view.must_setup_panel(component);
-                                        icon_klass python:view.get_component_icon(component)">
+                                        icon_klass python:view.get_component_icon(component)"
+                            tal:attributes="class string:ppe-panel ppe-panel-${component}">
                           <div class="ppe-panel-icon pull-left">
                             <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"
                               tal:attributes="class string:ion ${icon_klass} pp-icon pp-icon-lg"></i>
@@ -89,7 +90,7 @@
                           </div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
                             <div tal:condition="show_setup">
-                                <span class="text-muted" i18n:translate="">This panel is empty</span>
+                                <!--<span class="text-muted" i18n:translate="">This panel is empty</span>-->
                                 <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
                                   i18n:translate="">configure</a>
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
@@ -152,7 +153,7 @@
                 <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
                   tal:define="panel_type col/component;
                               uuid col/uuid">
-                  <div tal:define="idx repeat/col/index;
+                  <div tal:define="idx repeat/col/number;
                                    oddrow repeat/col/odd;
                                    klass col/klass | string:pagepanel-default;
                                    oddclass python:oddrow and 'item-odd' or 'item-even'"

@@ -87,7 +87,7 @@
                                     panels python:view.panels(item_idx)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
                       <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-8">
+                        <div class="col-xs-12 col-sm-9">
                           <small class="text-muted" tal:content="repeat/item/number" />
                           <a class="animated bounceInLeft" href="#content"
                             data-pjax="#app-pjax-container"
@@ -120,29 +120,33 @@
                             </tal:panel>
                           </div>
                         </div>
-                        <div class="col-xs-12 col-sm-4">
-                           <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
+                        <div class="col-xs-12 col-sm-3 ppe-col-dragindicator">
+                          <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
                             <i class="ion ion-ios7-drag pp-icon pp-icon-md">
-                        </span>
-                        <a class="ppe-action" href="#ppe-block-transition"
-                            data-appui="toggle-contentblock"
-                            data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/@@gridrow/transition/${item_idx};
-                                            class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
-                            tal:content="python:view.available_transitions(item_state)"
-                            i18n:translate="">
-                            transition
-                        </a>
-                        <a class="ppe-action pull-right"
+                          </span>
+                        <tal:comment tal:content="nothing">
+                          <a class="ppe-action hidden" href="#ppe-block-transition"
+                              data-appui="toggle-contentblock"
+                              data-target="#ppe-block-main-page"
+                              tal:attributes="href string:${context/absolute_url}/@@gridrow/transition/${item_idx};
+                                              class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
+                              tal:content="python:view.available_transitions(item_state)"
+                              i18n:translate="">
+                              transition
+                          </a>
+                        </tal:comment>
+                        <a class="ppe-action ppe-action-remove pull-right"
                           data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
                           tal:attributes="data-target string:#cbp-spmenu-p${item_idx} ;
-                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}">
-                            delete
+                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}"
+                          i18n:translate="">
+                            remove
                         </a>
                         <a class="ppe-action ppe-action-primary pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
                             data-target="#ppe-block-main-page"
-                            tal:attributes="href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
+                            tal:attributes="href string:${context/absolute_url}/@@panelblock-editor/${item_idx}"
+                            i18n:translate="">
                             edit
                         </a>
                         </div>
@@ -188,12 +192,16 @@
                         <div class="col-xs-12 col-md-9">
                             <div class="form-group field"
                                 tal:define="req_value request/title | nothing">
-                                <label class="sr-only" for="title" i18n:translate="">Title</label>
+                                <label for="title" i18n:translate="">Title</label>
                                     <input class="form-control" id="title"
                                         type="text" name="title"
-                                        placeholder="Please enter panel name"
+                                        placeholder="Please enter content block name"
                                         tal:attributes="value req_value">
                             </div> <!-- /title field -->
+                            <span class="help-block" i18n:translate="">
+                                  Enter optional descriptive title for this block
+                                  of content
+                                </span>
                             <p class="text-muted text-discreet">
                                 <strong i18n:translate="">Good to know:</strong>
                                 <span i18n:translate="">
