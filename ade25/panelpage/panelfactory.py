@@ -172,6 +172,20 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         self.subpath.append(name)
         return self
 
+    def next_url(self):
+        context = aq_inner(self.context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return url
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(self.next_url())
+
     @button.buttonAndHandler(_(u"Save"), name="save")
     def handleApply(self, action):
         data, errors = self.extractData()
@@ -186,21 +200,7 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         IStatusMessage(self.request).addStatusMessage(
             _(u"The panel has successfully been updated"),
             type='info')
-        row = self.traverse_subpath[0]
-        context = aq_inner(self.context)
-        url = '{0}/@@panelblock-editor/{1}'.format(
-            context.absolute_url(), row)
-        return self.request.response.redirect(url)
-
-    @button.buttonAndHandler(_(u"cancel"))
-    def handleCancel(self, action):
-        context = aq_inner(self.context)
-        row = self.traverse_subpath[0]
-        url = '{0}/@@panelblock-editor/{1}'.format(context.absolute_url(), row)
-        IStatusMessage(self.request).addStatusMessage(
-            _(u"Content panel factory has been cancelled."),
-            type='info')
-        return self.request.response.redirect(url)
+        return self.request.response.redirect(self.next_url())
 
     def getContent(self):
         uid = self.traverse_subpath[2]
@@ -212,7 +212,7 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
-        data['textblock'] = getattr(item, 'textline', '')
+        data['textblock'] = getattr(item, 'textblock', '')
         return data
 
 
