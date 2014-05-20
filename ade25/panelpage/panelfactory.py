@@ -112,6 +112,13 @@ class PanelSubHeadingEditForm(form.SchemaEditForm):
         self.subpath.append(name)
         return self
 
+    def next_url(self):
+        context = aq_inner(self.context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return url
+
     def panel(self):
         uid = self.traverse_subpath[2]
         item = api.content.get(UID=uid)
@@ -247,6 +254,13 @@ class PanelTextEditForm(form.SchemaEditForm):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+    def next_url(self):
+        context = aq_inner(self.context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return url
 
     def panel(self):
         uid = self.traverse_subpath[2]
