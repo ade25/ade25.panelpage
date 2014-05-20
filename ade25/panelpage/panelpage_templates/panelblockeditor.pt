@@ -28,7 +28,7 @@
           </div>
           <div class="col-xs-12 col-sm-4">
             <a class="ppe-close pull-right"
-              tal:attributes="href string:${context/absolute_url}/@@panel-base-edit/${gridrow}"
+              tal:attributes="href string:${context/absolute_url}/@@panel-base-edit/${view/block_id}"
               i18n:translate="">
               Settings
             </a>
