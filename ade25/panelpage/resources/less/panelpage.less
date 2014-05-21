@@ -108,6 +108,9 @@
     border-bottom: 1px solid @gray-lighter;
     border-right: ceil((@line-height-computed / 3)) solid @gray-lighter;
     color: @text-color;
+    .ppe-block-col-first {
+        padding: ceil((@line-height-computed / 2));
+    }
     a {
         display: inline-block;
         color: @gray-light;
@@ -133,7 +136,12 @@
         }
     }
     .ppe-block-title {
-        margin-top: 0;
+        position: absolute;
+        top: 0;
+        z-index: @zindex-popover;
+        //border: 1px solid red;
+        background: #fff;
+        background: rgba(255, 255, 255, .5);
     }
 }
 

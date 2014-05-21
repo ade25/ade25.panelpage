@@ -3072,6 +3072,10 @@ MIT License: https://github.com/driftyco/ionicons
     border-right: 7px solid #eee;
     border-bottom: 1px solid #eee;
 }
+.ppe-block .ppe-block-col-first
+{
+    padding: 10px;
+}
 .ppe-block a
 {
     display: inline-block;
@@ -3103,7 +3107,12 @@ MIT License: https://github.com/driftyco/ionicons
 }
 .ppe-block .ppe-block-title
 {
-    margin-top: 0;
+    position: absolute;
+    z-index: 1010;
+    top: 0;
+
+    background: #fff;
+    background: rgba(255, 255, 255, .5);
 }
 .ppe-section
 {
@@ -3374,10 +3383,10 @@ fieldset[disabled] .btn-ppe.active
 }
 .ppe-col-visible.ppe-col-bordered
 {
-    padding-top: 15px;
-    padding-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
 
-    border-left: 1px solid #eee;
+    border-left: 1px solid #999;
 }
 .ppe-col-action
 {
@@ -3409,9 +3418,27 @@ fieldset[disabled] .btn-ppe.active
 {
     font-weight: 200;
 }
-.ppe-panel-preview
+.ppe-block-sortable .ppe-block-gridpreview
 {
-    color: #999;
+    opacity: 0;
+
+    filter: alpha(opacity=0);
+}
+.ppe-block-sortable .ppe-panel-preview
+{
+    color: #555;
+}
+.ppe-block-sortable:hover .ppe-block-title
+{
+    opacity: .25;
+
+    filter: alpha(opacity=25);
+}
+.ppe-block-sortable:hover .ppe-block-gridpreview
+{
+    opacity: 1;
+
+    filter: alpha(opacity=100);
 }
 .ppe-ratio
 {

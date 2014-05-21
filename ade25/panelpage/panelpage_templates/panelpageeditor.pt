@@ -87,17 +87,22 @@
                                     panels python:view.panels(item_idx)"
                         tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
                       <div class="row">
-                        <div class="col-xs-12 col-sm-9">
+                        <div class="col-xs-12 col-sm-1 ppe-block-col-first">
                           <small class="text-muted" tal:content="repeat/item/number" />
-                          <a class="animated bounceInLeft" href="#content"
-                            data-pjax="#app-pjax-container"
-                            data-appui="xxxtoggle-contentblock"
-                            tal:attributes="data-target string:#ppe-block-${repeat/item/number};
-                                            href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
-                            <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
-                            <h4 tal:content="item/title">First added panel</h4>
-                          </a>
-                          <div class="row ppe-row-eq-height">
+                          <small class="text-muted" i18n:translate="">Block</small>
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                          <div class="ppe-block-title">
+                            <a class="animated bounceInLeft" href="#content"
+                              data-pjax="#app-pjax-container"
+                              data-appui="xxxtoggle-contentblock"
+                              tal:attributes="data-target string:#ppe-block-${repeat/item/number};
+                                              href string:${context/absolute_url}/@@panelblock-editor/${item_idx}">
+                              <!-- <span class="app-sign app-sign-default" tal:content="repeat/item/number">1</span> -->
+                              <h4 tal:content="item/title">First added panel</h4>
+                            </a>
+                          </div>
+                          <div class="row ppe-row-eq-height ppe-block-gridpreview">
                             <tal:panels tal:repeat="panel panels">
                               <div tal:attributes="class string:col-xs-12 col-sm-${panel/grid-col} ppe-col-visible ppe-col-bordered">
                                 <div class="ppe-panel-preview"
