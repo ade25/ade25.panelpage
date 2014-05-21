@@ -6,7 +6,7 @@
       <tal:image tal:condition="context/image">
         <img tal:define="scales context/@@images"
           tal:replace="structure python: scales.tag('image',
-                       width=600, height=600, direction='down',
+                       width=600, height=600,
                        css_class='img-responsive')"
           />
       </tal:image>

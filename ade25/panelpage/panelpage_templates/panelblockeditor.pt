@@ -66,20 +66,33 @@
                                           href string:${context/absolute_url}/gridcolumn/delete/${view/block_id}/${idx}">
                             <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md"></i>
                         </a>
+                        <a class="ppe-action pull-right"
+                          tal:define="component col/component;"
+                          tal:condition="not:python:component == 'placeholder'"
+                          tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
+                          i18n:translate="">edit</a>
                         <div class="ppe-panel"
                             tal:define="component col/component;
                                         show_setup python:view.must_setup_panel(component);
-                                        icon_klass python:view.get_component_icon(component)">
+                                        icon_klass python:view.get_component_icon(component)"
+                            tal:attributes="class string:ppe-panel ppe-panel-${component}">
                           <div class="ppe-panel-icon pull-left">
                             <i class="ion ion-ios7-circle-outline pp-icon pp-icon-lg"
                               tal:attributes="class string:ion ${icon_klass} pp-icon pp-icon-lg"></i>
                           </div>
-                            <!--<i tal:attributes="class string:fa ${icon_klass} fa-3x xfa-border pull-left"></i>-->
-                            <div class="h4 pp-panel-title"><span i18n:translate="">Panel</span> <span tal:replace="number" /></div>
+                          <div class="h4 pp-panel-title">
+                            <span i18n:translate="">Panel</span> <span tal:replace="number" />
+                            <a class="pp-panel-title-action"
+                              tal:define="component col/component;"
+                              tal:condition="not:python:component == 'placeholder'"
+                              tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
+                              i18n:translate="">edit</a>
+                          </div>
                             <strong class="sr-only" tal:content="col/component" i18n:translate="">Content:</strong>
                             <div tal:condition="show_setup">
-                                <span class="text-muted" i18n:translate="">This panel is empty</span>
-                                <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2">edit</a>
+                                <!--<span class="text-muted" i18n:translate="">This panel is empty</span>-->
+                                <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
+                                  i18n:translate="">configure</a>
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
                                   <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Select panel content</h3>
@@ -91,7 +104,11 @@
                                   </tal:items>
                                 </nav>
                             </div>
-                            <a tal:condition="not:show_setup"
+                            <span class="text-muted"
+                              tal:condition="not:show_setup"
+                              tal:content="python:view.prettify_name(component)">Component
+                            </span>
+                            <a class="hidden" tal:condition="not:show_setup"
                                 tal:attributes="href string:${context/absolute_url}/@@panel-editor/${view/block_id}/${idx}/${col/component}/${col/uuid}"
                                 i18n:translate="">edit panel</a>
                         </div>
