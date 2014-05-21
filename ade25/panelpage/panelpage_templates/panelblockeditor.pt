@@ -136,7 +136,7 @@
                 <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
                   tal:define="panel_type col/component;
                               uuid col/uuid">
-                  <div tal:define="idx repeat/col/index;
+                  <div tal:define="idx repeat/col/number;
                                    oddrow repeat/col/odd;
                                    klass col/klass | string:pagepanel-default;
                                    oddclass python:oddrow and 'item-odd' or 'item-even'"
