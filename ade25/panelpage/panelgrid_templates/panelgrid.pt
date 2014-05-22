@@ -2,7 +2,7 @@
   <tal:block tal:repeat="row grid">
     <div class="panelgrid-row"
       tal:define="idx repeat/row/index"
-      tal:attributes="class string:panelgrid-row panelgrid-row-${idx};
+      tal:attributes="class string:panelgrid-row panelgrid-row-${idx} ${row/klass};
                       id string:panelgrid-row-${idx}">
       <div class="row">
         <tal:block tal:repeat="col row/panels">
