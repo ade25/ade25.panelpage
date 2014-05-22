@@ -104,7 +104,8 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 cwd: 'bower_components/',
-                src: ['font-awesome/fonts/*', 'ionicons-less/fonts/*'],
+                src: ['font-awesome/fonts/*', 'ionicons-less/fonts/*',
+                      'open-iconic/font/fonts/*'],
                 dest: 'dist/assets/fonts/'
             },
             ico: {
