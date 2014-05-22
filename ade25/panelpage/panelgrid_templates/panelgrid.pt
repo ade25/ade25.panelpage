@@ -4,7 +4,7 @@
       tal:define="idx repeat/row/index"
       tal:attributes="class string:panelgrid-row panelgrid-row-${idx} ${row/klass};
                       id string:panelgrid-row-${idx}">
-      <div class="row ppe-row-eq-height">
+      <div class="row">
         <tal:block tal:repeat="col row/panels">
           <div tal:attributes="class string:col-xs-12 col-sm-${col/grid-col} xppe-col-visible"
             tal:define="panel_type col/component;
