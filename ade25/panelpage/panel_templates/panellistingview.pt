@@ -1,0 +1,13 @@
+<div class="contentpanel contentpanel-base"
+  tal:attributes="class string:contentpanel contentpanel-base ${context/klass};
+                  id string:contentpanel-${context/getId}">
+  <div class="contentpanel-content">
+    <div class="contentpanel-body">
+      <div tal:attributes="class string:contentpanel-listing ${context/klass}">
+        <p>App Listing code will go here - we will probably use several view
+          templates/options to provide the necessary listing types, e.g. link list, summary view
+          gridview.</p>
+      </div>
+    </div>
+  </div>
+</div>

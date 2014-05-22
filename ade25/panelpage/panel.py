@@ -87,3 +87,9 @@ class ImageView(grok.View):
     grok.context(IPanel)
     grok.require('zope2.View')
     grok.name('panel-image')
+
+
+class PanelListingView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-listing')
