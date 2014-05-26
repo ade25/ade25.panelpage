@@ -174,7 +174,8 @@ class GridRows(grok.View):
         row = grid[int(idx)]
         for col in row['panels']:
             item = api.content.get(UID=col['uuid'])
-            api.content.delete(obj=item)
+            if item:
+                api.content.delete(obj=item)
         grid.pop(int(idx))
         setattr(context, 'panelPageLayout', grid)
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())
@@ -328,6 +329,7 @@ class GridColumns(grok.View):
         uid = self._create_panel(component)
         col['component'] = component
         col['uuid'] = uid
+        col['klass'] = 'panel-column'
         row['panels'] = cols
         grid[int(row_idx)] = row
         return grid

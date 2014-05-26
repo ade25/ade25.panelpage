@@ -3,6 +3,7 @@ from zope.interface import Interface
 from plone.directives import form
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
+from plone.formwidget.querystring.widget import QueryStringFieldWidget
 
 from ade25.panelpage import MessageFactory as _
 
@@ -61,4 +62,45 @@ class IPanelImage(form.Schema):
         description=_(u"Upload panel image suitable in size and "
                       u"dimension for the usecase"),
         required=False,
+    )
+
+
+class IPanelListing(form.Schema):
+
+    form.widget(query=QueryStringFieldWidget)
+    query = schema.List(
+        title=_(u"Search terms"),
+        description=_(u"Define the search terms for the items you want to list"
+                      u" by choosing what to match on. The list of results"
+                      u"will be dynamically updated"),
+        value_type=schema.Dict(
+            value_type=schema.Field(),
+            key_type=schema.TextLine()
+        ),
+        required=False
+    )
+    sort_on = schema.TextLine(
+        title=_(u'label_sort_on', default=u'Sort on'),
+        description=_(u"Sort the collection on this index"),
+        required=False,
+    )
+
+    sort_reversed = schema.Bool(
+        title=_(u'label_sort_reversed', default=u'Reversed order'),
+        description=_(u'Sort the results in reversed order'),
+        required=False,
+    )
+
+    limit = schema.Int(
+        title=_(u'Limit'),
+        description=_(u'Limit Search Results'),
+        required=False,
+        default=1000,
+    )
+
+    item_count = schema.Int(
+        title=_(u'label_item_count', default=u'Item count'),
+        description=_(u'Number of items that will show up in one batch.'),
+        required=False,
+        default=30,
     )

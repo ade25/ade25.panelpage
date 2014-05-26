@@ -20,6 +20,7 @@ from ade25.panelpage.interfaces import IPanelAbstract
 from ade25.panelpage.interfaces import IPanelText
 from ade25.panelpage.interfaces import IPanelRichText
 from ade25.panelpage.interfaces import IPanelImage
+from ade25.panelpage.interfaces import IPanelListing
 
 from ade25.panelpage import MessageFactory as _
 
@@ -529,6 +530,83 @@ class PanelBaseEditForm(form.SchemaEditForm):
         data = {}
         data['title'] = row['title']
         data['klass'] = row['klass']
+        return data
+
+
+class PanelListingEditForm(form.SchemaEditForm):
+    grok.context(IPanelPage)
+    grok.require('cmf.AddPortalContent')
+    grok.name('panel-listing')
+
+    schema = IPanelListing
+    ignoreContext = False
+    css_class = 'app-form'
+    label = _(u"Edit content panel")
+
+    @property
+    def traverse_subpath(self):
+        return self.subpath
+
+    def publishTraverse(self, request, name):
+        if not hasattr(self, 'subpath'):
+            self.subpath = []
+        self.subpath.append(name)
+        return self
+
+    def next_url(self):
+        context = aq_inner(self.context)
+        row = self.traverse_subpath[0]
+        url = '{0}/@@panelblock-editor/{1}'.format(
+            context.absolute_url(), row)
+        return url
+
+    def panel(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        return item
+
+    @button.buttonAndHandler(_(u"Save"), name="save")
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+        item = self.panel()
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        for key, value in fields:
+            try:
+                new_value = data[key]
+                setattr(item, key, new_value)
+            except KeyError:
+                continue
+        modified(item)
+        item.reindexObject(idxs='modified')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"The panel has successfully been updated"),
+            type='info')
+        return self.request.response.redirect(self.next_url())
+
+    @button.buttonAndHandler(_(u"cancel"))
+    def handleCancel(self, action):
+        IStatusMessage(self.request).addStatusMessage(
+            _(u"Content panel factory has been cancelled."),
+            type='info')
+        return self.request.response.redirect(self.next_url())
+
+    def getContent(self):
+        uid = self.traverse_subpath[2]
+        item = api.content.get(UID=uid)
+        fti = getUtility(IDexterityFTI,
+                         name='ade25.panelpage.panel')
+        schema = fti.lookupSchema()
+        fields = getFieldsInOrder(schema)
+        data = {}
+        for key, value in fields:
+            data[key] = getattr(item, key, value)
+        data['image'] = getattr(item, 'image')
         return data
 
 
