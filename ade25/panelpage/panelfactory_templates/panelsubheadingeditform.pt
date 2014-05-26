@@ -28,10 +28,9 @@
         </div>
       </div>
       <div class="ppe-subtitle" tal:content="context/Title">Child Content</div>
-    </div>
-
-    <div class="ppe-section">
-      <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
+      <div class="ppe-section">
+        <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
+      </div>
     </div>
 
 
