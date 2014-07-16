@@ -51,6 +51,35 @@ class ResetLayout(grok.View):
         return self.request.response.redirect(url)
 
 
+class ClearLayout(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('clear-layout')
+
+    def render(self):
+        idx = self._clear_layouts()
+        msg = _(u"Removed {0} layouts".format(idx))
+        IStatusMessage(self.request).addStatusMessage(
+            msg, type='info')
+        url = self.context.absolute_url()
+        return self.request.response.redirect(url)
+
+    def _panel_pages(self):
+        catalog = api.portal.get_tool(name='portal_catalog')
+        items = catalog(object_provides=IPanelPage.__identifier__,)
+        return items
+
+    def _clear_layouts(self):
+        idx = 0
+        for page in self._panel_pages():
+            obj = page.getObject()
+            setattr(obj, 'panelPageLayout', list())
+            modified(obj)
+            obj.reindexObject(idxs='modified')
+            idx += 1
+        return idx
+
+
 class MigrateLayout(grok.View):
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
