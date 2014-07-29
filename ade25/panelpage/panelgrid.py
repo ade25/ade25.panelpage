@@ -172,10 +172,6 @@ class GridRows(grok.View):
         grid = getattr(context, 'panelPageLayout')
         idx = self.traverse_subpath[1]
         row = grid[int(idx)]
-        for col in row['panels']:
-            item = api.content.get(UID=col['uuid'])
-            if item:
-                api.content.delete(obj=item)
         grid.pop(int(idx))
         setattr(context, 'panelPageLayout', grid)
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())

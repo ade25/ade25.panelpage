@@ -93,3 +93,10 @@ class PanelListingView(grok.View):
     grok.context(IPanel)
     grok.require('zope2.View')
     grok.name('panel-listing')
+
+
+class AliasView(grok.View):
+    grok.context(IPanel)
+    grok.require('zope2.View')
+    grok.name('panel-alias')
+
