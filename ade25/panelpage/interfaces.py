@@ -1,9 +1,14 @@
+# -*- coding: UTF-8 -*-
+from plone.app.textfield import RichText
+from plone.app.vocabularies.catalog import CatalogSource
+from plone.app.widgets.dx import AjaxSelectWidget
+from plone.app.widgets.dx import RelatedItemsWidget
+from plone.directives import form
+from plone.formwidget.querystring.widget import QueryStringFieldWidget
+from plone.namedfile.field import NamedBlobImage
+from z3c.relationfield.schema import RelationChoice
 from zope import schema
 from zope.interface import Interface
-from plone.directives import form
-from plone.app.textfield import RichText
-from plone.namedfile.field import NamedBlobImage
-from plone.formwidget.querystring.widget import QueryStringFieldWidget
 
 from ade25.panelpage import MessageFactory as _
 
@@ -66,9 +71,11 @@ class IPanelImage(form.Schema):
 
 class IPanelAlias(form.Schema):
 
-    textline = schema.TextLine(
+    form.widget('alias', AjaxSelectWidget)
+    alias = schema.Choice(
         title=_(u"Alias"),
         required=False,
+        vocabulary=u"plone.app.vocabularies.Catalog",
     )
 
 
