@@ -64,6 +64,13 @@ class IPanelImage(form.Schema):
         required=False,
     )
 
+class IPanelAlias(form.Schema):
+
+    textline = schema.TextLine(
+        title=_(u"Alias"),
+        required=False,
+    )
+
 
 class IPanelListing(form.Schema):
 
