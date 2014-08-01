@@ -3,16 +3,6 @@
 
 from Acquisition import aq_inner
 from Products.statusmessages.interfaces import IStatusMessage
-from ade25.panelpage import MessageFactory as _
-from ade25.panelpage.interfaces import IPanelAbstract
-from ade25.panelpage.interfaces import IPanelAlias
-from ade25.panelpage.interfaces import IPanelHeading
-from ade25.panelpage.interfaces import IPanelImage
-from ade25.panelpage.interfaces import IPanelListing
-from ade25.panelpage.interfaces import IPanelRichText
-from ade25.panelpage.interfaces import IPanelSubHeading
-from ade25.panelpage.interfaces import IPanelText
-from ade25.panelpage.panelpage import IPanelPage
 from five import grok
 from plone import api
 from plone.dexterity.interfaces import IDexterityFTI
@@ -22,6 +12,18 @@ from zope import schema
 from zope.component import getUtility
 from zope.lifecycleevent import modified
 from zope.schema import getFieldsInOrder
+
+from ade25.panelpage.interfaces import IPanelAbstract
+from ade25.panelpage.interfaces import IPanelAlias
+from ade25.panelpage.interfaces import IPanelHeading
+from ade25.panelpage.interfaces import IPanelImage
+from ade25.panelpage.interfaces import IPanelListing
+from ade25.panelpage.interfaces import IPanelRichText
+from ade25.panelpage.interfaces import IPanelSubHeading
+from ade25.panelpage.interfaces import IPanelText
+from ade25.panelpage.panelpage import IPanelPage
+
+from ade25.panelpage import MessageFactory as _
 
 
 class PanelHeadingEditForm(form.SchemaEditForm):
