@@ -4,13 +4,12 @@
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
+from ade25.panelpage.panelpage import IPanelPage
 from five import grok
 from plone import api
 from plone.keyring import django_random
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
-
-from ade25.panelpage.panelpage import IPanelPage
 
 
 class PanelGrid(grok.View):
