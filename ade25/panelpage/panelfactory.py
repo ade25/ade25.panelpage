@@ -573,7 +573,7 @@ class PanelAliasEditForm(form.SchemaEditForm):
             self.status = self.formErrorsMessage
             return
         item = self.panel()
-        setattr(item, 'textline', data['textline'])
+        setattr(item, 'textline', data['alias'])
         modified(item)
         item.reindexObject(idxs='modified')
         IStatusMessage(self.request).addStatusMessage(
@@ -598,7 +598,7 @@ class PanelAliasEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
-        data['textline'] = getattr(item, 'textline', '')
+        data['alias'] = getattr(item, 'textline', '')
         return data
 
 

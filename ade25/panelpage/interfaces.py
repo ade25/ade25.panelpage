@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 from plone.app.textfield import RichText
 from plone.app.vocabularies.catalog import CatalogSource
-from plone.app.widgets.dx import AjaxSelectWidget
 from plone.app.widgets.dx import RelatedItemsWidget
 from plone.directives import form
 from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.namedfile.field import NamedBlobImage
 from z3c.relationfield.schema import RelationChoice
+from z3c.relationfield.schema import RelationList
 from zope import schema
 from zope.interface import Interface
 
@@ -69,13 +69,21 @@ class IPanelImage(form.Schema):
         required=False,
     )
 
+
 class IPanelAlias(form.Schema):
 
-    form.widget('alias', AjaxSelectWidget)
-    alias = schema.Choice(
+    form.widget('alias', RelatedItemsWidget)
+    alias = RelationList(
         title=_(u"Alias"),
+        description=_(u"Note that depending on the raw number of contents "
+                      u"the selection might be slow to update with all "
+                      u"available values"),
+        default=[],
+        value_type=RelationChoice(
+            title=_(u"Related Item"),
+            source=CatalogSource(),
+        ),
         required=False,
-        vocabulary=u"plone.app.vocabularies.Catalog",
     )
 
 

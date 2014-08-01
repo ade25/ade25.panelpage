@@ -1,21 +1,20 @@
-import json
+# -*- coding: UTF-8 -*-
+"""Module that provides functionality for modular layout management."""
+
 from Acquisition import aq_inner
-from five import grok
-from plone import api
-
-from zope.interface import Interface
-from zope.lifecycleevent import modified
-
-from zope.publisher.interfaces import IPublishTraverse
-from plone.app.layout.viewlets.interfaces import IBelowContentBody
-
 from Products.CMFCore.interfaces import IContentish
-
+from ade25.panelpage import MessageFactory as _
+from ade25.panelpage.config import component_icons
 from ade25.panelpage.config import panel_components
 from ade25.panelpage.config import pretty_components
-from ade25.panelpage.config import component_icons
+from five import grok
+from plone import api
+from plone.app.layout.viewlets.interfaces import IBelowContentBody
+from zope.interface import Interface
+from zope.lifecycleevent import modified
+from zope.publisher.interfaces import IPublishTraverse
 
-from ade25.panelpage import MessageFactory as _
+import json
 
 
 class IPanelPage(Interface):

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Module to render and manipulate a panel layout grid"""
+
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
@@ -171,7 +174,6 @@ class GridRows(grok.View):
         context = aq_inner(self.context)
         grid = getattr(context, 'panelPageLayout')
         idx = self.traverse_subpath[1]
-        row = grid[int(idx)]
         grid.pop(int(idx))
         setattr(context, 'panelPageLayout', grid)
         url = '{0}/@@panelpage-editor'.format(context.absolute_url())
