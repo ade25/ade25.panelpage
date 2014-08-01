@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Module providing page content type with predefined panelpage layout"""
+
 from Acquisition import aq_inner
 from five import grok
 
@@ -28,7 +31,7 @@ class IPage(form.Schema, IImageScaleTraversable):
 def childNodeIndexer(obj):
     searchable_text = obj.SearchableText()
     for item in obj.getFolderContents(
-        {'portal_type': 'ade25.panelpage.contentblock'},
+        {'portal_type': 'ade25.panelpage.panel'},
     ):
         searchable_text += item.SearchableText()
     return searchable_text

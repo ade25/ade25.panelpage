@@ -1,21 +1,21 @@
+# -*- coding: utf-8 -*-
+"""Module providing dexterity behavior for layout grid storage"""
+
 from Acquisition import aq_inner
 from Acquisition import aq_parent
+from Products.statusmessages.interfaces import IStatusMessage
 from five import grok
 from plone import api
-from zope import schema
-
-from zope.lifecycleevent import modified
-from zope.interface import alsoProvides
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.autoform.interfaces import IFormFieldProvider
 from plone.directives import form
 from plone.keyring import django_random
-
-from plone.autoform.interfaces import IFormFieldProvider
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from Products.statusmessages.interfaces import IStatusMessage
+from zope import schema
+from zope.interface import alsoProvides
+from zope.lifecycleevent import modified
 
 from ade25.panelpage.contentblock import IContentBlock
 from ade25.panelpage.panelpage import IPanelPage
-
 
 from ade25.panelpage import MessageFactory as _
 

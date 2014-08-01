@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+""" Tool configuration """
 
 from ade25.panelpage import MessageFactory as _
-
-""" Tool configuration """
 
 
 def panel_components():

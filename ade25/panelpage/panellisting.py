@@ -1,17 +1,16 @@
-from zope import schema
+# -*- coding: utf-8 -*-
+"""Module providing dexterity behavior for panel listings"""
 
+from plone.autoform.interfaces import IFormFieldProvider
+from plone.dexterity.interfaces import IDexterityContent
+from plone.directives import form
+from plone.formwidget.querystring.widget import QueryStringFieldWidget
+from plone.supermodel import model
+from zope import schema
 from zope.component import adapts
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from zope.interface import implements
-
-from plone.supermodel import model
-from plone.directives import form
-
-from plone.formwidget.querystring.widget import QueryStringFieldWidget
-
-from plone.autoform.interfaces import IFormFieldProvider
-from plone.dexterity.interfaces import IDexterityContent
 
 from ade25.panelpage import MessageFactory as _
 

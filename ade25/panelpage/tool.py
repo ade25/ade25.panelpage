@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
+"""Module providing genearal toolset for panel management"""
+
 from five import grok
 from plone import api
-
+from plone.dexterity.interfaces import IDexterityFTI
 from zope.component import getUtility
 from zope.interface import Interface
-from zope.schema import getFieldsInOrder
 from zope.lifecycleevent import modified
-
-from plone.dexterity.interfaces import IDexterityFTI
-#from collective.beaker.interfaces import ISession
+from zope.schema import getFieldsInOrder
+# from collective.beaker.interfaces import ISession
 
 SESSION_KEY = 'Uh53dAfH2JPzI/lIhBvN72RJzZVv6zk5'
 
