@@ -4,10 +4,26 @@
   <div class="contentpanel-content">
     <div class="contentpanel-abstract" tal:condition="context/Title">
       <div tal:attributes="class string:${context/klass}">
-        <div class="cp-alias-placeholder"
-          data-appui="ajax-alias">
-          <span class="pp-spinner pp-spinner-lg">Loading&hellip;</span>
+        <div class="cp-alias-placeholder" id="aliasPlaceholder"
+          tal:condition="context/textline">
+          <a class="pp-spinner" data-appui="ajaxified"
+            tal:define="uid context/textline;
+                        item python:view.resolve_item(uid)"
+            tal:attributes="href string:${item/absolute_url};
+                            data-source string:${item/absolute_url};
+                            data-target string:#aliasPlaceholder">
+            Loading&hellip;
+          </a>
+          <small i18n:translate="">
+            Please wait while we load the proxy object</small>
         </div>
+        <div class="ppe-block-placeholder text-center"
+          tal:condition="not:context/textline">
+          <span class="pp-spinner pp-spinner-lg">Loading&hellip;</span>
+          <div class="placeholder-title" i18n:translate="">
+             Proxy content not asigned or not callable
+          </div>
+      </div>
       </div>
     </div>
   </div>

@@ -1,9 +1,10 @@
+# -*- coding: UTF-8 -*-
 from Acquisition import aq_inner
 from five import grok
+from plone import api
 from zope import schema
 
 from plone.dexterity.content import Item
-
 from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
 
@@ -99,3 +100,6 @@ class AliasView(grok.View):
     grok.context(IPanel)
     grok.require('zope2.View')
     grok.name('panel-alias')
+
+    def resolve_item(self, uuid):
+        return api.content.get(UID=uuid)

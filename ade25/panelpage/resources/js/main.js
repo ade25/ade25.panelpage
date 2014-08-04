@@ -32,7 +32,7 @@
     $('a[data-appui="ajaxified"]').each(function () {
       var $targetUrl = $(this).data('source'),
           $container = $(this).data('target');
-      $(this).load($targetUrl + '?ajax_load=1 #content-core >*')
+      $($container).load($targetUrl + '?ajax_load=1 #content-core >*')
         .fadeIn('slow');
     });
 
