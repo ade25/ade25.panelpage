@@ -1,12 +1,8 @@
 # -*- coding: UTF-8 -*-
 from plone.app.textfield import RichText
-from plone.app.vocabularies.catalog import CatalogSource
-from plone.app.widgets.dx import RelatedItemsWidget
 from plone.directives import form
 from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.namedfile.field import NamedBlobImage
-from z3c.relationfield.schema import RelationChoice
-from z3c.relationfield.schema import RelationList
 from zope import schema
 from zope.interface import Interface
 
@@ -72,17 +68,10 @@ class IPanelImage(form.Schema):
 
 class IPanelAlias(form.Schema):
 
-    form.widget('alias', RelatedItemsWidget)
-    alias = RelationList(
+    alias = schema.TextLine(
         title=_(u"Alias"),
-        description=_(u"Note that depending on the raw number of contents "
-                      u"the selection might be slow to update with all "
-                      u"available values"),
-        default=[],
-        value_type=RelationChoice(
-            title=_(u"Related Item"),
-            source=CatalogSource(),
-        ),
+        description=_(u"Enter UID of content aliase that can be obtained by "
+                      u"appending @@UUID to a specific item URL"),
         required=False,
     )
 

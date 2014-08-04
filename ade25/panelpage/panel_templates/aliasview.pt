@@ -3,8 +3,12 @@
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
     <div class="contentpanel-abstract" tal:condition="context/Title">
-      <div tal:attributes="class string:${context/klass}"
-        tal:content="context/Title">Headline</div>
+      <div tal:attributes="class string:${context/klass}">
+        <div class="cp-alias-placeholder"
+          data-appui="ajax-alias">
+          <span class="pp-spinner pp-spinner-lg">Loading&hellip;</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
