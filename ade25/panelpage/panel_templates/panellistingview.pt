@@ -7,6 +7,12 @@
         <p>App Listing code will go here - we will probably use several view
           templates/options to provide the necessary listing types, e.g. link list, summary view
           gridview.</p>
+        <pre tal:content="context/query" />
+        <div class="media" tal:repeat="item view/dynamic_contents">
+          <div class="media-body">
+            <h4 tal:replace="item/Title" />
+          </div>
+        </div>
       </div>
     </div>
   </div>

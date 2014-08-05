@@ -4,7 +4,8 @@
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.interfaces import IDexterityContent
 from plone.directives import form
-from plone.formwidget.querystring.widget import QueryStringFieldWidget
+from plone.app.widgets.dx import QueryStringWidget
+# from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.supermodel import model
 from zope import schema
 from zope.component import adapts
@@ -19,17 +20,17 @@ class IPanelListing(model.Schema):
 
     """ Behavior to store a query to provide content listings. """
 
-    form.widget(query=QueryStringFieldWidget)
+    form.widget('query', QueryStringWidget)
     query = schema.List(
-        title=_(u"Search terms"),
-        description=_(u"Define the search terms for the items you want to list"
-                      u" by choosing what to match on. The list of results"
-                      u"will be dynamically updated"),
+        title=_(u'Search terms'),
+        description=_(u"Define the search terms for the items you want "
+                      u"to list by choosing what to match on. "
+                      u"The list of results will be dynamically updated"),
         value_type=schema.Dict(
             value_type=schema.Field(),
-            key_type=schema.TextLine()
-        ),
-        required=False
+            key_type=schema.TextLine()),
+        required=False,
+        missing_value=''
     )
     sort_on = schema.TextLine(
         title=_(u'label_sort_on', default=u'Sort on'),

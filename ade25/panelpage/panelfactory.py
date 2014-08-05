@@ -675,7 +675,7 @@ class PanelListingEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
-        data['image'] = getattr(item, 'image')
+        data['query'] = getattr(item, 'query')
         return data
 
 

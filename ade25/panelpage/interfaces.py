@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from plone.app.textfield import RichText
+from plone.app.widgets.dx import QueryStringWidget
 from plone.directives import form
-from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.namedfile.field import NamedBlobImage
 from zope import schema
 from zope.interface import Interface
@@ -78,17 +78,17 @@ class IPanelAlias(form.Schema):
 
 class IPanelListing(form.Schema):
 
-    form.widget(query=QueryStringFieldWidget)
+    form.widget('query', QueryStringWidget)
     query = schema.List(
-        title=_(u"Search terms"),
-        description=_(u"Define the search terms for the items you want to list"
-                      u" by choosing what to match on. The list of results"
-                      u"will be dynamically updated"),
+        title=_(u'Search terms'),
+        description=_(u"Define the search terms for the items you want "
+                      u"to list by choosing what to match on. "
+                      u"The list of results will be dynamically updated"),
         value_type=schema.Dict(
             value_type=schema.Field(),
-            key_type=schema.TextLine()
-        ),
-        required=False
+            key_type=schema.TextLine()),
+        required=False,
+        missing_value=''
     )
     sort_on = schema.TextLine(
         title=_(u'label_sort_on', default=u'Sort on'),
