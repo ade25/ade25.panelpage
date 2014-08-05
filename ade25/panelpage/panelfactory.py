@@ -641,11 +641,7 @@ class PanelListingEditForm(form.SchemaEditForm):
             self.status = self.formErrorsMessage
             return
         item = self.panel()
-        fti = getUtility(IDexterityFTI,
-                         name='ade25.panelpage.panel')
-        schema = fti.lookupSchema()
-        fields = getFieldsInOrder(schema)
-        for key, value in fields:
+        for key in data:
             try:
                 new_value = data[key]
                 setattr(item, key, new_value)
@@ -676,6 +672,10 @@ class PanelListingEditForm(form.SchemaEditForm):
         for key, value in fields:
             data[key] = getattr(item, key, value)
         data['query'] = getattr(item, 'query')
+        data['sort_on'] = getattr(item, 'sort_on')
+        data['sort_reversed'] = getattr(item, 'sort_reversed')
+        data['limit'] = getattr(item, 'limit')
+        data['item_count'] = getattr(item, 'item_count')
         return data
 
 

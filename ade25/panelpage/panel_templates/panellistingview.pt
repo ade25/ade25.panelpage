@@ -3,16 +3,34 @@
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
     <div class="contentpanel-body">
-      <div tal:attributes="class string:contentpanel-listing ${context/klass}">
-        <p>App Listing code will go here - we will probably use several view
-          templates/options to provide the necessary listing types, e.g. link list, summary view
-          gridview.</p>
+      <div tal:attributes="class string:contentpanel-listing ${context/klass}"
+        tal:condition="context/query">
         <pre tal:content="context/query" />
-        <div class="media" tal:repeat="item view/dynamic_contents">
-          <div class="media-body">
-            <h4 tal:replace="item/Title" />
+        <tal:block tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                               b_size python:int(request.get('b_size', 20));
+                               b_start python:int(request.get('b_start', 0));
+                               results view/dynamic_contents;
+                               batch python:Batch(results, b_size, b_start);">
+          <div class="media" tal:repeat="item batch">
+            <tal:image tal:define="scales context/@@images;
+                                   thumbnail python: scales.scale('image', width=128, height=128);"
+                tal:condition="thumbnail">
+                <a class="media-object-wrapper pull-left"
+                  tal:attributes="item/getURL">
+                  <img class="media-object"
+                    tal:attributes="src thumbnail/url;
+                                    width thumbnail/width;
+                                    height thumbnail/height" />
+                </a>
+            </tal:image>
+            <div class="media-body">
+              <h4 class="media-heading"><a tal:attributes="href item/getURL"
+                  tal:content="item/Title" /></h4>
+              <p tal:content="item/Description" />
+            </div>
           </div>
-        </div>
+          <div metal:use-macro="context/batch_macros/macros/navigation" />
+        </tal:block>
       </div>
     </div>
   </div>

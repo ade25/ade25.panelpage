@@ -115,3 +115,9 @@ class IPanelListing(form.Schema):
         required=False,
         default=30,
     )
+
+    textline = schema.TextLine(
+        title=_(u"List Headline"),
+        description=_(u"Add optional list headline"),
+        required=False,
+    )
