@@ -58,6 +58,13 @@ class IPanelListing(model.Schema):
         default=30,
     )
 
+    list_layout = schema.Choice(
+        title=_(u"List Layout"),
+        vocabulary=u"ade25.panelpage.AvailableLayouts",
+        required=False,
+        default=u'pp-list-base'
+    )
+
 
 class PanelListing(object):
     implements(IPanelListing)
