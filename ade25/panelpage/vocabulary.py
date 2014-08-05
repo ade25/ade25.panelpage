@@ -10,10 +10,10 @@ class AvailableLayoutsVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
-        TYPES = {_(u"1 Cols"): '1',
-                 _(u"2 Cols"): '2',
-                 _(u"3 Cols"): '3',
-                 _(u"4 Cols"): '4'}
+        TYPES = {
+            _(u"Basic Listing"): 'pp-list-base',
+            _(u"Media Listing"): 'pp-list-media'
+        }
         return SimpleVocabulary([SimpleTerm(value, title=title)
                                 for title, value
                                 in TYPES.iteritems()])
