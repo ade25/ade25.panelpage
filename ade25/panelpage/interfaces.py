@@ -121,3 +121,10 @@ class IPanelListing(form.Schema):
         description=_(u"Add optional list headline"),
         required=False,
     )
+
+    list_layout = schema.Choice(
+        title=_(u"List Layout"),
+        vocabulary=u"ade25.panelpage.AvailableLayouts",
+        required=False,
+        default=u'pp-list-base'
+    )
