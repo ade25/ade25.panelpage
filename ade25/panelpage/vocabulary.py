@@ -11,8 +11,9 @@ class AvailableLayoutsVocabulary(object):
 
     def __call__(self, context):
         TYPES = {
-            _(u"Basic Listing"): 'pp-list-base',
-            _(u"Media Listing"): 'pp-list-media'
+            _(u"List"): 'pp-list-base',
+            _(u"Summary"): 'pp-list-summary',
+            _(u"Media"): 'pp-list-media'
         }
         return SimpleVocabulary([SimpleTerm(value, title=title)
                                 for title, value
