@@ -87,7 +87,7 @@
                             <div tal:condition="show_setup">
                                 <!--<span class="text-muted" i18n:translate="">This panel is empty</span>-->
                                 <a class="app-link" data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
-                                  i18n:translate="">configure</a>
+                                  i18n:translate="">Setup panel content</a>
                                 <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
                                   <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close"><i class="ion ion-ios7-close-outline pp-icon pp-icon-md pull-right"></i></a>
                                     Select panel content</h3>
@@ -156,7 +156,7 @@
                       <div tal:condition="not:uuid">
                         <h6>Panel <span tal:replace="idx" /></h6>
                         <p class="text-muted" i18n:translate="">
-                          This panel does not have any content to display
+                          This panel does not have any content to display yet
                         </p>
                       </div>
                       <div tal:condition="uuid">
