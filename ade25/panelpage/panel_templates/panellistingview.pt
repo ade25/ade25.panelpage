@@ -2,10 +2,15 @@
   tal:attributes="class string:contentpanel contentpanel-base ${context/klass};
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
+    <div class="contentpanel-header" tal:condition="context/textline">
+      <div class="contentpanel-title">
+        <h3 tal:attributes="class string:contentpanel-subheading"
+          tal:content="context/textline">Headline</h3>
+      </div>
+    </div>
     <div class="contentpanel-body">
       <div tal:attributes="class string:contentpanel-listing ${context/klass}"
         tal:condition="context/query">
-        <pre tal:content="context/query" />
         <tal:block tal:define="Batch python:modules['Products.CMFPlone'].Batch;
                                b_size python:int(request.get('b_size', 20));
                                b_start python:int(request.get('b_start', 0));

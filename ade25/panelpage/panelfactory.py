@@ -676,6 +676,7 @@ class PanelListingEditForm(form.SchemaEditForm):
         data['sort_reversed'] = getattr(item, 'sort_reversed')
         data['limit'] = getattr(item, 'limit')
         data['item_count'] = getattr(item, 'item_count')
+        data['textline'] = getattr(item, 'textline')
         return data
 
 
