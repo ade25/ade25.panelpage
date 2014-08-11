@@ -50,7 +50,7 @@ class PanelPage(grok.View):
     grok.name('panelpage')
 
     def update(self):
-        self.has_subcontent = self.has_stored_layout()
+        self.has_content = self.has_stored_layout()
 
     def is_editable(self):
         editable = False
@@ -61,11 +61,6 @@ class PanelPage(grok.View):
     def rendered_panelgrid(self):
         context = aq_inner(self.context)
         template = context.restrictedTraverse('@@panelgrid')()
-        return template
-
-    def render_item(self, uid):
-        item = api.content.get(UID=uid)
-        template = item.restrictedTraverse('@@panelgrid')()
         return template
 
     def computed_klass(self):
@@ -80,14 +75,6 @@ class PanelPage(grok.View):
         if stored is not None:
             return True
         return False
-
-    def contained_blocks(self):
-        context = aq_inner(self.context)
-        block_layout = getattr(context, 'panelPageLayout', None)
-        if block_layout is None:
-            return list()
-        else:
-            return block_layout
 
 
 class PanelPageEditor(grok.View):

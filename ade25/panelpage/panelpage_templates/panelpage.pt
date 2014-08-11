@@ -12,7 +12,7 @@
     <p class="text-discreet">Panel Page Blocks</p>
   </div>
 
-  <tal:block tal:condition="view/has_subcontent">
+  <tal:block tal:condition="view/has_content">
     <div class="app-panelpage-content"
       tal:condition="view/has_stored_layout">
       <div tal:replace="structure view/rendered_panelgrid" />
@@ -23,7 +23,7 @@
       tal:condition="view/is_editable">
 
       <div class="ppe-block-placeholder"
-          tal:condition="not:view/has_subcontent">
+          tal:condition="not:view/has_content">
           <div class="row">
               <div class="col-xs-12 col-sm-1">
                   <div class="placeholder-sign">&hellip;</div>
