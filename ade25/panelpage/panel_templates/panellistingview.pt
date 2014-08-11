@@ -8,18 +8,19 @@
           tal:content="context/textline">Headline</h3>
       </div>
     </div>
-    <pre tal:content="context/query" />
-    <div class="contentpanel-body">
-      <div tal:attributes="class string:contentpanel-listing ${context/klass}"
-        tal:condition="context/query">
+    <div class="contentpanel-body"
+      tal:condition="view/has_selection">
+      <div tal:attributes="class string:contentpanel-listing ${context/list_layout} ${context/klass}">
         <tal:block tal:define="Batch python:modules['Products.CMFPlone'].Batch;
                                b_size python:int(request.get('b_size', 20));
                                b_start python:int(request.get('b_start', 0));
-                               results view/dynamic_contents;
-                               batch python:Batch(results, b_size, b_start);">
+                               results view/get_contents;
+                               batch python:Batch(results, b_size, b_start);
+                               layout context/list_layout">
           <div class="media" tal:repeat="item batch">
-            <tal:image tal:define="scales context/@@images;
-                                   thumbnail python: scales.scale('image', width=128, height=128);"
+            <tal:image tal:condition="python:layout == 'pp-list-media'"
+              tal:define="scales context/@@images;
+                          thumbnail python: scales.scale('image', width=128, height=128);"
                 tal:condition="thumbnail">
                 <a class="media-object-wrapper pull-left"
                   tal:attributes="item/getURL">
@@ -32,7 +33,9 @@
             <div class="media-body">
               <h4 class="media-heading"><a tal:attributes="href item/getURL"
                   tal:content="item/Title" /></h4>
-              <p tal:content="item/Description" />
+              <p tal:condition="python:layout in ['pp-list-media', 'pp-list-summary']"><span tal:content="item/Description" />
+                <a tal:attributes="href item/getURL" i18n:translate="">more&hellip;</a>
+              </p>
             </div>
           </div>
           <div metal:use-macro="context/batch_macros/macros/navigation" />

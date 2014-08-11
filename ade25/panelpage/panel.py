@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from Acquisition import aq_inner
+from Acquisition import aq_parent
 from five import grok
 from plone import api
 from zope import schema
@@ -8,6 +9,7 @@ from zope.component import getMultiAdapter
 from plone.dexterity.content import Item
 from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
+from plone.uuid.interfaces import IUUID
 
 from ade25.panelpage import MessageFactory as _
 
@@ -99,6 +101,23 @@ class PanelListingView(grok.View):
     def update(self):
         self.query = self._get_stored_query()
 
+    def has_selection(self):
+        context = aq_inner(self.context)
+        configured = False
+        if context.query or context.contentlist:
+            configured = True
+        return configured
+
+    def _folder_listing(self):
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
+        items = parent.restrictedTraverse('@@folderListing')()
+        data = []
+        for x in items:
+            if not IPanel.providedBy(x.getObject()):
+                data.append(x)
+        return data
+
     def _get_stored_query(self):
         context = aq_inner(self.context)
         return getattr(context, 'query')
@@ -136,6 +155,14 @@ class PanelListingView(grok.View):
             sort_on=sort_on, sort_order=sort_order,
             limit=limit, brains=brains
         )
+
+    def get_contents(self):
+        """ Return potentially cached list of contents """
+        data = self.dynamic_contents()
+        context = aq_inner(self.context)
+        if context.contentlist:
+            data = self._folder_listing()
+        return data
 
 
 class AliasView(grok.View):

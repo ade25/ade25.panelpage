@@ -671,7 +671,7 @@ class PanelListingEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
-        data['contentlist'] = getattr(item, 'contentlist')
+        data['contentlist'] = getattr(item, 'contentlist', False)
         data['query'] = getattr(item, 'query')
         data['sort_on'] = getattr(item, 'sort_on')
         data['sort_reversed'] = getattr(item, 'sort_reversed')

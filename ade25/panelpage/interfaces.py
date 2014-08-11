@@ -80,7 +80,7 @@ class IPanelListing(form.Schema):
 
     contentlist = schema.Bool(
         title=_(u"Show Content Listing"),
-        descritpion=_(u"Enable to show a listing if this folder contents. All "
+        description=_(u"Enable to show a listing if this folder contents. All "
                       u"query settings will be ignored if selected"),
         required=False,
     )
