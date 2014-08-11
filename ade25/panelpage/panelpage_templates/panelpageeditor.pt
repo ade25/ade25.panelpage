@@ -132,9 +132,8 @@
                         <a class="ppe-action ppe-action-remove pull-right"
                           data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
                           tal:attributes="data-target string:#cbp-spmenu-p${item_idx} ;
-                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}"
-                          i18n:translate="">
-                            remove
+                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}">
+                            <i class="ion ion-ios7-trash-outline pp-icon pp-icon-md"></i>
                         </a>
                         <a class="ppe-action ppe-action-primary pull-right" href="#ppe-block-main-page"
                             data-appui="toggle-contentblock"
