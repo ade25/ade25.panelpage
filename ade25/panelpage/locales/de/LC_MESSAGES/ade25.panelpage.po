@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2014-08-06 07:04+0000\n"
-"PO-Revision-Date: 2014-08-06 14:55+0100\n"
+"PO-Revision-Date: 2014-08-11 17:35+0100\n"
 "Last-Translator: Christoph Boehner <cb@vorwaerts-werbung.de>\n"
 "Language-Team: KK Language Team <info@kreativkombinat.de>\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "Titel dieses Inhaltsbereiches"
 
 #: ./../panelpage_templates/panelpageeditor.pt:224
 msgid "Content block"
-msgstr "Inhaltsabschnitt"
+msgstr "Block"
 
 #: ./../blockfactory.py:106
 msgid "Content block factory has been cancelled."

@@ -9,7 +9,6 @@ from zope.component import getMultiAdapter
 from plone.dexterity.content import Item
 from plone.directives import form
 from plone.namedfile.interfaces import IImageScaleTraversable
-from plone.uuid.interfaces import IUUID
 
 from ade25.panelpage import MessageFactory as _
 
