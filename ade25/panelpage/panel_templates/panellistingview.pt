@@ -8,6 +8,7 @@
           tal:content="context/textline">Headline</h3>
       </div>
     </div>
+    <pre tal:content="context/query" />
     <div class="contentpanel-body">
       <div tal:attributes="class string:contentpanel-listing ${context/klass}"
         tal:condition="context/query">

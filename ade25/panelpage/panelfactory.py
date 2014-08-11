@@ -677,7 +677,7 @@ class PanelListingEditForm(form.SchemaEditForm):
         data['limit'] = getattr(item, 'limit')
         data['item_count'] = getattr(item, 'item_count')
         data['textline'] = getattr(item, 'textline')
-        data['list_layout'] = getattr(item, 'list_layout')
+        data['list_layout'] = getattr(item, 'list_layout', 'pp-list-base')
         return data
 
 

@@ -20,6 +20,12 @@ class IPanelListing(model.Schema):
 
     """ Behavior to store a query to provide content listings. """
 
+    contentlist = schema.Bool(
+        title=_(u"Show Content Listing"),
+        descritpion=_(u"Enable to show a listing if this folder contents. All "
+                      u"query settings will be ignored if selected"),
+        required=False,
+    )
     form.widget('query', QueryStringWidget)
     query = schema.List(
         title=_(u'Search terms'),
