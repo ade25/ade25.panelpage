@@ -129,17 +129,6 @@
                           <span class="ppe-sign ppe-sign-draggable ppe-dragindicator pull-right">
                             <i class="ion ion-ios7-drag pp-icon pp-icon-md">
                           </span>
-                        <tal:comment tal:content="nothing">
-                          <a class="ppe-action hidden" href="#ppe-block-transition"
-                              data-appui="toggle-contentblock"
-                              data-target="#ppe-block-main-page"
-                              tal:attributes="href string:${context/absolute_url}/@@gridrow/transition/${item_idx};
-                                              class string:ppe-action ppe-action-transition ppe-action-${item_state} pull-right"
-                              tal:content="python:view.available_transitions(item_state)"
-                              i18n:translate="">
-                              transition
-                          </a>
-                        </tal:comment>
                         <a class="ppe-action ppe-action-remove pull-right"
                           data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
                           tal:attributes="data-target string:#cbp-spmenu-p${item_idx} ;

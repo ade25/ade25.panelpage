@@ -12,7 +12,6 @@ from plone import api
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 from zope.interface import Interface
 from zope.lifecycleevent import modified
-from zope.publisher.interfaces import IPublishTraverse
 
 import json
 
@@ -309,41 +308,3 @@ class RearrangeBlocks(grok.View):
         self.request.response.setHeader('Content-Type',
                                         'application/json; charset=utf-8')
         return json.dumps(results)
-
-
-class TransitionState(grok.View):
-    grok.context(IContentish)
-    grok.implements(IPublishTraverse)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('transition-state')
-
-    def render(self):
-        context = aq_inner(self.context)
-        uuid = self.traverse_subpath[0]
-        item = api.content.get(UID=uuid)
-        if len(self.traverse_subpath) > 1:
-            state = self.traverse_subpath[1]
-        else:
-            state = api.content.get_state(obj=item)
-        transitions = self.available_transitions()
-        action = transitions[state]
-        api.content.transition(obj=item, transition=action)
-        next_url = context.absolute_url()
-        return self.request.response.redirect(next_url)
-
-    @property
-    def traverse_subpath(self):
-        return self.subpath
-
-    def publishTraverse(self, request, name):
-        if not hasattr(self, 'subpath'):
-            self.subpath = []
-        self.subpath.append(name)
-        return self
-
-    def available_transitions(self):
-        transitions = {
-            'published': 'retract',
-            'private': 'publish'
-        }
-        return transitions
