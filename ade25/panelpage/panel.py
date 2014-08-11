@@ -103,7 +103,8 @@ class PanelListingView(grok.View):
     def has_selection(self):
         context = aq_inner(self.context)
         configured = False
-        if context.query or context.contentlist:
+        show_listing = getattr(context, 'contentlist', False)
+        if show_listing or context.query:
             configured = True
         return configured
 

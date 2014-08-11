@@ -25,6 +25,7 @@ class IPanelListing(model.Schema):
         description=_(u"Enable to show a listing if this folder contents. All "
                       u"query settings will be ignored if selected"),
         required=False,
+        default=False,
     )
     form.widget('query', QueryStringWidget)
     query = schema.List(
