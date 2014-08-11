@@ -8,7 +8,7 @@
 <body>
 
 <metal:header fill-slot="header">
-    <tal:modals tal:repeat="item view/contained_blocks">
+    <tal:modals tal:repeat="item view/stored_layout">
         <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-delete"
             tal:define="idx repeat/item/index;
                         item_state item/status"
@@ -69,7 +69,7 @@
                 </div>
             </div>
         <form class="ppe-form" id="ppe-form-rearrange" method="post"
-            tal:condition="view/has_subcontent"
+            tal:condition="view/has_content"
             tal:attributes="action string:${context/absolute_url}/@@rearrange-panelpage">
             <div class="ppe-section ppe-section-sortable app-panelpage-content panelpage-list"
                 id="ppe-list"
@@ -77,8 +77,8 @@
                                 data-appui-ajax-form string:#ppe-form-rearrange">
 
                 <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Content Blocks</div>
-                <tal:items  tal:condition="view/has_subcontent"
-                    tal:repeat="item view/contained_blocks">
+                <tal:items  tal:condition="view/has_content"
+                    tal:repeat="item view/stored_layout">
                     <div class="ppe-block animated bounceInLeft"
                         tal:define="item_idx repeat/item/index;
                                     uid item/id;
@@ -172,7 +172,7 @@
                 <span>Loading content...stay tuned</span>
             </div>
 
-            <div class="ppe-block-placeholder" tal:condition="not:view/has_subcontent">
+            <div class="ppe-block-placeholder" tal:condition="not:view/has_content">
                 <div class="row">
                     <div class="col-xs-12 col-sm-1">
                         <div class="placeholder-sign">&hellip;</div>

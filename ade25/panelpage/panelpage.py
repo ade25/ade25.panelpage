@@ -83,7 +83,7 @@ class PanelPageEditor(grok.View):
     grok.name('panelpage-editor')
 
     def update(self):
-        self.has_subcontent = len(self.contained_blocks()) > 0
+        self.has_content = len(self.stored_layout()) > 0
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -115,7 +115,7 @@ class PanelPageEditor(grok.View):
         }
         return transitions[state]
 
-    def contained_blocks(self):
+    def stored_layout(self):
         context = aq_inner(self.context)
         block_layout = getattr(context, 'panelPageLayout', None)
         if block_layout is None:
@@ -124,7 +124,7 @@ class PanelPageEditor(grok.View):
             return block_layout
 
     def panels(self, row_idx):
-        grid = self.contained_blocks()
+        grid = self.stored_layout()
         row = grid[int(row_idx)]
         return row['panels']
 
