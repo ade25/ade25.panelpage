@@ -36,10 +36,13 @@
                 <i class="ion ion-ios7-information-outline"></i>
             </div>
             <div class="placeholder-title" i18n:translate="">
-                Not implemented yet
+                Upps, something went wrong
             </div>
-            <p i18n:translate="">This panel type will be available soon. Please hold
-                tight until we update the system</p>
+            <p i18n:translate="">This panel type has not been implemented yet or
+              cannot be processed right now. This message will be logged and
+              forwarded to our devops team. Thank you for your patience.
+              Have a nice day.
+            </p>
         </div>
     </div>
 
