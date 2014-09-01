@@ -32,6 +32,7 @@ setup(name='ade25.panelpage',
           'plone.app.relationfield',
           'plone.namedfile [blobs]',
           'plone.formwidget.querystring',
+          'plone.formwidget.contenttree',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
