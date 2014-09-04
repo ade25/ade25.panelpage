@@ -10,26 +10,20 @@
 <metal:main fill-slot="main">
   <metal:content-core define-macro="main">
 
-    <div class="panelpage-editor" id="content-core">
+    <div class="panelpage-editor" id="xcontent-core">
       <div class="ppe-header">
         <div class="row">
           <div class="col-xs-12 col-sm-4">
             <a class="ppe-close pull-left"
               tal:attributes="href string:${context/absolute_url}">
               <i class="ion ion-ios7-arrow-left pp-icon pp-icon-md"></i>
-              Back
+              Quit
             </a>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="ppe-header-title text-center" i18n:translate="">
-              Panel Manager
+              Panel Storage
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            <a class="ppe-close pull-right"
-              tal:attributes="href string:${context/absolute_url}/@@edit">
-              Edit
-            </a>
           </div>
         </div>
       </div>
@@ -37,14 +31,31 @@
     </div>
 
     <div class="ppe-section">
-      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Details</div>
-      <p class="text-muted" tal:condition="context/klass">
-        <span i18n:translate="">This panel can be styled by using the custom</span>
-        <strong>CSS Class</strong> <code>.<span tal:replace="context/klass" /></code>
-      </p>
-      <div class="h6 ppe-subtitle ppe-subtitle-default" i18n:translate="">Panel Preview</div>
-      <div class="ppe-block">
-        <div tal:replace="structure view/render_item" />
+      <div class="ppe-block-placeholder pp-block-placeholder-error bg-danger" tal:condition="not:view/has_content">
+          <div class="row">
+              <div class="col-xs-12 col-sm-1">
+                  <div class="placeholder-sign">
+                    <i class="icon ion-ios7-information-outline pp-icon"></i>
+                  </div>
+              </div>
+              <div class="col-xs-12 col-sm-11">
+                  <div class="placeholder-title text-danger" i18n:translate="">
+                      This is a panel page storage object
+                  </div>
+              </div>
+          </div>
+      </div>
+      <h2 class="text-danger" i18n:translate="">Warning</h2>
+      <div class="alert alert-danger">
+        <p class="h5" i18n:translate="">
+          Do not alter, move or delete this panel content
+          storage object without checking the parent object for active panel
+          page layouts.</p>
+        <p i18n:translate="">
+          You can use the parents panel page editor view to verify asign panel blocks
+          exist. The parent page will most likely be broken if you manipulate this
+          storage object
+        </p>
       </div>
     </div>
 

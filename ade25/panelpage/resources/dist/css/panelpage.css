@@ -3329,7 +3329,12 @@ MIT License: https://github.com/driftyco/ionicons
 }
 .ppe-block-placeholder.placeholder-error
 {
+    border-color: #ebccd1;
     background: #f2dede;
+}
+.ppe-block-placeholder.placeholder-error .placeholder-sign
+{
+    color: #a94442;
 }
 .ppe-block-placeholder.placeholder-get-started
 {

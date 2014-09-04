@@ -270,6 +270,9 @@ class PanelError(grok.View):
     grok.require('zope2.View')
     grok.name('panel-error')
 
+    def update(self):
+        self.portal_url = api.portal.get().absolute_url()
+
     def publishTraverse(self, request, name):
         if not hasattr(self, 'subpath'):
             self.subpath = []
