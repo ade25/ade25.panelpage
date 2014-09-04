@@ -159,10 +159,10 @@
                           This panel does not have any content to display yet
                         </p>
                       </div>
-                      <code tal:content="view/stored_layout" />
-                      <!--<div tal:condition="uuid">
+                      <!--<code tal:content="view/stored_layout" />-->
+                      <div tal:condition="uuid">
                         <div tal:replace="structure python:view.rendered_panel(uuid)" />
-                      </div>-->
+                      </div>
                   </div>
                 </div>
               </tal:block>
