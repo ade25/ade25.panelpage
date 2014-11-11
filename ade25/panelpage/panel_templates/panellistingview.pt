@@ -17,15 +17,15 @@
                                results view/get_contents;
                                batch python:Batch(results, b_size, b_start);
                                layout context/list_layout">
-          <div class="media" tal:repeat="item batch">
+          <div class="media" tal:repeat="item results">
             <tal:image tal:condition="python:layout == 'pp-list-media'"
               tal:define="item_obj item/getObject;
                           scales item_obj/@@images;
                           thumbnail python: scales.scale('image', width=128, height=128);"
                 tal:condition="thumbnail">
                 <a class="media-object-wrapper pull-left"
-                  tal:attributes="item/getURL">
-                  <img class="media-object"
+                  tal:attributes="href item/getURL">
+                  <img class="media-object app-img"
                     tal:attributes="src thumbnail/url;
                                     width thumbnail/width;
                                     height thumbnail/height" />

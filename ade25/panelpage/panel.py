@@ -160,7 +160,7 @@ class PanelListingView(grok.View):
         """ Return potentially cached list of contents """
         data = self.dynamic_contents()
         context = aq_inner(self.context)
-        if context.contentlist:
+        if context.contentlist is True:
             data = self._folder_listing()
         return data
 
