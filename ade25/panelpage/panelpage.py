@@ -116,7 +116,7 @@ class PanelPageEditor(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        block_layout = getattr(context, 'panelPageLayout', None)
+        block_layout = getattr(context.aq_explicit, 'panelPageLayout', None)
         if block_layout is None:
             return list()
         else:
