@@ -2,6 +2,7 @@
 """Module to render and manipulate a panel layout grid"""
 
 from AccessControl import Unauthorized
+from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from ade25.panelpage.panelpage import IPanelPage
@@ -39,7 +40,7 @@ class PanelGrid(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        stored = getattr(context.aq_explicit, 'panelPageLayout')
+        stored = getattr(aq_base(context), 'panelPageLayout')
         return stored
 
     def panel_item(self, uuid):
