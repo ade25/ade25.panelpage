@@ -117,11 +117,10 @@ class PanelPageEditor(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        block_layout = getattr(context.aq_explicit, 'panelPageLayout', None)
-        if block_layout is None:
-            return list()
-        else:
-            return block_layout
+        block_layout = list()
+        if hasattr(context.aq_explicit, 'panelPageLayout'):
+            block_layout = getattr(context, 'panelPageLayout', None)
+        return block_layout
 
     def panels(self, row_idx):
         grid = self.stored_layout()
@@ -169,11 +168,10 @@ class PanelBlockEditor(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        block_layout = getattr(context, 'panelPageLayout', None)
-        if block_layout is None:
-            return list()
-        else:
-            return block_layout
+        block_layout = list()
+        if hasattr(context.aq_explicit, 'panelPageLayout'):
+            block_layout = getattr(context, 'panelPageLayout', None)
+        return block_layout
 
     def gridrow(self):
         grid = self.stored_layout()
