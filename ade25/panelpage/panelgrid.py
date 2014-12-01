@@ -40,7 +40,7 @@ class PanelGrid(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        stored = getattr(aq_base(context), 'panelPageLayout')
+        stored = getattr(context, 'panelPageLayout')
         return stored
 
     def panel_item(self, uuid):

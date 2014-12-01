@@ -70,9 +70,10 @@ class PanelPage(grok.View):
 
     def has_stored_layout(self):
         context = aq_inner(self.context)
-        stored = getattr(context, 'panelPageLayout')
-        if stored is not None:
-            return True
+        if hasattr(context.aq_explicit, 'panelPageLayout'):
+            stored = getattr(context, 'panelPageLayout')
+            if stored is not None:
+                return True
         return False
 
 
