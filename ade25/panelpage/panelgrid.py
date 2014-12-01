@@ -3,6 +3,7 @@
 
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
+from Acquisition import aq_explicit
 from Acquisition import aq_parent
 from ade25.panelpage.panelpage import IPanelPage
 from five import grok
@@ -39,7 +40,7 @@ class PanelGrid(grok.View):
 
     def stored_layout(self):
         context = aq_inner(self.context)
-        stored = getattr(context, 'panelPageLayout')
+        stored = getattr(aq_explicit(context), 'panelPageLayout')
         return stored
 
     def panel_item(self, uuid):
