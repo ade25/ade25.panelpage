@@ -308,7 +308,7 @@ class PanelTextEditForm(form.SchemaEditForm):
         data = {}
         for key, value in fields:
             data[key] = getattr(item, key, value)
-        data['textblock'] = getattr(item, 'textline', '')
+        data['textblock'] = getattr(item, 'textblock', '')
         return data
 
 
