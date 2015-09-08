@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from plone.app.textfield import RichText
-from plone.app.widgets.dx import QueryStringWidget
+from plone.app.z3cform.widget import QueryStringFieldWidget
 from plone.directives import form
 from plone.namedfile.field import NamedBlobImage
 from zope import schema
@@ -84,7 +84,7 @@ class IPanelListing(form.Schema):
                       u"query settings will be ignored if selected"),
         required=False,
     )
-    form.widget('query', QueryStringWidget)
+    form.widget('query', QueryStringFieldWidget)
     query = schema.List(
         title=_(u'Search terms'),
         description=_(u"Define the search terms for the items you want "

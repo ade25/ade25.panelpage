@@ -3,7 +3,7 @@ from five import grok
 from zope.lifecycleevent import modified
 
 from plone.uuid.interfaces import IUUID
-from zope.app.container.interfaces import IObjectAddedEvent
+from zope.container.interfaces import IObjectAddedEvent
 from ade25.panelpage.contentblock import IContentBlock
 
 
