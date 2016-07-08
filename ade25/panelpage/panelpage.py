@@ -9,6 +9,7 @@ from ade25.panelpage.config import panel_components
 from ade25.panelpage.config import pretty_components
 from five import grok
 from plone import api
+from plone.protect.utils import addTokenToUrl
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
 from zope.interface import Interface
 from zope.lifecycleevent import modified
@@ -84,6 +85,10 @@ class PanelPageEditor(grok.View):
 
     def update(self):
         self.has_content = len(self.stored_layout()) > 0
+
+    def get_protected_url(self, url):
+        url = addTokenToUrl(url)
+        return url
 
     def render_item(self, uid):
         item = api.content.get(UID=uid)
@@ -165,6 +170,10 @@ class PanelBlockEditor(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+    def get_protected_url(self, url):
+        url = addTokenToUrl(url)
+        return url
 
     def stored_layout(self):
         context = aq_inner(self.context)

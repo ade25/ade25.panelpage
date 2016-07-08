@@ -12,6 +12,9 @@ from plone.keyring import django_random
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.interface import alsoProvides
+
 
 class PanelGrid(grok.View):
     grok.context(IPanelPage)

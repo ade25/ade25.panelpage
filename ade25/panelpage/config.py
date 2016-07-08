@@ -35,16 +35,16 @@ def pretty_components():
 def component_icons():
     """ Asumes ionicons icon file """
     matrix = {
-        'textline': 'ion-document',
-        'heading': 'ion-document',
-        'subheading': 'ion-document',
-        'abstract': 'ion-document-text',
-        'text': 'ion-document-text',
-        'richtext': 'ion-document-text',
-        'image': 'ion-image',
-        'listing': 'ion-ios7-albums-outline',
-        'box': 'ion-filing',
-        'alias': 'ion-ios7-download',
-        'placeholder': 'ion-ios7-circle-outline'
+        'textline': 'ion-ios-document-outline',
+        'heading': 'ion-ios-document-outline',
+        'subheading': 'ion-ios-document-outline',
+        'abstract': 'ion-ios-document-outline',
+        'text': 'ion-ios-document-outline',
+        'richtext': 'ion-ios-document-outline',
+        'image': 'ion-ios-image-outline',
+        'listing': 'ion-ios-images-outline',
+        'box': 'ion-filing-outline',
+        'alias': 'ion-ios-browsers',
+        'placeholder': 'ion-ios-create-outline'
     }
     return matrix
