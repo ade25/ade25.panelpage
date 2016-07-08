@@ -208,7 +208,7 @@
                                 <button class="btn btn-ppe"
                                     name="form.button.Submit"
                                     id="form.button.Submit">
-                                    <i class="ion ion-ios-plus-outline pp-icon pp-icon-lg"></i><br>
+                                    <i class="ion ion-ios-add-circle-outline pp-icon pp-icon-lg"></i><br>
                                     <span class="h5" i18n:translate="">Content block</span>
                                 </button>
                             </div>

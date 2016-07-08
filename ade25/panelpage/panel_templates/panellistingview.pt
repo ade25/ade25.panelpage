@@ -23,13 +23,15 @@
                           scales item_obj/@@images;
                           thumbnail python: scales.scale('image', width=128, height=128);"
                 tal:condition="thumbnail">
-                <a class="media-object-wrapper pull-left"
-                  tal:attributes="href item/getURL">
-                  <img class="media-object app-img"
-                    tal:attributes="src thumbnail/url;
-                                    width thumbnail/width;
-                                    height thumbnail/height" />
-                </a>
+                <div class="media-left">
+                    <a class="media-object-wrapper pull-left"
+                            tal:attributes="href item/getURL">
+                        <img class="media-object app-img"
+                                tal:attributes="src thumbnail/url;
+                                        width thumbnail/width;
+                                        height thumbnail/height" />
+                    </a>
+                </div>
             </tal:image>
             <div class="media-body">
               <h4 class="media-heading"><a tal:attributes="href item/getURL"
