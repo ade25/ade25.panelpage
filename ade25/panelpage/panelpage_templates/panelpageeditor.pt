@@ -85,7 +85,7 @@
                                     item_state item/status;
                                     klass python:view.item_state_klass(item_state);
                                     panels python:view.panels(item_idx)"
-                        tal:attributes="class string:ppe-block ${klass} ppe-block-sortable animated bounceInLeft">
+                        tal:attributes="class string:ppe-block ${klass} ppe-block-sortable pat-sortable animated bounceInLeft">
                       <div class="row">
                         <div class="col-xs-12 col-sm-1 ppe-block-col-first">
                           <small class="text-muted" tal:content="repeat/item/number" />
