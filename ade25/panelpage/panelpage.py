@@ -55,7 +55,7 @@ class PanelPage(grok.View):
     def is_editable(self):
         editable = False
         if not api.user.is_anonymous():
-                editable = True
+            editable = True
         return editable
 
     def rendered_panelgrid(self):
@@ -286,6 +286,12 @@ class PanelError(grok.View):
             self.subpath = []
         self.subpath.append(name)
         return self
+
+    def is_editable(self):
+        editable = False
+        if not api.user.is_anonymous():
+            editable = True
+        return editable
 
 
 class RearrangeBlocks(grok.View):

@@ -1,4 +1,5 @@
 <div class="contentpanel contentpanel-error"
+  tal:condition="view/is_editable"
   tal:attributes="class string:contentpanel contentpanel-error;
                   id string:contentpanel-${context/getId}">
   <div class="contentpanel-content">
