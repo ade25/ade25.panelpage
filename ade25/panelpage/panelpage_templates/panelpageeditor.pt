@@ -130,9 +130,10 @@
                             <i class="ion ion-ios-menu pp-icon pp-icon-md">
                           </span>
                         <a class="ppe-action ppe-action-remove pull-right"
-                          data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s2"
-                          tal:attributes="data-target string:#cbp-spmenu-p${item_idx} ;
-                                          href string:${context/absolute_url}/@@gridrow/delete/${item_idx}">
+                          data-appui="contextmenu" data-target="#cbp-spmenu-s1" href="#cbp-spmenu-s1"
+                          tal:define="url string:${context/absolute_url}/@@gridrow/delete/${item_idx}"
+                          tal:attributes="data-target string:#cbp-spmenu-p${item_idx};
+                                          href python:view.get_protected_url(url)">
                             <i class="ion ion-ios-trash-outline pp-icon pp-icon-md"></i>
                         </a>
                         <a class="ppe-action ppe-action-primary pull-right" href="#ppe-block-main-page"
@@ -218,6 +219,32 @@
             </div>
         </div>
     </div>
+    <tal:modals tal:repeat="item view/stored_layout">
+        <nav id="cbp-spmenu-s1" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-delete"
+            tal:define="idx repeat/item/index;
+                        item_state item/status"
+          tal:attributes="id string:cbp-spmenu-p${idx}">
+          <h3><a class="cbp-spmenu-discard pull-right" href="#content-core" data-appui="contextmenu-close">
+            <i class="ion ion-ios-close-circle-outline pp-icon pp-icon-md pull-right"></i>
+          </a>
+            Delete confirmation</h3>
+          <p i18n:translate="">Removing this content block from the layout will
+            also remove all asigned panels.</p>
+          <a tal:define="url string:${context/absolute_url}/gridrow/delete/${idx};"
+             tal:attributes="href python:view.get_protected_url(url)">
+            <i class="ion ion-ios-backspace-outline pp-icon pp-icon-md pull-right"></i>
+            Delete panel
+          </a>
+          <p i18n:translate="">You can also just hide the content block and
+            keep all asigned content</p>
+          <a tal:define="url string:${context/absolute_url}/@@gridrow/transition/${idx}"
+              tal:attributes="href python:view.get_protected_url(url)">
+            <i class="ion ion-ios-eye-off-outline pp-icon pp-icon-md pull-right"></i>
+              <span tal:content="python:view.available_transitions(item_state)"
+                i18n:translate="">transition</span>
+          </a>
+        </nav>
+    </tal:modals>
 
   </metal:content-core>
 </metal:main>
