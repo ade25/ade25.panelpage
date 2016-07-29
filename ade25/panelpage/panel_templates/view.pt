@@ -31,11 +31,11 @@
     </div>
 
     <div class="ppe-section">
-      <div class="ppe-block-placeholder pp-block-placeholder-error bg-danger" tal:condition="not:view/has_content">
+      <div class="ppe-block-placeholder pp-block-placeholder-error bg-danger">
           <div class="row">
               <div class="col-xs-12 col-sm-1">
                   <div class="placeholder-sign">
-                    <i class="icon ion-ios7-information-outline pp-icon"></i>
+                    <i class="icon ion ion-ios-information-outline pp-icon"></i>
                   </div>
               </div>
               <div class="col-xs-12 col-sm-11">

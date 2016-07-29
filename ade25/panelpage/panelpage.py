@@ -21,6 +21,26 @@ class IPanelPage(Interface):
     """ Marker for panel and block enabled content """
 
 
+class PanelPageData(grok.View):
+    grok.context(IPanelPage)
+    grok.require('cmf.ModifyPortalContent')
+    grok.name('panel-page-data')
+
+    def render(self):
+        context = aq_inner(self.context)
+        msg = _(u"Panel page data not available")
+        data = {
+            'success': False,
+            'message': msg
+        }
+        layout = getattr(context, 'panelPageLayout', None)
+        if layout:
+            data = layout
+        self.request.response.setHeader('Content-Type',
+                                        'application/json; charset=utf-8')
+        return json.dumps(data)
+
+
 class PanelPageView(grok.View):
     grok.context(IPanelPage)
     grok.require('zope2.View')
@@ -42,7 +62,6 @@ class PanelPageViewlet(grok.Viewlet):
         context = aq_inner(self.context)
         tmpl = context.restrictedTraverse('@@panelpage')()
         return tmpl
-
 
 class PanelPage(grok.View):
     grok.context(IPanelPage)
