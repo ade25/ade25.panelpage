@@ -17,14 +17,14 @@
                                results view/get_contents;
                                batch python:Batch(results, b_size, b_start);
                                layout context/list_layout">
-          <div class="media" tal:repeat="item results">
+          <div class="media-item" tal:repeat="item results">
             <tal:image tal:condition="python:layout == 'pp-list-media'"
               tal:define="item_obj item/getObject;
                           scales item_obj/@@images;
                           thumbnail python: scales.scale('image', width=128, height=128);"
                 tal:condition="thumbnail">
-                <div class="media-left">
-                    <a class="media-object-wrapper pull-left"
+                <div class="media-item__aside">
+                    <a class="media-item__image"
                             tal:attributes="href item/getURL">
                         <img class="media-object app-img"
                                 tal:attributes="src thumbnail/url;
@@ -33,12 +33,14 @@
                     </a>
                 </div>
             </tal:image>
-            <div class="media-body">
-              <h4 class="media-heading"><a tal:attributes="href item/getURL"
-                  tal:content="item/Title" /></h4>
-              <p tal:condition="python:layout in ['pp-list-media', 'pp-list-summary']"><span tal:content="item/Description" />
-                <a tal:attributes="href item/getURL" i18n:translate="">more&hellip;</a>
-              </p>
+            <div class="media-item__main">
+                <div class="media-item__content">
+                    <h4 class="media-item__heading"><a tal:attributes="href item/getURL"
+                             tal:content="item/Title" /></h4>
+                    <p tal:condition="python:layout in ['pp-list-media', 'pp-list-summary']"><span tal:content="item/Description" />
+                        <a tal:attributes="href item/getURL" i18n:translate="">more&hellip;</a>
+                    </p>
+                </div>
             </div>
           </div>
           <div metal:use-macro="context/batch_macros/macros/navigation" />
