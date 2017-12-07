@@ -5,8 +5,13 @@ from plone.directives import form
 from plone.namedfile.field import NamedBlobImage
 from zope import schema
 from zope.interface import Interface
+from plone.theme.interfaces import IDefaultPloneLayer
 
 from ade25.panelpage import MessageFactory as _
+
+
+class IAde25PanelPageLayer(IDefaultPloneLayer):
+    """Marker interface that defines a Zope 3 browser layer."""
 
 
 class IPanelPageEnabled(Interface):

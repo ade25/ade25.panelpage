@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+    <layer
+            name="ade25.panelpage"
+            interface="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+</layers>

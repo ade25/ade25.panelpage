@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layers>
+    <layer
+            name="ade25.base"
+            interface="ade25.base.interfaces.IAde25BaseLayer"
+            remove="True"
+    />
+</layers>

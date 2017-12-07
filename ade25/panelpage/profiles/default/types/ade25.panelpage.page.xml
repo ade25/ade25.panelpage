@@ -4,9 +4,9 @@
    i18n:domain="ade25.panelpage" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">Page</property>
+  <property name="title" i18n:translate="">Panel Page</property>
   <property name="description"
-    i18n:translate="">A modular ppage with panel layout</property>
+    i18n:translate="">A modular page with panel layout</property>
   <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
   <property name="factory">ade25.panelpage.page</property>
   <property name="global_allow">True</property>
@@ -14,9 +14,6 @@
   <property name="allowed_content_types">
     <element value="Image" />
     <element value="File" />
-    <element value="ade25.panelpage.panel" />
-    <element value="ade25.panelpage.basepanel" />
-    <element value="ade25.panelpage.textpanel" />
   </property>
   <property name="allow_discussion">False</property>
 
