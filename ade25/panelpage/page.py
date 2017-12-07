@@ -7,12 +7,12 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from zope.interface import implementer
 
 
-class IPanelPage(model.Schema, IImageScaleTraversable):
+class IPage(model.Schema, IImageScaleTraversable):
     """
     A container with enabled layout support that can be used as landing page
     """
 
 
-@implementer(IPanelPage)
-class PanelPage(Item):
+@implementer(IPage)
+class Page(Item):
     pass
