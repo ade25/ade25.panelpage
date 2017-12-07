@@ -28,11 +28,18 @@
        in Plone -->
   <genericsetup:registerProfile
       name="default"
-      title="Ade25 PanelPage - Manage modular pages with blocks and panels"
+      title="Ade25 PanelPage - Manage modular page layouts"
       directory="profiles/default"
-      description="Extension profile for Manage modular pages with blocks and panels"
+      description="Support for modular page layouts with widgets and panels"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Uninstall Ade25 PanelPage"
+      directory="profiles/default"
+      description="Remove support for modular page layouts with widgets and panelss"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+  />
 
   <!-- -*- extra stuff goes here -*- -->
 
