@@ -37,7 +37,7 @@
       name="uninstall"
       title="Uninstall Ade25 PanelPage"
       directory="profiles/default"
-      description="Remove support for modular page layouts with widgets and panelss"
+      description="Remove support for modular page layouts with widgets and panels"
       provides="Products.GenericSetup.interfaces.EXTENSION"
   />
 
