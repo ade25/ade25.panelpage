@@ -9,11 +9,28 @@
         i18n_domain="ade25.panelpage">
 
     <browser:page
-            for="ade25.panelpage.page.IPage"
-            name="page-view"
-            class=".page.PageView"
-            template="page.pt"
-            permission="zope2.View"
+        for="ade25.panelpage.page.IPage"
+        name="page-view"
+        class=".page.PageView"
+        template="page.pt"
+        permission="zope2.View"
+        layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.interfaces.IPanelPage"
+            name="panel-page-data"
+            class=".panels.PanelPageDataJSON"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.interfaces.IPanelPage"
+            name="panel-page-view"
+            class=".panels.PanelView"
+            template="panels.pt"
+            permission="cmf.ModifyPortalContent"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 

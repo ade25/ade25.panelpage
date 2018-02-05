@@ -44,6 +44,11 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
   />
 
+    <!-- Panel tool providing crud operations -->
+  <utility
+        factory=".tool.PanelTool"
+        provides=".interfaces.IPanelTool"/>
+
   <!-- -*- extra stuff goes here -*- -->
 
   <plone:behavior

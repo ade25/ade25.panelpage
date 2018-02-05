@@ -28,6 +28,54 @@ class IPanelPageEnabled(Interface):
     """
 
 
+class IPanelTool(Interface):
+    """ Panel data processing
+
+        General tool providing CRUD operations for assigning panel
+        layout to content objects
+    """
+
+    def create(context):
+        """ Create asset assignment data file
+
+        The caller is responsible for passing a valid data dictionary
+        containing the necessary details
+
+        Returns JSON object
+
+        @param uuid:        content object UID
+        @param data:        predefined initial data dictionary
+        """
+
+    def read(context):
+        """ Read stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        """
+
+    def update(context):
+        """ Update stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        @param data:        data dictionary
+        """
+
+    def delete(context):
+        """ Delete stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        caravan site object UID
+        @param key:         (optional) dictionary item key
+        """
+
+
 class IPanelHeading(form.Schema):
 
     textline = schema.TextLine(
