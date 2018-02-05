@@ -25,7 +25,7 @@
      <element value="plone.app.content.interfaces.INameFromTitle" />
      <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
      <element value="ade25.panelpage.panelpage.IPanelPage" />
-     <element value="ade25.panelpage.pagelayout.IPanelPageLayout" />
+     <element value="ade25.panelpage.behavior.layout.IPanelPageLayout" />
    </property>
 
   <!-- View information -->

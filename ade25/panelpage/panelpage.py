@@ -9,16 +9,20 @@ from ade25.panelpage.config import panel_components
 from ade25.panelpage.config import pretty_components
 from five import grok
 from plone import api
+from plone.dexterity.content import Item
 from plone.protect.utils import addTokenToUrl
 from plone.app.layout.viewlets.interfaces import IBelowContentBody
-from zope.interface import Interface
+from zope.interface import Interface, implementer
 from zope.lifecycleevent import modified
+
+from ade25.panelpage.interfaces import IPanelPage
 
 import json
 
 
-class IPanelPage(Interface):
-    """ Marker for panel and block enabled content """
+@implementer(IPanelPage)
+class PanelPage(Item):
+    pass
 
 
 class PanelPageData(grok.View):

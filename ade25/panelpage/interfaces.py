@@ -14,6 +14,13 @@ class IAde25PanelPageLayer(IDefaultPloneLayer):
     """Marker interface that defines a Zope 3 browser layer."""
 
 
+class IPanelPage(Interface):
+    """ Marker interface for panel page
+
+    Type should ideally implement IDexterityContainer
+    """
+
+
 class IPanelPageEnabled(Interface):
     """ Marker interface for panel page enabled content
 
