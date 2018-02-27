@@ -37,8 +37,8 @@ class PanelView(BrowserView):
 
     def has_stored_layout(self):
         context = aq_inner(self.context)
-        if hasattr(context.aq_explicit, 'panelPageLayout'):
-            stored = getattr(context, 'panelPageLayout')
+        if hasattr(context.aq_explicit, 'panelLayout'):
+            stored = getattr(context, 'panelLayout')
             if stored is not None:
                 return True
         return False
@@ -57,7 +57,7 @@ class PanelPageDataJSON(BrowserView):
             'success': False,
             'message': msg
         }
-        layout = getattr(context, 'panelPageLayout', None)
+        layout = getattr(context, 'panelLayout', None)
         if layout:
             data = layout
         self.request.response.setHeader('Content-Type',

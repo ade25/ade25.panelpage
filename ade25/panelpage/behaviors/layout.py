@@ -38,6 +38,7 @@ class IPanelPageLayout(model.Schema):
         required=False,
     )
 
+    # directives.omitted('panelLayout')
     panelLayout = schema.TextLine(
         title=_("Panel Layout"),
         required=False,

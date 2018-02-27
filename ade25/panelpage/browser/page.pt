@@ -20,6 +20,9 @@
                     ${context/Description}
             </p>
         </div>
+
+        <div tal:replace="structure view/panel_page" />
+
         <div class="app-page__main">
             <p>Panel page content will go here</p>
         </div>
