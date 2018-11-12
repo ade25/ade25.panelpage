@@ -3,7 +3,7 @@
 
 from plone.app.textfield import RichText
 from plone.autoform.interfaces import IFormFieldProvider
-from plone.directives import form
+from plone.autoform import directives, form
 from plone.formwidget.querystring.widget import QueryStringFieldWidget
 from plone.namedfile.field import NamedBlobImage
 from zope import schema
@@ -39,7 +39,7 @@ class IPanelContent(form.Schema):
                       u"dimension for the usecase"),
         required=False,
     )
-    form.widget(query=QueryStringFieldWidget)
+    directives.widget(query=QueryStringFieldWidget)
     query = schema.List(
         title=_(u"Search terms"),
         description=_(u"Define the search terms for the items you want to list"

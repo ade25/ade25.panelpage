@@ -28,11 +28,11 @@ setup(name='ade25.panelpage',
           'setuptools',
           'collective.beaker',
           'plone.api',
-          'plone.app.dexterity [grok, relations]',
+          'plone.app.dexterity [relations]',
           'plone.app.relationfield',
           'plone.namedfile [blobs]',
           'plone.formwidget.querystring',
-          'plone.formwidget.contenttree',
+          #'plone.formwidget.contenttree',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

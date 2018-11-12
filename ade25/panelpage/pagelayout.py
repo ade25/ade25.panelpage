@@ -8,7 +8,7 @@ from five import grok
 from plone import api
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.autoform.interfaces import IFormFieldProvider
-from plone.directives import form
+from plone.autoform import directives, form
 from plone.keyring import django_random
 from zope import schema
 from zope.interface import alsoProvides
@@ -23,7 +23,7 @@ from ade25.panelpage import MessageFactory as _
 class IPanelPageLayout(form.Schema):
     """ Behavior storing panelpage block order """
 
-    form.omitted('panelPageLayout')
+    directives.omitted('panelPageLayout')
     panelPageLayout = schema.List(
         title=_("Panel Page Layout"),
         value_type=schema.TextLine(

@@ -6,7 +6,7 @@ from zope.interface import alsoProvides
 from zope.interface import implements
 
 from plone.supermodel import model
-from plone.directives import form
+from plone.autoform import directives
 
 from plone.formwidget.querystring.widget import QueryStringFieldWidget
 
@@ -20,13 +20,13 @@ class IContentBlockListing(model.Schema):
 
     """ Behavior to store a query to provide content listings. """
 
-    form.fieldset(
+    directives.fieldset(
         'sublisting',
         label=_(u"Content Listing"),
         fields=['query']
     )
 
-    form.widget(query=QueryStringFieldWidget)
+    directives.widget(query=QueryStringFieldWidget)
     query = schema.List(
         title=_(u"Search terms"),
         description=_(u"Define the search terms for the items you want to list"
