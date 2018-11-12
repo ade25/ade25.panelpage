@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 from plone.app.textfield import RichText
 from plone.app.z3cform.widget import QueryStringFieldWidget
-from plone.directives import form
+from plone.autoform import directives, form
 from plone.namedfile.field import NamedBlobImage
+from plone.supermodel import model
 from zope import schema
 from zope.interface import Interface
 from plone.theme.interfaces import IDefaultPloneLayer
@@ -76,7 +77,7 @@ class IPanelTool(Interface):
         """
 
 
-class IPanelHeading(form.Schema):
+class IPanelHeading(model.Schema):
 
     textline = schema.TextLine(
         title=_(u"Heading"),
@@ -84,7 +85,7 @@ class IPanelHeading(form.Schema):
     )
 
 
-class IPanelSubHeading(form.Schema):
+class IPanelSubHeading(model.Schema):
 
     textline = schema.TextLine(
         title=_(u"Subheading"),
@@ -92,7 +93,7 @@ class IPanelSubHeading(form.Schema):
     )
 
 
-class IPanelAbstract(form.Schema):
+class IPanelAbstract(model.Schema):
 
     textblock = schema.Text(
         title=_(u"Abstract"),
@@ -100,7 +101,7 @@ class IPanelAbstract(form.Schema):
     )
 
 
-class IPanelText(form.Schema):
+class IPanelText(model.Schema):
 
     textblock = schema.Text(
         title=_(u"Plaintext"),
@@ -108,7 +109,7 @@ class IPanelText(form.Schema):
     )
 
 
-class IPanelRichText(form.Schema):
+class IPanelRichText(model.Schema):
 
     text = RichText(
         title=_(u"Body"),
@@ -116,7 +117,7 @@ class IPanelRichText(form.Schema):
     )
 
 
-class IPanelImage(form.Schema):
+class IPanelImage(model.Schema):
 
     image = NamedBlobImage(
         title=_(u"Panel Image"),
@@ -126,7 +127,7 @@ class IPanelImage(form.Schema):
     )
 
 
-class IPanelAlias(form.Schema):
+class IPanelAlias(model.Schema):
 
     alias = schema.TextLine(
         title=_(u"Alias"),
@@ -136,7 +137,7 @@ class IPanelAlias(form.Schema):
     )
 
 
-class IPanelListing(form.Schema):
+class IPanelListing(model.Schema):
 
     contentlist = schema.Bool(
         title=_(u"Show Content Listing"),
@@ -144,7 +145,7 @@ class IPanelListing(form.Schema):
                       u"query settings will be ignored if selected"),
         required=False,
     )
-    form.widget('query', QueryStringFieldWidget)
+    directives.widget('query', QueryStringFieldWidget)
     query = schema.List(
         title=_(u'Search terms'),
         description=_(u"Define the search terms for the items you want "

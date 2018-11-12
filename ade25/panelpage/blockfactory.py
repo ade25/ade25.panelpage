@@ -8,8 +8,8 @@ from zope.component import getUtility
 
 from zope.lifecycleevent import modified
 
-from plone.directives import form
 from z3c.form import button
+from z3c.form import form
 
 from z3c.relationfield.schema import RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder

@@ -6,7 +6,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 from five import grok
 from plone import api
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.directives import form
+from plone.autoform import directives, form
 from z3c.form import button
 from zope import schema
 from zope.component import getUtility

@@ -3,13 +3,14 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from z3c.form import form
 from zope import schema
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
 
 from plone.dexterity.content import Container
 
-from plone.directives import form
+from plone.autoform import directives
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.uuid.interfaces import IUUID

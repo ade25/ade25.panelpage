@@ -6,7 +6,7 @@ from plone import api
 from zope.component import getMultiAdapter
 
 from plone.keyring import django_random
-from plone.directives import form
+from plone.autoform import form
 from plone.dexterity.content import Container
 from Products.CMFPlone.utils import safe_unicode
 

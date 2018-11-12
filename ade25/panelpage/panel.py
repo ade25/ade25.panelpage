@@ -7,7 +7,7 @@ from zope import schema
 from zope.component import getMultiAdapter
 
 from plone.dexterity.content import Item
-from plone.directives import form
+from plone.autoform import directives, form
 from plone.namedfile.interfaces import IImageScaleTraversable
 
 from ade25.panelpage import MessageFactory as _
@@ -25,7 +25,7 @@ class IPanel(form.Schema, IImageScaleTraversable):
         title=_(u"CSS Class"),
         required=False,
     )
-    form.omitted('component')
+    directives.omitted('component')
     component = schema.TextLine(
         title=_(u"Component"),
         required=False,

@@ -3,7 +3,7 @@
 
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.interfaces import IDexterityContent
-from plone.directives import form
+from plone.autoform import directives
 from plone.app.z3cform.widget import QueryStringFieldWidget
 from plone.supermodel import model
 from zope import schema
@@ -26,7 +26,7 @@ class IPanelListing(model.Schema):
         required=False,
         default=False,
     )
-    form.widget('query', QueryStringFieldWidget)
+    directives.widget('query', QueryStringFieldWidget)
     query = schema.List(
         title=_(u'Search terms'),
         description=_(u"Define the search terms for the items you want "
