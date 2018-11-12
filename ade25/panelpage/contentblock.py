@@ -3,6 +3,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.supermodel import model, directives
 from z3c.form import form
 from zope import schema
 from zope.component import getMultiAdapter
@@ -10,7 +11,6 @@ from zope.lifecycleevent import modified
 
 from plone.dexterity.content import Container
 
-from plone.autoform import directives
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.uuid.interfaces import IUUID
@@ -22,7 +22,7 @@ from ade25.panelpage.blocklisting import IContentBlockListing
 from ade25.panelpage import MessageFactory as _
 
 
-class IContentBlock(form.Schema, IImageScaleTraversable):
+class IContentBlock(model.Schema, IImageScaleTraversable):
 
     """ A single content block for layout composition. """
 
@@ -44,7 +44,7 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         title=_(u"CSS Class"),
         required=False,
     )
-    form.fieldset(
+    directives.fieldset(
         'details',
         label=_(u"Block Details"),
         fields=['text', 'image', 'contentAlias']
@@ -61,7 +61,7 @@ class IContentBlock(form.Schema, IImageScaleTraversable):
         title=_(u"Content Alias/Proxy UID"),
         required=False,
     )
-    form.fieldset(
+    directives.fieldset(
         'settings',
         label=_(u"Content Block Settings"),
         fields=['contentBlockLayout']

@@ -2,6 +2,7 @@ from Acquisition import aq_inner
 from AccessControl import Unauthorized
 from five import grok
 from plone import api
+from plone.supermodel import model
 
 from zope.component import getMultiAdapter
 
@@ -15,7 +16,7 @@ from ade25.panelpage.contentpanel import IContentPanel
 from ade25.panelpage import MessageFactory as _
 
 
-class IPanelManager(form.Schema):
+class IPanelManager(model.Schema):
     """
     Folder ccontaining content panels and showing overviews
     """

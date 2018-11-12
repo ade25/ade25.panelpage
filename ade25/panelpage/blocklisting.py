@@ -5,6 +5,7 @@ from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from zope.interface import implements
 
+from plone.supermodel import directives as model_directives
 from plone.supermodel import model
 from plone.autoform import directives
 
@@ -20,7 +21,7 @@ class IContentBlockListing(model.Schema):
 
     """ Behavior to store a query to provide content listings. """
 
-    directives.fieldset(
+    model_directives.fieldset(
         'sublisting',
         label=_(u"Content Listing"),
         fields=['query']

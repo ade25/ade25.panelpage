@@ -2,6 +2,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.supermodel import model
 from zope import schema
 from zope.schema import getFieldsInOrder
 from zope.component import getUtility
@@ -25,7 +26,7 @@ from ade25.panelpage.contentblock import IContentBlock
 from ade25.panelpage import MessageFactory as _
 
 
-class IContentBlockAlias(form.Schema):
+class IContentBlockAlias(model.Schema):
 
     contentAlias = RelationChoice(
         title=_(u"Link target"),
@@ -36,7 +37,7 @@ class IContentBlockAlias(form.Schema):
     )
 
 
-class IContentBlockEdit(form.Schema):
+class IContentBlockEdit(model.Schema):
 
     headline = schema.TextLine(
         title=_(u"Content Block Headline"),
@@ -54,7 +55,7 @@ class IContentBlockEdit(form.Schema):
     )
 
 
-class IContentBlockBodyEdit(form.Schema):
+class IContentBlockBodyEdit(model.Schema):
 
     text = RichText(
         title=_(u"Block Body Text"),
@@ -62,7 +63,7 @@ class IContentBlockBodyEdit(form.Schema):
     )
 
 
-class IContentBlockImageEdit(form.Schema):
+class IContentBlockImageEdit(model.Schema):
 
     image = NamedBlobImage(
         title=_(u"Image"),
@@ -75,7 +76,7 @@ class IContentBlockImageEdit(form.Schema):
     )
 
 
-class ContentBlockEditForm(form.SchemaEditForm):
+class ContentBlockEditForm(form.EditForm):
     grok.context(IContentBlock)
     grok.require('cmf.AddPortalContent')
     grok.name('edit-block')
@@ -140,7 +141,7 @@ class ContentBlockEditForm(form.SchemaEditForm):
         return self.request.response.redirect(next_url)
 
 
-class ContentBlockBodyEditForm(form.SchemaEditForm):
+class ContentBlockBodyEditForm(form.EditForm):
     grok.context(IContentBlock)
     grok.require('cmf.AddPortalContent')
     grok.name('edit-block-body')
@@ -205,7 +206,7 @@ class ContentBlockBodyEditForm(form.SchemaEditForm):
         return self.request.response.redirect(next_url)
 
 
-class ContentBlockImageEditForm(form.SchemaEditForm):
+class ContentBlockImageEditForm(form.EditForm):
     grok.context(IContentBlock)
     grok.require('cmf.AddPortalContent')
     grok.name('edit-block-image')
@@ -270,7 +271,7 @@ class ContentBlockImageEditForm(form.SchemaEditForm):
         return self.request.response.redirect(next_url)
 
 
-class CreateContentBlockAliasForm(form.SchemaEditForm):
+class CreateContentBlockAliasForm(form.EditForm):
     grok.context(IContentBlock)
     grok.require('cmf.AddPortalContent')
     grok.name('create-block-alias')

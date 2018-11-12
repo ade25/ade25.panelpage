@@ -3,6 +3,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.supermodel import model
 from zope import schema
 from zope.component import getMultiAdapter
 
@@ -13,7 +14,7 @@ from plone.namedfile.interfaces import IImageScaleTraversable
 from ade25.panelpage import MessageFactory as _
 
 
-class IPanel(form.Schema, IImageScaleTraversable):
+class IPanel(model.Schema, IImageScaleTraversable):
     """
     A single content panel or box
     """

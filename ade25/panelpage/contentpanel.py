@@ -2,6 +2,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.supermodel import model
 from zope import schema
 
 from plone.dexterity.content import Container
@@ -17,7 +18,7 @@ from plone.app.uuid.utils import uuidToObject
 from ade25.panelpage import MessageFactory as _
 
 
-class IContentPanel(form.Schema, IImageScaleTraversable):
+class IContentPanel(model.Schema, IImageScaleTraversable):
     """
     A single content panel or box
     """
