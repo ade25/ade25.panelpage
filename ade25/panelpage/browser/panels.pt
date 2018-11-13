@@ -16,12 +16,21 @@
                         Panel Section
                 </h1>
             </div>
-            <p class="app-page__abstract" tal:condition="context/Description">
+            <p class="app-page__abstract">
                 A single section associated with a stored layout and a configured
                 set of content panels.
             </p>
         </div>
         <div class="app-page__main">
+            <section class="c-panels" tal:condition="python:view.has_panels()">
+                <tal:panels tal:repeat="panel python:view.content_panels()">
+                    <div class="c-panels__item">
+                        <section class="c-panel">
+                            Rendered content panel - needs configuration and backend functionality
+                        </section>
+                    </div>
+                </tal:panels>
+            </section>
             <p>Panel Grid will go here.</p>
         </div>
 

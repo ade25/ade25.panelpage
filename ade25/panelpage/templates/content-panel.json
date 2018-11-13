@@ -1,0 +1,19 @@
+{
+  "id": "${id}",
+  "timestamp": "${timestamp}",
+  "_runtime": "0.0000059604644775390625",
+  "created": "${created}",
+  "updated": "${created}",
+  "title": "Ade25 Panel",
+  "state": "Published",
+  "mode": "view",
+  "widget": {
+    "id": "ade25.widgets.widget.base",
+    "name": "Base Widget",
+    "settings": {
+      "view": "@@content-widget-base",
+      "edit": "@@content-widget-base-edit"
+    },
+    "config": {}
+  }
+}

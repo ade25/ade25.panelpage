@@ -24,6 +24,22 @@ class PanelView(BrowserView):
             editable = True
         return editable
 
+    def stored_panels(self):
+        context = aq_inner(self.context)
+        panel_data = getattr(context, 'panelPageData', None)
+        return panel_data
+
+    def has_panels(self):
+        if self.stored_panels():
+            return True
+        return False
+
+    def panels(self):
+        content_panels = [
+            json.loads(panel) for panel in self.stored_panels()
+        ]
+        return content_panels
+
     def rendered_panel_grid(self):
         context = aq_inner(self.context)
         template = context.restrictedTraverse('@@panelgrid')()
@@ -42,6 +58,38 @@ class PanelView(BrowserView):
             if stored is not None:
                 return True
         return False
+
+
+class PanelPageGrid(BrowserView):
+    """ Embeddable panel list """
+    def __call__(self,
+                 identifier=None,
+                 mode='view',
+                 settings=None,
+                 **kw):
+        self.params = {
+            'panel_page_name': identifier,
+            'panel_page_mode': mode,
+            'panel_page_settings': settings
+        }
+        return self.render()
+
+    def panel_settings(self):
+        return self.params
+
+    def stored_panels(self):
+        context = aq_inner(self.context)
+        panel_data = getattr(context, 'panelPageData', None)
+        return panel_data
+
+    def has_panels(self):
+        return len(self.stored_panels()) > 0
+
+    def panels(self):
+        content_panels = [
+            json.loads(panel) for panel in self.stored_panels()
+        ]
+        return content_panels
 
 
 class PanelPageDataJSON(BrowserView):
