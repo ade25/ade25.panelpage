@@ -34,4 +34,13 @@
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
+    <!-- Panel default configuration view -->
+    <browser:page
+            for="ade25.panelpage.interfaces.IPanelPage"
+            name="content-panel-settings-default"
+            class=".panel.PanelDefaultSettings"
+            permission="cmf.ManagePortal"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
 </configure>

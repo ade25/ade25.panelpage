@@ -60,7 +60,7 @@ class PanelView(BrowserView):
         return False
 
 
-class PanelPageGrid(BrowserView):
+class PanelList(BrowserView):
     """ Embeddable panel list """
     def __call__(self,
                  identifier=None,

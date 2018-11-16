@@ -4,14 +4,16 @@ import json
 
 from Acquisition import aq_inner
 from plone import api
-from plone.autoform import directives
+from plone.autoform import directives as form_directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.dexterity.interfaces import IDexterityContent
+from plone.supermodel import directives as model_directives
 from plone.supermodel import model
+from plone.z3cform.textlines import TextLinesFieldWidget
+from zope import schema
 from zope.component import adapter, getUtility
 from zope.interface import implementer
 from zope.interface import provider
-from zope import schema
 
 from ade25.panelpage.interfaces import IPanelTool
 
@@ -29,27 +31,57 @@ def panel_layout_default_value():
 class IPanelPageLayout(model.Schema):
     """Behavior providing a list of panel row strings parsable as JSON"""
 
-    # directives.omitted('panelPageLayout')
-    panelPageLayout = schema.List(
-        title=_("Panel Page Layout"),
-        value_type=schema.TextLine(
-            title=_(u"Content Page Layout"),
-        ),
-        required=False,
+    model_directives.fieldset(
+        'panels',
+        label=u"Panels",
+        fields=['panelLayout',
+                'contentPanelsHeader',
+                'contentPanelsMain',
+                'contentPanelsFooter'
+                ]
     )
+
+    if not api.env.debug_mode():
+        #form_directives.omitted("panelPageLayout")
+        form_directives.omitted("panelLayout")
+
+    # directives.omitted('panelPageLayout')
+    #panelPageLayout = schema.List(
+    #    title=_("Panel Page Layout"),
+    #    value_type=schema.TextLine(
+    #        title=_(u"Content Page Layout"),
+    #    ),
+    #    required=False,
+    #)
 
     # directives.omitted('panelLayout')
     panelLayout = schema.TextLine(
         title=_("Panel Layout"),
         required=False,
-        defaultFactory=panel_layout_default_value,
+        # defaultFactory=panel_layout_default_value,
     )
 
-    # directives.omitted('panelPageData')
-    panelPageData = schema.List(
-        title=_("Stored Panels"),
+    form_directives.widget(contentPanelsHeader=TextLinesFieldWidget)
+    contentPanelsHeader = schema.List(
+        title=_("Content Panels Header"),
         value_type=schema.TextLine(
-            title=_(u"Content Page Layout"),
+            title=_(u"Header Panel"),
+        ),
+        required=False,
+    )
+    form_directives.widget(contentPanelsMain=TextLinesFieldWidget)
+    contentPanelsMain = schema.List(
+        title=_("Content Panels Main"),
+        value_type=schema.TextLine(
+            title=_(u"Main Panel"),
+        ),
+        required=False,
+    )
+    form_directives.widget(contentPanelsFooter=TextLinesFieldWidget)
+    contentPanelsFooter = schema.List(
+        title=_("Content Panels Footer"),
+        value_type=schema.TextLine(
+            title=_(u"Footer Panel"),
         ),
         required=False,
     )
