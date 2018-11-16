@@ -36,11 +36,11 @@
 
     <!-- Panel default configuration view -->
     <browser:page
-            for="ade25.panelpage.interfaces.IPanelPage"
+            for="ade25.panelpage.interfaces.IContentPanelStorageSupport"
             name="content-panel-settings-default"
             class=".panel.PanelDefaultSettings"
             permission="cmf.ManagePortal"
-            layer="..interfaces.IAde25PanelPageLayer"
+            layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
 </configure>
