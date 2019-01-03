@@ -1,42 +1,44 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-         metal:use-macro="context/main_template/macros/master"
-         i18n:domain="ade25.panelpage">
-<body>
-
-<metal:main fill-slot="main">
-    <metal:content-core define-macro="main">
-
-        <div class="app-page-header app-page__header">
-            <div class="app-page__title">
-                <h1 class="app-page__headline">
-                        Panel Section
-                </h1>
+<div class="c-panels">
+    <div class="c-panel">
+        <div class="c-panel__aside">
+            <div class="c-panel__actions">
+                <a class="c-panel__action" href="#add-new-panel"
+                         tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0'">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                        <style>
+                            .st3{fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:10}
+                        </style>
+                        <path d="M14.157 32h35.686M32 14.157v35.686" class="st3"/>
+                    </svg>
+                </a>
             </div>
-            <p class="app-page__abstract">
-                A single section associated with a stored layout and a configured
-                set of content panels.
-            </p>
         </div>
-        <div class="app-page__main">
-            <section class="c-panels" tal:condition="python:view.has_panels()">
-                <tal:panels tal:repeat="panel python:view.content_panels()">
-                    <div class="c-panels__item">
-                        <section class="c-panel">
-                            Rendered content panel - needs configuration and backend functionality
-                        </section>
+    </div>
+    <tal:panels tal:condition="python:view.has_content_panels()">
+        <tal:panels tal:repeat="panel python:view.content_panels()">
+            <div class="c-panels__item">
+                <section class="c-panel">
+                    <div class="c-panel__main">
+                        Rendered content panel (/@@content-panel)
+                        <pre tal:content="python:panel"></pre>
                     </div>
-                </tal:panels>
-            </section>
-            <p>Panel Grid will go here.</p>
-        </div>
-
-    </metal:content-core>
-</metal:main>
-
-</body>
-</html>
+                    <div class="c-panel__aside">
+                        <div class="c-panel__actions">
+                            <a class="c-panel__action" href="#add-new-panel"
+                                     tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0'">
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                    <style>
+                                        .st3{fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:10}
+                                    </style>
+                                    <path d="M14.157 32h35.686M32 14.157v35.686" class="st3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </tal:panels>
+    </tal:panels>
+    <p>Panel Grid will go here.</p>
+</div>
 

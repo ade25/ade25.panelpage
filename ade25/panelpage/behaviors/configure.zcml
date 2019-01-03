@@ -30,8 +30,9 @@
 
     <plone:behavior
             title="Content Panel Storage Support"
-            description="Enable panel page layout engine"
+            description="Enable panel page content layout engine"
             provides="ade25.panelpage.interfaces.IContentPanelStorageSupport"
+            for="plone.dexterity.interfaces.IDexterityContent"
     />
 
     <plone:behavior

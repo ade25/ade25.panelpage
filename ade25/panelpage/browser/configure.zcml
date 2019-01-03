@@ -26,9 +26,18 @@
     />
 
     <browser:page
-            for="ade25.panelpage.interfaces.IPanelPage"
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
             name="panel-page-view"
             class=".panels.PanelView"
+            template="panel-page-view.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panels"
+            class=".panels.ContentPanelList"
             template="panels.pt"
             permission="cmf.ModifyPortalContent"
             layer="..interfaces.IAde25PanelPageLayer"
