@@ -43,6 +43,15 @@
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel"
+            class=".panel.ContentPanel"
+            template="panel.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
     <!-- Panel default configuration view -->
     <browser:page
             for="ade25.panelpage.interfaces.IContentPanelStorageSupport"

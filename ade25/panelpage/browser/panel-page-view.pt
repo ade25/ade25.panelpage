@@ -10,7 +10,27 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="app-page-header app-page__header">
+        <div class="c-toolbar">
+            <div class="c-toolbar__content">
+                <div class="c-toolbar__item">
+                    <div class="c-toolbar__title">
+                        Editing Panel Page Content
+                    </div>
+                </div>
+                <div class="c-toolbar__item">
+                    <div class="c-toolbar__actions">
+                        <a class="c-toolbar__action c-button c-button--default" href="/@@panels-save">
+                            Save
+                        </a>
+                        <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="o-page__header">
             <div class="app-page__title">
                 <h1 class="app-page__headline">
                     Panel Section

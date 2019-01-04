@@ -62,7 +62,7 @@ class PanelDefaultSettings(BrowserView):
         return data
 
 
-class ContextCardWidget(BrowserView):
+class ContentPanel(BrowserView):
     """ Basic content panel view  """
 
     def __call__(self, data=None, mode="view", **kw):
@@ -109,18 +109,8 @@ class ContextCardWidget(BrowserView):
     def widget_content(self):
         context = aq_inner(self.context)
         panel_data = self.params["data"]
-        if "uuid" in panel_data:
-            context = api.content.get(UID=panel_data["uuid"])
         details = {
-            "title": context.Title(),
-            "description": context.Description(),
-            "url": context.absolute_url(),
-            "timestamp": context.Date,
-            "uuid": context.UID(),
-            "has_image": self.has_image(context),
-            "css_classes": "app-card--{0} {1}".format(
-                context.UID(), self.card_css_classes(context)
-            ),
-            "content_item": context,
+
         }
+        import pdb; pdb.set_trace()
         return details
