@@ -33,28 +33,29 @@
         <div class="o-page__header">
             <div class="app-page__title">
                 <h1 class="app-page__headline">
-                    Panel Section
+                    Panel Page Editor Demo
                 </h1>
             </div>
             <p class="app-page__abstract">
-                A single section associated with a stored layout and a configured
-                set of content panels.
+                This is a preview of the panel page editor that allows for management
+                of content panels. The panel content itself is provided by content
+                widgets. Currently the panels all display the placeholder widget.
             </p>
         </div>
         <div class="app-page__main" tal:define="context_uid context/UID">
 
             <section class="o-page__section">
-                <h2 class="o-page__section-title">Page Header Content Panels</h2>
+                <h2 class="o-page__section-title">Page Header Section Panels</h2>
                 <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='header')"></tal:content-panels>
             </section>
 
             <section class="o-page__section">
-                <h2 class="o-page__section-title">Page Main Content Panels</h2>
+                <h2 class="o-page__section-title">Page Main Section Panels</h2>
                 <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='main')"></tal:content-panels>
             </section>
 
             <section class="o-page__section">
-                <h2 class="o-page__section-title">Page Footer Content Panels</h2>
+                <h2 class="o-page__section-title">Page Footer Section Panels</h2>
                 <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='footer')"></tal:content-panels>
             </section>
 
