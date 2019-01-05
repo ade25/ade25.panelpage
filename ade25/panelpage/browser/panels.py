@@ -55,25 +55,6 @@ class PanelView(BrowserView):
         ]
         return content_panels
 
-    def rendered_panel_grid(self):
-        context = aq_inner(self.context)
-        template = context.restrictedTraverse('@@panelgrid')()
-        return template
-
-    def computed_styles(self):
-        klass = 'panel-page--default'
-        if self.is_editable():
-            klass = 'panel-page--editable'
-        return klass
-
-    def has_stored_layout(self):
-        context = aq_inner(self.context)
-        if hasattr(context.aq_explicit, 'panelLayout'):
-            stored = getattr(context, 'panelLayout')
-            if stored is not None:
-                return True
-        return False
-
 
 class ContentPanelList(BrowserView):
     """ Embeddable panel list """
@@ -118,6 +99,18 @@ class ContentPanelList(BrowserView):
             json.loads(panel) for panel in self.stored_panels()
         ]
         return content_panels
+
+    @staticmethod
+    def panel_widget(panel):
+        widget_data = panel['widget']
+        return widget_data
+
+    @staticmethod
+    def computed_panel_class(content_panel):
+        css_class = 'c-panel c-panel--'.format(
+            content_panel['id']
+        )
+        return css_class
 
 
 class PanelPageDataJSON(BrowserView):

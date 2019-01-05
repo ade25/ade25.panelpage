@@ -1,5 +1,6 @@
 <section class="c-content-panel" tal:define="widget python:view.widget_content">
     <div class="c-content-panel__main">
+        <pre tal:content="widget"></pre>
         <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(
                 widget_type='base'
                 )">

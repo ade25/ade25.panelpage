@@ -12,8 +12,10 @@
     </div>
     <tal:panels tal:condition="python:view.has_content_panels()">
         <tal:panels tal:repeat="panel python:view.content_panels()">
-            <section class="c-panel" tal:define="panel_number repeat/panel/number; settings python:view.settings"
-                tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number)">
+            <section class="c-panel" tal:define="panel_number repeat/panel/number;
+                                                 settings python:view.settings;
+                                                 panel_class python:view.computed_panel_class(panel)"
+                tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number) + ' ' + panel_class">
                 <div class="c-panel__header">
                     <div class="c-panel__controls">
                         <a class="c-panel__control c-panel__icon"
@@ -30,10 +32,8 @@
                     </div>
 
                 </div>
-                <div class="c-panel__main">
-                    <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(
-                            widget_type='text-block'
-                            )">
+                <div class="c-panel__main" tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
+                    <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'])">
                         Rendered Content Widget
                     </tal:content-widget>
                 </div>
