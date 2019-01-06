@@ -22,7 +22,8 @@
                         <a class="c-toolbar__action c-button c-button--default" href="/@@panels-save">
                             Save
                         </a>
-                        <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel">
+                        <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                            tal:attributes="href python:context.absolute_url()">
                             Cancel
                         </a>
                     </div>
@@ -31,16 +32,12 @@
         </div>
 
         <div class="o-page__header">
-            <div class="app-page__title">
-                <h1 class="app-page__headline">
-                    Panel Page Editor Demo
-                </h1>
-            </div>
-            <p class="app-page__abstract">
-                This is a preview of the panel page editor that allows for management
+            <div class="c-alert c-alert--info">
+                <h4 class="c-alert__title">Panel Page Editor Demo</h4>
+                <p>This is a preview of the panel page editor that allows for management
                 of content panels. The panel content itself is provided by content
-                widgets. Currently the panels all display the placeholder widget.
-            </p>
+                    widgets.</p>
+            </div>
         </div>
         <div class="app-page__main" tal:define="context_uid context/UID">
 

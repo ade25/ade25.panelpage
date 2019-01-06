@@ -39,6 +39,7 @@ class PanelDefaultSettings(BrowserView):
                 "id": str(uuid_tool.uuid4()),
                 "timestamp": str(int(time.time())),
                 "created": datetime.datetime.now().isoformat(),
+                "widget_id": str(uuid_tool.uuid4())
             }
         )
         try:
@@ -114,3 +115,18 @@ class ContentPanel(BrowserView):
         }
         import pdb; pdb.set_trace()
         return details
+
+
+class ContentPanelEdit(BrowserView):
+
+    def __call__(self, data=None, mode="view", **kw):
+        self.params = {"mode": mode, "data": data}
+        return self.render()
+
+    def render(self):
+        return self.index()
+
+    @staticmethod
+    def can_edit():
+        return not api.user.is_anonymous()
+

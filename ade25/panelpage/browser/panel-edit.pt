@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-editor" id="panel-editor">
+
+            <form class="o-form o-form--panel-page"
+                  id="form-panel-edit"
+                  method="post"
+                     tal:attributes="action request/URL">
+                <div class="c-toolbar">
+                    <div class="c-toolbar__content">
+                        <div class="c-toolbar__item">
+                            <div class="c-toolbar__title">
+                                Editing Panel Page Content
+                            </div>
+                        </div>
+                        <div class="c-toolbar__item">
+                            <div class="c-toolbar__actions">
+                                <small>Panel Editor</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="c-panel-editor__section">
+
+                        <div class="o-form__section">
+                            <div class="o-form__group">
+                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked" />
+                                <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
+                                <div class="o-form__help" i18n:translate="">
+                                    Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
+                                </div>
+                            </div>
+                        </div>
+                </section>
+
+                <section class="c-panel-editor__section">
+                    <div class="c-panel-editor__section-header">
+                        Content
+                    </div>
+                    <div>
+
+                    </div>
+                </section>
+
+                <section class="c-panel-editor__section">
+                    <div class="o-form__actions">
+                        <button class="c-button c-button--primary" type="submit" i18n:translate="">
+                            Save
+                        </button>
+                    </div>
+                </section>
+            </form>
+        </div>
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+
