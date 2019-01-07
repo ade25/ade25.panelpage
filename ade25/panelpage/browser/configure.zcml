@@ -54,6 +54,15 @@
 
     <browser:page
             for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-create"
+            class=".panel.ContentPanelCreate"
+            template="panel-create.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
             name="panel-edit"
             class=".panel.ContentPanelEdit"
             template="panel-edit.pt"

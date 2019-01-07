@@ -13,7 +13,7 @@
         <div class="c-panel-editor" id="panel-editor">
 
             <form class="o-form o-form--panel-page"
-                  id="form-panel-edit"
+                  id="form-panel-create"
                   method="post"
                      tal:attributes="action request/URL">
                 <div class="c-toolbar">
@@ -21,7 +21,7 @@
                         <div class="c-toolbar__item">
                             <div class="c-toolbar__title">
                                 Editing Panel Page Content
-                                <small>Update Panel</small>
+                                <small>Create Panel</small>
                             </div>
                         </div>
                         <div class="c-toolbar__item">
@@ -40,28 +40,27 @@
 
                 <section class="c-panel-editor__section">
 
-                        <div class="o-form__section">
-                            <div class="o-form__group">
-                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked" />
-                                <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
-                                <div class="o-form__help" i18n:translate="">
-                                    Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
-                                </div>
+                    <div class="o-form__section">
+                        <div class="o-form__group">
+                            <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked" />
+                            <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
+                            <div class="o-form__help" i18n:translate="">
+                                Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
                             </div>
                         </div>
+                    </div>
                 </section>
 
                 <section class="c-panel-editor__section">
                     <div class="c-panel-editor__section-header">
-                        Content
+                        Content Widget
                     </div>
                     <div class="c-widget-editor">
                         <div class="c-alert c-alert--default">
-                            The actual widget will be editable here
+                            The actual widget will be configured and edited here
                         </div>
                     </div>
                 </section>
-
             </form>
         </div>
 

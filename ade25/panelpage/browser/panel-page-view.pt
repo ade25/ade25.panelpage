@@ -19,12 +19,12 @@
                 </div>
                 <div class="c-toolbar__item">
                     <div class="c-toolbar__actions">
-                        <a class="c-toolbar__action c-button c-button--default" href="/@@panels-save">
-                            Save
-                        </a>
                         <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                            tal:attributes="href python:context.absolute_url()">
+                            tal:attributes="href python:context.absolute_url()" i18n:translate="">
                             Cancel
+                        </a>
+                        <a class="c-toolbar__action c-button c-button--primary" href="/@@panels-save" i18n:translate="">
+                            Save
                         </a>
                     </div>
                 </div>

@@ -130,3 +130,16 @@ class ContentPanelEdit(BrowserView):
     def can_edit():
         return not api.user.is_anonymous()
 
+
+class ContentPanelCreate(BrowserView):
+
+    def __call__(self, data=None, mode="view", **kw):
+        self.params = {"mode": mode, "data": data}
+        return self.render()
+
+    def render(self):
+        return self.index()
+
+    @staticmethod
+    def can_edit():
+        return not api.user.is_anonymous()
