@@ -1,14 +1,6 @@
-<!--suppress ALL -->
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-         i18n:domain="ade25.panelpage">
-<body>
-<!--suppress Annotator -->
-<div class="c-panels c-panels--edit">
+<tal:panels tal:define="view_mode python:view.params['panel_page_mode']"></tal:panels>
+<div class="c-panels c-panels--edit"
+    i18n:domain="ade25.panelpage">
     <div class="c-panel-factory c-panel-factory--default">
         <a class="c-panel-factory__action" href="#add-new-panel"
                 tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0'">
@@ -65,6 +57,4 @@
         </tal:panels>
     </tal:panels>
 </div>
-</body>
-</html>
 

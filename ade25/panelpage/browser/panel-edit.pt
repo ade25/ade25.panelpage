@@ -17,27 +17,31 @@
                   id="form-panel-edit"
                   method="post"
                      tal:attributes="action request/URL">
-                <div class="c-toolbar c-toolbar--primary">
-                    <div class="c-toolbar__content">
-                        <div class="c-toolbar__item">
-                            <div class="c-toolbar__title">
-                                Editing Panel Page Content
-                                <small>Update Panel</small>
+
+                <div class="c-panel-editor__header">
+                    <div class="c-toolbar c-toolbar--primary">
+                        <div class="c-toolbar__content">
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__title">
+                                    Editing Panel Page Content
+                                    <small>Update Panel</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="c-toolbar__item">
-                            <div class="c-toolbar__actions">
-                                <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                         tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
-                                    Cancel
-                                </a>
-                                <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
-                                    Save
-                                </button>
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__actions">
+                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                        Cancel
+                                    </a>
+                                    <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <section class="c-panel-editor__section">
 

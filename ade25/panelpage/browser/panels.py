@@ -61,10 +61,12 @@ class ContentPanelList(BrowserView):
     def __call__(self,
                  identifier=None,
                  section='main',
+                 mode='view'
                  **kw):
         self.params = {
             'panel_page_identifier': identifier,
-            'panel_page_section': section
+            'panel_page_section': section,
+            'panel_page_mode': mode
         }
         return self.render()
 

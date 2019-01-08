@@ -16,23 +16,26 @@
                   id="form-panel-create"
                   method="post"
                      tal:attributes="action request/URL">
-                <div class="c-toolbar">
-                    <div class="c-toolbar__content">
-                        <div class="c-toolbar__item">
-                            <div class="c-toolbar__title">
-                                Editing Panel Page Content
-                                <small>Create Panel</small>
+
+                <div class="c-panel-editor__header">
+                    <div class="c-toolbar">
+                        <div class="c-toolbar__content">
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__title">
+                                    Editing Panel Page Content
+                                    <small>Create Panel</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="c-toolbar__item">
-                            <div class="c-toolbar__actions">
-                                <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                         tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
-                                    Cancel
-                                </a>
-                                <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
-                                    Save
-                                </button>
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__actions">
+                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                        Cancel
+                                    </a>
+                                    <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,10 +55,78 @@
                 </section>
 
                 <section class="c-panel-editor__section">
+
                     <div class="c-panel-editor__section-header">
-                        Content Widget
+                        <div class="c-toolbar c-toolbar--default">
+                            <div class="c-toolbar__content">
+                                <div class="c-toolbar__item">
+                                    <div class="c-toolbar__title">
+                                        Content Widget Selection
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="c-widget-editor">
+
+                    <div class="c-widget-selector">
+                        <div class="c-widget-selector__section">
+                            <div class="c-widget-selector__header">
+                                <div class="c-widget-selector__headline" i18n:translate="">General</div>
+                            </div>
+                            <div class="c-widget-selector__main">
+                                <div class="o-grid o-grid--gutter">
+                                    <div class="o-grid__item  o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text Block
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text - 2 Columns
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text - 3 Columns
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="c-alert c-alert--default">
                             The actual widget will be configured and edited here
                         </div>
