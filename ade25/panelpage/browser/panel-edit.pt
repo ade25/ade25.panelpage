@@ -10,13 +10,14 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="c-panel-editor" id="panel-editor">
+        <div class="c-panel-editor" id="panel-editor"
+            tal:define="content_panel python:view.content_panel()">
 
             <form class="o-form o-form--panel-page"
                   id="form-panel-edit"
                   method="post"
                      tal:attributes="action request/URL">
-                <div class="c-toolbar">
+                <div class="c-toolbar c-toolbar--primary">
                     <div class="c-toolbar__content">
                         <div class="c-toolbar__item">
                             <div class="c-toolbar__title">
@@ -41,8 +42,10 @@
                 <section class="c-panel-editor__section">
 
                         <div class="o-form__section">
-                            <div class="o-form__group">
-                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked" />
+                            <div class="o-form__group"
+                                tal:define="panel_state python:content_panel['state']; panel_published python:panel_state == 'Published'">
+                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked"
+                                    tal:attributes="checked python:panel_published and 'checked' or ''" />
                                 <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
                                 <div class="o-form__help" i18n:translate="">
                                     Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
@@ -53,13 +56,23 @@
 
                 <section class="c-panel-editor__section">
                     <div class="c-panel-editor__section-header">
-                        Content
-                    </div>
-                    <div class="c-widget-editor">
-                        <div class="c-alert c-alert--default">
-                            The actual widget will be editable here
+
+                        <div class="c-toolbar c-toolbar--default">
+                            <div class="c-toolbar__content">
+                                <div class="c-toolbar__item">
+                                    <div class="c-toolbar__title">
+                                        Content
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="c-widget-editor">
+                        <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
+                            <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode='edit')">
+                                Rendered Content Widget
+                            </tal:content-widget>
+                        </div>
                 </section>
 
             </form>

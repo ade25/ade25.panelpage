@@ -9,13 +9,14 @@ import uuid as uuid_tool
 from Acquisition import aq_inner
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
+from ade25.panelpage.interfaces import IPanelTool
 from plone import api
 
 from ade25.base.utils import get_filesystem_template
 from ade25.panelpage import MessageFactory as _
 
 from plone.i18n.normalizer import IIDNormalizer
-from zope.component import queryUtility
+from zope.component import queryUtility, getUtility
 
 
 class PanelDefaultSettings(BrowserView):
@@ -119,8 +120,16 @@ class ContentPanel(BrowserView):
 
 class ContentPanelEdit(BrowserView):
 
-    def __call__(self, data=None, mode="view", **kw):
-        self.params = {"mode": mode, "data": data}
+    def __call__(self,
+                 identifier=None,
+                 section='main',
+                 panel=None,
+                 **kw):
+        self.params = {
+            'panel_page_identifier': identifier,
+            'panel_page_section': section,
+            'panel_page_item': panel,
+        }
         return self.render()
 
     def render(self):
@@ -129,6 +138,31 @@ class ContentPanelEdit(BrowserView):
     @staticmethod
     def can_edit():
         return not api.user.is_anonymous()
+
+    @property
+    def settings(self):
+        return self.params
+
+    @property
+    def panel_tool(self):
+        tool = getUtility(IPanelTool)
+        return tool
+
+    def stored_panel(self):
+        context = aq_inner(self.context)
+        identifier = self.settings['panel_page_identifier']
+        if not identifier:
+            identifier = context.UID()
+        panel_data = self.panel_tool.read(
+            identifier,
+            section=self.settings['panel_page_section'],
+            key=self.settings['panel_page_item']
+        )
+        return panel_data
+
+    def content_panel(self):
+        content_panel = json.loads(self.stored_panel())
+        return content_panel
 
 
 class ContentPanelCreate(BrowserView):
