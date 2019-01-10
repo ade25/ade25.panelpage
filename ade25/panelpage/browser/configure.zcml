@@ -39,7 +39,7 @@
             name="content-panels"
             class=".panels.ContentPanelList"
             template="panels.pt"
-            permission="cmf.ModifyPortalContent"
+            permission="zope2.View"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
@@ -72,7 +72,7 @@
 
     <!-- Panel default configuration view -->
     <browser:page
-            for="ade25.panelpage.interfaces.IContentPanelStorage"
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
             name="content-panel-settings-default"
             class=".panel.PanelDefaultSettings"
             permission="cmf.ManagePortal"
