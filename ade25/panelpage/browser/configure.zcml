@@ -72,7 +72,7 @@
 
     <!-- Panel default configuration view -->
     <browser:page
-            for="ade25.panelpage.interfaces.IContentPanelStorageSupport"
+            for="ade25.panelpage.interfaces.IContentPanelStorage"
             name="content-panel-settings-default"
             class=".panel.PanelDefaultSettings"
             permission="cmf.ManagePortal"
