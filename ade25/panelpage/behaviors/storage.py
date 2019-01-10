@@ -11,6 +11,8 @@ from zope import schema
 from zope.component import adapter
 from zope.interface import alsoProvides, implementer
 
+from ade25.panelpage.interfaces import IPanelPage
+
 from ade25.panelpage import MessageFactory as _
 
 
@@ -26,10 +28,11 @@ class IContentPanelStorage(model.Schema):
                 ]
     )
 
-    if not api.env.debug_mode():
-        form_directives.omitted("contentPanelsFooter")
+    #if not api.env.debug_mode():
+    #    form_directives.omitted("contentPanelsHeader")
+    #    form_directives.omitted("contentPanelsMain")
+    #    form_directives.omitted("contentPanelsFooter")
 
-    #form_directives.widget(contentPanelsHeader=TextLinesFieldWidget)
     contentPanelsHeader = schema.List(
         title=_("Content Panels Header"),
         value_type=schema.TextLine(
@@ -37,7 +40,6 @@ class IContentPanelStorage(model.Schema):
         ),
         required=False,
     )
-    #form_directives.widget(contentPanelsMain=TextLinesFieldWidget)
     contentPanelsMain = schema.List(
         title=_("Content Panels Main"),
         value_type=schema.TextLine(
@@ -45,7 +47,6 @@ class IContentPanelStorage(model.Schema):
         ),
         required=False,
     )
-    # form_directives.widget(contentPanelsFooter=TextLinesFieldWidget)
     contentPanelsFooter = schema.List(
         title=_("Content Panels Footer"),
         value_type=schema.TextLine(

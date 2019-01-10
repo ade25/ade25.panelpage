@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-editor" id="panel-editor">
+
+            <form class="o-form o-form--panel-page"
+                  id="form-panel-create"
+                  method="post"
+                     tal:attributes="action request/URL">
+
+                <div class="c-panel-editor__header">
+                    <div class="c-toolbar">
+                        <div class="c-toolbar__content">
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__title">
+                                    Editing Panel Page Content
+                                    <small>Create Panel</small>
+                                </div>
+                            </div>
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__actions">
+                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                        Cancel
+                                    </a>
+                                    <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="c-panel-editor__section">
+
+                    <div class="o-form__section">
+                        <div class="o-form__group">
+                            <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked" />
+                            <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
+                            <div class="o-form__help" i18n:translate="">
+                                Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="c-panel-editor__section">
+
+                    <div class="c-panel-editor__section-header">
+                        <div class="c-toolbar c-toolbar--default">
+                            <div class="c-toolbar__content">
+                                <div class="c-toolbar__item">
+                                    <div class="c-toolbar__title">
+                                        Content Widget Selection
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-widget-selector">
+                        <div class="c-widget-selector__section">
+                            <div class="c-widget-selector__header">
+                                <div class="c-widget-selector__headline" i18n:translate="">General</div>
+                            </div>
+                            <div class="c-widget-selector__main">
+                                <div class="o-grid o-grid--gutter">
+                                    <div class="o-grid__item  o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text Block
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text - 2 Columns
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <div class="c-card c-card--banner">
+                                            <div class="c-card__header">
+                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
+                                                        <style>
+                                                        </style>
+                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="c-card__footer">
+                                                Text - 3 Columns
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-alert c-alert--default">
+                            The actual widget will be configured and edited here
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

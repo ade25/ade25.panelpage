@@ -1,0 +1,13 @@
+<section class="c-content-panel" tal:define="widget python:view.widget_content">
+    <div class="c-content-panel__main">
+        <pre tal:content="widget"></pre>
+        <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(
+                widget_type='base'
+                )">
+            Rendered Content Widget
+        </tal:content-widget>
+    </div>
+    <div class="c-content-panel__aside">
+       Edit | Manage | Delete
+    </div>
+</section>

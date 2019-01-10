@@ -8,7 +8,8 @@
   "state": "Published",
   "mode": "view",
   "widget": {
-    "id": "ade25.widgets.widget.base",
+    "id": "${widget_id}",
+    "type": "base",
     "name": "Base Widget",
     "settings": {
       "view": "@@content-widget-base",

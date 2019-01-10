@@ -35,9 +35,6 @@ class IPanelPageLayout(model.Schema):
         'panels',
         label=u"Panels",
         fields=['panelLayout',
-                'contentPanelsHeader',
-                'contentPanelsMain',
-                'contentPanelsFooter'
                 ]
     )
 
@@ -45,45 +42,11 @@ class IPanelPageLayout(model.Schema):
         #form_directives.omitted("panelPageLayout")
         form_directives.omitted("panelLayout")
 
-    # directives.omitted('panelPageLayout')
-    #panelPageLayout = schema.List(
-    #    title=_("Panel Page Layout"),
-    #    value_type=schema.TextLine(
-    #        title=_(u"Content Page Layout"),
-    #    ),
-    #    required=False,
-    #)
-
     # directives.omitted('panelLayout')
     panelLayout = schema.TextLine(
         title=_("Panel Layout"),
         required=False,
         # defaultFactory=panel_layout_default_value,
-    )
-
-    form_directives.widget(contentPanelsHeader=TextLinesFieldWidget)
-    contentPanelsHeader = schema.List(
-        title=_("Content Panels Header"),
-        value_type=schema.TextLine(
-            title=_(u"Header Panel"),
-        ),
-        required=False,
-    )
-    form_directives.widget(contentPanelsMain=TextLinesFieldWidget)
-    contentPanelsMain = schema.List(
-        title=_("Content Panels Main"),
-        value_type=schema.TextLine(
-            title=_(u"Main Panel"),
-        ),
-        required=False,
-    )
-    form_directives.widget(contentPanelsFooter=TextLinesFieldWidget)
-    contentPanelsFooter = schema.List(
-        title=_("Content Panels Footer"),
-        value_type=schema.TextLine(
-            title=_(u"Footer Panel"),
-        ),
-        required=False,
     )
 
 
