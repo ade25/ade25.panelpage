@@ -10,6 +10,7 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.autoform import directives, form
 from plone.keyring import django_random
+from plone.supermodel import model
 from zope import schema
 from zope.interface import alsoProvides
 from zope.lifecycleevent import modified
@@ -20,7 +21,7 @@ from ade25.panelpage.panelpage import IPanelPage
 from ade25.panelpage import MessageFactory as _
 
 
-class IPanelPageLayout(form.Schema):
+class IPanelPageLayout(model.Schema):
     """ Behavior storing panelpage block order """
 
     directives.omitted('panelPageLayout')
@@ -31,6 +32,7 @@ class IPanelPageLayout(form.Schema):
         ),
         required=False,
     )
+
 
 alsoProvides(IPanelPageLayout, IFormFieldProvider)
 

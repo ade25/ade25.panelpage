@@ -1,33 +1,61 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-         metal:use-macro="context/main_template/macros/master"
-         i18n:domain="ade25.panelpage">
-<body>
-
-<metal:main fill-slot="main">
-    <metal:content-core define-macro="main">
-
-        <div class="app-page-header app-page__header">
-            <div class="app-page__title">
-                <h1 class="app-page__headline">
-                        Panel Section
-                </h1>
-            </div>
-            <p class="app-page__abstract" tal:condition="context/Description">
-                A single section associated with a stored layout and a configured
-                set of content panels.
-            </p>
+<tal:panels tal:define="view_mode python:view.params['panel_page_mode']">
+    <div class="c-panels c-panels--edit"
+             tal:attributes="class python:'c-panels c-panels--' + view_mode"
+             i18n:domain="ade25.panelpage">
+        <div class="c-panel-factory c-panel-factory--default">
+            <a class="c-panel-factory__action" href="#add-new-panel"
+                     tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0'">
+                <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="100%" height="100%" viewBox="0 0 64 64">
+                    <style>
+                        .o-icon__plus--path{fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10}
+                    </style>
+                    <path d="M14.157 32h35.686M32 14.157v35.686" class="o-icon__plus--path"/>
+                </svg>
+            </a>
         </div>
-        <div class="app-page__main">
-            <p>Panel Grid will go here.</p>
-        </div>
+        <tal:panels tal:condition="python:view.has_content_panels()">
+            <tal:panels tal:repeat="panel python:view.content_panels()">
+                <section class="c-panel" tal:define="panel_index repeat/panel/index;
+                        panel_number repeat/panel/number;
+                        settings python:view.settings;
+                        panel_class python:view.computed_panel_class(panel)"
+                         tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number) + ' ' + panel_class">
+                    <div class="c-panel__header">
+                        <div class="c-panel__controls">
+                            <a class="c-panel__control c-panel__icon"
+                                     tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="100%" height="100%" viewBox="0 0 64 64">
+                                    <style>
+                                        .o-icon__pen--path{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10}
+                                    </style>
+                                    <path d="M27.925 46.229L17.771 36.075M44.818 29.336L34.664 19.182l4.979-4.979a4.22 4.22 0 0 1 5.966 0l4.188 4.188a4.22 4.22 0 0 1 0 5.966l-4.979 4.979z" class="o-icon__pen--path"/>
+                                    <path d="M27.925 46.229l-14.957 4.803 4.803-14.957 16.893-16.893 10.154 10.154-16.893 16.893zM15.609 42.806l5.585 5.585" class="o-icon__pen--path"/>
+                                </svg>
 
-    </metal:content-core>
-</metal:main>
+                            </a>
+                        </div>
 
-</body>
-</html>
-
+                    </div>
+                    <div class="c-panel__main" tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
+                        <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode)">
+                            Rendered Content Widget
+                        </tal:content-widget>
+                    </div>
+                </section>
+                <div class="c-panel-factory c-panel-factory--default"
+                         tal:define="panel_number repeat/panel/number; settings python:view.settings"
+                         tal:attributes="class python:'c-panel-factory c-panel-factory--' + str(panel_number)">
+                    <a class="c-panel-factory__action" href="#add-new-panel"
+                             tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=' + str(panel_number)">
+                        <svg class="o-icon o-icon--svg o-icon--ui-plus" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 64 64">
+                            <style>
+                                .st3{fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10}
+                            </style>
+                            <path d="M14.157 32h35.686M32 14.157v35.686" class="st3"/>
+                        </svg>
+                    </a>
+                </div>
+            </tal:panels>
+        </tal:panels>
+    </div>
+</tal:panels>

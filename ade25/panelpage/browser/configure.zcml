@@ -26,12 +26,57 @@
     />
 
     <browser:page
-            for="ade25.panelpage.interfaces.IPanelPage"
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
             name="panel-page-view"
             class=".panels.PanelView"
-            template="panels.pt"
+            template="panel-page-view.pt"
             permission="cmf.ModifyPortalContent"
             layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panels"
+            class=".panels.ContentPanelList"
+            template="panels.pt"
+            permission="zope2.View"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel"
+            class=".panel.ContentPanel"
+            template="panel.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-create"
+            class=".panel.ContentPanelCreate"
+            template="panel-create.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-edit"
+            class=".panel.ContentPanelEdit"
+            template="panel-edit.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <!-- Panel default configuration view -->
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panel-settings-default"
+            class=".panel.PanelDefaultSettings"
+            permission="cmf.ManagePortal"
+            layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
 </configure>

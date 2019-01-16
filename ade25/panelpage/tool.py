@@ -6,12 +6,13 @@ import uuid as uuid_tool
 
 import time
 
+from babel.dates import format_datetime
 from Products.CMFPlone.utils import safe_unicode
-from five import grok
+from future.backports.email.utils import format_datetime
 from plone import api
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.event.utils import pydt
 from zope.component import getUtility
-from zope.interface import Interface
 from zope.lifecycleevent import modified
 from zope.schema import getFieldsInOrder
 # from collective.beaker.interfaces import ISession
@@ -35,15 +36,17 @@ class PanelTool(object):
         return json_data
 
     # @memoize
-    def read(self, uuid, key=None):
+    def read(self, uuid, section='main', key=None):
         item = api.content.get(UID=uuid)
-        stored = getattr(item, 'panelLayout', None)
-        data = dict()
+        field_name = 'contentPanels{0}'.format(
+            section.capitalize(),
+        )
+        stored = getattr(item, field_name, None)
+        data = list()
         if stored is not None:
-            data = json.loads(stored)
+            data = stored
         if key is not None:
-            records = data['items']
-            data = records[int(key)]
+            data = stored[int(key)]
         return data
 
     def update(self, uuid, component, data):
@@ -104,4 +107,20 @@ class PanelTool(object):
         """
         su = safe_unicode(value)
         return su.encode('utf-8')
+
+    @staticmethod
+    def time_stamp(date_value):
+        date = pydt(date_value)
+        timestamp = {
+            'day': format_datetime(date, 'dd', locale='de'),
+            'day_name': format_datetime(date, 'EEEE', locale='de'),
+            'month': date.strftime("%m"),
+            'year': date.strftime("%Y"),
+            'hour': date.strftime('%H'),
+            'minute': date.strftime('%M'),
+            'time': format_datetime(date, 'H:mm', locale='de'),
+            'date': date,
+            'date_short': format_datetime(date, 'short', locale='de')
+        }
+        return timestamp
 

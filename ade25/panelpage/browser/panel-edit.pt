@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-editor" id="panel-editor"
+            tal:define="content_panel python:view.content_panel()">
+
+            <form class="o-form o-form--panel-page"
+                  id="form-panel-edit"
+                  method="post"
+                     tal:attributes="action request/URL">
+
+                <div class="c-panel-editor__header">
+                    <div class="c-toolbar c-toolbar--primary">
+                        <div class="c-toolbar__content">
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__title">
+                                    Editing Panel Page Content
+                                    <small>Update Panel</small>
+                                </div>
+                            </div>
+                            <div class="c-toolbar__item">
+                                <div class="c-toolbar__actions">
+                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                        Cancel
+                                    </a>
+                                    <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <section class="c-panel-editor__section">
+
+                        <div class="o-form__section">
+                            <div class="o-form__group"
+                                tal:define="panel_state python:content_panel['state']; panel_published python:panel_state == 'Published'">
+                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked"
+                                    tal:attributes="checked python:panel_published and 'checked' or ''" />
+                                <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
+                                <div class="o-form__help" i18n:translate="">
+                                    Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
+                                </div>
+                            </div>
+                        </div>
+                </section>
+
+                <section class="c-panel-editor__section">
+                    <div class="c-panel-editor__section-header">
+
+                        <div class="c-toolbar c-toolbar--default">
+                            <div class="c-toolbar__content">
+                                <div class="c-toolbar__item">
+                                    <div class="c-toolbar__title">
+                                        Content
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-widget-editor">
+                        <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
+                            <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode='edit')">
+                                Rendered Content Widget
+                            </tal:content-widget>
+                        </div>
+                </section>
+
+            </form>
+        </div>
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

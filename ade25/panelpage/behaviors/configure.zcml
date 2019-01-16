@@ -25,7 +25,22 @@
             provides=".layout.IPanelPageLayout"
             factory=".layout.PanelPageLayout"
             for="plone.dexterity.interfaces.IDexterityContent"
-            marker="ade25.panelpage.interfaces.IPanelPageEnabled"
+            marker="ade25.panelpage.interfaces.IPanelPage"
+    />
+
+    <plone:behavior
+            title="Content Panel Storage Support"
+            description="Enable panel page content layout engine"
+            provides="ade25.panelpage.interfaces.IContentPanelStorageSupport"
+            for="plone.dexterity.interfaces.IDexterityContent"
+    />
+
+    <plone:behavior
+            title="Content Panel Storage"
+            description="Adds hidden content panel storage"
+            provides="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            factory="ade25.panelpage.behaviors.storage.ContentPanelStorage"
+            marker="ade25.panelpage.behaviors.storage.IContentPanelStorage"
     />
 
 </configure>

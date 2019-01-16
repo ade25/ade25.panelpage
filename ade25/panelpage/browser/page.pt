@@ -20,8 +20,9 @@
                     ${context/Description}
             </p>
         </div>
-
-        <div tal:replace="structure view/panel_page" />
+        <tal:comment tal:omit-tag="" tal:content="nothing">
+            <div tal:replace="structure view/panel_page" />
+        </tal:comment>
 
         <div class="app-page__main">
             <p>Panel page content will go here</p>
