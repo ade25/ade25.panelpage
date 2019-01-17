@@ -23,7 +23,7 @@
                     <div class="c-panel__header">
                         <div class="c-panel__controls">
                             <a class="c-panel__control c-panel__icon"
-                                     tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=header&panel=' + str(panel_index)">
+                                     tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
                                 <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="100%" height="100%" viewBox="0 0 64 64">
                                     <style>
                                         .o-icon__pen--path{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10}

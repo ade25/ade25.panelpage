@@ -28,12 +28,7 @@ setup(name='ade25.panelpage',
           'babel',
           'collective.beaker',
           'plone.api',
-          'plone.app.dexterity [relations]',
-          'plone.app.relationfield',
-          'plone.formwidget.querystring',
-          'plone.namedfile [blobs]',
           'setuptools',
-          #'plone.formwidget.contenttree',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
