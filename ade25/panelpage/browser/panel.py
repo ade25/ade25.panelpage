@@ -22,11 +22,11 @@ from zope.component import queryUtility, getUtility
 class PanelDefaultSettings(BrowserView):
     """ Base widget used as placeholder """
 
-    def __call__(self):
+    def __call__(self, widget_type="base"):
+        self.widget_type = widget_type
         return self.render()
 
-    @staticmethod
-    def build_default_configuration():
+    def build_default_configuration(self):
         """ Build default panel configuration
 
         Addon packages are expected to add their custom widget configuration
@@ -40,7 +40,8 @@ class PanelDefaultSettings(BrowserView):
                 "id": str(uuid_tool.uuid4()),
                 "timestamp": str(int(time.time())),
                 "created": datetime.datetime.now().isoformat(),
-                "widget_id": str(uuid_tool.uuid4())
+                "widget_id": str(uuid_tool.uuid4()),
+                "widget_type": self.widget_type
             }
         )
         try:
