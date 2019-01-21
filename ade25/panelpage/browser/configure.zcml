@@ -8,6 +8,12 @@
         xmlns:zcml="http://namespaces.zope.org/zcml"
         i18n_domain="ade25.panelpage">
 
+    <permission
+            id="ade25.panelpage.managePanels"
+            title="Ade25 Panel Page: Manage Panels"
+    />
+
+
     <browser:page
         for="ade25.panelpage.page.IPage"
         name="page-view"

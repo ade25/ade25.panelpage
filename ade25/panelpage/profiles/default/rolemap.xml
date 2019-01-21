@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<rolemap>
+    <rolemap>
+        <permissions>
+            <permission name="Ade25 Panel Page: Manage Panels"
+                        acquire="True">
+                <role name="Manager"/>
+                <role name="Site Administrator"/>
+            </permission>
+        </permissions>
+    </rolemap>
+
+</rolemap>
