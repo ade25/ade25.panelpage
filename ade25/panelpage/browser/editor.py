@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module providing panel page editor views"""
+from Acquisition import aq_inner
 from Products.Five import BrowserView
 from ade25.panelpage.interfaces import IPanelTool
 from plone import api
@@ -26,3 +27,27 @@ class PanelEditorToolbar(BrowserView):
         if not api.user.is_anonymous():
             editable = True
         return editable
+
+    def panel_page_support_enabled(self):
+        context = aq_inner(self.context)
+        try:
+            from ade25.panelpage.behaviors.storage import IContentPanelStorage
+            if IContentPanelStorage.providedBy(context):
+                return True
+            else:
+                return False
+        except ImportError:
+            return False
+
+    def show_toolbar(self):
+        context = aq_inner(self.context)
+        display_toolbar = False
+        if self.panel_page_support_enabled() and self.is_editable():
+            # Explicitly check for permissions
+            current_user = api.user.get_current()
+            display_toolbar = api.user.has_permission(
+                'ade25.panelpage.managePanels',
+                current_user,
+                context
+            )
+        return display_toolbar
