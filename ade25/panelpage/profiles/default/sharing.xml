@@ -1,0 +1,9 @@
+<sharing xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+         i18n:domain="plone">
+    <role
+            id="Content Panel Manager"
+            title="Manage Content Panels"
+            permission="Ade25 Panel Page: Manage Panels"
+            i18n:attributes="title"
+    />
+</sharing>
