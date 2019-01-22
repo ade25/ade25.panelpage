@@ -10,12 +10,6 @@ from zope.component import getUtility
 class PanelEditorToolbar(BrowserView):
     """ Rendered panel page toolbar"""
 
-    def __call__(self):
-        return self.render()
-
-    def render(self):
-        return self.index()
-
     @property
     def panel_tool(self):
         tool = getUtility(IPanelTool)
@@ -46,8 +40,8 @@ class PanelEditorToolbar(BrowserView):
             # Explicitly check for permissions
             current_user = api.user.get_current()
             display_toolbar = api.user.has_permission(
-                'ade25.panelpage.managePanels',
-                current_user,
-                context
+                'Ade25 Panel Page: Manage Panels',
+                user=current_user,
+                obj=context
             )
         return display_toolbar

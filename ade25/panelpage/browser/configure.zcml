@@ -85,4 +85,14 @@
             layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
+    <!-- Content Panel Editor -->
+    <browser:page
+        for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+        name="panel-editor-toolbar"
+        class=".editor.PanelEditorToolbar"
+        template="editor-toolbar.pt"
+        permission="cmf.ModifyPortalContent"
+        layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
 </configure>
