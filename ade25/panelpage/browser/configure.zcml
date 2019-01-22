@@ -54,7 +54,7 @@
             name="panel"
             class=".panel.ContentPanel"
             template="panel.pt"
-            permission="cmf.ModifyPortalContent"
+            permission="zope2.View"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
@@ -91,7 +91,7 @@
         name="panel-editor-toolbar"
         class=".editor.PanelEditorToolbar"
         template="editor-toolbar.pt"
-        permission="cmf.ModifyPortalContent"
+        permission="zope2.View"
         layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
