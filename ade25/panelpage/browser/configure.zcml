@@ -8,6 +8,12 @@
         xmlns:zcml="http://namespaces.zope.org/zcml"
         i18n_domain="ade25.panelpage">
 
+    <permission
+            id="ade25.panelpage.managePanels"
+            title="Ade25 Panel Page: Manage Panels"
+    />
+
+
     <browser:page
         for="ade25.panelpage.page.IPage"
         name="page-view"
@@ -48,7 +54,7 @@
             name="panel"
             class=".panel.ContentPanel"
             template="panel.pt"
-            permission="cmf.ModifyPortalContent"
+            permission="zope2.View"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
@@ -77,6 +83,16 @@
             class=".panel.PanelDefaultSettings"
             permission="cmf.ManagePortal"
             layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
+    <!-- Content Panel Editor -->
+    <browser:page
+        for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+        name="panel-editor-toolbar"
+        class=".editor.PanelEditorToolbar"
+        template="editor-toolbar.pt"
+        permission="zope2.View"
+        layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
 </configure>
