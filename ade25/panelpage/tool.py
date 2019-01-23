@@ -2,10 +2,12 @@
 """Module providing genearal toolset for panel management"""
 import datetime
 import json
+import os
 import uuid as uuid_tool
 
 import time
 
+from ade25.base.utils import get_filesystem_template
 from babel.dates import format_datetime
 from Products.CMFPlone.utils import safe_unicode
 from future.backports.email.utils import format_datetime
@@ -23,17 +25,25 @@ SESSION_KEY = 'Uh53dAfH2JPzI/lIhBvN72RJzZVv6zk5'
 class PanelTool(object):
     """ Utility providing CRUD operation for panel pages """
 
-    def create(self, uuid=None, data=None):
+    def create(self,
+               uuid=None,
+               section='main',
+               widget_type='base',
+               widget_position=0):
         item = api.content.get(UID=uuid)
         start = time.time()
-        initial_data = self.create_record(uuid, item, data)
+        widget_data = self.create_record(uuid, widget_type)
         end = time.time()
-        initial_data.update(dict(_runtime=str(end-start)))
-        json_data = json.dumps(initial_data)
-        setattr(item, 'panelLayout', json_data)
+        widget_data.update(dict(_runtime=str(end-start)))
+        field_name = 'contentPanels{0}'.format(
+            section.capitalize(),
+        )
+        records = getattr(item, field_name, None)
+        records.insert(widget_position, widget_data)
+        setattr(item, field_name, records)
         modified(item)
         item.reindexObject(idxs='modified')
-        return json_data
+        return widget_data
 
     # @memoize
     def read(self, uuid, section='main', key=None):
@@ -81,28 +91,39 @@ class PanelTool(object):
             item.reindexObject(idxs='modified')
         return uuid
 
-    def create_record(self, uuid=None, item=None, data=None):
-        record_uid = uuid_tool.uuid4()
-        if uuid:
-            record_uid = uuid
-        record_title = str(uuid_tool.uuid4())
-        if item:
-            record_title = item.Title()
-        records = {
-            "id": str(uuid_tool.uuid4()),
-            "uid": str(record_uid),
-            "timestamp": str(int(time.time())),
-            "_runtime": "0.0000059604644775390625",
-            "created": datetime.datetime.now().isoformat(),
-            "title": record_title,
-            "items": []
-        }
-        # Add potential initial data
-        if data:
-            records['items'].append(data)
-        return records
+    def create_record(self, uuid=None, widget_type=None):
+        record = self.build_default_configuration(uuid, widget_type)
+        return record
 
-    def safe_encode(self, value):
+    @staticmethod
+    def build_default_configuration(uuid, widget_type):
+        """ Build default panel configuration
+
+        Addon packages are expected to add their custom widget configuration
+        requirements to the registry during import and initialization and these
+        will be used as panel setting keys
+        """
+        template = get_filesystem_template(
+            'content-panel.json',
+            os.path.dirname(os.path.dirname(__file__)),
+            data={
+                "id": str(uuid_tool.uuid4()),
+                "context": uuid,
+                "timestamp": str(int(time.time())),
+                "created": datetime.datetime.now().isoformat(),
+                "widget_id": str(uuid_tool.uuid4()),
+                "widget_type": widget_type
+            }
+        )
+        try:
+            panel_setting_template = json.loads(template)
+            settings = json.dumps(panel_setting_template)
+        except ValueError:
+            settings = '{}'
+        return safe_unicode(settings)
+
+    @staticmethod
+    def safe_encode(value):
         """Return safe unicode version of value.
         """
         su = safe_unicode(value)

@@ -6,6 +6,7 @@ import time
 import datetime
 import uuid as uuid_tool
 
+from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
@@ -16,7 +17,7 @@ from ade25.base.utils import get_filesystem_template
 from ade25.panelpage import MessageFactory as _
 
 from plone.i18n.normalizer import IIDNormalizer
-from zope.component import queryUtility, getUtility
+from zope.component import queryUtility, getUtility, getMultiAdapter
 
 
 class PanelDefaultSettings(BrowserView):
@@ -172,9 +173,67 @@ class ContentPanelCreate(BrowserView):
         self.params = {"mode": mode, "data": data}
         return self.render()
 
+    def update(self):
+        self.errors = dict()
+        unwanted = ('_authenticator', 'form.button.Submit')
+        required = ('selector_display_type', )
+        if 'form.button.Submit' in self.request:
+            authenticator = getMultiAdapter((self.context, self.request),
+                                            name=u"authenticator")
+            if not authenticator.verify():
+                raise Unauthorized
+            form = self.request.form
+            form_data = {}
+            form_errors = {}
+            error_idx = 0
+            for value in form:
+                if value not in unwanted:
+                    form_data[value] = safe_unicode(form[value])
+                    if not form[value] and value in required:
+                        form_errors[value] = self.required_field_error()
+                        error_idx += 1
+                    else:
+                        error = {
+                            'active': False,
+                            'msg': form[value]
+                        }
+                        form_errors[value] = error
+            if error_idx > 0:
+                self.errors = form_errors
+            else:
+                self._create_panel(form)
+
     def render(self):
+        self.update()
         return self.index()
 
     @staticmethod
     def can_edit():
         return not api.user.is_anonymous()
+
+    @staticmethod
+    def required_field_error():
+        translation_service = api.portal.get_tool(name="translation_service")
+        error = {}
+        error_msg = _(u"This field is required")
+        error['active'] = True
+        error['msg'] = translation_service.translate(
+            error_msg,
+            'ade25.contacts',
+            target_language=api.portal.get_default_language()
+        )
+        return error
+
+    def _create_panel(self, form_data):
+        context = aq_inner(self.context)
+        i18n_service = api.portal.get_tool(name="translation_service")
+        success_message = _(u"Content Panel created")
+        message = i18n_service.translate(
+            success_message,
+            'hph.lectures',
+            target_language=api.portal.get_default_language()
+        )
+        api.portal.show_message(message=message,
+                                request=self.request,
+                                type='info')
+        return self.request.response.redirect(context.absolute_url())
