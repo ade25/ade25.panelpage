@@ -129,8 +129,8 @@ class ContentPanelEdit(BrowserView):
                  **kw):
         self.params = {
             'panel_page_identifier': identifier,
-            'panel_page_section': section,
-            'panel_page_item': panel,
+            'panel_page_section': self.request.get('section', section),
+            'panel_page_item': self.request.get('index', panel)
         }
         return self.render()
 
@@ -169,8 +169,15 @@ class ContentPanelEdit(BrowserView):
 
 class ContentPanelCreate(BrowserView):
 
-    def __call__(self, data=None, mode="view", **kw):
-        self.params = {"mode": mode, "data": data}
+    def __call__(self,
+                 index=0,
+                 section="view",
+                 **kw):
+        self.params = {
+            "panel_page_item": self.request.get('index', 0),
+            "panel_page_section": self.request.get('section', 'main')
+        }
+        self.params.update(kw)
         return self.render()
 
     def update(self):
@@ -184,6 +191,7 @@ class ContentPanelCreate(BrowserView):
                 raise Unauthorized
             form = self.request.form
             form_data = {}
+            form_data.update(self.params)
             form_errors = {}
             error_idx = 0
             for value in form:
@@ -211,6 +219,15 @@ class ContentPanelCreate(BrowserView):
     def can_edit():
         return not api.user.is_anonymous()
 
+    @property
+    def settings(self):
+        return self.params
+
+    @property
+    def panel_tool(self):
+        tool = getUtility(IPanelTool)
+        return tool
+
     @staticmethod
     def required_field_error():
         translation_service = api.portal.get_tool(name="translation_service")
@@ -233,7 +250,22 @@ class ContentPanelCreate(BrowserView):
             'hph.lectures',
             target_language=api.portal.get_default_language()
         )
+        selected_widget_type = 'base'
+        for record in form_data:
+            if record.startswith('widget'):
+                selected_widget_type = record.split('.')[1]
+        panel_data = self.panel_tool.create(
+            context.UID(),
+            section=form_data['panel_page_section'],
+            widget_type=selected_widget_type,
+            widget_position=form_data['panel_page_item']
+        )
+        next_url = '{0}/@@panel-edit?section={1}&index={2}'.format(
+            context.absolute_url(),
+            form_data['panel_page_section'],
+            form_data['panel_page_item']
+        )
         api.portal.show_message(message=message,
                                 request=self.request,
                                 type='info')
-        return self.request.response.redirect(context.absolute_url())
+        return self.request.response.redirect(next_url)

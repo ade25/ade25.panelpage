@@ -31,15 +31,16 @@ class PanelTool(object):
                widget_type='base',
                widget_position=0):
         item = api.content.get(UID=uuid)
-        start = time.time()
         widget_data = self.create_record(uuid, widget_type)
-        end = time.time()
-        widget_data.update(dict(_runtime=str(end-start)))
         field_name = 'contentPanels{0}'.format(
             section.capitalize(),
         )
         records = getattr(item, field_name, None)
-        records.insert(widget_position, widget_data)
+        try:
+            records.insert(widget_position, widget_data)
+        except TypeError:
+            insert_position = int(widget_position)
+            records.insert(insert_position, widget_data)
         setattr(item, field_name, records)
         modified(item)
         item.reindexObject(idxs='modified')
@@ -105,7 +106,7 @@ class PanelTool(object):
         """
         template = get_filesystem_template(
             'content-panel.json',
-            os.path.dirname(os.path.dirname(__file__)),
+            os.path.dirname(__file__),
             data={
                 "id": str(uuid_tool.uuid4()),
                 "context": uuid,
