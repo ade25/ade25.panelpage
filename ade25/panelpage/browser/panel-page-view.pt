@@ -34,29 +34,26 @@
                 </div>
             </div>
 
-            <div class="o-page__header">
-                <div class="c-alert c-alert--info">
-                    <h4 class="c-alert__title">Panel Page Editor Demo</h4>
-                    <p>This is a preview of the panel page editor that allows for management
-                        of content panels. The panel content itself is provided by content
-                        widgets.</p>
-                </div>
-            </div>
-
             <div class="o-page__main" tal:define="context_uid context/UID">
 
                 <section class="o-page__section">
-                    <h2 class="o-page__section-title">Page Header Section Panels</h2>
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Header</div>
+                    </div>
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='header', mode='edit')"></tal:content-panels>
                 </section>
 
                 <section class="o-page__section">
-                    <h2 class="o-page__section-title">Page Main Section Panels</h2>
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Main Content Section</small></div>
+                    </div>
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='main', mode='edit')"></tal:content-panels>
                 </section>
 
                 <section class="o-page__section">
-                    <h2 class="o-page__section-title">Page Footer Section Panels</h2>
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Footer</div>
+                    </div>
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='footer', mode='edit')"></tal:content-panels>
                 </section>
             </div>
