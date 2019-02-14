@@ -10,23 +10,38 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="app-page-header app-page__header">
-            <div class="app-page__title">
-                <h1 class="app-page__headline">
+        <section class="o-page__section">
+            <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context.UID(), section='header', mode='view')"></tal:content-panels>
+        </section>
+
+        <tal:toolbar tal:replace="structure python:context.restrictedTraverse('@@panel-editor-toolbar')()">
+            Content Panel Toolbar
+        </tal:toolbar>
+
+        <header class="o-page__header">
+            <div class="o-page__title">
+                <h1 class="o-page__headline" tal:content="context/Title">
                         ${context/Title}
                 </h1>
             </div>
-            <p class="app-page__abstract" tal:condition="context/Description">
+            <p class="o-page__abstract" tal:condition="context/Description">
                     ${context/Description}
             </p>
-        </div>
-        <tal:comment tal:omit-tag="" tal:content="nothing">
-            <div tal:replace="structure view/panel_page" />
-        </tal:comment>
+        </header>
 
-        <div class="app-page__main">
-            <p>Panel page content will go here</p>
+        <div class="o-page__main" tal:define="context_uid context/UID">
+
+            <section class="o-page__section">
+                <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context.UID(), section='main', mode='view')"></tal:content-panels>
+            </section>
         </div>
+
+        <div class="o-page__footer">
+            <section class="o-page__section">
+                <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context.UID(), section='footer', mode='view')"></tal:content-panels>
+            </section>
+        </div>
+
 
     </metal:content-core>
 </metal:main>
