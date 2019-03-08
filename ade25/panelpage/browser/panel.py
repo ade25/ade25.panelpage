@@ -183,7 +183,7 @@ class ContentPanelCreate(BrowserView):
     def update(self):
         self.errors = dict()
         unwanted = ('_authenticator', 'form.button.Submit')
-        required = ('selector_display_type', )
+        required = ('panel_page_widget', )
         if 'form.button.Submit' in self.request:
             authenticator = getMultiAdapter((self.context, self.request),
                                             name=u"authenticator")
@@ -247,13 +247,12 @@ class ContentPanelCreate(BrowserView):
         success_message = _(u"Content Panel created")
         message = i18n_service.translate(
             success_message,
-            'hph.lectures',
+            'ade25.panelpage',
             target_language=api.portal.get_default_language()
         )
         selected_widget_type = 'base'
-        for record in form_data:
-            if record.startswith('widget'):
-                selected_widget_type = record.split('.')[1]
+        if 'panel_page_widget' in form_data:
+            selected_widget_type = form_data['panel_page_widget']
         panel_data = self.panel_tool.create(
             context.UID(),
             section=form_data['panel_page_section'],

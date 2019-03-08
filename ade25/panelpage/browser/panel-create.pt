@@ -24,8 +24,7 @@
                         <div class="c-toolbar__content">
                             <div class="c-toolbar__item">
                                 <div class="c-toolbar__title">
-                                    Editing Panel Page Content
-                                    <small>Create Panel</small>
+                                    Content Widget Selection
                                 </div>
                             </div>
                             <div class="c-toolbar__item">
@@ -45,57 +44,76 @@
 
                 <section class="c-panel-editor__section">
 
-                    <div class="o-form__section">
-                        <div class="o-form__group">
-                            <input class="o-form__control o-form__control--switch" type="checkbox" name="panel.visibility" id="panel-visibility" checked="checked" />
-                            <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
-                            <div class="o-form__help" i18n:translate="">
-                                Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="c-panel-editor__section">
-
-                    <div class="c-panel-editor__section-header">
-                        <div class="c-toolbar c-toolbar--default">
-                            <div class="c-toolbar__content">
-                                <div class="c-toolbar__item">
-                                    <div class="c-toolbar__title">
-                                        Content Widget Selection
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="c-widget-selector">
-
-                        <input type="text" name="panel_page_section" tal:attributes="value python:view.settings['panel_page_section']" />
-                        <input type="text" name="panel_page_item" tal:attributes="value python:view.settings['panel_page_item']" />
+                        <span tal:replace="structure context/@@authenticator/authenticator"/>
+                        <input type="text" id="panel-page-section"
+                               name="panel_page_section"
+                               tal:attributes="value python:view.settings['panel_page_section']" />
+                        <input type="text" id="panel-page-item"
+                               name="panel_page_item"
+                               tal:attributes="value python:view.settings['panel_page_item']" />
+                        <input type="text" id="panel-page-widget"
+                               name="panel_page_widget" />
 
                         <div class="c-widget-selector__section">
                             <div class="c-widget-selector__header">
                                 <div class="c-widget-selector__headline" i18n:translate="">General</div>
                             </div>
                             <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter">
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
+                                <div class="o-grid o-grid--gutter o-grid--sm">
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <a class="c-widget-selector__item js-widget-selectable"
+                                           href="#text-block"
+                                            data-widget-type="text-block">
+                                            <div class="c-card c-card--selector">
+                                                <div class="c-card__header">
+                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
+                                                        <svg class="o-icon o-icon-widget-text-block-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-widget-text-block"></use>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="c-card__footer c-card__footer--centered">
+                                                    Text Block
                                                 </div>
                                             </div>
-                                            <div class="c-card__footer">
-                                                Text Block
+                                        </a>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <a class="c-widget-selector__item js-widget-selectable"
+                                           href="#separator"
+                                           data-widget-type="separator">
+                                            <div class="c-card c-card--selector">
+                                                <div class="c-card__header">
+                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
+                                                        <svg class="o-icon-ui-tile-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="c-card__footer c-card__footer--centered">
+                                                    Spacer
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
+                                    </div>
+                                    <div class="o-grid__item o-grid__item--width-25">
+                                        <a class="c-widget-selector__item js-widget-selectable"
+                                           href="#horizontal-line"
+                                           data-widget-type="horizontal-line">
+                                            <div class="c-card c-card--selector">
+                                                <div class="c-card__header">
+                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
+                                                        <svg class="o-icon-ui-tile-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="c-card__footer c-card__footer--centered">
+                                                    Horizontal Line
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
                                     <div class="o-grid__item o-grid__item--width-25">
                                         <div class="c-card c-card--banner">
@@ -217,7 +235,7 @@
                                 <div class="c-widget-selector__headline" i18n:translate="">Image</div>
                             </div>
                             <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter">
+                                <div class="o-grid o-grid--gutter o-grid--sm">
                                     <div class="o-grid__item  o-grid__item--width-25">
                                         <div class="c-card c-card--banner">
                                             <div class="c-card__header">
@@ -275,7 +293,7 @@
                                 <div class="c-widget-selector__headline" i18n:translate="">Gallery</div>
                             </div>
                             <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter">
+                                <div class="o-grid o-grid--gutter o-grid--sm">
                                     <div class="o-grid__item  o-grid__item--width-25">
                                         <div class="c-card c-card--banner">
                                             <div class="c-card__header">
@@ -333,7 +351,7 @@
                                 <div class="c-widget-selector__headline" i18n:translate="">Summary</div>
                             </div>
                             <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter">
+                                <div class="o-grid o-grid--gutter o-grid--sm">
                                     <div class="o-grid__item  o-grid__item--width-25">
                                         <div class="c-card c-card--banner">
                                             <div class="c-card__header">
@@ -405,22 +423,17 @@
                         <div class="c-toolbar__content">
                             <div class="c-toolbar__item">
                                 <div class="c-toolbar__title">
-                                    Add Content Widget
-                                    <small>Create Panel</small>
+
                                 </div>
                             </div>
                             <div class="c-toolbar__item">
                                 <div class="c-toolbar__actions">
-                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
-                                        Cancel
-                                    </a>
                                     <button class="c-toolbar__action c-button c-button--primary"
                                             type="submit"
                                             name="form.button.Submit"
                                             id="form.button.Submit"
                                              i18n:translate="">
-                                        Add
+                                        Add Widget
                                     </button>
                                 </div>
                             </div>

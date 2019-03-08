@@ -95,4 +95,13 @@
         layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panel-settings"
+            class=".factory.ContentPanelsEditFormView"
+            template="factory.pt"
+            permission="cmf.ManagePortal"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
 </configure>
