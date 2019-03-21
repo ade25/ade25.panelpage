@@ -55,6 +55,20 @@
                         <input type="text" id="panel-page-widget"
                                name="panel_page_widget" />
 
+                        <pre tal:content="python:view.selector_data()"></pre>
+                        <tal:block tal:define="selector_data python:view.selector_data()">
+                            <div class="c-widget-selector__section" tal:repeat="section selector_data">
+                                <tal:section tal:define="section_info python:selector_data[section]">
+                                    <div class="c-widget-selector__header">
+                                        <div class="c-widget-selector__headline" tal:content="python:section_info['section_title']">General</div>
+                                    </div>
+                                    <div class="c-widget-selector__main">
+
+                                    </div>
+                                </tal:section>
+                            </div>
+                        </tal:block>
+
                         <div class="c-widget-selector__section">
                             <div class="c-widget-selector__header">
                                 <div class="c-widget-selector__headline" i18n:translate="">General</div>

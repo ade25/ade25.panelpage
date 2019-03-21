@@ -11,13 +11,16 @@ from Acquisition import aq_inner
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
 from ade25.panelpage.interfaces import IPanelTool
+from ade25.widgets.interfaces import IContentWidgetTool
 from plone import api
-
-from ade25.base.utils import get_filesystem_template
-from ade25.panelpage import MessageFactory as _
 
 from plone.i18n.normalizer import IIDNormalizer
 from zope.component import queryUtility, getUtility, getMultiAdapter
+
+from ade25.base.utils import get_filesystem_template
+from ade25.widgets import utils as widget_utils
+
+from ade25.panelpage import MessageFactory as _
 
 
 class PanelDefaultSettings(BrowserView):
@@ -227,6 +230,22 @@ class ContentPanelCreate(BrowserView):
     def panel_tool(self):
         tool = getUtility(IPanelTool)
         return tool
+
+    @property
+    def widget_tool(self):
+        tool = getUtility(IContentWidgetTool)
+        return tool
+
+    @property
+    def selector_sections(self):
+        categories = widget_utils.widget_categories()
+        return categories
+
+    def selector_data(self):
+        data = self.widget_tool.section_widgets(
+            self.settings['panel_page_section']
+        )
+        return data
 
     @staticmethod
     def required_field_error():

@@ -48,7 +48,7 @@ class IContentPanelEditForm(Interface):
 class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
 
     schema = IContentPanelEditForm
-    ignoreContext = True
+    ignoreContext = False
     css_class = 'o-form o-form--panels'
     label = _(u"Edit content panel json storage")
 
@@ -59,15 +59,12 @@ class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
         )
         return url
 
-    def updateWidgets(self):
-        super(ContentPanelsEditForm, self).updateWidgets()
-
     def getContent(self):
         item = aq_inner(self.context)
         data = {
-            'contentPanelsHeader': getattr(item, 'contentPanelsHeader', ''),
-            'contentPanelsMain': getattr(item, 'contentPanelsMain', ''),
-            'contentPanelsFooter': getattr(item, 'contentPanelsFooter', '')
+            'contentPanelsHeader': getattr(item, 'contentPanelsHeader'),
+            'contentPanelsMain': getattr(item, 'contentPanelsMain'),
+            'contentPanelsFooter': getattr(item, 'contentPanelsFooter')
         }
         return data
 
@@ -103,6 +100,9 @@ class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
     def updateActions(self):
         super(ContentPanelsEditForm, self).updateActions()
         self.actions["update"].addClass("c-button--primary")
+
+    def updateWidgets(self):
+        super(ContentPanelsEditForm, self).updateWidgets()
 
 
 ContentPanelsEditFormView = layout.wrap_form(ContentPanelsEditForm)
