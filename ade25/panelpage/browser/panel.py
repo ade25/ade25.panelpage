@@ -237,15 +237,31 @@ class ContentPanelCreate(BrowserView):
         return tool
 
     @property
-    def selector_sections(self):
-        categories = widget_utils.widget_categories()
+    def stored_selector_sections(self):
+        categories = widget_utils.content_widget_types()
         return categories
 
-    def selector_data(self):
+    def stored_section_widgets(self):
         data = self.widget_tool.section_widgets(
             self.settings['panel_page_section']
         )
         return data
+
+    def selector_data(self):
+        records = self.stored_section_widgets()
+        for record, record_data in self.stored_section_widgets().items():
+            if not record_data['items']:
+                del records[record]
+        return records
+
+    def selector_sections(self):
+        selector_data = self.selector_data()
+        selector_list = selector_data.keys()
+        original_list = self.stored_selector_sections
+        return sorted(selector_list, key=lambda x: original_list.index(x))
+
+    def selector_section_items(self, section):
+        return self.selector_data()[section]
 
     @staticmethod
     def required_field_error():

@@ -46,391 +46,53 @@
 
                     <div class="c-widget-selector">
                         <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <input type="text" id="panel-page-section"
+                        <input type="hidden" id="panel-page-section"
                                name="panel_page_section"
                                tal:attributes="value python:view.settings['panel_page_section']" />
-                        <input type="text" id="panel-page-item"
+                        <input type="hidden" id="panel-page-item"
                                name="panel_page_item"
                                tal:attributes="value python:view.settings['panel_page_item']" />
-                        <input type="text" id="panel-page-widget"
+                        <input type="hidden" id="panel-page-widget"
                                name="panel_page_widget" />
 
-                        <pre tal:content="python:view.selector_data()"></pre>
-                        <tal:block tal:define="selector_data python:view.selector_data()">
-                            <div class="c-widget-selector__section" tal:repeat="section selector_data">
-                                <tal:section tal:define="section_info python:selector_data[section]">
-                                    <div class="c-widget-selector__header">
-                                        <div class="c-widget-selector__headline" tal:content="python:section_info['section_title']">General</div>
-                                    </div>
-                                    <div class="c-widget-selector__main">
 
-                                    </div>
-                                </tal:section>
-                            </div>
-                        </tal:block>
-
-                        <div class="c-widget-selector__section">
-                            <div class="c-widget-selector__header">
-                                <div class="c-widget-selector__headline" i18n:translate="">General</div>
-                            </div>
-                            <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter o-grid--sm">
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <a class="c-widget-selector__item js-widget-selectable"
-                                           href="#text-block"
-                                            data-widget-type="text-block">
-                                            <div class="c-card c-card--selector">
-                                                <div class="c-card__header">
-                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
-                                                        <svg class="o-icon o-icon-widget-text-block-dims">
-                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-widget-text-block"></use>
-                                                        </svg>
+                        <tal:sections tal:repeat="section python:view.selector_sections()">
+                            <div class="c-widget-selector__section" tal:define="section_info python:view.selector_section_items(section)">
+                                <div class="c-widget-selector__header">
+                                    <div class="c-widget-selector__headline" tal:content="python:section_info['section_title']">General</div>
+                                </div>
+                                <div class="c-widget-selector__main">
+                                    <div class="o-grid o-grid--gutter o-grid--sm">
+                                        <div class="o-grid__item o-grid__item--width-25" tal:repeat="section_item python:section_info['items']">
+                                            <a class="c-widget-selector__item js-widget-selectable"
+                                               tal:define="widget_name python:section_item['widget']"
+                                                tal:attributes="data-widget-type widget_name">
+                                                <div class="c-card c-card--selector">
+                                                    <div class="c-card__header">
+                                                        <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
+                                                            <svg class="o-icon o-icon-widget-text-block-dims"
+                                                                tal:attributes="class python:'o-icon o-icon-widget-' + widget_name + '-dims'">
+                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-{widget_name}-block"
+                                                                    tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#icon-widget-' + widget_name"></use>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    <div class="c-card__footer c-card__footer--centered"
+                                                        tal:content="python:section_item['title']">
+                                                        Widget Name
                                                     </div>
                                                 </div>
-                                                <div class="c-card__footer c-card__footer--centered">
-                                                    Text Block
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <a class="c-widget-selector__item js-widget-selectable"
-                                           href="#separator"
-                                           data-widget-type="separator">
-                                            <div class="c-card c-card--selector">
-                                                <div class="c-card__header">
-                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
-                                                        <svg class="o-icon-ui-tile-dims">
-                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="c-card__footer c-card__footer--centered">
-                                                    Spacer
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <a class="c-widget-selector__item js-widget-selectable"
-                                           href="#horizontal-line"
-                                           data-widget-type="horizontal-line">
-                                            <div class="c-card c-card--selector">
-                                                <div class="c-card__header">
-                                                    <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
-                                                        <svg class="o-icon-ui-tile-dims">
-                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="c-card__footer c-card__footer--centered">
-                                                    Horizontal Line
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Text - 2 Columns
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Text - 3 Columns
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg class="o-icon-ui-tile-dims">
-                                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Quote
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg class="o-icon-ui-tile-dims">
-                                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Spacer
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner c-widget-selector__item js-widget-selectable">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg class="o-icon-ui-tile-dims">
-                                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__main">
-                                                <div class="o-form__group">
-                                                    <input class="o-form__control o-form__control--hidden"
-                                                           type="checkbox"
-                                                           id="widget-horizontal-line"
-                                                           name="widget.horizontal-line" />
-                                                    <label class="o-form__label" for="widget-horizontal-line" i18n:translate="">Horizontal Line</label>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Horizontal Line
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg class="o-icon-ui-tile-dims">
-                                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Embed
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg class="o-icon-ui-tile-dims">
-                                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-ui-tile"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer">
-                                                Button
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="c-widget-selector__section">
-                            <div class="c-widget-selector__header">
-                                <div class="c-widget-selector__headline" i18n:translate="">Image</div>
-                            </div>
-                            <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter o-grid--sm">
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Cover
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Poster
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Card
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="c-widget-selector__section">
-                            <div class="c-widget-selector__header">
-                                <div class="c-widget-selector__headline" i18n:translate="">Gallery</div>
-                            </div>
-                            <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter o-grid--sm">
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Grid
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Slider
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Carousel
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="c-widget-selector__section">
-                            <div class="c-widget-selector__header">
-                                <div class="c-widget-selector__headline" i18n:translate="">Summary</div>
-                            </div>
-                            <div class="c-widget-selector__main">
-                                <div class="o-grid o-grid--gutter o-grid--sm">
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                List
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Grid
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="o-grid__item  o-grid__item--width-25">
-                                        <div class="c-card c-card--banner">
-                                            <div class="c-card__header">
-                                                <div class="c-widget__icon c-widget__icon--centered c-widget__icon--lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" id="Ebene_1" width="64" height="64" viewBox="0 0 64 64">
-                                                        <style>
-                                                        </style>
-                                                        <path fill="none" stroke="#4a4a4a" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M49.29 11.052H14.71v7.773h13.728v34.123h7.772V18.825h13.08z"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div class="c-card__footer" i18n:translate="">
-                                                Stack
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="c-widget-selector__section">
-                            <div class="c-widget-selector__header">
-                                <div class="c-widget-selector__headline" i18n:translate="">More</div>
-                            </div>
-                            <div class="c-widget-selector__main">
-                                <div class="c-alert c-alert--default">
-                                    The actual site specific or custom widgets will be available here
-                                </div>
-                            </div>
-                        </div>
-
+                        </tal:sections>
                     </div>
                 </section>
+
+
+
 
                 <div class="c-panel-editor__footer">
                     <div class="c-toolbar c-toolbar--inverse">
