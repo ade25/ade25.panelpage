@@ -1,6 +1,6 @@
 <tal:panels tal:define="view_mode python:view.params['panel_page_mode'];settings python:view.settings;">
     <div class="c-panels c-panels--edit"
-             tal:attributes="class python:'c-panels c-panels--' + view_mode"
+             tal:attributes="class python:'c-panels c-panels--' + view_mode + ' c-panels--' + settings['panel_page_section']"
              i18n:domain="ade25.panelpage">
         <div class="c-panel-factory c-panel-factory--default">
             <a class="c-panel-factory__action" href="#add-new-panel"

@@ -109,8 +109,8 @@ class ContentPanelList(BrowserView):
 
     @staticmethod
     def computed_panel_class(content_panel):
-        css_class = 'c-panel c-panel--'.format(
-            content_panel['id']
+        css_class = 'c-panel c-panel--{0}'.format(
+            content_panel['layout']
         )
         return css_class
 
