@@ -118,17 +118,59 @@ class ContentPanelList(BrowserView):
 class PanelPageDataJSON(BrowserView):
     """ JSON representation of stored panel layout """
 
-    def __call__(self):
+    def __call__(self,
+                 identifier=None,
+                 section='main',
+                 mode='view',
+                 **kw):
+        self.params = {
+            'panel_page_identifier': identifier,
+            'panel_page_section': section,
+            'panel_page_mode': mode
+        }
         return self.render()
 
-    def render(self):
+    @property
+    def settings(self):
+        return self.params
+
+    @property
+    def panel_tool(self):
+        tool = getUtility(IPanelTool)
+        return tool
+
+    def stored_panels(self):
         context = aq_inner(self.context)
+        identifier = self.settings['panel_page_identifier']
+        if not identifier:
+            identifier = context.UID()
+        panel_data = self.panel_tool.read(
+            identifier,
+            section=self.settings['panel_page_section']
+        )
+        return panel_data
+
+    def has_content_panels(self):
+        return len(self.stored_panels()) > 0
+
+    def content_panels(self):
+        content_panels = [
+            json.loads(panel) for panel in self.stored_panels()
+        ]
+        return content_panels
+
+    @staticmethod
+    def panel_widget(panel):
+        widget_data = panel['widget']
+        return widget_data
+
+    def render(self):
         msg = _(u"Panel page data not available")
         data = {
             'success': False,
             'message': msg
         }
-        layout = getattr(context, 'panelLayout', None)
+        layout = self.content_panels()
         if layout:
             data = layout
         self.request.response.setHeader('Content-Type',

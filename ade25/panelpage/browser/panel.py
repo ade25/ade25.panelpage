@@ -11,7 +11,7 @@ from Acquisition import aq_inner
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
 from ade25.panelpage.interfaces import IPanelTool
-from ade25.widgets.interfaces import IContentWidgetTool
+from ade25.widgets.interfaces import IContentWidgetTool, IContentWidgets
 from plone import api
 
 from plone.i18n.normalizer import IIDNormalizer
@@ -168,6 +168,27 @@ class ContentPanelEdit(BrowserView):
     def content_panel(self):
         content_panel = json.loads(self.stored_panel())
         return content_panel
+
+    def content_panel_widget(self):
+        return self.content_panel()['widget']
+
+    def widget_data(self):
+        widget_tool = getUtility(IContentWidgetTool)
+        return widget_tool.section_widgets(self.settings['panel_page_section'])
+
+    def content_widget_data(self, widget_id):
+        context = aq_inner(self.context)
+        widget_data = {
+            'widget_id': widget_id,
+            'data': {
+                'state': 'draft',
+                'content': dict()
+            }
+        }
+        storage = IContentWidgets(context)
+        if storage.has_widgets():
+            widget_data['data'] = storage.read_widget(widget_id)
+        return widget_data
 
 
 class ContentPanelCreate(BrowserView):

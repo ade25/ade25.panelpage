@@ -2,6 +2,7 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
       lang="en"
          metal:use-macro="context/main_template/macros/master"
          i18n:domain="ade25.panelpage">
@@ -10,8 +11,9 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="c-panel-editor" id="panel-editor"
-            tal:define="content_panel python:view.content_panel()">
+        <div class="c-panel-editor c-panel-editor--centered" id="panel-editor"
+            tal:define="content_panel python:view.content_panel();
+                        settings python:view.settings">
 
             <form class="o-form o-form--panel-page"
                   id="form-panel-edit"
@@ -33,50 +35,136 @@
                                              tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
                                         Cancel
                                     </a>
-                                    <button class="c-toolbar__action c-button c-button--primary" type="submit" i18n:translate="">
-                                        Save
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <section class="c-panel-editor__section">
-
-                        <div class="o-form__section">
-                            <div class="o-form__group"
-                                tal:define="panel_state python:content_panel['state']; panel_published python:panel_state == 'Published'">
-                                <input class="o-form__control o-form__control--switch" type="checkbox" id="panel-visibility" checked="checked"
-                                    tal:attributes="checked python:panel_published and 'checked' or ''" />
-                                <label class="o-form__label" for="panel-visibility" i18n:translate="">Panel is published</label>
-                                <div class="o-form__help" i18n:translate="">
-                                    Decide wether this content panel and the contained widgets should be visible to anonymous site visitors.
-                                </div>
-                            </div>
-                        </div>
-                </section>
-
                 <section class="c-panel-editor__section">
                     <div class="c-panel-editor__section-header">
-
-                        <div class="c-toolbar c-toolbar--default">
-                            <div class="c-toolbar__content">
-                                <div class="c-toolbar__item">
-                                    <div class="c-toolbar__title">
-                                        Content
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="c-panel-editor__section-header">
+                            <div class="c-panel-editor__section-headline">Content</div>
                         </div>
                     </div>
-                    <div class="c-widget-editor">
+                    <div class="c-widget-editor" tal:define="widget_id python:view.content_panel_widget()['id']">
+                        <pre tal:content="python:view.content_widget_data(widget_id)"></pre>
+                        <div class="c-widget-editor__item">
+                            <div class="c-widget-editor__item-aside">
+                                <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                </svg>
+                            </div>
+                            <div class="c-widget-editor__item-main">
+                                <h5 class="c-widget-editor__item-title">Widget Default
+                                    <span tal:content="python:view.content_panel_widget()['type']"></span></h5>
+                                <small>last modified: 12.04.2019 - <span tal:content="python:view.content_panel_widget()['id']"></small>
+                            </div>
+                            <div class="c-widget-editor__item-actions">
+                                <a class="c-button c-button--default c-widget-editor__item-link"
+                                         tal:attributes="href python:context.absolute_url() + '/@@content-widget-edit-child'">
+                                    <svg class="o-icon o-icon--md o-icon__ui--add-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--add"></use>
+                                    </svg>
+                                </a>
+                                <a class="c-button c-button--default c-widget-editor__item-link"
+                                         tal:attributes="href python:context.absolute_url() + '/@@content-widget?' + settings['panel_page_section'] + '/' + settings['panel_page_item'] + '/' + view.content_panel_widget()['id']">
+                                    <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="c-widget-editor__item c-widget-editor__item--secondary">
+                            <div class="c-widget-editor__item-aside">
+                                <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                </svg>
+                            </div>
+                            <div class="c-widget-editor__item-main">
+                                <h5 class="c-widget-editor__item-title">01 - Child Element 1</h5>
+                            </div>
+                            <div class="c-widget-editor__item-actions">
+                                <a class="c-button c-button--default c-widget-editor__item-link"
+                                         tal:attributes="href python:context.absolute_url() + '/@@content-widget-edit'">
+                                    <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
                             <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode='edit')">
                                 Rendered Content Widget
                             </tal:content-widget>
                         </div>
+                    </div>
+                    <div class="c-panel-editor__action">
+
+                    </div>
+                </section>
+
+
+                <section class="c-panel-editor__section">
+                    <div class="c-panel-editor__section-header">
+                            <div class="c-panel-editor__section-headline">Settings</div>
+                    </div>
+
+                    <div class="c-widget-editor">
+
+                        <pre tal:content="python:view.stored_panel()"></pre>
+
+                        <div class="o-form__section">
+                            <div class="o-form__group o-grid o-grid--gutter">
+                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Layout</label>
+                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
+                                    <option disabled value i18n:translate=""> -- select an option -- </option>
+                                    <option value="published"
+                                             i18n:translate="">Default</option>
+                                    <option value="private"
+                                             i18n:translate="">Container centered</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="o-form__section">
+                            <div class="o-form__group o-grid o-grid--gutter">
+                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Display</label>
+                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
+                                    <option disabled value i18n:translate=""> -- select an option -- </option>
+                                    <option value="published"
+                                             i18n:translate="">Hidden</option>
+                                    <option value="private"
+                                             i18n:translate="">Visible</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="o-form__section">
+                            <div class="o-form__group o-grid o-grid--gutter">
+                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Design</label>
+                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
+                                    <option disabled value i18n:translate=""> -- select an option -- </option>
+                                    <option value="published"
+                                             i18n:translate="">Default</option>
+                                    <option value="private"
+                                             i18n:translate="">Primary background</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="c-alert c-alert--danger">
+                        <a class="c-button c-button--danger c-button--sm c-alert__button" href="">
+                            <svg class="o-icon o-icon--md o-icon__ui--trash-dims">
+                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--trash"></use>
+                            </svg>
+                        </a>
+                        <strong class="c-alert__title">Danger Zone:</strong>
+                        Deleting a content panel is permanent and discards all stored data. Choose this option wisely.
+                    </div>
+
                 </section>
 
             </form>
