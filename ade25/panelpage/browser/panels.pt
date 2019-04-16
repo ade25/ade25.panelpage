@@ -18,24 +18,27 @@
                         settings python:view.settings;
                         panel_class python:view.computed_panel_class(panel)"
                          tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number) + ' ' + panel_class">
-                    <div class="c-panel__header">
-                        <div class="c-panel__controls">
-                            <a class="c-panel__control c-panel__icon"
-                                     tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
-                                <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
-                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
-                                </svg>
-                            </a>
-                            <a class="c-panel__control c-panel__icon c-panel__icon--fixed-bottom"
-                                     tal:attributes="href python:context.absolute_url() + '/@@panel-settings?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
-                                <svg class="o-icon o-icon--md o-icon__ui--more-vertical-dims">
-                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--more-vertical"></use>
-                                </svg>
-                            </a>
+                    <div class="c-panel__main c-panel__main--centered"
+                             tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
+
+                        <div class="c-panel__header">
+                            <div class="c-panel__controls">
+                                <a class="c-panel__control c-panel__icon"
+                                         tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
+                                    <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                    </svg>
+                                </a>
+                                <a class="c-panel__control c-panel__icon c-panel__icon--fixed-bottom"
+                                         tal:attributes="href python:context.absolute_url() + '/@@panel-settings?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
+                                    <svg class="o-icon o-icon--md o-icon__ui--more-vertical-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--more-vertical"></use>
+                                    </svg>
+                                </a>
+                            </div>
+
                         </div>
 
-                    </div>
-                    <div class="c-panel__main" tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
                         <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode)">
                             Rendered Content Widget
                         </tal:content-widget>

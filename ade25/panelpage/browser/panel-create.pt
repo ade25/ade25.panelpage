@@ -30,12 +30,9 @@
                             <div class="c-toolbar__item">
                                 <div class="c-toolbar__actions">
                                     <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
                                         Cancel
                                     </a>
-                                    <button class="c-toolbar__action c-button c-button--primary u-visibility--hidden" type="submit" i18n:translate="">
-                                        Save
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -71,9 +68,9 @@
                                                     <div class="c-card__header">
                                                         <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
                                                             <svg class="o-icon o-icon-widget-text-block-dims"
-                                                                tal:attributes="class python:'o-icon o-icon-widget-' + widget_name + '-dims'">
-                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon-{widget_name}-block"
-                                                                    tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#icon-widget-' + widget_name"></use>
+                                                                tal:attributes="class python:'o-icon o-icon--spacer o-icon-widget--' + widget_name + '-dims'">
+                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon--{widget_name}-block"
+                                                                    tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#widget--' + widget_name"></use>
                                                             </svg>
                                                         </div>
                                                     </div>

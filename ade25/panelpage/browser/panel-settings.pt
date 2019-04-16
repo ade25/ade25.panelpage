@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.sitecontent">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+
+        <div class="c-panel-editor__header">
+            <div class="c-toolbar">
+                <div class="c-toolbar__content">
+                    <div class="c-toolbar__item">
+                        <div class="c-toolbar__title">
+                            Content Panel Settings
+                        </div>
+                    </div>
+                    <div class="c-toolbar__item">
+                        <div class="c-toolbar__actions">
+                            <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                     tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
+                                Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="o-page__main">
+
+            <section class="o-page__section">
+                <span tal:replace="structure view/contents" />
+            </section>
+        </div>
+
+
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>

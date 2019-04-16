@@ -32,7 +32,7 @@
                             <div class="c-toolbar__item">
                                 <div class="c-toolbar__actions">
                                     <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page-view'" i18n:translate="">
+                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
                                         Cancel
                                     </a>
                                 </div>
@@ -42,13 +42,7 @@
                 </div>
 
                 <section class="c-panel-editor__section">
-                    <div class="c-panel-editor__section-header">
-                        <div class="c-panel-editor__section-header">
-                            <div class="c-panel-editor__section-headline">Content</div>
-                        </div>
-                    </div>
                     <div class="c-widget-editor" tal:define="widget_id python:view.content_panel_widget()['id']">
-                        <pre tal:content="python:view.content_widget_data(widget_id)"></pre>
                         <div class="c-widget-editor__item">
                             <div class="c-widget-editor__item-aside">
                                 <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
@@ -68,7 +62,7 @@
                                     </svg>
                                 </a>
                                 <a class="c-button c-button--default c-widget-editor__item-link"
-                                         tal:attributes="href python:context.absolute_url() + '/@@content-widget?' + settings['panel_page_section'] + '/' + settings['panel_page_item'] + '/' + view.content_panel_widget()['id']">
+                                         tal:attributes="href python:context.absolute_url() + '/@@content-widget?wid=' + settings['panel_page_section'] + '/' + settings['panel_page_item'] + '/' + view.content_panel_widget()['id']">
                                     <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
                                         <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
                                     </svg>
@@ -95,7 +89,7 @@
                         </div>
 
                         <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
-                            <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode='edit')">
+                            <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget')(widget_type=widget['type'], widget_mode='edit')">
                                 Rendered Content Widget
                             </tal:content-widget>
                         </div>
@@ -103,68 +97,6 @@
                     <div class="c-panel-editor__action">
 
                     </div>
-                </section>
-
-
-                <section class="c-panel-editor__section">
-                    <div class="c-panel-editor__section-header">
-                            <div class="c-panel-editor__section-headline">Settings</div>
-                    </div>
-
-                    <div class="c-widget-editor">
-
-                        <pre tal:content="python:view.stored_panel()"></pre>
-
-                        <div class="o-form__section">
-                            <div class="o-form__group o-grid o-grid--gutter">
-                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Layout</label>
-                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
-                                    <option disabled value i18n:translate=""> -- select an option -- </option>
-                                    <option value="published"
-                                             i18n:translate="">Default</option>
-                                    <option value="private"
-                                             i18n:translate="">Container centered</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="o-form__section">
-                            <div class="o-form__group o-grid o-grid--gutter">
-                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Display</label>
-                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
-                                    <option disabled value i18n:translate=""> -- select an option -- </option>
-                                    <option value="published"
-                                             i18n:translate="">Hidden</option>
-                                    <option value="private"
-                                             i18n:translate="">Visible</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="o-form__section">
-                            <div class="o-form__group o-grid o-grid--gutter">
-                                <label class="o-form__label o-grid__item o-grid__item--width-33" for="panel-layout" i18n:translate="">Design</label>
-                                <select class="o-form__control o-form__control--select o-grid__item o-grid__item--width-66" id="panelp-layout">
-                                    <option disabled value i18n:translate=""> -- select an option -- </option>
-                                    <option value="published"
-                                             i18n:translate="">Default</option>
-                                    <option value="private"
-                                             i18n:translate="">Primary background</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="c-alert c-alert--danger">
-                        <a class="c-button c-button--danger c-button--sm c-alert__button" href="">
-                            <svg class="o-icon o-icon--md o-icon__ui--trash-dims">
-                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--trash"></use>
-                            </svg>
-                        </a>
-                        <strong class="c-alert__title">Danger Zone:</strong>
-                        Deleting a content panel is permanent and discards all stored data. Choose this option wisely.
-                    </div>
-
                 </section>
 
             </form>

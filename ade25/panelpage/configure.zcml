@@ -49,30 +49,17 @@
         factory=".tool.PanelTool"
         provides=".interfaces.IPanelTool"/>
 
-  <!-- -*- extra stuff goes here -*- -->
+  <!-- Vocabularies -->
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelLayoutOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelLayoutVocabulary" />
 
-  <!--<plone:behavior
-    title="Panel Page"
-    description="Enable panel page layout engine"
-    provides="ade25.panelpage.panelpage.IPanelPage"
-    />-->
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelDesignOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelDesignVocabulary" />
 
-  <!--<plone:behavior
-    title="Panel Page Layout"
-    description="Storage for Panel Page Layout Ordering"
-    provides="ade25.panelpage.pagelayout.IPanelPageLayout"
-    />-->
-
-  <!--<plone:behavior
-    title="Panel Content"
-    description="Panel basic content schema"
-    provides="ade25.panelpage.panelcontent.IPanelContent"
-    />-->
-
-  <!--<plone:behavior
-    title="Panel Page Content Listing"
-    description="Use a collection/catalog query as block content"
-    provides="ade25.panelpage.blocklisting.IContentBlockListing"
-    />-->
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelDisplayOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelDisplayVocabulary" />
 
 </configure>

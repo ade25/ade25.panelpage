@@ -81,13 +81,18 @@ class PanelTool(object):
         item.reindexObject(idxs='modified')
         return item
 
-    def delete(self, uuid, key=None):
-        stored = self.read(uuid)
+    def delete(self, uuid, section='main', key=None):
+        item = api.content.get(UID=uuid)
+        field_name = 'contentPanels{0}'.format(
+            section.capitalize(),
+        )
+        stored = getattr(item, field_name, None)
         if key is not None:
-            stored[key] = dict()
-            updated = json.dumps(stored)
+            updated = dict(stored)
+            del updated[key]
+            records = json.dumps(updated)
             item = api.content.get(UID=uuid)
-            setattr(item, 'panelLayout', updated)
+            setattr(item, field_name, records)
             modified(item)
             item.reindexObject(idxs='modified')
         return uuid

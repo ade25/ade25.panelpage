@@ -33,9 +33,9 @@
 
     <browser:page
             for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
-            name="panel-page-view"
+            name="panel-page"
             class=".panels.PanelView"
-            template="panel-page-view.pt"
+            template="panel-page.pt"
             permission="cmf.ModifyPortalContent"
             layer="..interfaces.IAde25PanelPageLayer"
     />
@@ -73,6 +73,24 @@
             class=".panel.ContentPanelEdit"
             template="panel-edit.pt"
             permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-delete"
+            class=".panel.ContentPanelDelete"
+            template="panel-delete.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-settings"
+            class=".panel.ContentPanelSettingsFormView"
+            template="panel-settings.pt"
+            permission="cmf.ManagePortal"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 
