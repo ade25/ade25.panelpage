@@ -88,6 +88,10 @@
                             </div>
                         </div>
 
+                        <div class="c-panel__section">
+                            <div class="c-alert c-alert--default" tal:content="python:view.widget_settings()"></div>
+                        </div>
+
                         <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
                             <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget')(widget_type=widget['type'], widget_mode='edit')">
                                 Rendered Content Widget

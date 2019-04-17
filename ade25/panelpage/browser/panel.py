@@ -181,6 +181,15 @@ class ContentPanelEdit(BrowserView):
     def content_panel_widget(self):
         return self.content_panel()['widget']
 
+    def widget_settings(self):
+        widget_identifier = self.content_panel_widget()['type']
+        widget_tool = getUtility(IContentWidgetTool)
+        try:
+            settings = widget_tool.widget_setup(widget_identifier)
+        except KeyError:
+            settings = {}
+        return settings
+
     def widget_data(self):
         widget_tool = getUtility(IContentWidgetTool)
         return widget_tool.section_widgets(self.settings['panel_page_section'])
