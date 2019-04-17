@@ -121,7 +121,7 @@ class IContentPanelSettings(Interface):
         description=_(u"Select responsive behavior for widget"),
         required=False,
         default='u-display--block',
-        vocabulary='ade25.widgets.vocabularies.ContentPanelDisplayOptions'
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelDisplayOptions'
     )
     custom_class = schema.TextLine(
         title=_(u"Additional CSS Classes"),
