@@ -28,10 +28,10 @@ class IContentPanelStorage(model.Schema):
                 ]
     )
 
-    #if not api.env.debug_mode():
-    #    form_directives.omitted("contentPanelsHeader")
-    #    form_directives.omitted("contentPanelsMain")
-    #    form_directives.omitted("contentPanelsFooter")
+    if not api.env.debug_mode():
+        form_directives.omitted("contentPanelsHeader")
+        form_directives.omitted("contentPanelsMain")
+        form_directives.omitted("contentPanelsFooter")
 
     contentPanelsHeader = schema.List(
         title=_("Content Panels Header"),

@@ -1,6 +1,12 @@
 # -*- coding: UTF-8 -*-
-from zope.interface import Interface
+from plone.autoform import directives as form, directives
+from plone.autoform.interfaces import IFormFieldProvider
 from plone.theme.interfaces import IDefaultPloneLayer
+from zope import schema
+from zope.interface import Interface
+from zope.interface import provider
+
+from ade25.panelpage import MessageFactory as _
 
 
 class IAde25PanelPageLayer(IDefaultPloneLayer):
@@ -72,3 +78,54 @@ class IPanelTool(Interface):
 class IContentPanelStorageSupport(Interface):
     """ Marker for content panel storage support """
     pass
+
+
+@provider(IFormFieldProvider)
+class IContentPanelSettings(Interface):
+    """ Content Panel Settings """
+
+    directives.mode(section='hidden')
+    section = schema.TextLine(
+        title=u'Page Section',
+        required=False
+    )
+    directives.mode(panel='hidden')
+    panel = schema.TextLine(
+        title=u'Page Section Panel',
+        required=False
+    )
+    directives.mode(identifier='hidden')
+    identifier = schema.TextLine(
+        title=u'Widget Identifier',
+        required=False
+    )
+    form.widget('widget_layout', klass='js-choices-selector')
+    widget_layout = schema.Choice(
+        title=_(u"Widget Layout"),
+        description=_(u"Select layout for the content panel"),
+        required=False,
+        default='c-panel--default',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelLayoutOptions'
+    )
+    form.widget('widget_design', klass='js-choices-selector')
+    widget_design = schema.Choice(
+        title=_(u"Widget Design"),
+        description=_(u"Change predefined base style of the content panel"),
+        required=False,
+        default='c-panel--bg-default',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelDesignOptions'
+    )
+    form.widget('widget_display', klass='js-choices-selector')
+    widget_display = schema.Choice(
+        title=_(u"Widget Display"),
+        description=_(u"Select responsive behavior for widget"),
+        required=False,
+        default='u-display--block',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelDisplayOptions'
+    )
+    custom_class = schema.TextLine(
+        title=_(u"Additional CSS Classes"),
+        description=_(u"Enter optional css classes that should be applied to "
+                      u"the default widget class."),
+        required=False
+    )
