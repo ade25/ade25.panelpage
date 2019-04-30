@@ -19,8 +19,8 @@ from plone.autoform.form import AutoExtensibleForm
 
 from plone.i18n.normalizer import IIDNormalizer
 from z3c.form import button
+from z3c.form import form
 from plone.z3cform import layout
-from plone.directives import form
 
 from zope.component import queryUtility, getUtility, getMultiAdapter
 
