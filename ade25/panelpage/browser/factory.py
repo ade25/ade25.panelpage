@@ -8,14 +8,14 @@ from zope import schema
 from plone.autoform.form import AutoExtensibleForm
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
-from plone.directives import form
 from plone.z3cform import layout
 from ade25.panelpage import MessageFactory as _
 from zope.component import getUtility
 from zope.interface import Interface, provider
 from zope.lifecycleevent import modified
 from zope.schema import getFieldsInOrder
-from z3c.form import button, field
+from z3c.form import button
+from z3c.form import form
 
 
 @provider(IFormFieldProvider)
