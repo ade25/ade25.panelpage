@@ -128,7 +128,6 @@ class ContentPanel(BrowserView):
         details = {
 
         }
-        import pdb; pdb.set_trace()
         return details
 
 

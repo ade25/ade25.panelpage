@@ -12,17 +12,17 @@
     <metal:content-core define-macro="main">
 
         <div class="c-panel-overlay c-panel-overlay--active">
-            <div class="c-panel-overlay__header">
-                <a class="c-panel-overlay__action" href="@@panel-page">Close</a>
+            <div class="c-panel-overlay__content">
+                <a class="c-panel-overlay__action" href="@@panel-page"
+                    tal:attributes="href python:context.absolute_url() + '/@@panel-page'">
+                    <svg class="o-icon o-icon--size-3 o-icon--circle o-icon__ui--close-dims">
+                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--close"></use>
+                    </svg>
+                </a>
             </div>
             <div class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor"
                      tal:define="content_panel python:view.content_panel();
                     settings python:view.settings">
-
-                <form class="o-form o-form--panels"
-                      id="form-panel-edit"
-                      method="post"
-                         tal:attributes="action request/URL">
 
                     <div class="c-panel-editor__header" style="display: none">
                         <div class="c-toolbar c-toolbar--primary">
@@ -121,7 +121,6 @@
                         </div>
                     </section>
 
-                </form>
             </div>
         </div>
 
