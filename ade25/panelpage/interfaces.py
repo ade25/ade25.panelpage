@@ -2,6 +2,8 @@
 from plone.autoform import directives as form, directives
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.theme.interfaces import IDefaultPloneLayer
+from plone.supermodel import directives as model_directives
+
 from zope import schema
 from zope.interface import Interface
 from zope.interface import provider
@@ -99,6 +101,16 @@ class IContentPanelSettings(Interface):
         title=u'Widget Identifier',
         required=False
     )
+
+    model_directives.fieldset(
+        'settings',
+        label=u"Settings",
+        fields=['widget_layout',
+                'widget_design',
+                'widget_display'
+                ]
+    )
+
     form.widget('widget_layout', klass='js-choices-selector')
     widget_layout = schema.Choice(
         title=_(u"Widget Layout"),

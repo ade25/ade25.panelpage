@@ -138,12 +138,17 @@ class ContentPanelEdit(BrowserView):
                  identifier=None,
                  section='main',
                  panel=None,
-                 **kw):
-        self.params = {
+                 debug='off',
+                 *args,
+                 **kwargs):
+        params = {
             'panel_page_identifier': identifier,
             'panel_page_section': self.request.get('section', section),
-            'panel_page_item': self.request.get('index', panel)
+            'panel_page_item': self.request.get('index', panel),
+            'debug_mode': debug
         }
+        params.update(kwargs)
+        self.params = params
         return self.render()
 
     def render(self):
@@ -180,6 +185,25 @@ class ContentPanelEdit(BrowserView):
 
     def content_panel_widget(self):
         return self.content_panel()['widget']
+
+    def widget_configuration(self):
+        widget_tool = getUtility(IContentWidgetTool)
+        widget = self.content_panel_widget()
+        widget_id = widget['type']
+        try:
+            configuration = widget_tool.widget_setup(
+                widget_id
+            )
+        except KeyError:
+            configuration = {
+                "pkg": "PKG Undefined",
+                "id": widget_id,
+                "name": widget_id.replace('-', ' ').title(),
+                "title": widget_id.replace('-', ' ').title(),
+                "category": "more",
+                "type": "base"
+            }
+        return configuration
 
     def widget_settings(self):
         widget_identifier = self.content_panel_widget()['type']
