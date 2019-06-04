@@ -10,7 +10,7 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <section class="o-page__section u-display--full-width">
+        <section class="o-page__section">
             <div class="o-hero">
                 <div class="o-hero__content">
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context.UID(), section='header', mode='view')"></tal:content-panels>

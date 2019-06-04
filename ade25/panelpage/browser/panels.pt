@@ -29,12 +29,6 @@
                                         <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
                                     </svg>
                                 </a>
-                                <a class="c-panel__control c-panel__icon c-panel__icon--fixed-bottom"
-                                         tal:attributes="href python:context.absolute_url() + '/@@panel-settings?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)">
-                                    <svg class="o-icon o-icon--md o-icon__ui--more-vertical-dims">
-                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--more-vertical"></use>
-                                    </svg>
-                                </a>
                             </div>
 
                         </div>

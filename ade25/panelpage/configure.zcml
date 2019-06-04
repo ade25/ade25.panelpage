@@ -45,10 +45,13 @@
   />
 
     <!-- Panel tool providing crud operations -->
-  <utility
+    <utility
         factory=".tool.PanelTool"
         provides=".interfaces.IPanelTool"/>
 
+    <utility
+            factory=".tool.PanelEditorTool"
+            provides=".interfaces.IPanelEditor"/>
   <!-- Vocabularies -->
     <utility
         name="ade25.panelpage.vocabularies.ContentPanelLayoutOptions"

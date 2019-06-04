@@ -10,11 +10,13 @@ import time
 from ade25.base.utils import get_filesystem_template
 from babel.dates import format_datetime
 from Products.CMFPlone.utils import safe_unicode
+from collective.beaker.interfaces import ISession
 from future.backports.email.utils import format_datetime
 from plone import api
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.event.utils import pydt
 from zope.component import getUtility
+from zope.globalrequest import getRequest
 from zope.lifecycleevent import modified
 from zope.schema import getFieldsInOrder
 # from collective.beaker.interfaces import ISession
@@ -151,3 +153,64 @@ class PanelTool(object):
         }
         return timestamp
 
+
+class PanelEditorTool(object):
+    """ Panel editor session storage tool
+
+        Store selected panel configuration inside anonymous session
+        to provide dynamically built add and edit forms for content
+        panels and widgets
+    """
+
+    @staticmethod
+    def get(key=None):
+        """ Create module filter session """
+        portal = api.portal.get()
+        session_id = 'ade25.panelpage.editor.{0}'.format(
+            '.'.join(portal.getPhysicalPath())
+        )
+        if key:
+            session_id = 'ade25.panelpage.editor.{0}'.format(key)
+        session = ISession(getRequest())
+        if session_id not in session:
+            session[session_id] = dict()
+            session.save()
+        return session[session_id]
+
+    @staticmethod
+    def destroy(key=None):
+        """ Destroy module filter session """
+        portal = api.portal.get()
+        session_id = 'ade25.panelpage.editor.{0}'.format(
+            '.'.join(portal.getPhysicalPath())
+        )
+        if key:
+            session_id = 'ade25.panelpage.editor.{0}'.format(key)
+        session = ISession(getRequest())
+        if session_id in session:
+            del session[session_id]
+            session.save()
+
+    def add(self, key, data=None):
+        """
+            Add item to survey session
+        """
+        survey = self.get()
+        item = self.update(key, data)
+        if not item:
+            survey[key] = data
+            return survey[key]
+
+    def update(self, key, data):
+        survey = self.get()
+        item_id = key
+        if item_id in survey:
+            survey[item_id] = data
+            return survey[item_id]
+        return None
+
+    def remove(self, key):
+        survey = self.get()
+        if key in survey:
+            del survey[key]
+            return key

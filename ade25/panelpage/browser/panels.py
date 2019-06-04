@@ -7,7 +7,7 @@ from plone import api
 from Products.Five import BrowserView
 from zope.component import getUtility
 
-from ade25.panelpage.interfaces import IPanelTool
+from ade25.panelpage.interfaces import IPanelTool, IPanelEditor
 from ade25.panelpage import MessageFactory as _
 
 
@@ -15,6 +15,7 @@ class PanelView(BrowserView):
     """ Rendered panel page """
 
     def __call__(self):
+        self.update_panel_editor()
         return self.render()
 
     def render(self):
@@ -54,6 +55,11 @@ class PanelView(BrowserView):
             json.loads(panel) for panel in self.stored_panels()
         ]
         return content_panels
+
+    @staticmethod
+    def update_panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
 
 
 class ContentPanelList(BrowserView):
@@ -109,8 +115,10 @@ class ContentPanelList(BrowserView):
 
     @staticmethod
     def computed_panel_class(content_panel):
-        css_class = 'c-panel c-panel--{0}'.format(
-            content_panel['layout']
+        css_class = 'c-panel--{0} c-panel--{1} u-display--{2}'.format(
+            content_panel['layout'],
+            content_panel['design'],
+            content_panel['display']
         )
         return css_class
 

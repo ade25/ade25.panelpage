@@ -11,7 +11,7 @@ from Acquisition import aq_inner
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
-from ade25.panelpage.interfaces import IPanelTool
+from ade25.panelpage.interfaces import IPanelTool, IPanelEditor
 from ade25.widgets.interfaces import IContentWidgetTool, IContentWidgets
 from plone import api
 from plone.app.z3cform import layout
@@ -148,6 +148,7 @@ class ContentPanelEdit(BrowserView):
         }
         params.update(kwargs)
         self.params = params
+        self._update_panel_editor(self.params)
         return self.render()
 
     def render(self):
@@ -161,10 +162,20 @@ class ContentPanelEdit(BrowserView):
     def settings(self):
         return self.params
 
+    @staticmethod
+    def panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
+
     @property
     def panel_tool(self):
         tool = getUtility(IPanelTool)
         return tool
+
+    @property
+    def widget_tool(self):
+        widget_tool = getUtility(IContentWidgetTool)
+        return widget_tool
 
     def stored_panel(self):
         context = aq_inner(self.context)
@@ -206,30 +217,40 @@ class ContentPanelEdit(BrowserView):
 
     def widget_settings(self):
         widget_identifier = self.content_panel_widget()['type']
-        widget_tool = getUtility(IContentWidgetTool)
         try:
-            settings = widget_tool.widget_setup(widget_identifier)
+            settings = self.widget_tool.widget_setup(widget_identifier)
         except KeyError:
             settings = {}
         return settings
 
     def widget_data(self):
-        widget_tool = getUtility(IContentWidgetTool)
-        return widget_tool.section_widgets(self.settings['panel_page_section'])
+        return self.widget_tool.section_widgets(
+            self.settings['panel_page_section'])
 
     def content_widget_data(self, widget_id):
         context = aq_inner(self.context)
-        widget_data = {
-            'widget_id': widget_id,
-            'data': {
-                'state': 'draft',
-                'content': dict()
-            }
-        }
+        widget_data = {}
         storage = IContentWidgets(context)
         if storage.has_widgets():
-            widget_data['data'] = storage.read_widget(widget_id)
+            widget_data = storage.read_widget(widget_id)
         return widget_data
+
+    def _update_panel_editor(self, settings):
+        context = aq_inner(self.context)
+        tool = getUtility(IPanelEditor)
+        return tool.add(
+            key=context.UID(),
+            data={
+                'content_section': settings['panel_page_section'],
+                'content_section_panel': settings['panel_page_item'],
+                'panel': self.content_panel(),
+                'widget_id': self.content_panel_widget()['id'],
+                'widget_content': self.content_widget_data(
+                    self.content_panel_widget()['id']
+                ),
+                'widget_settings': self.widget_settings()
+            }
+        )
 
 
 class ContentPanelCreate(BrowserView):
@@ -433,9 +454,7 @@ class ContentPanelDelete(BrowserView):
     def stored_panel(self):
         context = aq_inner(self.context)
         identifier = self.settings['panel_page_identifier']
-        # Test for existing identifier by using the string value form the
-        # settings dictionary
-        if identifier == 'None':
+        if not identifier:
             identifier = context.UID()
         panel_data = self.panel_tool.read(
             identifier,
@@ -525,6 +544,44 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
         )
         return url
 
+    def stored_panel(self):
+        context = aq_inner(self.context)
+        identifier = getattr(self.request, 'identifier', '')
+        if not identifier:
+            identifier = context.UID()
+        panel_data = self.panel_tool.read(
+            identifier,
+            section=getattr(self.request, 'section', ''),
+            key=getattr(self.request, 'panel', '')
+        )
+        return panel_data
+
+    def content_panel(self):
+        content_panel = json.loads(self.stored_panel())
+        return content_panel
+
+    def content_panel_widget(self):
+        return self.content_panel()['widget']
+
+    def widget_configuration(self):
+        widget_tool = getUtility(IContentWidgetTool)
+        widget = self.content_panel_widget()
+        widget_id = widget['type']
+        try:
+            configuration = widget_tool.widget_setup(
+                widget_id
+            )
+        except KeyError:
+            configuration = {
+                "pkg": "PKG Undefined",
+                "id": widget_id,
+                "name": widget_id.replace('-', ' ').title(),
+                "title": widget_id.replace('-', ' ').title(),
+                "category": "more",
+                "type": "base"
+            }
+        return configuration
+
     def getContent(self):
         item = aq_inner(self.context)
         # TODO: Read data form panel settings
@@ -539,8 +596,8 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
     def applyChanges(self, data):
         pass
 
-    @button.buttonAndHandler(u"Delete Panel", name='delete')
-    def handleDelete(self, action):
+    @button.buttonAndHandler(u"Cancel", name='cancel')
+    def handleCancel(self, action):
         """Delete panel and all stored contents. Redirects to conformation page.
         """
         context = aq_inner(self.context)
@@ -548,11 +605,10 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
         if errors:
             self.status = self.formErrorsMessage
             return
-        next_url = '{0}/@@panel-delete?section={1}&panel={2}&identifier={3}'.format(
+        next_url = '{0}/@@panel-edit?section={1}&panel={2}'.format(
             context.absolute_url(),
             data['section'],
-            data['panel'],
-            data['identifier']
+            data['panel']
         )
         return self.request.response.redirect(next_url)
 
@@ -572,7 +628,7 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
     def updateActions(self):
         super(ContentPanelSettingsForm, self).updateActions()
         self.actions["update"].addClass("c-button--primary")
-        self.actions["delete"].addClass("c-button--danger")
+        self.actions["cancel"].addClass("c-button--default")
 
     def updateWidgets(self):
         super(ContentPanelSettingsForm, self).updateWidgets()
