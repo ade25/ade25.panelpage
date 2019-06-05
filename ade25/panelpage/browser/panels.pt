@@ -33,7 +33,7 @@
 
                         </div>
 
-                        <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode)">
+                        <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode, data_set={'id': widget['id']})">
                             Rendered Content Widget
                         </tal:content-widget>
                     </div>
