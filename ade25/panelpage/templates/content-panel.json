@@ -8,6 +8,7 @@
   "mode": "view",
   "layout": "default",
   "display": "block",
+  "design": "default",
   "widget": {
     "id": "${widget_id}",
     "type": "${widget_type}",

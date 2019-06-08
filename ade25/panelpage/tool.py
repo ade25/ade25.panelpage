@@ -62,26 +62,20 @@ class PanelTool(object):
             data = stored[int(key)]
         return data
 
-    def update(self, uuid, component, data):
+    def update(self, uuid, data, section='main', key=None):
         item = api.content.get(UID=uuid)
-        if 'textline' in data:
-            setattr(item, 'textline', data['textline'])
-        if 'textblock' in data:
-            setattr(item, 'textblock', data['textblock'])
-        else:
-            fti = getUtility(IDexterityFTI,
-                             name='ade25.panelpage.panel')
-            schema = fti.lookupSchema()
-            fields = getFieldsInOrder(schema)
-            for key, value in fields:
-                try:
-                    new_value = data[key]
-                    setattr(item, key, new_value)
-                except KeyError:
-                    continue
-        modified(item)
-        item.reindexObject(idxs='modified')
-        return item
+        field_name = 'contentPanels{0}'.format(
+            section.capitalize(),
+        )
+        stored = getattr(item, field_name, None)
+        if key is not None:
+            updated = dict(stored)
+            updated[key] = data
+            records = json.dumps(updated)
+            setattr(item, field_name, records)
+            modified(item)
+            item.reindexObject(idxs='modified')
+        return data
 
     def delete(self, uuid, section='main', key=None):
         item = api.content.get(UID=uuid)
@@ -93,7 +87,6 @@ class PanelTool(object):
             updated = dict(stored)
             del updated[key]
             records = json.dumps(updated)
-            item = api.content.get(UID=uuid)
             setattr(item, field_name, records)
             modified(item)
             item.reindexObject(idxs='modified')
@@ -195,22 +188,22 @@ class PanelEditorTool(object):
         """
             Add item to survey session
         """
-        survey = self.get()
+        session = self.get()
         item = self.update(key, data)
         if not item:
-            survey[key] = data
-            return survey[key]
+            session[key] = data
+            return session[key]
 
     def update(self, key, data):
-        survey = self.get()
+        session = self.get()
         item_id = key
-        if item_id in survey:
-            survey[item_id] = data
-            return survey[item_id]
+        if item_id in session:
+            session[item_id] = data
+            return session[item_id]
         return None
 
     def remove(self, key):
-        survey = self.get()
-        if key in survey:
-            del survey[key]
+        session = self.get()
+        if key in session:
+            del session[key]
             return key

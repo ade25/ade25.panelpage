@@ -5,6 +5,7 @@ import json
 from Acquisition import aq_inner
 from plone import api
 from Products.Five import BrowserView
+from plone.protect.utils import addTokenToUrl
 from zope.component import getUtility
 
 from ade25.panelpage.interfaces import IPanelTool, IPanelEditor
@@ -116,11 +117,15 @@ class ContentPanelList(BrowserView):
     @staticmethod
     def computed_panel_class(content_panel):
         css_class = 'c-panel--{0} c-panel--{1} u-display--{2}'.format(
-            content_panel['layout'],
-            content_panel['design'],
-            content_panel['display']
+            content_panel.get('layout', "default"),
+            content_panel.get("design", "default"),
+            content_panel.get("display", "block")
         )
         return css_class
+
+    @staticmethod
+    def panel_widget_action(url):
+        return addTokenToUrl(url)
 
 
 class PanelPageDataJSON(BrowserView):
