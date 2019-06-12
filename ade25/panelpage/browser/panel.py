@@ -18,6 +18,8 @@ from plone.app.z3cform import layout
 from plone.autoform.form import AutoExtensibleForm
 
 from plone.i18n.normalizer import IIDNormalizer
+from plone.protect.utils import addTokenToUrl
+from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form import form
 from plone.z3cform import layout
@@ -403,6 +405,16 @@ class ContentPanelDelete(BrowserView):
         self.params.update(kw)
         return self.render()
 
+    @staticmethod
+    def panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
+
+    @property
+    def configuration(self):
+        context = aq_inner(self.context)
+        return self.panel_editor()[context.UID()]
+
     def update(self):
         self.errors = dict()
         unwanted = ('_authenticator', 'form.button.Submit')
@@ -507,6 +519,40 @@ class ContentPanelDelete(BrowserView):
             widget_data['data'] = storage.read_widget(widget_id)
         return widget_data
 
+    @staticmethod
+    def widget_actions(content_type="default"):
+        actions = [
+            "create",
+            "update",
+            "delete",
+            "settings",
+        ]
+        if content_type == "collection-item":
+            actions = [
+                "update",
+                "delete",
+                "reorder"
+            ]
+        return actions
+
+    def widget_action(self, action_name, widget_type="base"):
+        context = aq_inner(self.context)
+        widget_tool = getUtility(IContentWidgetTool)
+        is_current = False
+        if action_name == "delete":
+            is_current = True
+        action_details = widget_tool.widget_action_details(
+            context,
+            action_name,
+            widget_type,
+            is_current
+        )
+        return action_details
+
+    @staticmethod
+    def widget_action_url(action_url):
+        return addTokenToUrl(action_url)
+
     def _remove_panel(self, form_data):
         context = aq_inner(self.context)
         i18n_service = api.portal.get_tool(name="translation_service")
@@ -533,14 +579,37 @@ class ContentPanelDelete(BrowserView):
 class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
 
     schema = IContentPanelSettings
-    ignoreContext = False
+    ignoreContext = True
     css_class = 'o-form o-form--panels o-form--panel-settings'
     label = _(u"Update content panel settings")
 
+    enableCSRFProtection = True
+    formErrorsMessage = _(u'There were errors.')
+
+    submitted = False
+
+    @property
+    def panel_editor(self):
+        tool = getUtility(IPanelEditor)
+        return tool.get()
+
+    @property
+    def panel_configuration(self):
+        context = aq_inner(self.context)
+        return self.panel_editor[context.UID()]
+
+    @property
+    def panel_tool(self):
+        tool = getUtility(IPanelTool)
+        return tool
+
     def next_url(self):
         context = aq_inner(self.context)
-        url = '{0}/@@panel-page'.format(
-            context.absolute_url()
+        editor_data = self.panel_configuration
+        url = '{0}/@@panel-edit?section={1}&panel={2}'.format(
+            context.absolute_url(),
+            editor_data["content_section"],
+            editor_data["content_section_panel"]
         )
         return url
 
@@ -583,17 +652,26 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
         return configuration
 
     def getContent(self):
-        item = aq_inner(self.context)
-        # TODO: Read data form panel settings
-        data = {
-            'custom_class': getattr(self.request, 'widget_class', 'c-widget'),
-            'section': getattr(self.request, 'section', ''),
-            'panel': getattr(self.request, 'panel', ''),
-            'identifier': getattr(self.request, 'identifier', ''),
+        editor_data = self.panel_configuration
+        panel_settings = {
+            "section": editor_data["content_section"],
+            "panel": editor_data["content_section_panel"],
+            "custom_class": editor_data["panel"]["widget"]["css_classes"],
+            "widget_layout": editor_data["panel"]["layout"],
+            "widget_display": editor_data["panel"]["display"],
+            "widget_design": editor_data["panel"]["design"]
         }
-        return data
+        return panel_settings
 
     def applyChanges(self, data):
+        context = aq_inner(self.context)
+        editor_data = self.panel_configuration
+        panel_data = self.panel_tool.read(
+            context.UID(),
+            section=editor_data["content_section"],
+            key=editor_data["content_section_panel"]
+        )
+        # TODO: store updated panel data via panel tool
         pass
 
     @button.buttonAndHandler(u"Cancel", name='cancel')
@@ -630,8 +708,69 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
         self.actions["update"].addClass("c-button--primary")
         self.actions["cancel"].addClass("c-button--default")
 
-    def updateWidgets(self):
-        super(ContentPanelSettingsForm, self).updateWidgets()
 
+class ContentPanelSettingsFormView(FormWrapper):
 
-ContentPanelSettingsFormView = layout.wrap_form(ContentPanelSettingsForm)
+    form = ContentPanelSettingsForm
+
+    def __call__(self,
+                 identifier=None,
+                 section='main',
+                 panel=None,
+                 debug='off',
+                 *args,
+                 **kwargs):
+        params = {
+            'panel_page_identifier': identifier,
+            'panel_page_section': self.request.get('section', section),
+            'panel_page_item': self.request.get('index', panel),
+            'debug_mode': debug
+        }
+        params.update(kwargs)
+        self.params = params
+        self.update()
+        return self.render()
+
+    @property
+    def settings(self):
+        return self.params
+
+    @staticmethod
+    def panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
+
+    @property
+    def configuration(self):
+        context = aq_inner(self.context)
+        return self.panel_editor()[context.UID()]
+
+    @staticmethod
+    def widget_actions(content_type="default"):
+        actions = [
+            "create",
+            "update",
+            "delete",
+            "settings",
+        ]
+        if content_type == "collection-item":
+            actions = [
+                "update",
+                "delete",
+                "reorder"
+            ]
+        return actions
+
+    def widget_action(self, action_name, widget_type="base"):
+        context = aq_inner(self.context)
+        widget_tool = getUtility(IContentWidgetTool)
+        action_details = widget_tool.widget_action_details(
+            context,
+            action_name,
+            widget_type
+        )
+        return action_details
+
+    @staticmethod
+    def widget_action_url(action_url):
+        return addTokenToUrl(action_url)

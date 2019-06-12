@@ -33,9 +33,9 @@ class ContentPanelLayoutVocabularyFactory(object):
     @staticmethod
     def get_display_options():
         display_options = {
-            'c-panel--default': _(u'Full width container'),
-            'c-panel--centered': _(u'Centered constrained container'),
-            'c-panel--container-centered':
+            'full-width': _(u'Full width container'),
+            'container': _(u'Centered constrained container'),
+            'container-centered':
                 _(u'Full width container with centered constrained content'),
         }
         return display_options
@@ -67,9 +67,9 @@ class ContentPanelDesignVocabularyFactory(object):
     @staticmethod
     def get_display_options():
         display_options = {
-            'c-panel--bg-default': _(u'Default'),
-            'c-panel--bg-primary': _(u'Primary Background'),
-            'c-panel--bg-secondary': _(u'Secondary Background')
+            'default': _(u'Default'),
+            'primary': _(u'Primary Background'),
+            'secondary': _(u'Secondary Background')
         }
         return display_options
 

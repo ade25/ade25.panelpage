@@ -21,8 +21,7 @@
                 </a>
             </div>
             <div class="c-panel-editor c-panel-editor--overlay" id="panel-editor"
-                     tal:define="content_panel python:view.content_panel();
-                    settings python:view.settings">
+                tal:define="settings python:view.settings;configuration python:view.configuration">
 
                 <form class="o-form o-form--panels"
                       id="form-panel-edit"
@@ -33,39 +32,45 @@
 
                         <section class="o-page__section">
                             <span tal:replace="structure context/@@authenticator/authenticator"/>
-                            <input type="hidden" id="panel-page-section"
-                                   name="panel_page_section"
-                                     tal:attributes="value python:view.settings['panel_page_section']" />
-                            <input type="hidden" id="panel-page-item"
-                                   name="panel_page_item"
-                                     tal:attributes="value python:view.settings['panel_page_item']" />
-                            <input type="hidden" id="content-widget-identifier"
-                                   name="content-widget-identifier"
-                                     tal:attributes="value python:view.settings['panel_page_identifier']"/>
                         </section>
-                        <div class="c-widget-editor" tal:define="widget_id python:view.content_panel_widget()['id']">
-                            <div class="c-widget-editor__item">
+                        <div class="c-widget-editor">
+                            <div class="c-widget-editor__item"
+                                     tal:define="widget_title python:configuration['widget_settings']['title'];
+                                    widget_type python:configuration['widget_settings']['type']">
                                 <div class="c-widget-editor__item-aside">
                                     <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
                                         <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
                                     </svg>
                                 </div>
                                 <div class="c-widget-editor__item-main">
-                                    <h5 class="c-widget-editor__item-title">Widget
-                                        <span tal:content="python:view.widget_configuration()['title']"></span></h5>
-                                    <small><span tal:replace="python:view.content_panel_widget()['id']" /></small>
+                                    <h5 class="c-widget-editor__item-title">
+                                        <span tal:content="widget_title"></span>
+                                    </h5>
+                                    <small>
+                                        <span i18n:translate="">last modified:</span>
+                                        12.04.2019
+                                    </small>
                                 </div>
                                 <div class="c-widget-editor__item-actions">
-                                    <button class="c-button c-button--danger c-widget-editor__item-link"
-                                            type="submit"
-                                            name="form.button.Submit"
-                                            id="form.button.Submit">
-                                        <svg class="o-icon o-icon--md o-icon__ui--trash-dims">
-                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--trash"></use>
-                                        </svg>
-                                    </button>
+                                    <tal:actions tal:repeat="action_name python:view.widget_actions(widget_type)">
+                                        <tal:action
+                                                 tal:define="action python:view.widget_action(action_name, widget_type=widget_type)"
+                                                 tal:condition="python:action['display']">
+                                            <a tal:define="action_url python:view.widget_action_url(action['url']);
+                                                    action_icon python:action['icon'];
+                                                    action_class python:action['css_class']"
+                                                     tal:attributes="class python:'c-button c-button--default ' + action_class + ' c-widget-editor__item-link';href action_url">
+                                                <svg class="o-icon o-icon-widget-text-block-dims"
+                                                         tal:attributes="class python:'o-icon o-icon--md o-icon-ui--' + action_icon + '-dims'">
+                                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon--{action_icon}-block"
+                                                             tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#ui--' + action_icon"></use>
+                                                </svg>
+                                            </a>
+                                        </tal:action>
+                                    </tal:actions>
                                 </div>
                             </div>
+
                         </div>
                         <section class="o-page__section">
                             <div class="c-alert c-alert--danger">
@@ -76,7 +81,7 @@
                         </section>
                         <div class="o-form__actions">
                             <a class="c-button c-button--default" href=""
-                                tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + settings['panel_page_item']">
+                                tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + configuration['content_section'] + '&panel=' + configuration['content_section_panel']">
                                 Cancel
                             </a>
                             <button class="c-button c-button--danger c-widget-editor__item-link"
