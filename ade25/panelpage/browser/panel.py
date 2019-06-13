@@ -353,7 +353,11 @@ class ContentPanelCreate(BrowserView):
     @property
     def configuration(self):
         context = aq_inner(self.context)
-        return self.panel_editor()[context.UID()]
+        try:
+            config = self.panel_editor()[context.UID()]
+        except KeyError:
+            config = dict()
+        return config
 
     @property
     def panel_tool(self):
@@ -624,7 +628,7 @@ class ContentPanelDelete(BrowserView):
 class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
 
     schema = IContentPanelSettings
-    ignoreContext = True
+    ignoreContext = False
     css_class = 'o-form o-form--panels o-form--panel-settings'
     label = _(u"Update content panel settings")
 
@@ -716,8 +720,17 @@ class ContentPanelSettingsForm(AutoExtensibleForm, form.Form):
             section=editor_data["content_section"],
             key=editor_data["content_section_panel"]
         )
-        # TODO: store updated panel data via panel tool
-        pass
+        record = json.loads(panel_data)
+        record["widget"]["css_classes"] = data["custom_class"]
+        record["layout"] = data["widget_layout"]
+        record["display"] = data["widget_display"]
+        record["design"] = data["widget_design"]
+        self.panel_tool.update(
+            context.UID(),
+            json.dumps(record),
+            section=editor_data["content_section"],
+            key=editor_data["content_section_panel"]
+        )
 
     @button.buttonAndHandler(u"Cancel", name='cancel')
     def handleCancel(self, action):

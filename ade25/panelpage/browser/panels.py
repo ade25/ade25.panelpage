@@ -117,7 +117,7 @@ class ContentPanelList(BrowserView):
     @staticmethod
     def computed_panel_class(content_panel):
         css_class = 'c-panel--{0} c-panel--{1} u-display--{2}'.format(
-            content_panel.get('layout', "default"),
+            content_panel.get('layout', "full-width"),
             content_panel.get("design", "default"),
             content_panel.get("display", "block")
         )
