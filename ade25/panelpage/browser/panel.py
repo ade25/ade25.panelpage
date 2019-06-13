@@ -358,7 +358,9 @@ class ContentPanelCreate(BrowserView):
         except KeyError:
             config = {
                 "content_section": self.settings.get("panel_page_section"),
-                "content_section_panel": self.settings.get("panel_page_item")
+                "content_section_panel": str(
+                    self.settings.get("panel_page_item")
+                )
             }
         return config
 
