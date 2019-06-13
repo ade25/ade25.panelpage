@@ -356,7 +356,10 @@ class ContentPanelCreate(BrowserView):
         try:
             config = self.panel_editor()[context.UID()]
         except KeyError:
-            config = dict()
+            config = {
+                "content_section": self.settings.get("panel_page_section"),
+                "content_section_panel": self.settings.get("panel_page_item")
+            }
         return config
 
     @property
