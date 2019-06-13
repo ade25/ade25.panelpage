@@ -37,7 +37,10 @@ class PanelTool(object):
         field_name = 'contentPanels{0}'.format(
             section.capitalize(),
         )
-        records = getattr(item, field_name, None)
+        records = getattr(item, field_name, list())
+        if not records:
+            # Handle initial panel setup
+            records = list()
         try:
             records.insert(widget_position, widget_data)
         except TypeError:
@@ -69,10 +72,9 @@ class PanelTool(object):
         )
         stored = getattr(item, field_name, None)
         if key is not None:
-            updated = dict(stored)
-            updated[key] = data
-            records = json.dumps(updated)
-            setattr(item, field_name, records)
+            updated = stored
+            updated[int(key)] = data
+            setattr(item, field_name, updated)
             modified(item)
             item.reindexObject(idxs='modified')
         return data
@@ -84,10 +86,9 @@ class PanelTool(object):
         )
         stored = getattr(item, field_name, None)
         if key is not None:
-            updated = dict(stored)
-            del updated[key]
-            records = json.dumps(updated)
-            setattr(item, field_name, records)
+            updated = stored
+            del updated[int(key)]
+            setattr(item, field_name, updated)
             modified(item)
             item.reindexObject(idxs='modified')
         return uuid

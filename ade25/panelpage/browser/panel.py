@@ -237,6 +237,40 @@ class ContentPanelEdit(BrowserView):
             widget_data = storage.read_widget(widget_id)
         return widget_data
 
+    @staticmethod
+    def widget_actions(content_type="default"):
+        actions = [
+            "create",
+            "update",
+            "delete",
+            "settings",
+        ]
+        if content_type == "collection-item":
+            actions = [
+                "update",
+                "delete",
+                "reorder"
+            ]
+        return actions
+
+    def widget_action(self, action_name, widget_type="base"):
+        context = aq_inner(self.context)
+        widget_tool = getUtility(IContentWidgetTool)
+        is_current = False
+        if action_name == "update":
+            is_current = True
+        action_details = widget_tool.widget_action_details(
+            context,
+            action_name,
+            widget_type,
+            is_current
+        )
+        return action_details
+
+    @staticmethod
+    def widget_action_url(action_url):
+        return addTokenToUrl(action_url)
+
     def _update_panel_editor(self, settings):
         context = aq_inner(self.context)
         tool = getUtility(IPanelEditor)
@@ -310,6 +344,16 @@ class ContentPanelCreate(BrowserView):
     @property
     def settings(self):
         return self.params
+
+    @staticmethod
+    def panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
+
+    @property
+    def configuration(self):
+        context = aq_inner(self.context)
+        return self.panel_editor()[context.UID()]
 
     @property
     def panel_tool(self):
@@ -555,6 +599,7 @@ class ContentPanelDelete(BrowserView):
 
     def _remove_panel(self, form_data):
         context = aq_inner(self.context)
+        panel_data = self.configuration
         i18n_service = api.portal.get_tool(name="translation_service")
         success_message = _(u"Content Panel successfully removed")
         message = i18n_service.translate(
@@ -564,8 +609,8 @@ class ContentPanelDelete(BrowserView):
         )
         self.panel_tool.delete(
             context.UID(),
-            section=form_data['panel_page_section'],
-            widget_position=form_data['panel_page_item']
+            section=panel_data['content_section'],
+            key=panel_data['content_section_panel']
         )
         next_url = '{0}/@@panel-page'.format(
             context.absolute_url()
@@ -764,10 +809,14 @@ class ContentPanelSettingsFormView(FormWrapper):
     def widget_action(self, action_name, widget_type="base"):
         context = aq_inner(self.context)
         widget_tool = getUtility(IContentWidgetTool)
+        is_current = False
+        if action_name == "settings":
+            is_current = True
         action_details = widget_tool.widget_action_details(
             context,
             action_name,
-            widget_type
+            widget_type,
+            is_current
         )
         return action_details
 

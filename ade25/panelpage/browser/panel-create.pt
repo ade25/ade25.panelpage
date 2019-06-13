@@ -11,111 +11,107 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="c-panel-editor" id="panel-editor">
+        <div class="c-panel-overlay c-panel-overlay--active"
+                 tal:define="settings python:view.settings;configuration python:view.configuration">
+            <div class="c-panel-overlay__content">
+                <a class="c-panel-overlay__action" href="@@panel-page"
+                         tal:attributes="href python:context.absolute_url() + '/@@panel-page'">
+                    <svg class="o-icon o-icon--size-3 o-icon--circle o-icon__ui--close-dims">
+                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--close"></use>
+                    </svg>
+                </a>
+            </div>
+            <section class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor">
+                <form class="o-form o-form--panels js-widget-select-form"
+                      id="form-panel-create"
+                      method="post"
+                      enctype="multipart/form-data"
+                         tal:attributes="action request/URL">
 
-            <form class="o-form o-form--panel-page js-widget-select-form"
-                  id="form-panel-create"
-                  method="post"
-                  enctype="multipart/form-data"
-                  tal:attributes="action request/URL">
+                    <div class="c-widget-editor">
 
-                <div class="c-panel-editor__header">
-                    <div class="c-toolbar">
-                        <div class="c-toolbar__content">
-                            <div class="c-toolbar__item">
-                                <div class="c-toolbar__title">
-                                    Content Widget Selection
-                                </div>
+                        <div class="c-widget-editor__item">
+                            <div class="c-widget-editor__item-aside">
+                                <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                </svg>
                             </div>
-                            <div class="c-toolbar__item">
-                                <div class="c-toolbar__actions">
-                                    <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
-                                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
-                                        Cancel
-                                    </a>
-                                </div>
+                            <div class="c-widget-editor__item-main">
+                                <h5 class="c-widget-editor__item-title" i18n:translate="">
+                                    Add Content Panel
+                                </h5>
+                                <small i18n:translate="">Please select content widget for this page section</small>
+                            </div>
+                            <div class="c-widget-editor__item-actions">
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <section class="c-panel-editor__section">
+                    <section class="c-panel-editor__section">
 
-                    <div class="c-widget-selector">
-                        <span tal:replace="structure context/@@authenticator/authenticator"/>
-                        <input type="hidden" id="panel-page-section"
-                               name="panel_page_section"
-                               tal:attributes="value python:view.settings['panel_page_section']" />
-                        <input type="hidden" id="panel-page-item"
-                               name="panel_page_item"
-                               tal:attributes="value python:view.settings['panel_page_item']" />
-                        <input type="hidden" id="panel-page-widget"
-                               name="panel_page_widget" />
+                        <div class="c-widget-selector">
+                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                            <input type="hidden" id="panel-page-section"
+                                   name="panel_page_section"
+                                     tal:attributes="value python:view.settings['panel_page_section']" />
+                            <input type="hidden" id="panel-page-item"
+                                   name="panel_page_item"
+                                     tal:attributes="value python:view.settings['panel_page_item']" />
+                            <input type="hidden" id="panel-page-widget"
+                                   name="panel_page_widget" />
 
 
-                        <tal:sections tal:repeat="section python:view.selector_sections()">
-                            <div class="c-widget-selector__section" tal:define="section_info python:view.selector_section_items(section)">
-                                <div class="c-widget-selector__header">
-                                    <div class="c-widget-selector__headline" tal:content="python:section_info['section_title']">General</div>
-                                </div>
-                                <div class="c-widget-selector__main">
-                                    <div class="o-grid o-grid--gutter o-grid--sm">
-                                        <div class="o-grid__item o-grid__item--width-25" tal:repeat="section_item python:section_info['items']">
-                                            <a class="c-widget-selector__item js-widget-selectable"
-                                               tal:define="widget_name python:section_item['widget']"
-                                                tal:attributes="data-widget-type widget_name">
-                                                <div class="c-card c-card--selector">
-                                                    <div class="c-card__header">
-                                                        <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
-                                                            <svg class="o-icon o-icon-widget-text-block-dims"
-                                                                tal:attributes="class python:'o-icon o-icon--spacer o-icon-widget--' + widget_name + '-dims'">
-                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon--{widget_name}-block"
-                                                                    tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#widget--' + widget_name"></use>
-                                                            </svg>
+                            <tal:sections tal:repeat="section python:view.selector_sections()">
+                                <div class="c-widget-selector__section" tal:define="section_info python:view.selector_section_items(section)">
+                                    <div class="c-widget-selector__header">
+                                        <div class="c-widget-selector__headline" tal:content="python:section_info['section_title']">General</div>
+                                    </div>
+                                    <div class="c-widget-selector__main">
+                                        <div class="o-grid o-grid--gutter o-grid--sm">
+                                            <div class="o-grid__item o-grid__item--width-25" tal:repeat="section_item python:section_info['items']">
+                                                <a class="c-widget-selector__item js-widget-selectable"
+                                                         tal:define="widget_name python:section_item['widget']"
+                                                         tal:attributes="data-widget-type widget_name">
+                                                    <div class="c-card c-card--selector">
+                                                        <div class="c-card__header">
+                                                            <div class="c-widget__icon c-widget__icon--default c-widget__icon--centered c-widget__icon--lg">
+                                                                <svg class="o-icon o-icon-widget-text-block-dims"
+                                                                         tal:attributes="class python:'o-icon o-icon--spacer o-icon-widget--' + widget_name + '-dims'">
+                                                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon--{widget_name}-block"
+                                                                             tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#widget--' + widget_name"></use>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        <div class="c-card__footer c-card__footer--centered"
+                                                                 tal:content="python:section_item['title']">
+                                                            Widget Name
                                                         </div>
                                                     </div>
-                                                    <div class="c-card__footer c-card__footer--centered"
-                                                        tal:content="python:section_item['title']">
-                                                        Widget Name
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </tal:sections>
-                    </div>
-                </section>
-
-
-
-
-                <div class="c-panel-editor__footer">
-                    <div class="c-toolbar c-toolbar--inverse">
-                        <div class="c-toolbar__content">
-                            <div class="c-toolbar__item">
-                                <div class="c-toolbar__title">
-
-                                </div>
-                            </div>
-                            <div class="c-toolbar__item">
-                                <div class="c-toolbar__actions">
-                                    <button class="c-toolbar__action c-button c-button--primary"
-                                            type="submit"
-                                            name="form.button.Submit"
-                                            id="form.button.Submit"
-                                             i18n:translate="">
-                                        Add Widget
-                                    </button>
-                                </div>
-                            </div>
+                            </tal:sections>
                         </div>
+                    </section>
+
+                    <div class="o-form__actions">
+                        <a class="c-button c-button--default" href=""
+                                 tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + configuration['content_section'] + '&panel=' + configuration['content_section_panel']">
+                            Cancel
+                        </a>
+                        <button class="c-button c-button--primary c-widget-editor__item-link"
+                                type="submit"
+                                name="form.button.Submit"
+                                id="form.button.Submit"
+                                 i18n:translate="">
+                           Add widget
+                        </button>
                     </div>
-                </div>
 
-
-            </form>
+                </form>
+            </section>
         </div>
 
     </metal:content-core>
