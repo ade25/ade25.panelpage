@@ -98,7 +98,8 @@
 
                     <div class="o-form__actions">
                         <a class="c-button c-button--default" href=""
-                                 tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + configuration['content_section'] + '&panel=' + configuration['content_section_panel']">
+                            tal:attributes="href python:context.absolute_url() + '/@@panel-page'"
+                            i18n:translate="">
                             Cancel
                         </a>
                         <button class="c-button c-button--primary c-widget-editor__item-link"
