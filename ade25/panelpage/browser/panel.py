@@ -140,13 +140,15 @@ class ContentPanelEdit(BrowserView):
                  section='main',
                  panel=None,
                  debug='off',
+                 cleanup='off',
                  *args,
                  **kwargs):
         params = {
             'panel_page_identifier': identifier,
             'panel_page_section': self.request.get('section', section),
             'panel_page_item': self.request.get('index', panel),
-            'debug_mode': debug
+            'debug_mode': debug,
+            'cleanup_mode': cleanup
         }
         params.update(kwargs)
         self.params = params
@@ -273,9 +275,12 @@ class ContentPanelEdit(BrowserView):
 
     def _update_panel_editor(self, settings):
         context = aq_inner(self.context)
+        context_uid = context.UID()
         tool = getUtility(IPanelEditor)
+        if settings["cleanup_mode"]:
+            tool.remove(context_uid)
         return tool.add(
-            key=context.UID(),
+            key=context_uid,
             data={
                 'content_section': settings['panel_page_section'],
                 'content_section_panel': settings['panel_page_item'],

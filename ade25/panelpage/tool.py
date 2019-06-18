@@ -158,7 +158,7 @@ class PanelEditorTool(object):
 
     @staticmethod
     def get(key=None):
-        """ Create module filter session """
+        """ Create panel editor session """
         portal = api.portal.get()
         session_id = 'ade25.panelpage.editor.{0}'.format(
             '.'.join(portal.getPhysicalPath())
@@ -173,7 +173,7 @@ class PanelEditorTool(object):
 
     @staticmethod
     def destroy(key=None):
-        """ Destroy module filter session """
+        """ Destroy panel editor session """
         portal = api.portal.get()
         session_id = 'ade25.panelpage.editor.{0}'.format(
             '.'.join(portal.getPhysicalPath())
@@ -187,7 +187,7 @@ class PanelEditorTool(object):
 
     def add(self, key, data=None):
         """
-            Add item to survey session
+            Add item to editor session
         """
         session = self.get()
         item = self.update(key, data)
