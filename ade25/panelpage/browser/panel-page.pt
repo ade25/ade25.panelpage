@@ -10,7 +10,7 @@
 <metal:main fill-slot="main">
     <metal:content-core define-macro="main">
 
-        <div class="c-panel-editor">
+        <div class="c-panel-editor" tal:define="settings python:view.settings">
             <div class="c-panel-editor__header">
                 <div class="c-toolbar c-toolbar--primary">
                     <div class="c-toolbar__content">
@@ -28,6 +28,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="c-panel__section" tal:condition="python:settings['debug_mode'] == 'on'">
+                <div class="c-alert c-alert--default">
+                    <h6>Debug Information</h6>
+                    <div tal:content="python:view.panel_editor()"></div>
                 </div>
             </div>
 

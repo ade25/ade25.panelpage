@@ -122,4 +122,12 @@
         layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-editor-reset"
+            class=".editor.PanelEditorReset"
+            permission="cmf.ModifyPortalContent"
+            layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
 </configure>

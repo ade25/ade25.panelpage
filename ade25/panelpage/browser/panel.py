@@ -186,15 +186,21 @@ class ContentPanelEdit(BrowserView):
         identifier = self.settings['panel_page_identifier']
         if not identifier:
             identifier = context.UID()
-        panel_data = self.panel_tool.read(
-            identifier,
-            section=self.settings['panel_page_section'],
-            key=self.settings['panel_page_item']
-        )
+        try:
+            panel_data = self.panel_editor()[context.UID()]["panel"]
+        except:
+            panel_data = self.panel_tool.read(
+                identifier,
+                section=self.settings['panel_page_section'],
+                key=self.settings['panel_page_item']
+            )
         return panel_data
 
     def content_panel(self):
-        content_panel = json.loads(self.stored_panel())
+        try:
+            content_panel = json.loads(self.stored_panel())
+        except TypeError:
+            content_panel = self.stored_panel()
         return content_panel
 
     def content_panel_widget(self):

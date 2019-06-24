@@ -172,18 +172,10 @@ class PanelEditorTool(object):
         return session[session_id]
 
     @staticmethod
-    def destroy(key=None):
+    def destroy():
         """ Destroy panel editor session """
-        portal = api.portal.get()
-        session_id = 'ade25.panelpage.editor.{0}'.format(
-            '.'.join(portal.getPhysicalPath())
-        )
-        if key:
-            session_id = 'ade25.panelpage.editor.{0}'.format(key)
         session = ISession(getRequest())
-        if session_id in session:
-            del session[session_id]
-            session.save()
+        session.delete()
 
     def add(self, key, data=None):
         """
@@ -208,3 +200,9 @@ class PanelEditorTool(object):
         if key in session:
             del session[key]
             return key
+
+    @staticmethod
+    def reset():
+        """ Reset panel editor session """
+        session = ISession(getRequest())
+        session.invalidate()

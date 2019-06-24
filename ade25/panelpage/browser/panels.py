@@ -15,7 +15,12 @@ from ade25.panelpage import MessageFactory as _
 class PanelView(BrowserView):
     """ Rendered panel page """
 
-    def __call__(self):
+    def __call__(self,
+                 debug="off",
+                 **kw):
+        self.params = {
+            'debug_mode': debug
+        }
         self.update_panel_editor()
         return self.render()
 
@@ -23,9 +28,18 @@ class PanelView(BrowserView):
         return self.index()
 
     @property
+    def settings(self):
+        return self.params
+
+    @property
     def panel_tool(self):
         tool = getUtility(IPanelTool)
         return tool
+
+    @staticmethod
+    def panel_editor():
+        tool = getUtility(IPanelEditor)
+        return tool.get()
 
     @staticmethod
     def is_editable():
@@ -60,7 +74,7 @@ class PanelView(BrowserView):
     @staticmethod
     def update_panel_editor():
         tool = getUtility(IPanelEditor)
-        return tool.get()
+        tool.reset()
 
 
 class ContentPanelList(BrowserView):
