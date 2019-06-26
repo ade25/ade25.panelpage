@@ -155,7 +155,7 @@ class IContentPanelSettings(Interface):
         title=_(u"Widget Layout"),
         description=_(u"Select layout for the content panel"),
         required=False,
-        default='c-panel--default',
+        default='full-width',
         vocabulary='ade25.panelpage.vocabularies.ContentPanelLayoutOptions'
     )
     form.widget('widget_design', klass='js-choices-selector')

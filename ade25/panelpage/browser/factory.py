@@ -54,7 +54,7 @@ class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
 
     def next_url(self):
         context = aq_inner(self.context)
-        url = '{0}/@@panel-page-view'.format(
+        url = '{0}/@@panel-page'.format(
             context.absolute_url()
         )
         return url
@@ -76,6 +76,14 @@ class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
         modified(context)
         context.reindexObject(idxs='modified')
 
+    @button.buttonAndHandler(u"Cancel")
+    def handleCancel(self, action):
+        """User cancelled. Redirect back to the front page.
+        """
+        context = aq_inner(self.context)
+        next_url = context.absolute_url()
+        return self.request.response.redirect(next_url)
+
     @button.buttonAndHandler(u'Update')
     def handleApply(self, action):
         data, errors = self.extractData()
@@ -89,16 +97,9 @@ class ContentPanelsEditForm(AutoExtensibleForm, form.Form):
             type='info')
         return self.request.response.redirect(self.next_url())
 
-    @button.buttonAndHandler(u"Cancel")
-    def handleCancel(self, action):
-        """User cancelled. Redirect back to the front page.
-        """
-        context = aq_inner(self.context)
-        next_url = context.absolute_url()
-        return self.request.response.redirect(next_url)
-
     def updateActions(self):
         super(ContentPanelsEditForm, self).updateActions()
+        self.actions["cancel"].addClass("c-button--default")
         self.actions["update"].addClass("c-button--primary")
 
     def updateWidgets(self):
