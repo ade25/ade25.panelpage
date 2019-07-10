@@ -90,7 +90,7 @@
             name="panel-settings"
             class=".panel.ContentPanelSettingsFormView"
             template="panel-settings.pt"
-            permission="cmf.ManagePortal"
+            permission="cmf.ModifyPortalContent"
             layer="..interfaces.IAde25PanelPageLayer"
     />
 

@@ -1,4 +1,5 @@
-<tal:panels tal:define="view_mode python:view.params['panel_page_mode'];settings python:view.settings;">
+<tal:panels tal:condition="python:view.available_widgets()"
+    tal:define="view_mode python:view.params['panel_page_mode'];settings python:view.settings;">
     <div class="c-panels c-panels--edit"
          xmlns:xlink="http://www.w3.org/1999/xlink"
              tal:attributes="class python:'c-panels c-panels--' + view_mode + ' c-panels--' + settings['panel_page_section']"

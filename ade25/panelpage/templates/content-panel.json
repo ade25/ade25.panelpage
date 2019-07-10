@@ -6,8 +6,8 @@
   "updated": "${created}",
   "state": "Published",
   "mode": "view",
-  "layout": "default",
-  "display": "block",
+  "layout": "full-width",
+  "display": "u-display--block",
   "design": "default",
   "widget": {
     "id": "${widget_id}",

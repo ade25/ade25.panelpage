@@ -3,6 +3,7 @@
 import json
 
 from Acquisition import aq_inner
+from ade25.widgets.interfaces import IContentWidgetTool
 from plone import api
 from Products.Five import BrowserView
 from plone.protect.utils import addTokenToUrl
@@ -36,6 +37,11 @@ class PanelView(BrowserView):
         tool = getUtility(IPanelTool)
         return tool
 
+    @property
+    def widget_tool(self):
+        tool = getUtility(IContentWidgetTool)
+        return tool
+
     @staticmethod
     def panel_editor():
         tool = getUtility(IPanelEditor)
@@ -47,6 +53,15 @@ class PanelView(BrowserView):
         if not api.user.is_anonymous():
             editable = True
         return editable
+
+    def display_page_section(self,  section):
+        widgets = self.widget_tool.section_widgets(section)
+        assigned_widgets = list()
+        for widget_info in widgets.values():
+            assigned_widgets.extend(widget_info['items'])
+        if assigned_widgets:
+            return True
+        return False
 
     def stored_panels(self):
         context = aq_inner(self.context)
@@ -102,6 +117,17 @@ class ContentPanelList(BrowserView):
     def panel_tool(self):
         tool = getUtility(IPanelTool)
         return tool
+
+    @property
+    def widget_tool(self):
+        tool = getUtility(IContentWidgetTool)
+        return tool
+
+    def available_widgets(self):
+        widgets = self.widget_tool.section_widgets(
+            self.settings["panel_page_section"]
+        )
+        return widgets
 
     def stored_panels(self):
         context = aq_inner(self.context)
