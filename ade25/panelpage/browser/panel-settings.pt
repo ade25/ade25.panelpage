@@ -41,14 +41,10 @@
                                         <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
                                     </svg>
                                 </div>
-                                <div class="c-widget-editor__item-main">
+                                <div class="c-widget-editor__item-main c-widget-editor__item-main--centered">
                                     <h5 class="c-widget-editor__item-title">
                                         <span tal:content="widget_title"></span>
                                     </h5>
-                                    <small>
-                                        <span i18n:translate="">last modified:</span>
-                                        12.04.2019
-                                    </small>
                                 </div>
                                 <div class="c-widget-editor__item-actions">
                                     <tal:actions tal:repeat="action_name python:view.widget_actions(widget_type)">
