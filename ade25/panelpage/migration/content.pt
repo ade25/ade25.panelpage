@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <header class="o-page__header">
+            <div class="o-page__section c-page-header">
+                <div class="c-page-header__title">
+                    <h1 class="c-page-header__headline">
+                        Panel Page Migration: Content
+                    </h1>
+                </div>
+                <p class="c-page-header__abstract">
+                    Cleanup leftover legacy content throughout the system
+                </p>
+            </div>
+        </header>
+
+        <div class="o-page__main">
+            <section class="o-page__section">
+                <div class="c-alert c-alert--danger">
+                    <div class="o-grid">
+                        <div class="o-grid__item o-grid__item--width-75">
+                            <p>
+                                <strong tal:content="python:view.content_items_counter()"></strong>
+                                legacy panel page content objects pending removal.
+                            </p>
+                        </div>
+                        <div class="o-grid__item o-grid__item--width-25">
+                            <a class="c-button c-button--danger"
+                                     tal:attributes="href python:view.cleanup_action()"
+                                     i18n:translate="">
+                                Remove legacy content now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-condensed" tal:condition="python:view.has_legacy_content">
+                    <tbody>
+                    <tal:block tal:repeat="item python:view.content_items()">
+                        <tr tal:define="item_idx repeat/item/number">
+                            <th>${item_idx}</th>
+                            <td>
+                                <strong tal:content="python:item['title']">Title</strong><br>
+                                <small tal:content="python:item['key']"></small>
+                            </td>
+                            <td>
+                                <a class="c-button c-button--default"
+                                    tal:attributes="href python:item['url']">Review</a>
+                            </td>
+                        </tr>
+                    </tal:block>
+                    </tbody>
+                </table>
+
+            </section>
+        </div>
+    </metal:content-core>
+</metal:main>
+</body>
+</html>
