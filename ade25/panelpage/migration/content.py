@@ -90,6 +90,7 @@ class RemoveLegacyContentRunner(BrowserView):
             sort_on='effective',
             sort_order='reverse'
         )
+        portal_object = api.portal.get()
         for candidate in items:
             api.content.delete(
                 candidate.getObject(),

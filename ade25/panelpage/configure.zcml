@@ -45,6 +45,8 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
   />
 
+    <include file="upgrades.zcml" />
+
     <!-- Panel tool providing crud operations -->
     <utility
         factory=".tool.PanelTool"
