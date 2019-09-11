@@ -147,6 +147,13 @@ class ContentPanelList(BrowserView):
         tool = getUtility(IContentWidgetTool)
         return tool
 
+    @staticmethod
+    def is_editable():
+        editable = False
+        if not api.user.is_anonymous():
+            editable = True
+        return editable
+
     def available_widgets(self):
         widgets = self.widget_tool.section_widgets(
             self.settings["panel_page_section"]

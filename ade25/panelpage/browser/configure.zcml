@@ -118,7 +118,7 @@
         name="panel-editor-toolbar"
         class=".editor.PanelEditorToolbar"
         template="editor-toolbar.pt"
-        permission="cmf.ModifyPortalContent"
+        permission="zope2.View"
         layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
     />
 

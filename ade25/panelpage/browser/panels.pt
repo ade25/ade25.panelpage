@@ -4,7 +4,8 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
              tal:attributes="class python:'c-panels c-panels--' + view_mode + ' c-panels--' + settings['panel_page_section']"
              i18n:domain="ade25.panelpage">
-        <div class="c-panel-factory c-panel-factory--default">
+        <div class="c-panel-factory c-panel-factory--default"
+            tal:condition="python:view.is_editable">
             <a class="c-panel-factory__action" href="#add-new-panel"
                      tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0&section=' + settings['panel_page_section']">
                 <svg class="o-icon o-icon--md o-icon__ui--add-dims">
@@ -22,7 +23,8 @@
                     <div class="c-panel__main c-panel__main--centered"
                              tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
 
-                        <div class="c-panel__header">
+                        <div class="c-panel__header"
+                            tal:condition="python:view.is_editable">
                             <div class="c-panel__controls">
                                 <a class="c-panel__control c-panel__icon"
                                      tal:define="edit_url python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)"
@@ -32,7 +34,6 @@
                                     </svg>
                                 </a>
                             </div>
-
                         </div>
 
                         <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode, data_set={'id': widget['id']})">
@@ -41,6 +42,7 @@
                     </div>
                 </section>
                 <div class="c-panel-factory c-panel-factory--default"
+                         tal:condition="python:view.is_editable"
                          tal:define="panel_number repeat/panel/number; settings python:view.settings"
                          tal:attributes="class python:'c-panel-factory c-panel-factory--' + str(panel_number)">
                     <a class="c-panel-factory__action" href="#add-new-panel"
