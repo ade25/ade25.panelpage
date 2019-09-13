@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 """Module providing content type cleanup"""
+import logging
+
 from Acquisition import aq_inner
-from Products.Five import BrowserView
 from plone import api
 from plone.protect.utils import addTokenToUrl
+from Products.CMFPlone import utils
+from Products.Five import BrowserView
 from zope.component import getMultiAdapter
 from zope.lifecycleevent import modified
-from Products.CMFPlone import utils
+
+logger = logging.getLogger("ADE25 Panel Page")
 
 
 class RemoveLegacyContent(BrowserView):
@@ -92,7 +96,15 @@ class RemoveLegacyContentRunner(BrowserView):
         )
         portal_object = api.portal.get()
         for candidate in items:
-            api.content.delete(
-                candidate.getObject(),
-                check_linkintegrity=False
-            )
+            parent_path = '/'.join(candidate.getPath().split('/')[:-1])
+            try:
+                container = portal_object.unrestrictedTraverse(parent_path)
+                container._delObject(candidate.getId)
+            except:
+                # Handle error
+                logger.info(
+                    " - Could not remove {0} located at {1}".format(
+                        candidate.getId,
+                        parent_path
+                    )
+                )
