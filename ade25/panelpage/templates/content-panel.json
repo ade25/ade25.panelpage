@@ -9,11 +9,12 @@
   "layout": "full-width",
   "display": "u-display--block",
   "design": "default",
+  "css_classes": "",
   "widget": {
     "id": "${widget_id}",
     "type": "${widget_type}",
-    "layout": "default",
-    "css_classes": {},
+    "layout": "full-width",
+    "css_classes": "",
     "settings": {},
     "config": {}
   }
