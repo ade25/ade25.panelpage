@@ -2,11 +2,12 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from five import grok
 from plone import api
+from plone.supermodel import model
 from zope import schema
 
 from plone.dexterity.content import Container
 
-from plone.directives import form
+from plone.autoform import directives, form
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.interfaces import IImageScaleTraversable
@@ -17,7 +18,7 @@ from plone.app.uuid.utils import uuidToObject
 from ade25.panelpage import MessageFactory as _
 
 
-class IContentPanel(form.Schema, IImageScaleTraversable):
+class IContentPanel(model.Schema, IImageScaleTraversable):
     """
     A single content panel or box
     """
@@ -68,7 +69,7 @@ class IContentPanel(form.Schema, IImageScaleTraversable):
                       u" will be ignored"),
         required=False
     )
-    form.widget(query=QueryStringFieldWidget)
+    directives.widget(query=QueryStringFieldWidget)
     query = schema.List(
         title=_(u"Search terms"),
         description=_(u"Define the search terms for the items you want to list"

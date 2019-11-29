@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.sitecontent">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-overlay c-panel-overlay--active">
+            <div class="c-panel-overlay__content">
+                <a class="c-panel-overlay__action" href="@@panel-page"
+                         tal:attributes="href python:context.absolute_url() + '/@@panel-page'">
+                    <svg class="o-icon o-icon--size-3 o-icon--circle o-icon__ui--close-dims">
+                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--close"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="c-panel-editor c-panel-editor--overlay" id="panel-editor"
+                tal:define="settings python:view.settings;configuration python:view.configuration">
+
+                <form class="o-form o-form--panels"
+                      id="form-panel-edit"
+                      method="post"
+                         tal:attributes="action request/URL">
+
+                    <div class="o-page__main">
+
+                        <section class="o-page__section">
+                            <span tal:replace="structure context/@@authenticator/authenticator"/>
+                        </section>
+                        <div class="c-widget-editor">
+                            <div class="c-widget-editor__item"
+                                     tal:define="widget_title python:configuration['widget_settings']['title'];
+                                    widget_type python:configuration['widget_settings']['type']">
+                                <div class="c-widget-editor__item-aside">
+                                    <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                    </svg>
+                                </div>
+                                <div class="c-widget-editor__item-main c-widget-editor__item-main--centered">
+                                    <h5 class="c-widget-editor__item-title">
+                                        <span tal:content="widget_title"></span>
+                                    </h5>
+                                </div>
+                                <div class="c-widget-editor__item-actions">
+                                    <tal:actions tal:repeat="action_name python:view.widget_actions(widget_type)">
+                                        <tal:action
+                                                 tal:define="action python:view.widget_action(action_name, widget_type=widget_type)"
+                                                 tal:condition="python:action['display']">
+                                            <a tal:define="action_url python:view.widget_action_url(action['url']);
+                                                    action_icon python:action['icon'];
+                                                    action_class python:action['css_class']"
+                                                     tal:attributes="class python:'c-button c-button--default ' + action_class + ' c-widget-editor__item-link';href action_url">
+                                                <svg class="o-icon o-icon-widget-text-block-dims"
+                                                         tal:attributes="class python:'o-icon o-icon--md o-icon-ui--' + action_icon + '-dims'">
+                                                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#icon--{action_icon}-block"
+                                                             tal:attributes="xlink:href python:'/assets/symbol/svg/sprite.symbol.svg#ui--' + action_icon"></use>
+                                                </svg>
+                                            </a>
+                                        </tal:action>
+                                    </tal:actions>
+                                </div>
+                            </div>
+
+                        </div>
+                        <section class="o-page__section">
+                            <div class="c-alert c-alert--danger">
+                                <h2 class="c-alert__title">Danger Zone</h2>
+                                <p>Deleting a content page panel will remove all its configurations and also cleanout
+                                    all associated data from the widget storage.</p>
+                            </div>
+                        </section>
+                        <div class="o-form__actions">
+                            <a class="c-button c-button--default" href=""
+                                tal:attributes="href python:context.absolute_url() + '/@@panel-edit?section=' + configuration['content_section'] + '&panel=' + configuration['content_section_panel']">
+                                Cancel
+                            </a>
+                            <button class="c-button c-button--danger c-widget-editor__item-link"
+                                    type="submit"
+                                    name="form.button.Submit"
+                                    id="form.button.Submit"
+                                    i18n:translate="">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>

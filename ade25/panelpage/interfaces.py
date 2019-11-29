@@ -1,12 +1,25 @@
 # -*- coding: UTF-8 -*-
-from plone.app.textfield import RichText
-from plone.app.z3cform.widget import QueryStringFieldWidget
-from plone.directives import form
-from plone.namedfile.field import NamedBlobImage
+from plone.autoform import directives as form, directives
+from plone.autoform.interfaces import IFormFieldProvider
+from plone.theme.interfaces import IDefaultPloneLayer
+from plone.supermodel import directives as model_directives
+
 from zope import schema
 from zope.interface import Interface
+from zope.interface import provider
 
 from ade25.panelpage import MessageFactory as _
+
+
+class IAde25PanelPageLayer(IDefaultPloneLayer):
+    """Marker interface that defines a Zope 3 browser layer."""
+
+
+class IPanelPage(Interface):
+    """ Marker interface for panel page
+
+    Type should ideally implement IDexterityContainer
+    """
 
 
 class IPanelPageEnabled(Interface):
@@ -16,121 +29,154 @@ class IPanelPageEnabled(Interface):
     """
 
 
-class IPanelHeading(form.Schema):
+class IPanelTool(Interface):
+    """ Panel data processing
 
-    textline = schema.TextLine(
-        title=_(u"Heading"),
-        required=False,
+        General tool providing CRUD operations for assigning panel
+        layout to content objects
+    """
+
+    def create(context):
+        """ Create asset assignment data file
+
+        The caller is responsible for passing a valid data dictionary
+        containing the necessary details
+
+        Returns JSON object
+
+        @param uuid:        content object UID
+        @param data:        predefined initial data dictionary
+        """
+
+    def read(context):
+        """ Read stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        """
+
+    def update(context):
+        """ Update stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        @param data:        data dictionary
+        """
+
+    def delete(context):
+        """ Delete stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        caravan site object UID
+        @param key:         (optional) dictionary item key
+        """
+
+
+class IPanelEditor(Interface):
+    """ Panel data processing
+
+        General tool providing CRUD operations for assigning panel
+        configuration to editor sessions
+    """
+
+    def create(context):
+        """ Create asset assignment data file
+
+        The caller is responsible for passing a valid data dictionary
+        containing the necessary details
+
+        Returns JSON object
+
+        @param uuid:        content object UID
+        @param data:        predefined initial data dictionary
+        """
+
+    def read(context):
+        """ Read stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        """
+
+    def update(context):
+        """ Update stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        object UID
+        @param key:         (optional) dictionary item key
+        @param data:        data dictionary
+        """
+
+    def delete(context):
+        """ Delete stored data from object
+
+        Returns a dictionary
+
+        @param uuid:        caravan site object UID
+        @param key:         (optional) dictionary item key
+        """
+
+
+class IContentPanelStorageSupport(Interface):
+    """ Marker for content panel storage support """
+    pass
+
+
+@provider(IFormFieldProvider)
+class IContentPanelSettings(Interface):
+    """ Content Panel Settings """
+
+    directives.mode(section='hidden')
+    section = schema.TextLine(
+        title=u'Page Section',
+        required=False
+    )
+    directives.mode(panel='hidden')
+    panel = schema.TextLine(
+        title=u'Page Section Panel',
+        required=False
+    )
+    directives.mode(identifier='hidden')
+    identifier = schema.TextLine(
+        title=u'Widget Identifier',
+        required=False
     )
 
-
-class IPanelSubHeading(form.Schema):
-
-    textline = schema.TextLine(
-        title=_(u"Subheading"),
+    form.widget('widget_layout', klass='js-choices-selector')
+    widget_layout = schema.Choice(
+        title=_(u"Widget Layout"),
+        description=_(u"Select layout for the content panel"),
         required=False,
+        default='full-width',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelLayoutOptions'
     )
-
-
-class IPanelAbstract(form.Schema):
-
-    textblock = schema.Text(
-        title=_(u"Abstract"),
+    form.widget('widget_design', klass='js-choices-selector')
+    widget_design = schema.Choice(
+        title=_(u"Widget Design"),
+        description=_(u"Change predefined base style of the content panel"),
         required=False,
+        default='c-panel--bg-default',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelDesignOptions'
     )
-
-
-class IPanelText(form.Schema):
-
-    textblock = schema.Text(
-        title=_(u"Plaintext"),
+    form.widget('widget_display', klass='js-choices-selector')
+    widget_display = schema.Choice(
+        title=_(u"Widget Display"),
+        description=_(u"Select responsive behavior for widget"),
         required=False,
+        default='u-display--block',
+        vocabulary='ade25.panelpage.vocabularies.ContentPanelDisplayOptions'
     )
-
-
-class IPanelRichText(form.Schema):
-
-    text = RichText(
-        title=_(u"Body"),
-        required=False,
-    )
-
-
-class IPanelImage(form.Schema):
-
-    image = NamedBlobImage(
-        title=_(u"Panel Image"),
-        description=_(u"Upload panel image suitable in size and "
-                      u"dimension for the usecase"),
-        required=False,
-    )
-
-
-class IPanelAlias(form.Schema):
-
-    alias = schema.TextLine(
-        title=_(u"Alias"),
-        description=_(u"Enter UID of content aliase that can be obtained by "
-                      u"appending @@UUID to a specific item URL"),
-        required=False,
-    )
-
-
-class IPanelListing(form.Schema):
-
-    contentlist = schema.Bool(
-        title=_(u"Show Content Listing"),
-        description=_(u"Enable to show a listing if this folder contents. All "
-                      u"query settings will be ignored if selected"),
-        required=False,
-    )
-    form.widget('query', QueryStringFieldWidget)
-    query = schema.List(
-        title=_(u'Search terms'),
-        description=_(u"Define the search terms for the items you want "
-                      u"to list by choosing what to match on. "
-                      u"The list of results will be dynamically updated"),
-        value_type=schema.Dict(
-            value_type=schema.Field(),
-            key_type=schema.TextLine()),
-        required=False,
-        missing_value=''
-    )
-    sort_on = schema.TextLine(
-        title=_(u'label_sort_on', default=u'Sort on'),
-        description=_(u"Sort the collection on this index"),
-        required=False,
-    )
-
-    sort_reversed = schema.Bool(
-        title=_(u'label_sort_reversed', default=u'Reversed order'),
-        description=_(u'Sort the results in reversed order'),
-        required=False,
-    )
-
-    limit = schema.Int(
-        title=_(u'Limit'),
-        description=_(u'Limit Search Results'),
-        required=False,
-        default=1000,
-    )
-
-    item_count = schema.Int(
-        title=_(u'label_item_count', default=u'Item count'),
-        description=_(u'Number of items that will show up in one batch.'),
-        required=False,
-        default=30,
-    )
-
-    textline = schema.TextLine(
-        title=_(u"List Headline"),
-        description=_(u"Add optional list headline"),
-        required=False,
-    )
-
-    list_layout = schema.Choice(
-        title=_(u"List Layout"),
-        vocabulary=u"ade25.panelpage.AvailableLayouts",
-        required=False,
-        default=u'pp-list-base'
+    custom_class = schema.TextLine(
+        title=_(u"Additional CSS Classes"),
+        description=_(u"Enter optional css classes that should be applied to "
+                      u"the default widget class."),
+        required=False
     )

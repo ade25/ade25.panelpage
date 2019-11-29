@@ -1,0 +1,58 @@
+<tal:panels tal:condition="python:view.available_widgets()"
+    tal:define="view_mode python:view.params['panel_page_mode'];settings python:view.settings;">
+    <div class="c-panels c-panels--edit"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+             tal:attributes="class python:'c-panels c-panels--' + view_mode + ' c-panels--' + settings['panel_page_section']"
+             i18n:domain="ade25.panelpage">
+        <div class="c-panel-factory c-panel-factory--default"
+            tal:condition="python:settings['panel_page_mode'] == 'edit' and view.is_editable()">
+            <a class="c-panel-factory__action" href="#add-new-panel"
+                     tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=0&section=' + settings['panel_page_section']">
+                <svg class="o-icon o-icon--md o-icon__ui--add-dims">
+                    <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--add"></use>
+                </svg>
+            </a>
+        </div>
+        <tal:panels tal:condition="python:view.has_content_panels()">
+            <tal:panels tal:repeat="panel python:view.content_panels()">
+                <section class="c-panel" tal:define="panel_index repeat/panel/index;
+                        panel_number repeat/panel/number;
+                        settings python:view.settings;
+                        panel_class python:view.computed_panel_class(panel)"
+                         tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number) + ' ' + panel_class">
+                    <div class="c-panel__main c-panel__main--centered"
+                             tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
+
+                        <div class="c-panel__header"
+                            tal:condition="python:settings['panel_page_mode'] == 'edit' and view.is_editable()">
+                            <div class="c-panel__controls">
+                                <a class="c-panel__control c-panel__icon"
+                                     tal:define="edit_url python:context.absolute_url() + '/@@panel-edit?section=' + settings['panel_page_section'] + '&panel=' + str(panel_index)"
+                                     tal:attributes="href python:view.panel_widget_action(edit_url)">
+                                    <svg class="o-icon o-icon--md o-icon__ui--pen-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget-view')(widget_type=widget['type'], widget_mode=view_mode, data_set={'id': widget['id']})">
+                            Rendered Content Widget
+                        </tal:content-widget>
+                    </div>
+                </section>
+                <div class="c-panel-factory c-panel-factory--default"
+                         tal:define="panel_number repeat/panel/number"
+                         tal:attributes="class python:'c-panel-factory c-panel-factory--' + str(panel_number)"
+                    tal:condition="python:settings['panel_page_mode'] == 'edit' and view.is_editable()">
+                    <a class="c-panel-factory__action" href="#add-new-panel"
+                             tal:attributes="href python:context.absolute_url() + '/@@panel-create?index=' + str(panel_number) + '&section=' + settings['panel_page_section']">
+                        <svg class="o-icon o-icon--md o-icon__ui--add-dims">
+                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--add"></use>
+                        </svg>
+                    </a>
+                </div>
+            </tal:panels>
+        </tal:panels>
+    </div>
+</tal:panels>

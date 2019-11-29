@@ -4,9 +4,9 @@
    i18n:domain="ade25.panelpage" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">Page</property>
+  <property name="title" i18n:translate="">Panel Page</property>
   <property name="description"
-    i18n:translate="">A modular ppage with panel layout</property>
+    i18n:translate="">A modular page with panel layout</property>
   <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
   <property name="factory">ade25.panelpage.page</property>
   <property name="global_allow">True</property>
@@ -14,9 +14,6 @@
   <property name="allowed_content_types">
     <element value="Image" />
     <element value="File" />
-    <element value="ade25.panelpage.panel" />
-    <element value="ade25.panelpage.basepanel" />
-    <element value="ade25.panelpage.textpanel" />
   </property>
   <property name="allow_discussion">False</property>
 
@@ -27,16 +24,17 @@
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />
      <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
-     <element value="ade25.panelpage.panelpage.IPanelPage" />
-     <element value="ade25.panelpage.pagelayout.IPanelPageLayout" />
+     <element value="ade25.panelpage.interfaces.IPanelPage" />
+      <element value="ade25.panelpage.behaviors.storage.IContentPanelStorage" />
+      <element value="ade25.panelpage.interfaces.IContentPanelStorageSupport" />
    </property>
 
   <!-- View information -->
   <property name="link_target"></property>
   <property name="immediate_view">view</property>
-  <property name="default_view">view</property>
+  <property name="default_view">page-view</property>
   <property name="view_methods">
-   <element value="view"/>
+   <element value="page-view"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>

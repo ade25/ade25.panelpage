@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-overlay c-panel-overlay--active">
+            <div class="c-panel-overlay__content">
+                <a class="c-panel-overlay__action" href="@@panel-page"
+                    tal:attributes="href python:context.absolute_url() + '/@@panel-page'">
+                    <svg class="o-icon o-icon--size-3 o-icon--circle o-icon__ui--close-dims">
+                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--close"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor"
+                     tal:define="content_panel python:view.content_panel();
+                    settings python:view.settings">
+
+                    <section class="c-panel-editor__section">
+                        <div class="c-widget-editor" tal:define="widget_id python:view.content_panel_widget()['id'];
+                                widget_configuration python:view.widget_configuration();
+                                settings python:view.settings;">
+
+                            <div class="c-panel__section" tal:condition="python:settings['debug_mode'] == 'on'">
+                                <div class="c-alert c-alert--default" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
+                                    <h6>Debug Information</h6>
+                                    <div tal:content="python:view.panel_editor()"></div>
+                                </div>
+                            </div>
+
+                            <div class="c-panel__main" tal:define="widget python:content_panel['widget'];widget_type python:str(widget['type'])">
+                                <tal:content-widget tal:replace="structure python:context.restrictedTraverse('@@content-widget')(widget_type=widget['type'], widget_mode='edit', data_set={'panel': content_panel, 'page_section': settings['panel_page_section'], 'page_panel': settings['panel_page_item']})">
+                                    Rendered Content Widget
+                                </tal:content-widget>
+                            </div>
+                        </div>
+                        <div class="c-panel-editor__action">
+
+                        </div>
+                    </section>
+
+            </div>
+        </div>
+
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

@@ -1,41 +1,121 @@
-from five import grok
+# -*- coding: utf-8 -*-
+"""Module providing panel page vocabularies"""
+from binascii import b2a_qp
+
+from zope.interface import implementer
 from zope.schema. interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 from ade25.panelpage import MessageFactory as _
 
 
-class AvailableLayoutsVocabulary(object):
-    grok.implements(IVocabularyFactory)
+@implementer(IVocabularyFactory)
+class ContentPanelLayoutVocabularyFactory(object):
 
     def __call__(self, context):
-        TYPES = {
-            _(u"List"): 'pp-list-base',
-            _(u"Summary"): 'pp-list-summary',
-            _(u"Media"): 'pp-list-media'
+        widgets = self.get_display_options()
+        terms = [
+            self.generate_simple_term(widget_key, widget_term)
+            for widget_key, widget_term in widgets.items()
+        ]
+        return SimpleVocabulary(terms)
+
+    @staticmethod
+    def generate_simple_term(widget, widget_term):
+        term = SimpleTerm(
+            value=widget,
+            token=b2a_qp(widget.encode('utf-8')),
+            title=_(widget_term)
+        )
+        return term
+
+    @staticmethod
+    def get_display_options():
+        display_options = {
+            'full-width': _(u'Full width container'),
+            'container': _(u'Centered constrained container'),
+            'container-centered':
+                _(u'Full width container with centered constrained content'),
         }
-        return SimpleVocabulary([SimpleTerm(value, title=title)
-                                for title, value
-                                in TYPES.iteritems()])
-grok.global_utility(AvailableLayoutsVocabulary,
-                    name=u"ade25.panelpage.AvailableLayouts")
+        return display_options
 
 
-class PanelPageComponentsVocabulary(object):
-    grok.implements(IVocabularyFactory)
+ContentPanelLayoutVocabulary = ContentPanelLayoutVocabularyFactory()
+
+
+@implementer(IVocabularyFactory)
+class ContentPanelDesignVocabularyFactory(object):
 
     def __call__(self, context):
-        TYPES = {
-            _(u"Text"): 'text',
-            _(u"Rich Text"): 'rich-text',
-            _(u"Image"): 'image',
-            _(u"Panel"): 'panel',
-            _(u"Listing"): 'listing',
-            _(u"Alias"): 'alias'
+        widgets = self.get_display_options()
+        terms = [
+            self.generate_simple_term(widget_key, widget_term)
+            for widget_key, widget_term in widgets.items()
+        ]
+        return SimpleVocabulary(terms)
+
+    @staticmethod
+    def generate_simple_term(widget, widget_term):
+        term = SimpleTerm(
+            value=widget,
+            token=b2a_qp(widget.encode('utf-8')),
+            title=_(widget_term)
+        )
+        return term
+
+    @staticmethod
+    def get_display_options():
+        display_options = {
+            'default': _(u'Default'),
+            'primary': _(u'Primary Background'),
+            'secondary': _(u'Secondary Background')
         }
-        return SimpleVocabulary([SimpleTerm(value, title=title)
-                                for title, value
-                                in TYPES.iteritems()])
-grok.global_utility(PanelPageComponentsVocabulary,
-                    name=u"ade25.panelpage.PageComponents")
+        return display_options
+
+
+ContentPanelDesignVocabulary = ContentPanelDesignVocabularyFactory()
+
+
+@implementer(IVocabularyFactory)
+class ContentPanelDisplayVocabularyFactory(object):
+
+    def __call__(self, context):
+        widgets = self.get_display_options()
+        terms = [
+            self.generate_simple_term(widget_key, widget_term)
+            for widget_key, widget_term in widgets.items()
+        ]
+        return SimpleVocabulary(terms)
+
+    @staticmethod
+    def generate_simple_term(widget, widget_term):
+        term = SimpleTerm(
+            value=widget,
+            token=b2a_qp(widget.encode('utf-8')),
+            title=_(widget_term)
+        )
+        return term
+
+    @staticmethod
+    def get_display_options():
+        display_options = {
+            'u-display--none': _(u'Hidden'),
+            'u-display--block|u-display-sm--none': _(u'Hidden from 576px'),
+            'u-display--block|u-display-md--none': _(u'Hidden from 768px'),
+            'u-display--block|u-display-lg--none': _(u'Hidden from 992px'),
+            'u-display--block|u-display-xl--none': _(u'Hidden from 1200px'),
+            'u-display--block|u-display-xxl--none': _(u'Hidden from 1400px'),
+            'u-display--block|u-display-xxxl--none': _(u'Hidden from 1600px'),
+            'u-display--block': _(u'Visible'),
+            'u-display--none|u-display-sm--block': _(u'Visible from 576px'),
+            'u-display--none|u-display-md--block': _(u'Visible from 768px'),
+            'u-display--none|u-display-lg--block': _(u'Visible from 992px'),
+            'u-display--none|u-display-xl--block': _(u'Visible from 1200px'),
+            'u-display--none|u-display-xxl--block': _(u'Visible from 1400px'),
+            'u-display--none|u-display-xxxl--block': _(u'Visible from 1600px'),
+        }
+        return display_options
+
+
+ContentPanelDisplayVocabulary = ContentPanelDisplayVocabularyFactory()

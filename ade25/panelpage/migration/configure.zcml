@@ -1,0 +1,23 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:browser="http://namespaces.zope.org/browser"
+        xmlns:z3c="http://namespaces.zope.org/z3c"
+        i18n_domain="ade25.panelpage">
+
+    <!-- Control panels -->
+    <browser:page
+            name="panel-page-content-migration"
+            for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+            class="ade25.panelpage.migration.content.RemoveLegacyContent"
+            permission="cmf.ManagePortal"
+            template="content.pt"
+    />
+
+    <browser:page
+            name="panel-page-content-migration-runner"
+            for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+            class="ade25.panelpage.migration.content.RemoveLegacyContentRunner"
+            permission="cmf.ManagePortal"
+    />
+
+</configure>

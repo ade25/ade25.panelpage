@@ -1,0 +1,133 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:i18n="http://namespaces.zope.org/i18n"
+        xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+        xmlns:plone="http://namespaces.plone.org/plone"
+        xmlns:browser="http://namespaces.zope.org/browser"
+        xmlns:five="http://namespaces.zope.org/five"
+        xmlns:zcml="http://namespaces.zope.org/zcml"
+        i18n_domain="ade25.panelpage">
+
+    <permission
+            id="ade25.panelpage.managePanels"
+            title="Ade25 Panel Page: Manage Panels"
+    />
+
+
+    <browser:page
+        for="ade25.panelpage.page.IPage"
+        name="page-view"
+        class=".page.PageView"
+        template="page.pt"
+        permission="zope2.View"
+        layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.interfaces.IPanelPage"
+            name="panel-page-data"
+            class=".panels.PanelPageDataJSON"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-page"
+            class=".panels.PanelView"
+            template="panel-page.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panels"
+            class=".panels.ContentPanelList"
+            template="panels.pt"
+            permission="zope2.View"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel"
+            class=".panel.ContentPanel"
+            template="panel.pt"
+            permission="zope2.View"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-create"
+            class=".panel.ContentPanelCreate"
+            template="panel-create.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-edit"
+            class=".panel.ContentPanelEdit"
+            template="panel-edit.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-delete"
+            class=".panel.ContentPanelDelete"
+            template="panel-delete.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-settings"
+            class=".panel.ContentPanelSettingsFormView"
+            template="panel-settings.pt"
+            permission="cmf.ModifyPortalContent"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <!-- Panel default configuration view -->
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panel-settings-default"
+            class=".panel.PanelDefaultSettings"
+            permission="cmf.ManagePortal"
+            layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="content-panel-settings"
+            class=".factory.ContentPanelsEditFormView"
+            template="factory.pt"
+            permission="cmf.ManagePortal"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <!-- Content Panel Editor -->
+    <browser:page
+        for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+        name="panel-editor-toolbar"
+        class=".editor.PanelEditorToolbar"
+        template="editor-toolbar.pt"
+        permission="zope2.View"
+        layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-editor-reset"
+            class=".editor.PanelEditorReset"
+            permission="cmf.ModifyPortalContent"
+            layer="ade25.panelpage.interfaces.IAde25PanelPageLayer"
+    />
+
+</configure>

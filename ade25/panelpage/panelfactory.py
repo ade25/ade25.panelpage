@@ -6,8 +6,9 @@ from Products.statusmessages.interfaces import IStatusMessage
 from five import grok
 from plone import api
 from plone.dexterity.interfaces import IDexterityFTI
-from plone.directives import form
-from z3c.form import button
+from plone.autoform import directives
+from plone.supermodel import model
+from z3c.form import button, form
 from zope import schema
 from zope.component import getUtility
 from zope.lifecycleevent import modified
@@ -26,7 +27,7 @@ from ade25.panelpage.panelpage import IPanelPage
 from ade25.panelpage import MessageFactory as _
 
 
-class PanelHeadingEditForm(form.SchemaEditForm):
+class PanelHeadingEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-heading')
@@ -94,7 +95,7 @@ class PanelHeadingEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelSubHeadingEditForm(form.SchemaEditForm):
+class PanelSubHeadingEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-subheading')
@@ -169,7 +170,7 @@ class PanelSubHeadingEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelAbstractEditForm(form.SchemaEditForm):
+class PanelAbstractEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-abstract')
@@ -237,7 +238,7 @@ class PanelAbstractEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelTextEditForm(form.SchemaEditForm):
+class PanelTextEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-text')
@@ -312,7 +313,7 @@ class PanelTextEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelRichTextEditForm(form.SchemaEditForm):
+class PanelRichTextEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-richtext')
@@ -380,7 +381,7 @@ class PanelRichTextEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelImageEditForm(form.SchemaEditForm):
+class PanelImageEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-image')
@@ -448,7 +449,7 @@ class PanelImageEditForm(form.SchemaEditForm):
         return data
 
 
-class IPanelBaseEdit(form.Schema):
+class IPanelBaseEdit(model.Schema):
 
     title = schema.TextLine(
         title=_(u"Content Panel Title"),
@@ -460,7 +461,7 @@ class IPanelBaseEdit(form.Schema):
     )
 
 
-class PanelBaseEditForm(form.SchemaEditForm):
+class PanelBaseEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-base-edit')
@@ -534,7 +535,7 @@ class PanelBaseEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelAliasEditForm(form.SchemaEditForm):
+class PanelAliasEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-alias')
@@ -602,7 +603,7 @@ class PanelAliasEditForm(form.SchemaEditForm):
         return data
 
 
-class PanelListingEditForm(form.SchemaEditForm):
+class PanelListingEditForm(form.EditForm):
     grok.context(IPanelPage)
     grok.require('cmf.AddPortalContent')
     grok.name('panel-listing')

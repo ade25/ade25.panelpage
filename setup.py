@@ -25,14 +25,10 @@ setup(name='ade25.panelpage',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'setuptools',
+          'babel',
           'collective.beaker',
           'plone.api',
-          'plone.app.dexterity [grok, relations]',
-          'plone.app.relationfield',
-          'plone.namedfile [blobs]',
-          'plone.formwidget.querystring',
-          'plone.formwidget.contenttree',
+          'setuptools',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

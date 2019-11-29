@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.panelpage">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-editor" tal:define="settings python:view.settings"
+            tal:condition="python:view.is_panel_page_manager()">
+            <div class="c-panel-editor__header">
+                <div class="c-toolbar c-toolbar--primary">
+                    <div class="c-toolbar__content">
+                        <div class="c-toolbar__item">
+                            <div class="c-toolbar__title">
+                                Editing Panel Page Content
+                            </div>
+                        </div>
+                        <div class="c-toolbar__item">
+                            <div class="c-toolbar__actions">
+                                <a class="c-toolbar__action c-button c-button--default" href="/@@panels-cancel"
+                                         tal:attributes="href python:context.absolute_url()" i18n:translate="">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="c-panel__section" tal:condition="python:settings['debug_mode'] == 'on'">
+                <div class="c-alert c-alert--default">
+                    <h6>Debug Information</h6>
+                    <div tal:content="python:view.panel_editor()"></div>
+                </div>
+            </div>
+
+            <div class="o-page__main" tal:define="context_uid context/UID">
+
+                <section class="o-page__section" tal:condition="python:view.display_page_section('header')">
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Header</div>
+                    </div>
+                    <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='header', mode='edit')"></tal:content-panels>
+                </section>
+
+                <section class="o-page__section" tal:condition="python:view.display_page_section('main')">
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Main Content Section</small></div>
+                    </div>
+                    <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='main', mode='edit')"></tal:content-panels>
+                </section>
+
+                <section class="o-page__section" tal:condition="python:view.display_page_section('footer')">
+                    <div class="c-widget-selector__header">
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Footer</div>
+                    </div>
+                    <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='footer', mode='edit')"></tal:content-panels>
+                </section>
+            </div>
+
+        </div>
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
+

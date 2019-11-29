@@ -1,0 +1,19 @@
+<div class="c-panel-editor__header" tal:condition="python:view.show_toolbar()">
+    <div class="c-toolbar c-toolbar--primary">
+        <div class="c-toolbar__content">
+            <div class="c-toolbar__item">
+                <div class="c-toolbar__title" i18n:translate="">
+                    Panel Page
+                </div>
+            </div>
+            <div class="c-toolbar__item">
+                <div class="c-toolbar__actions">
+                    <a class="c-toolbar__action c-button c-button--default" href="/@@panel-page"
+                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

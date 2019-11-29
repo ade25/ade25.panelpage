@@ -1,0 +1,21 @@
+{
+  "id": "${id}",
+  "timestamp": "${timestamp}",
+  "_runtime": "0.0000059604644775390625",
+  "created": "${created}",
+  "updated": "${created}",
+  "state": "Published",
+  "mode": "view",
+  "layout": "full-width",
+  "display": "u-display--block",
+  "design": "default",
+  "css_classes": "",
+  "widget": {
+    "id": "${widget_id}",
+    "type": "${widget_type}",
+    "layout": "full-width",
+    "css_classes": "",
+    "settings": {},
+    "config": {}
+  }
+}

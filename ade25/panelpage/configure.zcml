@@ -11,8 +11,12 @@
   <!-- Include configuration for dependencies listed in setup.py -->
   <includeDependencies package="." />
 
+    <include package=".behaviors" />
+    <include package=".browser" />
+    <include package=".migration" />
+
   <!-- Grok the package to initialize schema interfaces and content classes -->
-  <grok:grok package="." />
+  <!--<grok:grok package="." />-->
 
   <include package="plone.app.relationfield" />
 
@@ -28,36 +32,40 @@
        in Plone -->
   <genericsetup:registerProfile
       name="default"
-      title="Ade25 PanelPage - Manage modular pages with blocks and panels"
+      title="Ade25 PanelPage - Manage modular page layouts"
       directory="profiles/default"
-      description="Extension profile for Manage modular pages with blocks and panels"
+      description="Support for modular page layouts with widgets and panels"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Uninstall Ade25 PanelPage"
+      directory="profiles/default"
+      description="Remove support for modular page layouts with widgets and panels"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+  />
 
-  <!-- -*- extra stuff goes here -*- -->
+    <include file="upgrades.zcml" />
 
-  <plone:behavior
-    title="Panel Page"
-    description="Enable panel page layout engine"
-    provides="ade25.panelpage.panelpage.IPanelPage"
-    />
+    <!-- Panel tool providing crud operations -->
+    <utility
+        factory=".tool.PanelTool"
+        provides=".interfaces.IPanelTool"/>
 
-  <plone:behavior
-    title="Panel Page Layout"
-    description="Storage for Panel Page Layout Ordering"
-    provides="ade25.panelpage.pagelayout.IPanelPageLayout"
-    />
+    <utility
+            factory=".tool.PanelEditorTool"
+            provides=".interfaces.IPanelEditor"/>
+  <!-- Vocabularies -->
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelLayoutOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelLayoutVocabulary" />
 
-  <plone:behavior
-    title="Panel Content"
-    description="Panel basic content schema"
-    provides="ade25.panelpage.panelcontent.IPanelContent"
-    />
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelDesignOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelDesignVocabulary" />
 
-  <plone:behavior
-    title="Panel Page Content Listing"
-    description="Use a collection/catalog query as block content"
-    provides="ade25.panelpage.blocklisting.IContentBlockListing"
-    />
+    <utility
+        name="ade25.panelpage.vocabularies.ContentPanelDisplayOptions"
+        component="ade25.panelpage.vocabulary.ContentPanelDisplayVocabulary" />
 
 </configure>
