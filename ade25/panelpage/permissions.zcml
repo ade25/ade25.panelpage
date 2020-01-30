@@ -1,0 +1,13 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:i18n="http://namespaces.zope.org/i18n"
+        i18n_domain="ade25.panelpage">
+
+    <!-- Define new permissions -->
+
+    <permission
+            id="ade25.panelpage.ManageContentPanels"
+            title="Ade25 Panel Page: Manage Panels"
+    />
+
+</configure>

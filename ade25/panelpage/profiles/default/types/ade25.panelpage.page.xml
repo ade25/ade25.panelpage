@@ -22,11 +22,11 @@
   <property name="klass">ade25.panelpage.page.Page</property>
 
   <property name="behaviors">
-     <element value="plone.app.content.interfaces.INameFromTitle" />
-     <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
-     <element value="ade25.panelpage.interfaces.IPanelPage" />
-      <element value="ade25.panelpage.behaviors.storage.IContentPanelStorage" />
-      <element value="ade25.panelpage.interfaces.IContentPanelStorageSupport" />
+     <element value="plone.namefromtitle" />
+     <element value="plone.basic"/>
+     <element value="ade25.panelpage" />
+      <element value="ade25.contentpanels" />
+      <element value="ade25.contentpanelstorage" />
    </property>
 
   <!-- View information -->

@@ -8,27 +8,31 @@
     <include package="plone.behavior" file="meta.zcml"/>
 
     <plone:behavior
+            name="ade25.panelpage"
             title="Panel Page"
             description="Panel Page Marker Interface"
             provides="ade25.panelpage.interfaces.IPanelPage"
     />
 
+    <!-- DEPRECATED
     <plone:behavior
             title="Panel Page Enabled"
             description="Enable panel page layout engine"
             provides="ade25.panelpage.interfaces.IPanelPageEnabled"
     />
 
-    <plone:behavior
+
+        <plone:behavior
             title="Panel Page Layout"
             description="Adds a hidden field to store panel configuration and layout"
             provides=".layout.IPanelPageLayout"
             factory=".layout.PanelPageLayout"
             for="plone.dexterity.interfaces.IDexterityContent"
             marker="ade25.panelpage.interfaces.IPanelPage"
-    />
+    />-->
 
     <plone:behavior
+            name="ade25.contentpanels"
             title="Content Panel Storage Support"
             description="Enable panel page content layout engine"
             provides="ade25.panelpage.interfaces.IContentPanelStorageSupport"
@@ -36,6 +40,7 @@
     />
 
     <plone:behavior
+            name="ade25.contentpanelstorage"
             title="Content Panel Storage"
             description="Adds hidden content panel storage"
             provides="ade25.panelpage.behaviors.storage.IContentPanelStorage"
