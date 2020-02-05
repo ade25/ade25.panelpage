@@ -195,6 +195,16 @@ class ContentPanelList(BrowserView):
         return css_class
 
     @staticmethod
+    def computed_panel_content_class(content_panel):
+        css_class = "c-panel__main"
+        layout = content_panel.get('layout', 'full-width')
+        if layout.startswith('container'):
+            css_class += " c-panel__main--container"
+        if layout.endswith('centered'):
+            css_class += " c-panel__main--centered"
+        return css_class
+
+    @staticmethod
     def panel_widget_action(url):
         return addTokenToUrl(url)
 

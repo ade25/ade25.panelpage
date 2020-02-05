@@ -21,7 +21,8 @@
                         panel_class python:view.computed_panel_class(panel)"
                          tal:attributes="class python:'c-panel c-panel--editable c-panel--' + str(panel_number) + ' ' + panel_class">
                     <div class="c-panel__main c-panel__main--centered"
-                             tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])">
+                             tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type'])"
+                        tal:attributes="class python:view.computed_panel_content_class(panel)">
 
                         <div class="c-panel__header"
                             tal:condition="python:settings['panel_page_mode'] == 'edit' and view.is_editable()">
