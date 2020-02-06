@@ -51,6 +51,15 @@
 
     <browser:page
             for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
+            name="panel-listing"
+            class=".panels.ContentPanelOverview"
+            template="panels-overview.pt"
+            permission="zope2.View"
+            layer="..interfaces.IAde25PanelPageLayer"
+    />
+
+    <browser:page
+            for="ade25.panelpage.behaviors.storage.IContentPanelStorage"
             name="panel"
             class=".panel.ContentPanel"
             template="panel.pt"

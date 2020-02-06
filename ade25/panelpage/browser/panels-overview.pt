@@ -1,0 +1,178 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      lang="en"
+         metal:use-macro="context/main_template/macros/master"
+         i18n:domain="ade25.sitecontent">
+<body>
+
+<metal:main fill-slot="main">
+    <metal:content-core define-macro="main">
+
+        <div class="c-panel-overlay c-panel-overlay--active"
+                 tal:define="settings python:view.settings;">
+            <div class="c-panel-overlay__content">
+                <a class="c-panel-overlay__action" href="@@panel-page"
+                         tal:attributes="href python:context.absolute_url()">
+                    <svg class="o-icon o-icon--size-3 o-icon--circle o-icon__ui--close-dims">
+                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--close"></use>
+                    </svg>
+                </a>
+            </div>
+            <section class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor">
+                <section class="c-panel-editor__section">
+                    <div class="c-widget-editor" >
+                        <div class="c-panel__main">
+
+                            <div class="c-panel__section" tal:condition="python:settings['debug_mode'] == 'on'">
+                                <div class="c-alert c-alert--default">
+                                    <h6>Debug Information</h6>
+                                    <div tal:content="python:view.panel_editor()"></div>
+                                </div>
+                            </div>
+
+                            <div class="c-widget-editor__item c-widget-editor__item--reverse">
+                                <div class="c-widget-editor__item-aside">
+                                    <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                        <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                    </svg>
+                                </div>
+                                <div class="c-widget-editor__item-main">
+                                    <h5 class="c-widget-editor__item-title">
+                                        Panel Page Overview
+                                    </h5>
+                                    <small>Listing of available panels and the assigned content widgets</small>
+                                </div>
+                                <div class="c-widget-editor__item-actions">
+
+                                </div>
+                            </div>
+
+
+                            <section class="c-panel-editor__section">
+                                <div class="o-page__section">
+                                    <div class="c-widget-selector__header">
+                                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Header</small></div>
+                                    </div>
+                                    <div class="c-alert c-alert--default" tal:condition="python:not view.has_content_panels(page_section='header')">
+                                        There are no content panels assigned to this page section.
+                                    </div>
+                                    <div class="c-widget-editor__nodes" tal:condition="python:view.has_content_panels(page_section='header')">
+                                        <tal:panels tal:repeat="panel python:view.content_panels(page_section='header')">
+                                            <div tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type']);settings python:view.widget_configuration(widget_type);panel_idx repeat/panel/index">
+                                                <div class="c-widget-editor__item c-widget-editor__item--primary">
+                                                    <div class="c-widget-editor__item-aside">
+                                                        <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-main c-widget-editor__item-main--centered">
+                                                        <h5 class="c-widget-editor__item-title">
+                                                            <span tal:replace="repeat/panel/number"></span> -
+                                                            <span tal:content="python:settings['title']"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-actions">
+                                                        <a class="c-button c-button--default c-widget-editor__item-link"
+                                                                 tal:define="action python:view.widget_edit_action('main', panel_idx)"
+                                                                 tal:attributes="href python:view.panel_widget_action(action)">
+                                                            <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
+                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tal:panels>
+                                    </div>
+                                </div>
+
+                                <div class="o-page__section">
+                                    <div class="c-widget-selector__header">
+                                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Main Content Section</small></div>
+                                    </div>
+                                    <div class="c-alert c-alert--default" tal:condition="python:not view.has_content_panels(page_section='main')">
+                                        There are no content panels assigned to this page section.
+                                    </div>
+                                    <div class="c-widget-editor__nodes" tal:condition="python:view.has_content_panels(page_section='main')">
+                                        <tal:panels tal:repeat="panel python:view.content_panels(page_section='main')">
+                                            <div tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type']);settings python:view.widget_configuration(widget_type);panel_idx repeat/panel/index">
+                                                <div class="c-widget-editor__item c-widget-editor__item--primary">
+                                                    <div class="c-widget-editor__item-aside">
+                                                        <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-main c-widget-editor__item-main--centered">
+                                                        <h5 class="c-widget-editor__item-title">
+                                                            <span tal:replace="repeat/panel/number"></span> -
+                                                            <span tal:content="python:settings['title']"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-actions">
+                                                        <a class="c-button c-button--default c-widget-editor__item-link"
+                                                            tal:define="action python:view.widget_edit_action('main', panel_idx)"
+                                                            tal:attributes="href python:view.panel_widget_action(action)">
+                                                            <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
+                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tal:panels>
+                                    </div>
+                                </div>
+
+                                <div class="o-page__section">
+                                    <div class="c-widget-selector__header">
+                                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Footer</small></div>
+                                    </div>
+                                    <div class="c-alert c-alert--default" tal:condition="python:not view.has_content_panels(page_section='footer')">
+                                        There are no content panels assigned to this page section.
+                                    </div>
+                                    <div class="c-widget-editor__nodes" tal:condition="python:view.has_content_panels(page_section='footer')">
+                                        <tal:panels tal:repeat="panel python:view.content_panels(page_section='footer')">
+                                            <div tal:define="widget python:view.panel_widget(panel);widget_type python:str(widget['type']);settings python:view.widget_configuration(widget_type);panel_idx repeat/panel/index">
+                                                <div class="c-widget-editor__item c-widget-editor__item--primary">
+                                                    <div class="c-widget-editor__item-aside">
+                                                        <svg class="o-icon o-icon--size-3 o-icon__ui--dots-dims">
+                                                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--dots"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-main c-widget-editor__item-main--centered">
+                                                        <h5 class="c-widget-editor__item-title">
+                                                            <span tal:replace="repeat/panel/number"></span> -
+                                                            <span tal:content="python:settings['title']"></span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="c-widget-editor__item-actions">
+                                                        <a class="c-button c-button--default c-widget-editor__item-link"
+                                                                 tal:define="action python:view.widget_edit_action('main', panel_idx)"
+                                                                 tal:attributes="href python:view.panel_widget_action(action)">
+                                                            <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
+                                                                <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tal:panels>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+        </div>
+
+
+    </metal:content-core>
+</metal:main>
+
+</body>
+</html>
