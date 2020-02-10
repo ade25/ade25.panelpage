@@ -76,7 +76,7 @@
                                                     </div>
                                                     <div class="c-widget-editor__item-actions">
                                                         <a class="c-button c-button--default c-widget-editor__item-link"
-                                                                 tal:define="action python:view.widget_edit_action('main', panel_idx)"
+                                                                 tal:define="action python:view.widget_edit_action('header', panel_idx)"
                                                                  tal:attributes="href python:view.panel_widget_action(action)">
                                                             <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
                                                                 <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
@@ -150,7 +150,7 @@
                                                     </div>
                                                     <div class="c-widget-editor__item-actions">
                                                         <a class="c-button c-button--default c-widget-editor__item-link"
-                                                                 tal:define="action python:view.widget_edit_action('main', panel_idx)"
+                                                                 tal:define="action python:view.widget_edit_action('footer', panel_idx)"
                                                                  tal:attributes="href python:view.panel_widget_action(action)">
                                                             <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
                                                                 <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
