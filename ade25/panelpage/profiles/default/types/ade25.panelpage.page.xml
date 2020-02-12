@@ -27,6 +27,7 @@
      <element value="ade25.panelpage" />
       <element value="ade25.contentpanels" />
       <element value="ade25.contentpanelstorage" />
+      <element value="ade25.contentwidgets" />
    </property>
 
   <!-- View information -->

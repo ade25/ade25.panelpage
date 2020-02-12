@@ -195,6 +195,148 @@ class ContentPanelList(BrowserView):
         return css_class
 
     @staticmethod
+    def computed_panel_content_class(content_panel):
+        css_class = "c-panel__main"
+        layout = content_panel.get('layout', 'full-width')
+        if layout.startswith('container'):
+            css_class += " c-panel__main--container"
+        if layout.endswith('centered'):
+            css_class += " c-panel__main--centered"
+        return css_class
+
+    @staticmethod
+    def panel_widget_action(url):
+        return addTokenToUrl(url)
+
+
+class ContentPanelOverview(BrowserView):
+    """ Embeddable panel list """
+    def __call__(self,
+                 identifier=None,
+                 section='main',
+                 mode='view',
+                 debug="off",
+                 **kw):
+        self.params = {
+            'panel_page_identifier': identifier,
+            'panel_page_section': section,
+            'panel_page_mode': mode,
+            'debug_mode': debug
+        }
+        return self.render()
+
+    def render(self):
+        return self.index()
+
+    @property
+    def settings(self):
+        return self.params
+
+    @property
+    def panel_tool(self):
+        tool = getUtility(IPanelTool)
+        return tool
+
+    @property
+    def widget_tool(self):
+        tool = getUtility(IContentWidgetTool)
+        return tool
+
+    @staticmethod
+    def is_editable():
+        editable = False
+        if not api.user.is_anonymous():
+            editable = True
+        return editable
+
+    def available_widgets(self):
+        widgets = self.widget_tool.section_widgets(
+            self.settings["panel_page_section"]
+        )
+        return widgets
+
+    def stored_panels(self, page_section='main'):
+        context = aq_inner(self.context)
+        identifier = self.settings['panel_page_identifier']
+        if not identifier:
+            identifier = context.UID()
+        panel_data = self.panel_tool.read(
+            identifier,
+            section=page_section
+        )
+        return panel_data
+
+    def has_content_panels(self, page_section):
+        return len(self.stored_panels(page_section)) > 0
+
+    def content_panels(self, page_section):
+        content_panels = [
+            json.loads(panel) for panel in self.stored_panels(page_section)
+        ]
+        return content_panels
+
+    @staticmethod
+    def panel_widget(panel):
+        widget_data = panel['widget']
+        return widget_data
+
+    @staticmethod
+    def widget_configuration(widget_type):
+        widget_tool = getUtility(IContentWidgetTool)
+        widget_id = widget_type
+        try:
+            configuration = widget_tool.widget_setup(
+                widget_id
+            )
+        except KeyError:
+            configuration = {
+                "pkg": "PKG Undefined",
+                "id": widget_id,
+                "name": widget_id.replace('-', ' ').title(),
+                "title": widget_id.replace('-', ' ').title(),
+                "category": "more",
+                "type": "base"
+            }
+        return configuration
+
+    def widget_edit_action(self, section, panel):
+        context = aq_inner(self.context)
+        url = '{0}/@@panel-edit?section={1}&panel={2}'.format(
+            context.absolute_url(),
+            section,
+            panel
+        )
+        return url
+
+    def widget_delete_action(self, section, panel):
+        context = aq_inner(self.context)
+        url = '{0}/@@panel-delete?section={1}&panel={2}'.format(
+            context.absolute_url(),
+            section,
+            panel
+        )
+        return url
+
+    @staticmethod
+    def computed_panel_class(content_panel):
+        css_class = 'c-panel--{0} c-panel--{1} u-display--{2}'.format(
+            content_panel.get('layout', "full-width"),
+            content_panel.get("design", "default"),
+            content_panel.get("display", "block")
+        )
+        return css_class
+
+    @staticmethod
+    def computed_panel_content_class(content_panel):
+        css_class = "c-panel__main"
+        layout = content_panel.get('layout', 'full-width')
+        if layout.startswith('container'):
+            css_class += " c-panel__main--container"
+        if layout.endswith('centered'):
+            css_class += " c-panel__main--centered"
+        return css_class
+
+    @staticmethod
     def panel_widget_action(url):
         return addTokenToUrl(url)
 

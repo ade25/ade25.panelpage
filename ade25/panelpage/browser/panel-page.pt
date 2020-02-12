@@ -43,7 +43,7 @@
 
                 <section class="o-page__section" tal:condition="python:view.display_page_section('header')">
                     <div class="c-widget-selector__header">
-                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Header</div>
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Header</small></div>
                     </div>
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='header', mode='edit')"></tal:content-panels>
                 </section>
@@ -57,7 +57,7 @@
 
                 <section class="o-page__section" tal:condition="python:view.display_page_section('footer')">
                     <div class="c-widget-selector__header">
-                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Footer</div>
+                        <div class="c-widget-selector__headline" i18n:translate="">Content Panels <small>Page Footer</small></div>
                     </div>
                     <tal:content-panels tal:replace="structure python:context.restrictedTraverse('@@content-panels')(identifier=context_uid, section='footer', mode='edit')"></tal:content-panels>
                 </section>
