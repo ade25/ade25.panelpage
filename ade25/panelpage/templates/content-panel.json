@@ -6,14 +6,14 @@
   "updated": "${created}",
   "state": "Published",
   "mode": "view",
-  "layout": "full-width",
+  "layout": "container-centered",
   "display": "u-display--block",
   "design": "default",
   "css_classes": "",
   "widget": {
     "id": "${widget_id}",
     "type": "${widget_type}",
-    "layout": "full-width",
+    "layout": "container-centered",
     "css_classes": "",
     "settings": {},
     "config": {}
