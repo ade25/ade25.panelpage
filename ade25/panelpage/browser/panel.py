@@ -2,6 +2,7 @@
 """Module providing panel views"""
 import json
 import os
+import pickle
 import time
 import datetime
 import uuid as uuid_tool
@@ -279,12 +280,26 @@ class ContentPanelEdit(BrowserView):
     def widget_action_url(action_url):
         return addTokenToUrl(action_url)
 
+    @staticmethod
+    def _validate_widget_content(content_data):
+        try:
+            data_hash = pickle.dumps(content_data)
+            if data_hash:
+                return content_data
+        except (pickle.PicklingError, TypeError):
+            # Return sensible error message and abort
+            pass
+
     def _update_panel_editor(self, settings):
         context = aq_inner(self.context)
         context_uid = context.UID()
         tool = getUtility(IPanelEditor)
         if settings["cleanup_mode"]:
             tool.remove(context_uid)
+        stored_widget_content = self.content_widget_data(
+            self.content_panel_widget()['id']
+        )
+        widget_content = self._validate_widget_content(stored_widget_content)
         return tool.add(
             key=context_uid,
             data={
@@ -292,9 +307,7 @@ class ContentPanelEdit(BrowserView):
                 'content_section_panel': settings['panel_page_item'],
                 'panel': self.content_panel(),
                 'widget_id': self.content_panel_widget()['id'],
-                'widget_content': self.content_widget_data(
-                    self.content_panel_widget()['id']
-                ),
+                'widget_content': widget_content,
                 'widget_settings': self.widget_settings()
             }
         )

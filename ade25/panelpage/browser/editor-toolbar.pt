@@ -1,4 +1,5 @@
-<div class="c-panel-editor__header" tal:condition="python:view.show_toolbar()">
+<div class="c-panel-editor__header" tal:condition="python:view.show_toolbar()"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
     <div class="c-toolbar c-toolbar--primary">
         <div class="c-toolbar__content">
             <div class="c-toolbar__item">
@@ -9,8 +10,18 @@
             <div class="c-toolbar__item">
                 <div class="c-toolbar__actions">
                     <a class="c-toolbar__action c-button c-button--default" href="/@@panel-page"
-                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'" i18n:translate="">
-                        Edit
+                             tal:attributes="href python:context.absolute_url() + '/@@panel-page'">
+                        <span class="u-visibility--hidden" i18n:translate="">Edit</span>
+                        <svg class="o-icon o-icon--md o-icon-ui--pen-dims">
+                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--pen"></use>
+                        </svg>
+                    </a>
+                    <a class="c-toolbar__action c-button c-button--default"
+                       tal:attributes="href python:context.absolute_url() + '/@@panel-listing'" i18n:translate="">
+                        <span class="u-visibility--hidden" i18n:translate="">Configure</span>
+                        <svg class="o-icon o-icon--md o-icon-ui--more-vertical-dims">
+                            <use xlink:href="/assets/symbol/svg/sprite.symbol.svg#ui--more-vertical"></use>
+                        </svg>
                     </a>
                 </div>
             </div>
