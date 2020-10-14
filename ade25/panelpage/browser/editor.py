@@ -15,36 +15,9 @@ class PanelEditorToolbar(BrowserView):
         tool = getUtility(IPanelTool)
         return tool
 
-    @staticmethod
-    def is_editable():
-        editable = False
-        if not api.user.is_anonymous():
-            editable = True
-        return editable
-
-    def panel_page_support_enabled(self):
-        context = aq_inner(self.context)
-        try:
-            from ade25.panelpage.behaviors.storage import IContentPanelStorage
-            if IContentPanelStorage.providedBy(context):
-                return True
-            else:
-                return False
-        except ImportError:
-            return False
-
     def show_toolbar(self):
         context = aq_inner(self.context)
-        display_toolbar = False
-        if self.panel_page_support_enabled() and self.is_editable():
-            # Explicitly check for permissions
-            current_user = api.user.get_current()
-            display_toolbar = api.user.has_permission(
-                'Ade25 Panel Page: Manage Panels',
-                user=current_user,
-                obj=context
-            )
-        return display_toolbar
+        return self.panel_tool.check_permission(context.UID())
 
 
 class PanelEditorReset(BrowserView):

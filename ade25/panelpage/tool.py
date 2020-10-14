@@ -8,6 +8,7 @@ import uuid as uuid_tool
 import time
 
 from ade25.base.utils import get_filesystem_template
+from ade25.panelpage.behaviors.storage import IContentPanelStorage
 from babel.dates import format_datetime
 from Products.CMFPlone.utils import safe_unicode
 from collective.beaker.interfaces import ISession
@@ -93,6 +94,10 @@ class PanelTool(object):
             item.reindexObject(idxs='modified')
         return uuid
 
+    def check_permission(self, uuid):
+        item = api.content.get(UID=uuid)
+        return self.check_editor_permissions(item)
+
     def create_record(self, uuid=None, widget_type=None):
         record = self.build_default_configuration(uuid, widget_type)
         return record
@@ -146,6 +151,32 @@ class PanelTool(object):
             'date_short': format_datetime(date, 'short', locale='de')
         }
         return timestamp
+
+    @staticmethod
+    def authenticated():
+        return not api.user.is_anonymous()
+
+    @staticmethod
+    def panel_page_support_enabled(context):
+        try:
+            if IContentPanelStorage.providedBy(context):
+                return True
+            else:
+                return False
+        except ImportError:
+            return False
+
+    def check_editor_permissions(self, context_object):
+        can_edit = False
+        if self.panel_page_support_enabled(context_object) and self.authenticated():
+            # Explicitly check for permissions
+            current_user = api.user.get_current()
+            can_edit = api.user.has_permission(
+                'Ade25 Panel Page: Manage Panels',
+                user=current_user,
+                obj=context_object
+            )
+        return can_edit
 
 
 class PanelEditorTool(object):

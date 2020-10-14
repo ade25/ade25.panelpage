@@ -47,12 +47,9 @@ class PanelView(BrowserView):
         tool = getUtility(IPanelEditor)
         return tool.get()
 
-    @staticmethod
-    def is_editable():
-        editable = False
-        if not api.user.is_anonymous():
-            editable = True
-        return editable
+    def is_editable(self):
+        context = aq_inner(self.context)
+        return self.panel_tool.check_permission(context.UID())
 
     def panel_page_support_enabled(self):
         context = aq_inner(self.context)
@@ -147,12 +144,9 @@ class ContentPanelList(BrowserView):
         tool = getUtility(IContentWidgetTool)
         return tool
 
-    @staticmethod
-    def is_editable():
-        editable = False
-        if not api.user.is_anonymous():
-            editable = True
-        return editable
+    def is_editable(self):
+        context = aq_inner(self.context)
+        return self.panel_tool.check_permission(context.UID())
 
     def available_widgets(self):
         widgets = self.widget_tool.section_widgets(
@@ -242,12 +236,9 @@ class ContentPanelOverview(BrowserView):
         tool = getUtility(IContentWidgetTool)
         return tool
 
-    @staticmethod
-    def is_editable():
-        editable = False
-        if not api.user.is_anonymous():
-            editable = True
-        return editable
+    def is_editable(self):
+        context = aq_inner(self.context)
+        return self.panel_tool.check_permission(context.UID())
 
     def available_widgets(self):
         widgets = self.widget_tool.section_widgets(

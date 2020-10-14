@@ -1,5 +1,5 @@
 <div class="c-panel-editor__header" tal:condition="python:view.show_toolbar()"
-     xmlns:xlink="http://www.w3.org/1999/xlink">
+     xmlns:xlink="http://www.w3.org/1999/xlink" i18n:domain="ade25.panelpage">
     <div class="c-toolbar c-toolbar--primary">
         <div class="c-toolbar__content">
             <div class="c-toolbar__item">

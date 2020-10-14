@@ -21,7 +21,8 @@
                     </svg>
                 </a>
             </div>
-            <section class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor">
+            <section class="c-panel-editor c-panel-editor--centered c-panel-editor--overlay" id="panel-editor"
+                tal:condition="python:view.is_editable()">
                 <section class="c-panel-editor__section">
                     <div class="c-widget-editor" >
                         <div class="c-panel__main">

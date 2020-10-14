@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2014-08-06 07:04+0000\n"
-"PO-Revision-Date: 2014-08-11 17:35+0100\n"
+"POT-Creation-Date: 2020-10-13 11:36+0000\n"
+"PO-Revision-Date: 2020-10-13 14:18+0200\n"
 "Last-Translator: Christoph Boehner <cb@vorwaerts-werbung.de>\n"
 "Language-Team: KK Language Team <info@kreativkombinat.de>\n"
 "MIME-Version: 1.0\n"
@@ -13,698 +13,636 @@ msgstr ""
 "Language-Name: German\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ade25.panelpage\n"
+"Language: de\n"
+"X-Generator: Poedit 2.4.1\n"
 
-#: ./../contentblock_templates/contentview.pt:76
-msgid "&times;"
-msgstr "&times;"
+#: ade25.panelpage/ade25/panelpage/browser/editor-toolbar.pt
+msgid "<span class=\"u-visibility--hidden\">x</span> <svg class=\"o-icon o-icon--md o-icon-ui--more-vertical-dims\"> <use xlink:href=\"/assets/symbol/svg/sprite.symbol.svg#ui--more-vertical\"></use> </svg>"
+msgstr "<span class=„u-visibility—hidden“>x</span> <svg class=„o-icon o-icon—md o-icon-ui—more-vertical-dims“> <use xlink:href=„/assets/symbol/svg/sprite.symbol.svg#ui—more-vertical“></use> </svg>"
 
-#: ./../profiles/default/types/ade25.panelpage.basepanel.xml
-msgid "A base content panel"
-msgstr "Basis Inhaltskachel"
+#: ade25.panelpage/ade25/panelpage/profiles/default/types/ade25.panelpage.page.xml
+msgid "A modular page with panel layout"
+msgstr "Eine Seite mit konfigurierbaren Inhaltsabschnitten"
 
-#: ./../profiles/default/types/ade25.panelpage.panel.xml
-msgid "A base panel"
-msgstr "Basis Panel"
-
-#: ./../profiles/default/types/ade25.panelpage.imagepanel.xml
-msgid "A image content panel"
-msgstr "Eine Kachel für Bildinhalte"
-
-#: ./../profiles/default/types/ade25.panelpage.page.xml
-msgid "A modular ppage with panel layout"
-msgstr "Eine modulare Inhaltsseite mit konfigurierbarem Kachel Layout"
-
-#: ./../profiles/default/types/ade25.panelpage.listingpanel.xml
-msgid "A panel providing content listings"
-msgstr "Eine Kachel für automatische Auflistungen"
-
-#: ./../profiles/default/types/ade25.panelpage.textpanel.xml
-msgid "A richtext panel"
-msgstr "Eine Kachel für formatierten Text"
-
-#: ./../profiles/default/types/ade25.panelpage.contentblock.xml
-msgid "A single content block for layout composition"
-msgstr "Ein Seitenabschnitt zur Zusammenstellung eines Layouts"
-
-#: ./../profiles/default/types/ade25.panelpage.contentpanel.xml
-msgid "A single content panel or box"
-msgstr "Eine einzelne Kachel oder Box für Seiteninhalte"
-
-#: ./../config.py:25
-#: ./../contentblock_templates/contentview.pt:38
-#: ./../contentpanel.py:37
+#: ade25.panelpage/ade25/panelpage/config.py
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Abstract"
 msgstr "Anreisser"
 
-#: ./../panelpage_templates/panelpageeditor.pt:191
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Add Content Block"
 msgstr "Inhaltsabschnitt hinzufügen"
 
-#: ./../contentpanel.py:49
+#: ade25.panelpage/ade25/panelpage/browser/panel-create.pt
+msgid "Add Content Panel"
+msgstr "Inhaltsbereich hinzufügen"
+
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Add an icon class from font awesome site"
 msgstr "Icon Klasse aus Font Awesome hinzufügen"
 
-#: ./../contentblock_templates/contentview.pt:111
-msgid "Add column"
-msgstr "Absatz hinzufügen"
+#: ade25.panelpage/ade25/panelpage/browser/panel-create.pt
+msgid "Add widget"
+msgstr "Widget hinzufügen"
 
-#: ./../blockfactory.py:282
-msgid "Add content block alias"
-msgstr "Alias für einen Inhaltabschnitt anlegen"
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Additional CSS Classes"
+msgstr "Zusätzliche CSS Klasse (optional)"
 
-#: ./../panelmanager_templates/view.pt:25
-msgid "Add content panel"
-msgstr "Inhaltpanel hinzufügen"
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+msgid "Adds hidden content panel storage"
+msgstr "Fügt versteckte Elemente zur Speicherung von konfigurierbaren Inhaltsbereichen hinzu."
 
-#: ./../interfaces.py:121
-msgid "Add optional list headline"
-msgstr "Optionale Überschrift für die Auflistung eingeben"
+#: ade25.panelpage/ade25/panelpage/configure.zcml
+msgid "Ade25 PanelPage - Manage modular page layouts"
+msgstr "Ade25 Panel Pages - Verwaltung dynamischer Seiteninhalte und Layouts"
 
-#: ./../config.py:29
-#: ./../interfaces.py:72
-#: ./../vocabulary.py:35
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Alias"
 msgstr "Alias"
 
-#: ./../profiles/default/types/ade25.panelpage.basepanel.xml
-msgid "BasePanel"
-msgstr "Basiskachel"
-
-#: ./../panelpage_templates/panelpageeditor.pt:92
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Block"
 msgstr "Abschnitt"
 
-#: ./../blockfactory.py:52
-#: ./../contentblock.py:52
-msgid "Block Body Text"
-msgstr "Haupttext des Abschnitts"
-
-#: ./../contentblock.py:48
-msgid "Block Details"
-msgstr "Details dieses Inhaltsbereiches"
-
-#: ./../interfaces.py:54
-msgid "Body"
-msgstr "Haupttext"
-
-#: ./../contentpanel.py:53
-#: ./../panelcontent.py:30
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Body Text"
 msgstr "Haupttext"
 
-#: ./../contentblock.py:43
-#: ./../contentpanel.py:29
-#: ./../panel.py:24
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "CSS Class"
 msgstr "CSS Klasse"
 
-#: ./../blockfactory.py:73
-msgid "Change the default image position to the right third"
-msgstr "Standard Bildausrichtung auf das rechte Drittel umstellen"
+#: ade25.panelpage/ade25/panelpage/browser/panel-create.pt
+#: ade25.panelpage/ade25/panelpage/browser/panel-page.pt
+msgid "Cancel"
+msgstr "Abbrechen"
 
-#: ./../panel.py:29
-msgid "Component"
-msgstr "Komponente"
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Centered constrained container"
+msgstr "Zentrierter Bereich mit eingeschränkter Breite"
 
-#: ./../contentblock.py:60
-msgid "Content Alias/Proxy UID"
-msgstr "Alias für Inhalte/UID des Zielobjektes"
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Change predefined base style of the content panel"
+msgstr "Ändern Sie den voreingestellten Basisstil dieses Inhaltsbereichs"
 
-#: ./../contentblock_templates/contentview.pt:97
-msgid "Content Aliases"
-msgstr "Alias für Inhalte"
+#: ade25.panelpage/ade25/panelpage/browser/editor-toolbar.pt
+msgid "Configure"
+msgstr "Konfigurieren"
 
-#: ./../blockfactory.py:42
-#: ./../contentblock.py:33
-msgid "Content Block Headline"
-msgstr "Überschrift dieses Abschnittes"
-
-#: ./../contentblock_templates/contentview.pt:57
-#: ./../panelpage_templates/panelblockeditor.pt:54
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Content Block Layout"
 msgstr "Layout dieses Inhaltsbereiches"
 
-#: ./../contentblock_templates/contentview.pt:119
-#: ./../panelpage_templates/panelblockeditor.pt:145
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Content Block Preview"
 msgstr "Vorschau dieses Bereiches"
 
-#: ./../contentblock.py:65
-#: ./../contentblock_templates/contentview.pt:8
-msgid "Content Block Settings"
-msgstr "Einstellungen dieses Inhaltsbereiches"
-
-#: ./../panelpage_templates/panelpageeditor.pt:79
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Content Blocks"
 msgstr "Abschnitte"
 
-#: ./../blocklisting.py:25
-msgid "Content Listing"
-msgstr "Auflistung von Inhalten"
-
-#: ./../pagelayout.py:30
+#: ade25.panelpage/ade25/panelpage/pagelayout.py
 msgid "Content Page Layout"
 msgstr "Layout dieser Inhaltsseite"
 
-#: ./../contentpanel_templates/view.pt:25
+#: ade25.panelpage/ade25/panelpage/contentpanel_templates/view.pt
 msgid "Content Panel"
 msgstr "Kachel"
 
-#: ./../panel.py:20
-#: ./../panelfactory.py:454
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+msgid "Content Panel Storage"
+msgstr "Speicher für Inhaltsbereiche"
+
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+msgid "Content Panel Storage Support"
+msgstr "Unterstützung für Panel Page Inhaltsbereiche"
+
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "Content Panel Title"
 msgstr "Titel dieses Inhaltsbereiches"
 
-#: ./../panelpage_templates/panelpageeditor.pt:224
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "Content Panel created"
+msgstr "Inhaltsbereich wurde erstellt"
+
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "Content Panel successfully removed"
+msgstr "Inhaltsbereich wurde erfolgreich entfernt"
+
+#: ade25.panelpage/ade25/panelpage/browser/panel-page.pt
+msgid "Content Panels <small>Page Footer</small>"
+msgstr "Elemente <small>Fuß der Seite</small>"
+
+#: ade25.panelpage/ade25/panelpage/browser/panel-page.pt
+msgid "Content Panels <small>Page Header</small>"
+msgstr "Elemente <small>Kopf der Seite</small>"
+
+#: ade25.panelpage/ade25/panelpage/browser/panel-page.pt
+msgid "Content Panels <small>Page Main Content Section</small>"
+msgstr "Elemente <small>Hauptbereich der Seite</small>"
+
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Content Panels Footer"
+msgstr "Inhaltselemente Foster"
+
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Content Panels Header"
+msgstr "Inhaltselemente Header"
+
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Content Panels Main"
+msgstr "Inhaltselemente Main"
+
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Content block"
 msgstr "Block"
 
-#: ./../blockfactory.py:106
-msgid "Content block factory has been cancelled."
-msgstr "Das Erstellen eines neuen Abschnittes wurde abgebrochen"
-
-#: ./../panelfactory.py:79
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "Content panel factory has been cancelled."
 msgstr "Die Erstellung eines neuen Inhaltsbereiches wurde abgebrochen"
 
-#: ./../contentpanel.py:48
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Content panel icon class"
 msgstr "Icon Klasse für diese Kachel"
 
-#: ./../contentblock.py:29
-#: ./../contentpanel.py:25
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Content panel title"
 msgstr "Titel dieses Inhaltsbereiches"
 
-#: ./../profiles/default/types/ade25.panelpage.contentblock.xml
-msgid "ContentBlock"
-msgstr "Inhaltsabschnitt"
-
-#: ./../profiles/default/types/ade25.panelpage.contentpanel.xml
-msgid "ContentPanel"
-msgstr "Inhaltskachel"
-
-#: ./../panelmanager_templates/view.pt:60
-msgid "Create content block"
-msgstr "Abschnitt erstellen"
-
-#: ./../panelpage_templates/panelblockeditor.pt:175
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Create content panel"
 msgstr "Inhaltsbereich erstellen"
 
-#: ./../panelmanager_templates/createpanel.pt:14
-msgid "Create new panel"
-msgstr "Neue Kachel hinzufügen"
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Default"
+msgstr "Standard"
 
-#: ./../panelmanager_templates/createpanel.pt:53
-msgid "Create panel"
-msgstr "Kachel erstellen"
-
-#: ./../interfaces.py:84
-#: ./../panellisting.py:26
-msgid "Define the search terms for the items you want to list by choosing what to match on. The list of results will be dynamically updated"
-msgstr "Definieren Sie die Suchbegriffe, nach denen die Inhalte gelistet werden sollen. Die Ergebnisliste wird dynamisch aktualisiert."
-
-#: ./../blocklisting.py:32
-#: ./../contentpanel.py:74
-#: ./../panelcontent.py:44
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Define the search terms for the items you want to list by choosing what to match on. The list of resultswill be dynamically updated"
 msgstr "Definieren Sie die Suchbegriffe, nach denen die Inhalte gelistet werden sollen. Die Ergebnisliste wird dynamisch aktualisiert."
 
-#: ./../contentpanel.py:65
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Display subitems"
 msgstr "Subinhalte anzeigen"
 
-#: ./../panelfactory_templates/panelaliaseditform.pt:24
+#: ade25.panelpage/ade25/panelpage/browser/editor-toolbar.pt
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelaliaseditform.pt
 msgid "Edit Alias"
 msgstr "Alias bearbeiten"
 
-#: ./../panelfactory_templates/panelimageeditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelimageeditform.pt
 msgid "Edit Image"
 msgstr "Bild bearbeiten"
 
-#: ./../panelfactory_templates/panellistingeditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panellistingeditform.pt
 msgid "Edit Listing"
 msgstr "Auflistung bearbeiten"
 
-#: ./../panelfactory_templates/panelabstracteditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelabstracteditform.pt
 msgid "Edit Panel Abstract"
 msgstr "Einleitungstext bearbeiten"
 
-#: ./../panelfactory_templates/panelrichtexteditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelrichtexteditform.pt
 msgid "Edit Richtext Panel"
 msgstr "Kachel für formatierten Text bearbeiten"
 
-#: ./../panelfactory_templates/paneltexteditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/paneltexteditform.pt
 msgid "Edit Text Panel"
 msgstr "Text bearbeiten"
 
-#: ./../blockfactory.py:217
-msgid "Edit content block image content"
-msgstr "Den Bildinhalt dieses Abschnittes bearbeiten"
-
-#: ./../blockfactory.py:87
-#: ./../panelfactory.py:37
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "Edit content panel"
 msgstr "Inhaltsbereich bearbeiten"
 
-#: ./../interfaces.py:73
-msgid "Enter UID of content aliase that can be obtained by appending @@UUID to a specific item URL"
-msgstr "Bitte geben Sie die UUID des Inhalts an, der hier eingefügt werden soll. Die UUID wird angezeigt, wenn @uuid an die jeweilige URL des Zielobjektes angehängt wird"
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Edit content panel json storage"
+msgstr ""
 
-#: ./../panelpage_templates/panelpageeditor.pt:206
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+msgid "Enable panel page content layout engine"
+msgstr "Panel Page Content Layout Engine aktivieren"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Enter optional css classes that should be applied to the default widget class."
+msgstr "Geben Sie optionale zusätzliche Klassen ein, die den Standard Widget Klassen nachgestellt werden sollen."
+
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Enter optional descriptive title for this block of content"
 msgstr "Geben Sie einen optionalen Beschribungstext für diesen Inhaltsabschnitt ein"
 
-#: ./../profiles/default/types/ade25.panelpage.panelmanager.xml
-msgid "Folder ccontaining content panels and showing overviews"
-msgstr "Ein Ordner der Inhaltskacheln beinhalten kann und der Übersichten anzeigt"
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Footer Panel"
+msgstr "Footer Panel"
 
-#: ./../panelpage_templates/panelpageeditor.pt:211
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Full width container"
+msgstr "Volle Bildschirmbreite"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Full width container with centered constrained content"
+msgstr "Volle Bildschirmbreite mit zentriertem Inhaltsbereich fixer Breite"
+
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Good to know:"
 msgstr "Gut zu wissen:"
 
-#: ./../panelpage_templates/panelblockeditor.pt:25
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Gridrow Layout"
 msgstr "Layout Inhaltsabschnitt"
 
-#: ./../config.py:23
-#: ./../interfaces.py:22
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Header Panel"
+msgstr "Header Panel"
+
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Heading"
 msgstr "Überschrift"
 
-#: ./../panelfactory_templates/panelheadingeditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelheadingeditform.pt
 msgid "Heading Panel"
 msgstr "Überschirftskachel"
 
-#: ./../contentblock_templates/contentview.pt:22
-#: ./../contentpanel.py:33
-#: ./../panelcontent.py:22
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Headline"
 msgstr "Überschrift"
 
-#: ./../page.py:23
-msgid "Hide title and description"
-msgstr "Titel und Beschreibung ausblenden"
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden"
+msgstr "Versteckt"
 
-#: ./../blockfactory.py:68
-#: ./../config.py:28
-#: ./../contentblock.py:56
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 1200px"
+msgstr "Versteckt ab einer Breite von 1200px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 1400px"
+msgstr "Versteckt ab einer Breite von 1400px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 1600px"
+msgstr "Versteckt ab einer Breite von 1600px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 576px"
+msgstr "Versteckt ab einer Breite von 576px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 768px"
+msgstr "Versteckt ab einer Breite von 768px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Hidden from 992px"
+msgstr "Versteckt ab einer Breite von 992px"
+
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Image"
 msgstr "Bild"
 
-#: ./../profiles/default/types/ade25.panelpage.imagepanel.xml
-msgid "ImagePanel"
-msgstr "Bildkachel"
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "Item added successfully."
+msgstr "Element erfolgreich angelegt."
 
-#: ./../contentblock_templates/contentview.pt:95
-msgid "Infobox"
-msgstr "Infobox"
-
-#: ./../panelpage_templates/panelerror.pt:24
-msgid "Layout Panel"
-msgstr "Layout Kachel"
-
-#: ./../blocklisting.py:54
-#: ./../contentpanel.py:96
-#: ./../interfaces.py:106
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Limit"
 msgstr "Anzeigelimit"
 
-#: ./../blocklisting.py:55
-#: ./../contentpanel.py:97
-#: ./../interfaces.py:107
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Limit Search Results"
 msgstr "Limit für Suchanfragen"
 
-#: ./../blockfactory.py:31
-msgid "Link target"
-msgstr "Linkziel"
-
-#: ./../contentpanel.py:59
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Linked content item"
 msgstr "Verlinkter Inhalt"
 
-#: ./../vocabulary.py:14
-msgid "List"
-msgstr "Liste"
-
-#: ./../interfaces.py:120
-msgid "List Headline"
-msgstr "Überschrift Liste"
-
-#: ./../interfaces.py:126
-#: ./../panellisting.py:62
-msgid "List Layout"
-msgstr "Layout der Auflistung"
-
-#: ./../config.py:30
-#: ./../contentblock_templates/contentview.pt:94
-#: ./../vocabulary.py:34
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Listing"
 msgstr "Auflistung"
 
-#: ./../profiles/default/types/ade25.panelpage.listingpanel.xml
-msgid "ListingPanel"
-msgstr "Automatische Liste Kachel"
+#: ade25.panelpage/ade25/panelpage/behaviors/storage.py
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+msgid "Main Panel"
+msgstr "Main Panel"
 
-#: ./../vocabulary.py:16
-msgid "Media"
-msgstr "Medienansicht"
-
-#: ./../panelpage_templates/panelblockeditor.pt:172
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "No panels asigned yet"
 msgstr "Es wurden noch keine Inhalte angelegt"
 
-#: ./../panelpage_templates/panelerror.pt:38
-msgid "Not implemented yet"
-msgstr "Diese Funktion konnte nicht bereitgestellt werden"
-
-#: ./../blocklisting.py:62
-#: ./../contentpanel.py:104
-#: ./../interfaces.py:114
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Number of items that will show up in one batch."
 msgstr "Anzahl von Objekten in einem Listenteilbereich"
 
-#: ./../blockfactory.py:43
-#: ./../contentblock.py:34
-msgid "Optional headline for this block"
-msgstr "Optionale Überschrift für diesen Abschnitt"
-
-#: ./../profiles/default/types/ade25.panelpage.page.xml
-msgid "Page"
-msgstr "Inhaltsseite"
-
-#: ./../contentblock_templates/view.pt:20
-msgid "Page Explorer"
-msgstr "Seiten Explorer"
-
-#: ./../panelpage_templates/panelpageeditor.pt:48
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Page Layout"
 msgstr "Seitenlayout"
 
-#: ./../contentblock_templates/contentview.pt:82
-#: ./../panelpage_templates/panelblockeditor.pt:84
-#: ./../profiles/default/types/ade25.panelpage.panel.xml
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Panel"
 msgstr "Inhaltsbereich"
 
-#: ./../contentpanel_templates/view.pt:40
-#: ./../panel_templates/view.pt:40
+#: ade25.panelpage/ade25/panelpage/contentpanel_templates/view.pt
 msgid "Panel Details"
 msgstr "Kacheldetails"
 
-#: ./../panelfactory_templates/panelfactory.pt:26
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelfactory.pt
 msgid "Panel Edit Form"
 msgstr "Kachel Bearbeitungsformular"
 
-#: ./../panelfactory_templates/panelfactory.pt:20
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelfactory.pt
 msgid "Panel Factory"
 msgstr "Kachelfabrik"
 
-#: ./../contentpanel.py:42
-#: ./../panelcontent.py:36
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Panel Icon Image"
 msgstr "Kachel Icon"
 
-#: ./../interfaces.py:62
-msgid "Panel Image"
-msgstr "Kachelbild"
+#: ade25.panelpage/ade25/panelpage/behaviors/layout.py
+msgid "Panel Layout"
+msgstr "Panel Layout"
 
-#: ./../panel_templates/view.pt:24
-msgid "Panel Manager"
-msgstr "Kachel Manager"
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+#: ade25.panelpage/ade25/panelpage/browser/editor-toolbar.pt
+#: ade25.panelpage/ade25/panelpage/profiles/default/types/ade25.panelpage.page.xml
+msgid "Panel Page"
+msgstr "Panel Page"
 
-#: ./../pagelayout.py:28
+#: ade25.panelpage/ade25/panelpage/pagelayout.py
 msgid "Panel Page Layout"
 msgstr "Panelpage Layout"
 
-#: ./../contentpanel_templates/view.pt:45
-#: ./../panel_templates/view.pt:45
+#: ade25.panelpage/ade25/panelpage/behaviors/configure.zcml
+msgid "Panel Page Marker Interface"
+msgstr "Panel Page Marker Interface"
+
+#: ade25.panelpage/ade25/panelpage/contentpanel_templates/view.pt
 msgid "Panel Preview"
 msgstr "Kachel Vorschau"
 
-#: ./../profiles/default/types/ade25.panelpage.panelmanager.xml
-msgid "PanelManager"
-msgstr "Panel Manager"
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "Panel configuration data not available"
+msgstr "Konfiguration der Inhaltsbereiche kann nicht abrufen werden"
 
-#: ./../panelpage.py:318
+#: ade25.panelpage/ade25/panelpage/browser/panels.py
+#: ade25.panelpage/ade25/panelpage/panelpage_legacy.py
+msgid "Panel page data not available"
+msgstr "Gespeicherte Seiteninhalte sind nicht verfügbar"
+
+#: ade25.panelpage/ade25/panelpage/panelpage_legacy.py
 msgid "Panelpage order successfully updated"
 msgstr "Reihenfolge der Seiteninhalte erfolgreich aktualisiert"
 
-#: ./../config.py:26
-#: ./../interfaces.py:46
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Plaintext"
 msgstr "Unformatierter Text"
 
-#: ./../contentpanel.py:54
-#: ./../panelcontent.py:31
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Please enter rich formatted text. But keep it short and suitable for a content panel"
 msgstr "Bitte geben Sie formatierten Text ein. Halten Sie diesen dem Bereich entsprechend kurz und übersichtlich."
 
-#: ./../panelmanager_templates/createpanel.pt:25
-#: ./../panelmanager_templates/view.pt:32
-msgid "Please provide a human readable title for this panel"
-msgstr "Bitte geben Sie einen verständlichen Titel für diesen Bereich ein"
+#: ade25.panelpage/ade25/panelpage/browser/panel-create.pt
+msgid "Please select content widget for this page section"
+msgstr "Bitte wählen Sie das gewünschte Inhaltselement (Widget) für diesen Bereich der Seite"
 
-#: ./../page.py:24
-msgid "Prevent the rendering of DC Title and Description touse headline and abstract of the first content block"
-msgstr "Darstellung von Dublin Core Titel und Beschreibung ausblenden und stattdessen Überschrift und Einleitungstext des ersten Inhaltsabschnittes verwenden"
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Primary Background"
+msgstr "Primärer Hintergrund"
 
-#: ./../contentblock_templates/contentview.pt:68
-msgid "Ratio:"
-msgstr "Verhältnis"
+#: ade25.panelpage/ade25/panelpage/migration/content.pt
+msgid "Remove legacy content now"
+msgstr "Veraltete Seiteninhalte jetzt entfernen"
 
-#: ./../pagelayout.py:49
+#: ade25.panelpage/ade25/panelpage/configure.zcml
+msgid "Remove support for modular page layouts with widgets and panels"
+msgstr "Entfernen der Unterstützung für konfigurierbare Seitenelemente und Layouts"
+
+#: ade25.panelpage/ade25/panelpage/pagelayout.py
 msgid "Removed stored layout - you may start over now"
 msgstr "Die gespeicherten Seitenlayouts wurden zurückgesetzt - sie können nun erneut beginnen."
 
-#: ./../pagelayout.py:61
+#: ade25.panelpage/ade25/panelpage/pagelayout.py
 msgid "Removed {0} layouts"
 msgstr "{0} Layouts entfernt"
 
-#: ./../panelpage_templates/panelpageeditor.pt:18
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Removing this content block from the layout will also remove all asigned panels."
 msgstr "Das entfernen dieses Abschnittes wird auch alle in diesem Abschnitt verwendeten Inhalte/Kacheln entfernen."
 
-#: ./../panelpage_templates/panelblockeditor.pt:194
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Removing this panel will also remove all of its contents. This step can not be undone."
 msgstr "Das Löschen dieser Kachel entfernt auch alle zugewiesenen Inhalte. Dieser Schritt kann nicht rückgängig gemacht werden."
 
-#: ./../vocabulary.py:31
-msgid "Rich Text"
-msgstr "Formatierter Text"
-
-#: ./../config.py:27
-#: ./../contentblock_templates/contentview.pt:92
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Richtext"
 msgstr "Formatierter Text"
 
-#: ./../blockfactory.py:72
-msgid "Right align image"
-msgstr "Bild rechts ausrichten"
-
-#: ./../blockfactory.py:94
-#: ./../panelfactory.py:61
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "Save"
 msgstr "Speichern"
 
-#: ./../blocklisting.py:31
-#: ./../contentpanel.py:73
-#: ./../interfaces.py:83
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Search terms"
 msgstr "Suchbegriffe"
 
-#: ./../panelpage_templates/panelblockeditor.pt:30
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Secondary Background"
+msgstr "Sekundärer Hintergrund"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Select layout for the content panel"
+msgstr "Wählen Sie das gewünschte Layout für den Bereich"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Select responsive behavior for widget"
+msgstr "Wählen Sie das Verhalten des Elements in Abhängigkeit der Bildschirmgrösse"
+
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: ./../panelpage_templates/panelblockeditor.pt:89
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "Setup panel content"
 msgstr "Inhalte anlegen"
 
-#: ./../blockfactory.py:48
-#: ./../contentblock.py:39
-#: ./../contentpanel.py:38
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Short and visualy highlighted teaser message"
 msgstr "Kurze und optisch hervorgehobener Anreissertext"
 
-#: ./../blocklisting.py:43
-#: ./../contentpanel.py:85
-#: ./../interfaces.py:95
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Sort the collection on this index"
 msgstr "Die gesammelten Inhalte nach diesem Index sortieren"
 
-#: ./../blocklisting.py:49
-#: ./../contentpanel.py:91
-#: ./../interfaces.py:101
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Sort the results in reversed order"
 msgstr "Die Ergebnisse in umgekehrter Reihenfolge sortieren"
 
-#: ./../config.py:24
-#: ./../interfaces.py:30
+#: ade25.panelpage/ade25/panelpage/config.py
 msgid "Subheading"
 msgstr "Unterüberschrift"
 
-#: ./../panelfactory_templates/panelsubheadingeditform.pt:24
+#: ade25.panelpage/ade25/panelpage/panelfactory_templates/panelsubheadingeditform.pt
 msgid "Subheading Panel"
 msgstr "Unterüberschrift"
 
-#: ./../vocabulary.py:15
-msgid "Summary"
-msgstr "Zusammenfassung"
+#: ade25.panelpage/ade25/panelpage/configure.zcml
+msgid "Support for modular page layouts with widgets and panels"
+msgstr "Unterstützung für bearbeitbare Layouts mit konfigurierbaren Seitenelementen und -bereichen"
 
-#: ./../blockfactory.py:47
-#: ./../contentblock.py:38
-msgid "Teaser"
-msgstr "Anreisser"
-
-#: ./../vocabulary.py:30
-msgid "Text"
-msgstr "Text"
-
-#: ./../profiles/default/types/ade25.panelpage.textpanel.xml
-msgid "TextPanel"
-msgstr "Textkachel"
-
-#: ./../blockfactory.py:201
-msgid "The content block body text has successfully been updated"
-msgstr "Der Haupttext dieses Abschnitts wurde erfolgreich aktualisiert"
-
-#: ./../blockfactory.py:136
-msgid "The content block has successfully been updated"
-msgstr "Der Inhaltsbereich wurde erfolgreich aktualisiert"
-
-#: ./../panelpage_templates/panelpageeditor.pt:212
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "The content block title will be used to identify the specific item but will not be displayed"
 msgstr "Der Titel des Seitenabschnittes wird Besuchern der Seite nicht angezeigt. Der Titel wird verwendet, um die redaktionelle Verwaltung der Inhalte zu erleichtern."
 
-#: ./../panelfactory.py:72
+#: ade25.panelpage/ade25/panelpage/browser/factory.py
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "The panel has successfully been updated"
 msgstr "Kachel wurde erfolgreich aktualisiert"
 
-#: ./../panelmanager_templates/createpanel.pt:28
-#: ./../panelmanager_templates/view.pt:35
-msgid "The title will be displayed next to a default icon"
-msgstr "Der Titel wird neben dem Standard Icon angezeigt "
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "There were errors."
+msgstr "Es ist leider ein Fehler aufgetreten."
 
-#: ./../blockfactory.py:266
-msgid "This block has successfully been updated"
-msgstr "Der Inhalt wurde erfolgreich aktualisiert"
-
-#: ./../panelmanager.py:54
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
 msgid "This field is required"
 msgstr "Dies ist ein Pflichtfeld"
 
-#: ./../contentpanel.py:60
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "This field will be populated with an uid by the system. Do not edit it yourself"
 msgstr "Dieses feld wird vom System mit einer eingeutigen ID befüllt und sollte nicht manuell bearbeitet werden"
 
-#: ./../panelpage_templates/panelpageeditor.pt:181
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "This item has no content"
 msgstr "Dieses Objekt hat keinen Inhalt"
 
-#: ./../contentblock_templates/contentview.pt:130
-msgid "This item has not been configured yet"
-msgstr "Dieser Bereich wurde noch nicht konfiguriert"
-
-#: ./../contentpanel_templates/view.pt:42
-#: ./../panel_templates/view.pt:42
+#: ade25.panelpage/ade25/panelpage/contentpanel_templates/view.pt
 msgid "This panel can be styled by using the custom"
 msgstr "Dieser Abschnitt kann mit Hilfe dieser speziellen Klasse mit einem bestimmten Design versehen werden"
 
-#: ./../panelpage_templates/panelblockeditor.pt:158
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "This panel does not have any content to display yet"
 msgstr "Dieser Inhaltsbereich hat noch keinen darstellbaren Inhalt zugewiesen"
 
-#: ./../contentblock_templates/contentview.pt:85
-msgid "This panel is empty"
-msgstr "Dieser Bereich ist leer"
-
-#: ./../panelpage_templates/panelerror.pt:41
-msgid "This panel type will be available soon. Please hold tight until we update the system"
-msgstr "Dieser Inhaltstyp wird in Kürze verfügbar sein. Bitte bleiben Sie angeschnallt, bis wir das System aktualisiert haben und wir unsere endgültige Position erreicht haben."
-
-#: ./../panelmanager_templates/createpanel.pt:38
-#: ./../panelmanager_templates/view.pt:45
-#: ./../panelpage_templates/panelpageeditor.pt:200
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "Title"
 msgstr "Titel"
 
-#: ./../panelpage.py:147
+#: ade25.panelpage/ade25/panelpage/panelpage_legacy.py
 msgid "Unconfigured"
 msgstr "nicht konfiguriert"
 
-#: ./../contentpanel.py:43
-#: ./../panelcontent.py:37
+#: ade25.panelpage/ade25/panelpage/configure.zcml
+msgid "Uninstall Ade25 PanelPage"
+msgstr "Ade25 Panel Page deinstallieren"
+
+#: ade25.panelpage/ade25/panelpage/browser/panel.py
+msgid "Update content panel settings"
+msgstr "Einstellungen für Inhaltsbereiche ändern"
+
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "Upload panel icon image suitable in size and dimension for the usecase"
 msgstr "Bitte laden Sie ein Icon für diese Kachel hoch, dessen Dateigrösse und Abmaße für diesen Fall vorbereitet wurden"
 
-#: ./../interfaces.py:63
-msgid "Upload panel image suitable in size and dimension for the usecase"
-msgstr "Bitte laden Sie ein Icon für diese Kachel hoch, dessen Dateigrösse und Abmaße für diesen Fall vorbereitet wurden"
-
-#: ./../contentpanel.py:66
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
 msgid "Use this setting to automatically list all subcontents of this context. All custom query selections made will be ignored"
 msgstr "Verwenden Sie diese Einstellung, um automatisch alle Subinhalte in diesem Bereich zu listen. Alle besonders ausgewählten Abfragen werden im Anschluss ignoriert"
 
-#: ./../panelpage_templates/panelpageeditor.pt:53
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "View"
 msgstr "Ansicht"
 
-#: ./../contentblock_templates/contentview.pt:91
-msgid "Widgets"
-msgstr "Widgets"
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible"
+msgstr "Sichtbar"
 
-#: ./../panelpage_templates/panelpageeditor.pt:24
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 1200px"
+msgstr "Sichtbar ab einer Bildschirmbreite von 1200px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 1400px"
+msgstr "Sichtbar ab einer Bildschirmbreite von  1400px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 1600px"
+msgstr "Sichtbar ab einer Bildschirmbreite von 1600px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 576px"
+msgstr "Sichtbar ab einer Bildschirmbreite von 576px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 768px"
+msgstr "Sichtbar ab einer Bildschirmbreite von 768px"
+
+#: ade25.panelpage/ade25/panelpage/vocabulary.py
+msgid "Visible from 992px"
+msgstr "Sichtbar ab einer Bildschirmbreite von 992px"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Widget Design"
+msgstr "Aussehen des Inhaltselements"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Widget Display"
+msgstr "Anzeige des Inhaltselements"
+
+#: ade25.panelpage/ade25/panelpage/interfaces.py
+msgid "Widget Layout"
+msgstr "Layout des Inhaltselements"
+
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "You can also just hide the content block and keep all asigned content"
 msgstr "Sie können den Inhaltsblock verstecken und alle bereits hinzugewiesenen Inhalte beibehalten"
 
-#: ./../contentblock_templates/contentview.pt:88
-msgid "add content"
-msgstr "Inhalt hinzufügen"
-
-#: ./../blockfactory.py:102
-#: ./../panelfactory.py:76
+#: ade25.panelpage/ade25/panelpage/panelfactory.py
 msgid "cancel"
 msgstr "abbrechen"
 
-#: ./../contentblock_templates/contentview.pt:48
-msgid "change"
-msgstr "aktualsieren"
-
-#: ./../contentblock_templates/contentview.pt:102
-#: ./../panelpage_templates/panelblockeditor.pt:69
-#: ./../panelpage_templates/panelpageeditor.pt:150
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelpageeditor.pt
 msgid "edit"
 msgstr "bearbeiten"
 
-#: ./../panelpage_templates/panelblockeditor.pt:106
+#: ade25.panelpage/ade25/panelpage/panelpage_templates/panelblockeditor.pt
 msgid "edit panel"
 msgstr "Kachel bearbeiten"
 
 #. Default: "Item count"
-#: ./../blocklisting.py:61
-#: ./../contentpanel.py:103
-#: ./../interfaces.py:113
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "label_item_count"
 msgstr "Artikelanzahl"
 
 #. Default: "Sort on"
-#: ./../blocklisting.py:42
-#: ./../contentpanel.py:84
-#: ./../interfaces.py:94
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "label_sort_on"
 msgstr "Sortieren nach"
 
 #. Default: "Reversed order"
-#: ./../blocklisting.py:48
-#: ./../contentpanel.py:90
-#: ./../interfaces.py:100
+#: ade25.panelpage/ade25/panelpage/contentpanel.py
+#: ade25.panelpage/ade25/panelpage/panelcontent.py
 msgid "label_sort_reversed"
 msgstr "Sortierreihenfolge umdrehen"
-
-#: ./../panelpage_templates/panelpageeditor.pt:143
-msgid "remove"
-msgstr "entfernen"
-
